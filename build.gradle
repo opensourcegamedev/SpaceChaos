@@ -8,12 +8,42 @@ task wrapper(type: Wrapper) {
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.8
+
+ext {
+    gdxVersion = "1.9.5"
+    box2DLightsVersion = '1.4'
+    log4jVersion = '1.2.17'
+    ini4jVersion = '0.5.4'
+    jsonVersion = '20160810'
+    gameNetworkLibVersion = '1.0.6-SNAPSHOT'
+    apacheCommonsLangVersion = '3.5'
+
+    mainClassName = "com.jukusoft.libgdx.rpg.desktop.DesktopLauncher"
+}
 
 repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+
+    maven {
+        url "https://oss.sonatype.org/content/repositories/"
+    }
+
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+
+    jcenter()
     mavenCentral()
 }
 
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }

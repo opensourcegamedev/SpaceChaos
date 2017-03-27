@@ -1,0 +1,35 @@
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+
+    maven {
+        url "https://oss.sonatype.org/content/repositories/"
+    }
+
+    mavenCentral()
+}
+
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile project(":engine")
+
+    //libGDX
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+    compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
+    //Apache commons-lang library for custom hashcode
+    compile "org.apache.commons:commons-lang3:$apacheCommonsLangVersion"
+}

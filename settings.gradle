@@ -1,2 +1,5 @@
 rootProject.name = 'spacechaos'
+include 'engine'
+include 'game'
+include 'desktop'
 

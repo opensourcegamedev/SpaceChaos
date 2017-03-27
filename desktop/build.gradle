@@ -1,0 +1,45 @@
+plugins {
+    id "com.stehno.natives" version "0.2.4"
+    id "nebula.ospackage" version "3.6.1"
+}
+
+apply plugin: 'java'
+
+apply plugin: "java"
+apply plugin: "maven"
+apply plugin: 'application'
+apply plugin: "maven-publish"
+
+sourceCompatibility = 1.8
+
+mainClassName = "dev.game.spacechaos.desktop.DesktopLauncher"
+
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+
+    maven {
+        url "https://oss.sonatype.org/content/repositories/"
+    }
+
+    mavenCentral()
+}
+
+//dont cache snapshot builds from maven central and other repositories
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile project(":game")
+
+    compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+
+    compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+}
