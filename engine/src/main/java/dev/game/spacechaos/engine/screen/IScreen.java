@@ -25,8 +25,14 @@ public interface IScreen {
     */
     public void draw(GameTime time, SpriteBatch batch);
 
+    /**
+    * pause screen and switch to another screen
+    */
     public void onPause();
 
+    /**
+    * screen was pushed, so we have to resume this game screen
+    */
     public void onResume();
 
     /**
