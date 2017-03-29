@@ -7,6 +7,7 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
+import dev.game.spacechaos.game.entities.PlayerSpaceShuttle;
 import dev.game.spacechaos.game.entities.SpaceShuttle;
 
 /**
@@ -38,7 +39,7 @@ public class GameScreen extends BaseScreen {
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
 
         //create space shuttle img, x, y
-        spaceShuttle = new SpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth()/2, game.getViewportHeight()/2);
+        spaceShuttle = new PlayerSpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth()/2, game.getViewportHeight()/2);
     }
 
     @Override public void onResume() {
