@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
@@ -74,6 +75,10 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
 
         //draw center, only for debugging purposes
         SpriteBatcherUtils.fillRectangle(batch, getMiddleX() - 10, getMiddleY() - 10, 20, 20, Color.YELLOW);
+
+        //draw mouse position
+        Vector3 mousePos = camera.getMousePosition();
+        SpriteBatcherUtils.fillRectangle(batch, mousePos.x - 5, mousePos.y - 5, 10, 10, Color.RED);
     }
 
 }
