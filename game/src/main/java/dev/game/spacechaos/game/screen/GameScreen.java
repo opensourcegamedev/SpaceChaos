@@ -37,8 +37,8 @@ public class GameScreen extends BaseScreen {
         //get asset
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
 
-        //create space shuttle
-        spaceShuttle = new SpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class));
+        //create space shuttle img, x, y
+        spaceShuttle = new SpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth()/2, game.getViewportHeight()/2);
     }
 
     @Override public void onResume() {
@@ -59,7 +59,7 @@ public class GameScreen extends BaseScreen {
         batch.draw(this.bgTexture, 0, 0, game.getViewportWidth(), game.getViewportHeight());
 
         //draw shuttle
-        spaceShuttle.draw(batch, game.getViewportWidth()/2, game.getViewportHeight()/2);
+        spaceShuttle.draw(batch);
     }
 
     @Override public void destroy() {
