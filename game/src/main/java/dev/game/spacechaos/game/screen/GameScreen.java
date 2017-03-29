@@ -52,6 +52,9 @@ public class GameScreen extends BaseScreen {
     @Override public void update(ScreenBasedGame game, GameTime time) {
         //get camera
         CameraWrapper camera = game.getCamera();
+
+        //update shuttle
+        spaceShuttle.update(game, game.getCamera(), time);
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
@@ -59,7 +62,7 @@ public class GameScreen extends BaseScreen {
         batch.draw(this.bgTexture, 0, 0, game.getViewportWidth(), game.getViewportHeight());
 
         //draw shuttle
-        spaceShuttle.draw(batch);
+        spaceShuttle.draw(time, game.getCamera(), batch);
     }
 
     @Override public void destroy() {
