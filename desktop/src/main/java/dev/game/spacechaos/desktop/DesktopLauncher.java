@@ -5,7 +5,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import dev.game.spacechaos.engine.utils.FileUtils;
 import dev.game.spacechaos.game.Game;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
