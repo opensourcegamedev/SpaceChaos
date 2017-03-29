@@ -15,7 +15,7 @@ import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
  */
 public class PlayerSpaceShuttle extends SpaceShuttle {
 
-    private float MAX_SPEED = 1f;
+    private float MAX_SPEED = 2f;
     protected Vector2 tmpVector = new Vector2();
 
     public PlayerSpaceShuttle(Texture shuttleTexture, float xPos, float yPos) {
@@ -54,8 +54,9 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         //set values to vector
         tmpVector.set(speedX, speedY);
 
-        //normalize vector
+        //normalize and scale vector
         tmpVector.nor();
+        tmpVector.scl(MAX_SPEED);
 
         //move entity
         move(tmpVector.x, tmpVector.y);
