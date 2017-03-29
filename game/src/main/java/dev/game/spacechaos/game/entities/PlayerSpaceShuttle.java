@@ -35,5 +35,8 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             move(-MAX_SPEED, 0);
         }
+
+        //update super class (SpaceShuttle)
+        super.update(game, camera, time);
     }
 }
