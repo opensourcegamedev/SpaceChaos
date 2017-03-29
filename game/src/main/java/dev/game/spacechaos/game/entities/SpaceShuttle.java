@@ -19,6 +19,9 @@ public class SpaceShuttle extends Entity implements UpdatableEntity, DrawableEnt
         super(xPos, yPos);
 
         this.shuttleTexture = shuttleTexture;
+
+        //update width & height of space shuttle
+        this.setDimension(shuttleTexture.getWidth(), shuttleTexture.getHeight());
     }
 
     @Override
