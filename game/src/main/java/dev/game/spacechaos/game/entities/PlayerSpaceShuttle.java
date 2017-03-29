@@ -10,6 +10,7 @@ import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.MouseUtils;
 import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
+import dev.game.spacechaos.game.camera.SmoothCamera;
 
 /**
  * Created by Jo on 29.03.2017.
@@ -18,6 +19,9 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
 
     private float MAX_SPEED = 2f;
     protected Vector2 tmpVector = new Vector2();
+
+    //smooth camera value
+    protected float lerp = 0.1f;
 
     public PlayerSpaceShuttle(Texture shuttleTexture, float xPos, float yPos) {
         super(shuttleTexture, xPos, yPos);
@@ -57,7 +61,10 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         }
 
         //move and centralize camera
-        camera.setPosition(getMiddleX() - game.getViewportWidth() / 2, getMiddleY() - game.getViewportHeight() / 2);
+        //camera.setPosition(getMiddleX() - game.getViewportWidth() / 2, getMiddleY() - game.getViewportHeight() / 2);
+
+        //update smooth camera
+        SmoothCamera.update(game, camera, getMiddleX(), getMiddleY(), this.lerp);
 
         //update super class (SpaceShuttle)
         super.update(game, camera, time);
