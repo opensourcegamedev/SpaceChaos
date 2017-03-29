@@ -1,7 +1,5 @@
 package dev.game.spacechaos.game.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
@@ -28,14 +26,22 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
     @Override
     public void update(BaseGame game, CameraWrapper camera, GameTime time) {
         //handle user input
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            move(0, MAX_SPEED);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            move(0, -MAX_SPEED);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            move(MAX_SPEED,0);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        float mouseX = camera.getMousePosition().x;
+        float mouseY = camera.getMousePosition().y;
+
+        if (mouseX > getX()) {
+            //right
+            move(MAX_SPEED, 0);
+        } else if (mouseX < getX()) {
+            //left
             move(-MAX_SPEED, 0);
+        }
+        if (mouseY > getY()) {
+            //up
+            move(0, MAX_SPEED);
+        } else if (mouseY < getY()) {
+            //down
+            move(0, -MAX_SPEED);
         }
 
         //update super class (SpaceShuttle)
