@@ -2,6 +2,7 @@ package dev.game.spacechaos.engine.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 
@@ -36,15 +37,11 @@ public class MouseUtils {
     }
 
     public static float getRelativeMouseAngle (CameraWrapper camera, float entityX, float entityY) {
-        //get mouse position relative to camera
-        Vector3 mousePos = camera.getMousePosition();
-
-        //calculate mouse position relative to entity
-        float relX = mousePos.x - entityX;
-        float relY = mousePos.y - entityY;
+        //get mouse position relative to entity
+        Vector2 relPos = getRelativePositionToEntity(camera, entityX, entityY);
 
         //calculate mouse angle relative to entity
-        double angleRadians = (float) Math.atan2(relY, relX);
+        double angleRadians = (float) Math.atan2(relPos.y, relPos.x);
         float angle = (float) Math.toDegrees(angleRadians);
 
         while (angle > 360) {
@@ -56,6 +53,17 @@ public class MouseUtils {
         }
 
         return angle;
+    }
+
+    public static Vector2 getRelativePositionToEntity(CameraWrapper camera, float entityX, float entityY){
+        //get mouse position relative to camera
+        Vector3 mousePos = camera.getMousePosition();
+
+        //calculate mouse position relative to entity
+        float relX = mousePos.x - entityX;
+        float relY = mousePos.y - entityY;
+
+        return new Vector2(relX, relY);
     }
 
 }
