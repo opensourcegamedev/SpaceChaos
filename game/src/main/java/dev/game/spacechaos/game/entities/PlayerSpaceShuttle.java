@@ -56,6 +56,9 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
             move(tmpVector.x, tmpVector.y);
         }
 
+        //move and centralize camera
+        camera.setPosition(getMiddleX() - game.getViewportWidth() / 2, getMiddleY() - game.getViewportHeight() / 2);
+
         //update super class (SpaceShuttle)
         super.update(game, camera, time);
     }
