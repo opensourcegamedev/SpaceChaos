@@ -31,4 +31,27 @@ public class MouseUtils {
         return camera.getMousePosition();
     }
 
+    public float getRelativeMouseAngle (CameraWrapper camera, float entityX, float entityY) {
+        //get mouse position relative to camera
+        Vector3 mousePos = camera.getMousePosition();
+
+        //calculate mouse position relative to entity
+        float relX = mousePos.x - entityX;
+        float relY = mousePos.y - entityY;
+
+        //calculate mouse angle relative to entity
+        double angleRadians = (float) Math.atan2(relY, relX);
+        float angle = (float) Math.toDegrees(angleRadians);
+
+        while (angle > 360) {
+            angle -= 360;
+        }
+
+        while (angle < 0) {
+            angle += 360;
+        }
+
+        return angle;
+    }
+
 }
