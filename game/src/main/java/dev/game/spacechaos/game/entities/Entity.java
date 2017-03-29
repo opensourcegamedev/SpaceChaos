@@ -3,7 +3,7 @@ package dev.game.spacechaos.game.entities;
 /**
  * Created by Justin on 29.03.2017.
  */
-public class Entity {
+public abstract class Entity {
 
     private volatile float xPos = 0;
     private volatile float yPos = 0;
@@ -53,5 +53,7 @@ public class Entity {
     public float getMiddleY () {
         return this.getY() + (height / 2);
     }
+
+    public abstract void destroy ();
 
 }
