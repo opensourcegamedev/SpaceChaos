@@ -6,22 +6,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * Created by Jo on 29.03.2017.
  */
-public class SpaceShuttle {
+public class SpaceShuttle extends Entity {
 
     private Texture shuttleTexture;
-    private float xPos;
-    private float yPos;
 
     public SpaceShuttle(Texture shuttleTexture, float xPos, float yPos) {
+        super(xPos, yPos);
+
         this.shuttleTexture = shuttleTexture;
-        this.xPos = xPos;
-        this.yPos = yPos;
     }
 
     public void update() {
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(shuttleTexture, xPos - shuttleTexture.getWidth() / 2, yPos - shuttleTexture.getHeight() / 2); //center shuttle at given coordinates
+        batch.draw(shuttleTexture, this.getX() - shuttleTexture.getWidth() / 2, this.getY() - shuttleTexture.getHeight() / 2); //center shuttle at given coordinates
     }
 }
