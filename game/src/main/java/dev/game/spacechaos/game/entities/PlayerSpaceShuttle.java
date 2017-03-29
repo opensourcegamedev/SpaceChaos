@@ -30,37 +30,30 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
 
     @Override
     public void update(BaseGame game, CameraWrapper camera, GameTime time) {
-        //handle user input
-        float mouseX = camera.getMousePosition().x;
-        float mouseY = camera.getMousePosition().y;
+        //get mouse position relative to shuttle
+        Vector2 vector = MouseUtils.getRelativePositionToEntity(camera, getX(), getY());
+        float mouseX = vector.x;
+        float mouseY = vector.y;
 
-        float speedX = 0;
-        float speedY = 0;
-
-        if (MouseUtils.getRelativePositionToEntity(camera, getX(), getY()).x > 0) {
-            //right
-            speedX = MAX_SPEED;
-        } else if (MouseUtils.getRelativePositionToEntity(camera, getX(), getY()).x > 0) {
-            //left
-            speedX = -MAX_SPEED;
+        if (Math.abs(mouseX) < 1) {
+            mouseX = 0;
         }
-        if (mouseY > getY()) {
-            //up
-            speedY = MAX_SPEED;
-        } else if (mouseY < getY()) {
-            //down
-            speedY = -MAX_SPEED;
+
+        if (Math.abs(mouseY) < 1) {
+            mouseY = 0;
         }
 
         //set values to vector
-        tmpVector.set(speedX, speedY);
+        tmpVector.set(mouseX, mouseY);
 
         //normalize and scale vector
         tmpVector.nor();
         tmpVector.scl(MAX_SPEED);
 
-        //move entity
-        move(tmpVector.x, tmpVector.y);
+        if (mouseX != 0 && mouseY != 0) {
+            //move entity
+            move(tmpVector.x, tmpVector.y);
+        }
 
         //update super class (SpaceShuttle)
         super.update(game, camera, time);

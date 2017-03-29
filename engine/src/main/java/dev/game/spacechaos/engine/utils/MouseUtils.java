@@ -12,6 +12,7 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 public class MouseUtils {
 
     protected static Vector3 tmpVector = new Vector3(0, 0, 0);
+    protected static Vector2 tmpVector2 = new Vector2(0, 0);
 
     public static float getMouseX (float x, CameraWrapper camera) {
         return (x + camera.getX()) * 1 / camera.getZoom();/* - (viewportWidth / 2)*/
@@ -63,7 +64,9 @@ public class MouseUtils {
         float relX = mousePos.x - entityX;
         float relY = mousePos.y - entityY;
 
-        return new Vector2(relX, relY);
+        tmpVector2.set(relX, relY);
+
+        return tmpVector2;
     }
 
 }
