@@ -1,11 +1,14 @@
 package dev.game.spacechaos.game.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.MouseUtils;
+import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
 
 /**
  * Created by Jo on 29.03.2017.
@@ -13,6 +16,7 @@ import dev.game.spacechaos.engine.utils.MouseUtils;
 public class PlayerSpaceShuttle extends SpaceShuttle {
 
     private float MAX_SPEED = 1f;
+    protected Vector2 tmpVector = new Vector2();
 
     public PlayerSpaceShuttle(Texture shuttleTexture, float xPos, float yPos) {
         super(shuttleTexture, xPos, yPos);
@@ -29,20 +33,32 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         float mouseX = camera.getMousePosition().x;
         float mouseY = camera.getMousePosition().y;
 
+        float speedX = 0;
+        float speedY = 0;
+
         if (mouseX > getX()) {
             //right
-            move(MAX_SPEED, 0);
+            speedX = MAX_SPEED;
         } else if (mouseX < getX()) {
             //left
-            move(-MAX_SPEED, 0);
+            speedX = -MAX_SPEED;
         }
         if (mouseY > getY()) {
             //up
-            move(0, MAX_SPEED);
+            speedY = MAX_SPEED;
         } else if (mouseY < getY()) {
             //down
-            move(0, -MAX_SPEED);
+            speedY = -MAX_SPEED;
         }
+
+        //set values to vector
+        tmpVector.set(speedX, speedY);
+
+        //normalize vector
+        tmpVector.nor();
+
+        //move entity
+        move(tmpVector.x, tmpVector.y);
 
         //update super class (SpaceShuttle)
         super.update(game, camera, time);
@@ -51,9 +67,12 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
     @Override
     public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //get mouse angle relative to shuttle
-        float angle = MouseUtils.getRelativeMouseAngle(camera, getMiddleX(), getMiddleY());
+        float angle = MouseUtils.getRelativeMouseAngle(camera, getMiddleX(), getMiddleY()) - 90;
 
-        batch.draw(shuttleTextureRegion, this.getX() - getWidth() / 2, this.getY() - getHeight() / 2, 0, 0, getWidth(), getHeight(), 1f, 1f, angle); //center shuttle at given coordinates
+        batch.draw(shuttleTextureRegion, this.getX(), this.getY(), getWidth() / 2, getHeight() / 2, getWidth(), getHeight(), 1f, 1f, angle); //center shuttle at given coordinates
+
+        //draw center, only for debugging purposes
+        SpriteBatcherUtils.fillRectangle(batch, getMiddleX() - 10, getMiddleY() - 10, 20, 20, Color.YELLOW);
     }
 
 }
