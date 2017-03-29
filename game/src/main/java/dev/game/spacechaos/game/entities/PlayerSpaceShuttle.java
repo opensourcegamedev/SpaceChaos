@@ -35,6 +35,15 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         float mouseX = vector.x;
         float mouseY = vector.y;
 
+        //avoid jerky
+        if (Math.abs(mouseX) < 1) {
+            mouseX = 0;
+        }
+
+        if (Math.abs(mouseY) < 1) {
+            mouseY = 0;
+        }
+
         //set values to vector
         tmpVector.set(mouseX, mouseY);
 
