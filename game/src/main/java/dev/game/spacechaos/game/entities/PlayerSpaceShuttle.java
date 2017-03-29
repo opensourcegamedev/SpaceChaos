@@ -71,6 +71,9 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         //draw mouse position
         Vector3 mousePos = camera.getMousePosition();
         SpriteBatcherUtils.fillRectangle(batch, mousePos.x - 5, mousePos.y - 5, 10, 10, Color.RED);
+
+        //draw position
+        SpriteBatcherUtils.fillRectangle(batch, getX() - 5, getY() - 5, 10, 10, Color.BLUE);
     }
 
 }
