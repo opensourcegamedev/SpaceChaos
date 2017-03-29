@@ -10,6 +10,9 @@ import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.PlayerSpaceShuttle;
 import dev.game.spacechaos.game.entities.SpaceShuttle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Justin on 28.03.2017.
  */
@@ -17,6 +20,7 @@ public class GameScreen extends BaseScreen {
 
     protected static final String BG_IMAGE_PATH = "./data/images/skybox/galaxy/galaxy+X.png";
     protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/starship/spaceshuttle.png";
+    protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starship/spaceshuttledark.png";
 
     //background image
     protected Texture bgTexture = null;
@@ -24,22 +28,28 @@ public class GameScreen extends BaseScreen {
     //spaceshuttle
     protected SpaceShuttle spaceShuttle;
 
+    protected List<SpaceShuttle> enemySpaceShuttles = new ArrayList<>();
+
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //load all neccessary assets
 
         //load skybox
         assetManager.load(BG_IMAGE_PATH, Texture.class);
         assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
+        assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
 
         //wait while assets are loading
         assetManager.finishLoadingAsset(BG_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
+        assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
 
         //get asset
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
 
         //create space shuttle img, x, y
         spaceShuttle = new PlayerSpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth()/2, game.getViewportHeight()/2);
+
+        //TODO: add some enemy space shuttles
     }
 
     @Override public void onResume() {
@@ -56,11 +66,21 @@ public class GameScreen extends BaseScreen {
 
         //update shuttle
         spaceShuttle.update(game, game.getCamera(), time);
+
+        //update enemy space shuttles
+        this.enemySpaceShuttles.stream().forEach(shuttle -> {
+            shuttle.update(game, game.getCamera(), time);
+        });
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
         //draw background skybox image
         batch.draw(this.bgTexture, 0, 0, game.getViewportWidth(), game.getViewportHeight());
+
+        //draw enemy space shuttles
+        this.enemySpaceShuttles.stream().forEach(shuttle -> {
+            shuttle.draw(time, game.getCamera(), batch);
+        });
 
         //draw shuttle
         spaceShuttle.draw(time, game.getCamera(), batch);
