@@ -5,20 +5,39 @@ package dev.game.spacechaos.game.entities;
  */
 public abstract class Entity {
 
+    //current absolute position of entity
     private volatile float xPos = 0;
     private volatile float yPos = 0;
+
+    //current dimension of entity
     private volatile float width = 0;
     protected volatile float height = 0;
 
+    /**
+    * default constructor
+     *
+     * @param xPos x position
+     * @param yPos y position
+    */
     public Entity (float xPos, float yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
     }
 
+    /**
+    * get absolute x position of entity
+     *
+     * @return x position
+    */
     public float getX () {
         return this.xPos;
     }
 
+    /**
+     * get absolute y position of entity
+     *
+     * @return y position
+     */
     public float getY () {
         return this.yPos;
     }
