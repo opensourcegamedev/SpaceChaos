@@ -3,6 +3,7 @@
 # general
 .*
 !.gitignore
+!.travis.yml
 
 ### Windows ###
 # Windows image file caches
