@@ -9,6 +9,9 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+before_install:
+ - chmod +x gradlew
+
 #script:
 #- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 #- mvn clean verify
