@@ -43,6 +43,9 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
 
+        System.out.println("test");
+        System.out.println("test");
+
         //get asset
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
 
