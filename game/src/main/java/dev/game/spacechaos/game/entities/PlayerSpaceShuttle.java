@@ -20,11 +20,17 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
     private float MAX_SPEED = 2f;
     protected Vector2 tmpVector = new Vector2();
 
+    //used to store front coordinates
+    private float frontX, frontY;
+    //front vector: origin shuttle center.
+    private Vector2 frontVec = new Vector2();
+
     //smooth camera value
     protected float lerp = 0.1f;
 
     public PlayerSpaceShuttle(Texture shuttleTexture, float xPos, float yPos) {
         super(shuttleTexture, xPos, yPos);
+        frontVec.set(shuttleTexture.getWidth()/2, shuttleTexture.getHeight()/2);
     }
 
     @Override
@@ -35,16 +41,16 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
     @Override
     public void update(BaseGame game, CameraWrapper camera, GameTime time) {
         //get mouse position relative to shuttle
-        Vector2 vector = MouseUtils.getRelativePositionToEntity(camera, getX(), getY());
+        Vector2 vector = MouseUtils.getRelativePositionToEntity(camera, frontX, frontY);
         float mouseX = vector.x;
         float mouseY = vector.y;
 
         //avoid jerky
-        if (Math.abs(mouseX) < 1) {
+        if (Math.abs(mouseX) < 5) { //changed from 1 to 5
             mouseX = 0;
         }
 
-        if (Math.abs(mouseY) < 1) {
+        if (Math.abs(mouseY) < 5) { //changed from 1 to 5
             mouseY = 0;
         }
 
@@ -55,14 +61,18 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         tmpVector.nor();
         tmpVector.scl(MAX_SPEED);
 
-        if (Math.abs(mouseX) > 1 || Math.abs(mouseY) > 1) {
+        if (Math.abs(mouseX) > 5 || Math.abs(mouseY) > 5) {  //from 1 to 5 so the shuttle is able to stop
             //move entity
             move(tmpVector.x, tmpVector.y);
         }
 
-        //move and centralize camera
-        //camera.setPosition(getMiddleX() - game.getViewportWidth() / 2, getMiddleY() - game.getViewportHeight() / 2);
+        //update front
+        frontX = getMiddleX()+ frontVec.x;
+        frontY = getMiddleY()+ frontVec.y;
 
+        //move and centralize camera
+//        camera.setPosition(getMiddleX() - game.getViewportWidth() / 2, getMiddleY() - game.getViewportHeight() / 2);
+//
         //update smooth camera
         SmoothCamera.update(game, camera, getMiddleX(), getMiddleY(), this.lerp);
 
@@ -75,6 +85,9 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         //get mouse angle relative to shuttle
         float angle = MouseUtils.getRelativeMouseAngle(camera, getMiddleX(), getMiddleY()) - 90;
 
+        //adjust front angle
+        frontVec.setAngle(angle+90);
+
         batch.draw(shuttleTextureRegion, this.getX(), this.getY(), getWidth() / 2, getHeight() / 2, getWidth(), getHeight(), 1f, 1f, angle); //center shuttle at given coordinates
 
         //draw center, only for debugging purposes
@@ -86,6 +99,9 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
 
         //draw position
         SpriteBatcherUtils.fillRectangle(batch, getX() - 5, getY() - 5, 10, 10, Color.BLUE);
+
+        //draw front position
+        SpriteBatcherUtils.fillRectangle(batch, frontX - 5, frontY - 5, 10, 10, Color.GREEN);
     }
 
 }
