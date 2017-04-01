@@ -20,8 +20,8 @@ import java.util.List;
 public class GameScreen extends BaseScreen {
 
     protected static final String BG_IMAGE_PATH = "./data/images/skybox/galaxy/galaxy+X.png";
-    protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/starship/spaceshuttle.png";
-    protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starship/spaceshuttledark.png";
+    protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/starships/spaceshuttle.png";
+    protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
 
     //background image
     protected Texture bgTexture = null;

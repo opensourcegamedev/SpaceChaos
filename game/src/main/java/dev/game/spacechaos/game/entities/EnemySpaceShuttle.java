@@ -14,6 +14,7 @@ public class EnemySpaceShuttle extends SpaceShuttle{
 
     private SpaceShuttle target;
     private Vector2 moveDir = new Vector2();
+    private float MAX_SPEED = 1f;
 
     public EnemySpaceShuttle(Texture shuttleTexture, float xPos, float yPos, SpaceShuttle target) {
         super(shuttleTexture, xPos, yPos);
@@ -25,6 +26,7 @@ public class EnemySpaceShuttle extends SpaceShuttle{
     public void update(BaseGame game, CameraWrapper camera, GameTime time) {
         //calculate target direction and move in this direction
         moveDir.set(target.getMiddleX()-getMiddleX(), target.getMiddleY()-getMiddleY()).nor();
+        moveDir.scl(MAX_SPEED);
         move(moveDir.x, moveDir.y);
         super.update(game, camera, time);
     }
