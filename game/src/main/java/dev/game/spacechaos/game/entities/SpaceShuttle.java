@@ -37,7 +37,8 @@ public class SpaceShuttle extends Entity implements UpdatableEntity, DrawableEnt
         batch.draw(shuttleTextureRegion, this.getX() - getWidth() / 2, this.getY() - getHeight() / 2); //center shuttle at given coordinates
     }
 
-    @Override public void destroy() {
+    @Override
+    public void destroy() {
         //unload texture
         this.shuttleTextureRegion = null;
 

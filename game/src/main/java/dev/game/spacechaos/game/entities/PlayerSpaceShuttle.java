@@ -30,7 +30,7 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
 
     public PlayerSpaceShuttle(Texture shuttleTexture, float xPos, float yPos) {
         super(shuttleTexture, xPos, yPos);
-        frontVec.set(shuttleTexture.getWidth()/2, shuttleTexture.getHeight()/2);
+        frontVec.set(shuttleTexture.getWidth() / 2, shuttleTexture.getHeight() / 2);
     }
 
     @Override
@@ -40,6 +40,7 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
 
     @Override
     public void update(BaseGame game, CameraWrapper camera, GameTime time) {
+
         //get mouse position relative to shuttle
         Vector2 vector = MouseUtils.getRelativePositionToEntity(camera, frontX, frontY);
         float mouseX = vector.x;
@@ -67,8 +68,8 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         }
 
         //update front
-        frontX = getMiddleX()+ frontVec.x;
-        frontY = getMiddleY()+ frontVec.y;
+        frontX = getMiddleX() + frontVec.x;
+        frontY = getMiddleY() + frontVec.y;
 
         //move and centralize camera
 //        camera.setPosition(getMiddleX() - game.getViewportWidth() / 2, getMiddleY() - game.getViewportHeight() / 2);
@@ -86,7 +87,7 @@ public class PlayerSpaceShuttle extends SpaceShuttle {
         float angle = MouseUtils.getRelativeMouseAngle(camera, getMiddleX(), getMiddleY()) - 90;
 
         //adjust front angle
-        frontVec.setAngle(angle+90);
+        frontVec.setAngle(angle + 90);
 
         batch.draw(shuttleTextureRegion, this.getX(), this.getY(), getWidth() / 2, getHeight() / 2, getWidth(), getHeight(), 1f, 1f, angle); //center shuttle at given coordinates
 

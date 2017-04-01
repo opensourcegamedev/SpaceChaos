@@ -8,11 +8,11 @@ import dev.game.spacechaos.engine.game.BaseGame;
  */
 public class SmoothCamera {
 
-    private SmoothCamera () {
+    private SmoothCamera() {
         //
     }
 
-    public static void update (BaseGame game, CameraWrapper camera, float targetX, float targetY, float lerp) {
+    public static void update(BaseGame game, CameraWrapper camera, float targetX, float targetY, float lerp) {
         //get screen resolution
         float screenWidth = game.getViewportWidth();
         float screenHeight = game.getViewportHeight();

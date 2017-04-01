@@ -15,7 +15,8 @@ public class Game extends ScreenBasedGame {
         super();
     }
 
-    @Override protected void onCreateScreens(ScreenManager<IScreen> screenManager) {
+    @Override
+    protected void onCreateScreens(ScreenManager<IScreen> screenManager) {
         //add game screen
         screenManager.addScreen("game", new GameScreen());
 

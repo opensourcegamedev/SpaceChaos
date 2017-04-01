@@ -14,22 +14,22 @@ public abstract class Entity {
     protected volatile float height = 0;
 
     /**
-    * default constructor
+     * default constructor
      *
      * @param xPos x position
      * @param yPos y position
-    */
-    public Entity (float xPos, float yPos) {
+     */
+    public Entity(float xPos, float yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
     }
 
     /**
-    * get absolute x position of entity
+     * get absolute x position of entity
      *
      * @return x position
-    */
-    public float getX () {
+     */
+    public float getX() {
         return this.xPos;
     }
 
@@ -38,38 +38,38 @@ public abstract class Entity {
      *
      * @return y position
      */
-    public float getY () {
+    public float getY() {
         return this.yPos;
     }
 
     /**
-    * set absolute position of entity
+     * set absolute position of entity
      *
      * @param x x position
      * @param y y position
-    */
-    public void setPos (float x, float y) {
+     */
+    public void setPos(float x, float y) {
         this.xPos = x;
         this.yPos = y;
     }
 
     /**
-    * move entity
+     * move entity
      *
      * @param x speed x
      * @param y speed y
-    */
-    public void move (float x, float y) {
+     */
+    public void move(float x, float y) {
         this.xPos += x;
         this.yPos += y;
     }
 
     /**
-    * get current width of entity
+     * get current width of entity
      *
      * @return width of entity
-    */
-    public float getWidth () {
+     */
+    public float getWidth() {
         return this.width;
     }
 
@@ -78,27 +78,27 @@ public abstract class Entity {
      *
      * @return height of entity
      */
-    public float getHeight () {
+    public float getHeight() {
         return this.height;
     }
 
     /**
-    * set dimension of entity
+     * set dimension of entity
      *
-     * @param width width of entity
+     * @param width  width of entity
      * @param height height of entity
-    */
-    public void setDimension (float width, float height) {
+     */
+    public void setDimension(float width, float height) {
         this.width = width;
         this.height = height;
     }
 
     /**
-    * get center x position of entity
+     * get center x position of entity
      *
      * @return center x position
-    */
-    public float getMiddleX () {
+     */
+    public float getMiddleX() {
         return this.getX() + (width / 2);
     }
 
@@ -107,13 +107,13 @@ public abstract class Entity {
      *
      * @return center y position
      */
-    public float getMiddleY () {
+    public float getMiddleY() {
         return this.getY() + (height / 2);
     }
 
     /**
-    * cleanUp entity and dispose all resources / assets
-    */
-    public abstract void destroy ();
+     * cleanUp entity and dispose all resources / assets
+     */
+    public abstract void destroy();
 
 }
