@@ -7,6 +7,7 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
+import dev.game.spacechaos.game.entities.EnemySpaceShuttle;
 import dev.game.spacechaos.game.entities.PlayerSpaceShuttle;
 import dev.game.spacechaos.game.entities.SpaceShuttle;
 
@@ -52,7 +53,12 @@ public class GameScreen extends BaseScreen {
         //create space shuttle img, x, y
         spaceShuttle = new PlayerSpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth()/2, game.getViewportHeight()/2);
 
-        //TODO: add some enemy space shuttles
+        //TODO: add some enemy space shuttles, check if its not in close proximity to player shuttle
+        for(int amount = 0; amount < 2; amount++){
+            float x = (float) Math.random()*game.getViewportWidth();
+            float y = (float) Math.random()*game.getViewportHeight();
+            enemySpaceShuttles.add(new EnemySpaceShuttle(assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), x, y, spaceShuttle));
+        }
     }
 
     @Override public void onResume() {
