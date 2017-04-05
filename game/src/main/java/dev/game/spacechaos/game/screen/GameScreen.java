@@ -3,6 +3,7 @@ package dev.game.spacechaos.game.screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
@@ -11,6 +12,7 @@ import dev.game.spacechaos.game.entities.EnemySpaceShuttle;
 import dev.game.spacechaos.game.entities.PlayerSpaceShuttle;
 import dev.game.spacechaos.game.entities.Projectile;
 import dev.game.spacechaos.game.entities.SpaceShuttle;
+import dev.game.spacechaos.game.entities.collision.CollisionObject;
 import dev.game.spacechaos.game.skybox.SkyBox;
 
 import java.util.ArrayList;
@@ -30,6 +32,8 @@ public class GameScreen extends BaseScreen {
     protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
     //protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
 
+    protected static final String ASTEROID1_IMAGE_PATH = "./data/images/entities/asteroids/asteroid1_brown.png";
+
     //background image
     protected Texture bgTexture = null;
 
@@ -40,6 +44,9 @@ public class GameScreen extends BaseScreen {
 
     protected List<SpaceShuttle> enemySpaceShuttles = new ArrayList<>();
     //protected List<Projectile> playerProjectiles = new ArrayList<>(); //one list for player and enemy projectiles?
+
+    //list with all colliding objects, like meteorits
+    protected List<CollisionObject> collisionObjectList = new ArrayList<>();
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -55,6 +62,9 @@ public class GameScreen extends BaseScreen {
         assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
         //assetManager.load(PROJECTILE_IMAGE_PATH, Texture.class);
 
+        //load collision objects
+        assetManager.load(ASTEROID1_IMAGE_PATH, Texture.class);
+
         //wait while assets are loading
         assetManager.finishLoadingAsset(BG_IMAGE_PATH);
         assetManager.finishLoadingAsset(SKYBOX_MINUS_X);
@@ -64,6 +74,7 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
         //assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
+        assetManager.finishLoadingAsset(ASTEROID1_IMAGE_PATH);
 
         System.out.println("test");
         System.out.println("test");
@@ -88,6 +99,12 @@ public class GameScreen extends BaseScreen {
             float y = (float) Math.random() * game.getViewportHeight();
             enemySpaceShuttles.add(new EnemySpaceShuttle(assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), x, y, spaceShuttle));
         }
+
+        //get texture of asteroids
+        Texture texture = assetManager.get(ASTEROID1_IMAGE_PATH);
+        TextureRegion textureRegion = new TextureRegion(texture);
+
+        this.collisionObjectList.add(new CollisionObject(game.getViewportWidth() / 2 - 100, game.getViewportHeight() / 2 - 100, 3, textureRegion));
     }
 
     @Override
@@ -108,6 +125,11 @@ public class GameScreen extends BaseScreen {
         //update shuttle
         spaceShuttle.update(game, game.getCamera(), time);
 
+        //update collision objects
+        this.collisionObjectList.stream().forEach(obj -> {
+            obj.update(game, game.getCamera(), time);
+        });
+
         //update enemy space shuttles
         this.enemySpaceShuttles.stream().forEach(shuttle -> {
             shuttle.update(game, game.getCamera(), time);
@@ -121,6 +143,11 @@ public class GameScreen extends BaseScreen {
 
         //draw skybox
         this.skyBox.draw(time, game.getCamera(), batch);
+
+        //draw collision objects
+        this.collisionObjectList.stream().forEach(obj -> {
+            obj.draw(time, game.getCamera(), batch);
+        });
 
         //draw enemy space shuttles
         this.enemySpaceShuttles.stream().forEach(shuttle -> {
