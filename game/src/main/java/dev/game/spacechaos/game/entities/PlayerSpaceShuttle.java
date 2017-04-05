@@ -15,7 +15,7 @@ import dev.game.spacechaos.game.camera.SmoothCamera;
 /**
  * Created by Jo on 29.03.2017.
  */
-public class PlayerSpaceShuttle extends SpaceShuttle {
+public class PlayerSpaceShuttle extends SpaceShuttle implements Player {
 
     private float MAX_SPEED = 2f;
     protected Vector2 tmpVector = new Vector2();

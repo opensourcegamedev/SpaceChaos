@@ -11,6 +11,7 @@ import dev.game.spacechaos.game.entities.EnemySpaceShuttle;
 import dev.game.spacechaos.game.entities.PlayerSpaceShuttle;
 import dev.game.spacechaos.game.entities.Projectile;
 import dev.game.spacechaos.game.entities.SpaceShuttle;
+import dev.game.spacechaos.game.skybox.SkyBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,18 @@ import java.util.List;
 public class GameScreen extends BaseScreen {
 
     protected static final String BG_IMAGE_PATH = "./data/images/skybox/galaxy/galaxy+X.png";
+    protected static final String SKYBOX_PLUS_X = "./data/images/skybox/galaxy/galaxy+X.png";
+    protected static final String SKYBOX_MINUS_X = "./data/images/skybox/galaxy/galaxy-X.png";
+    protected static final String SKYBOX_PLUS_Y = "./data/images/skybox/galaxy/galaxy+Y.png";
+    protected static final String SKYBOX_MINUS_Y = "./data/images/skybox/galaxy/galaxy-Y.png";
     protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/starships/spaceshuttle.png";
     protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
     //protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
 
     //background image
     protected Texture bgTexture = null;
+
+    protected SkyBox skyBox = null;
 
     //spaceshuttle
     protected SpaceShuttle spaceShuttle;
@@ -40,12 +47,20 @@ public class GameScreen extends BaseScreen {
 
         //load skybox
         assetManager.load(BG_IMAGE_PATH, Texture.class);
+        assetManager.load(SKYBOX_MINUS_X, Texture.class);
+        assetManager.load(SKYBOX_PLUS_X, Texture.class);
+        assetManager.load(SKYBOX_MINUS_Y, Texture.class);
+        assetManager.load(SKYBOX_PLUS_Y, Texture.class);
         assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
         assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
         //assetManager.load(PROJECTILE_IMAGE_PATH, Texture.class);
 
         //wait while assets are loading
         assetManager.finishLoadingAsset(BG_IMAGE_PATH);
+        assetManager.finishLoadingAsset(SKYBOX_MINUS_X);
+        assetManager.finishLoadingAsset(SKYBOX_PLUS_X);
+        assetManager.finishLoadingAsset(SKYBOX_MINUS_Y);
+        assetManager.finishLoadingAsset(SKYBOX_PLUS_Y);
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
         //assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
@@ -56,8 +71,16 @@ public class GameScreen extends BaseScreen {
         //get asset
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
 
+        Texture skyBox1 = assetManager.get(SKYBOX_MINUS_X);
+        Texture skyBox2 = assetManager.get(SKYBOX_PLUS_X);
+        Texture skyBox3 = assetManager.get(SKYBOX_MINUS_Y);
+        Texture skyBox4 = assetManager.get(SKYBOX_PLUS_Y);
+
         //create space shuttle img, x, y
         spaceShuttle = new PlayerSpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth() / 2, game.getViewportHeight() / 2);
+
+        //create skybox
+        this.skyBox = new SkyBox(new Texture[]{skyBox1/*, skyBox2, skyBox3, skyBox4*/}, game.getViewportWidth(), game.getViewportHeight());
 
         //TODO: add some enemy space shuttles, check if its not in close proximity to any shuttle
         for (int amount = 0; amount < 2; amount++) {
@@ -94,7 +117,10 @@ public class GameScreen extends BaseScreen {
     @Override
     public void draw(GameTime time, SpriteBatch batch) {
         //draw background skybox image
-        batch.draw(this.bgTexture, 0, 0, game.getViewportWidth(), game.getViewportHeight());
+        //batch.draw(this.bgTexture, 0, 0, game.getViewportWidth(), game.getViewportHeight());
+
+        //draw skybox
+        this.skyBox.draw(time, game.getCamera(), batch);
 
         //draw enemy space shuttles
         this.enemySpaceShuttles.stream().forEach(shuttle -> {
