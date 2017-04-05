@@ -80,7 +80,7 @@ public class GameScreen extends BaseScreen {
         spaceShuttle = new PlayerSpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth() / 2, game.getViewportHeight() / 2);
 
         //create skybox
-        this.skyBox = new SkyBox(new Texture[]{skyBox1/*, skyBox2, skyBox3, skyBox4*/}, game.getViewportWidth(), game.getViewportHeight());
+        this.skyBox = new SkyBox(new Texture[]{skyBox1, skyBox2, skyBox3, skyBox4}, game.getViewportWidth(), game.getViewportHeight());
 
         //TODO: add some enemy space shuttles, check if its not in close proximity to any shuttle
         for (int amount = 0; amount < 2; amount++) {

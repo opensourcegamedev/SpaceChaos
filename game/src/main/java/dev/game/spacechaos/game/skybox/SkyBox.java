@@ -52,7 +52,7 @@ public class SkyBox implements DrawableEntity {
     }
 
     protected int getIndex (int x, int y) {
-        return (x * y) % skyboxTextures.length;
+        return (y * skyboxTextures.length + x) % skyboxTextures.length;
     }
 
     protected void drawView (int x, int y, SpriteBatch batch) {
