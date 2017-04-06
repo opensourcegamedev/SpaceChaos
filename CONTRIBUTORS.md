@@ -19,6 +19,12 @@ Donation by hackcraft.de
 
 (see also specific license file in specific directory)
 
+## Shield Effect
+
+Path: data/images/fx/shield-effect
+License: CC-BY 3.0
+Author: Bonsaiheldin | http://bonsaiheld.org
+
 # External music
 
 ## Sci-Fi Menu Soundtracks
