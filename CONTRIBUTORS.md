@@ -23,6 +23,6 @@ Donation by hackcraft.de
 
 ## Sci-Fi Menu Soundtracks
 
-Path: data/music/sci-fi-menus-2-shorts-tracks
+Path: data/music/sci-fi-menus-2-shorts-tracks, data/music/i-know-your-secret
 License: CC-BY 3.0
 Author: Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
