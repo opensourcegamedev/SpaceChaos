@@ -1,4 +1,4 @@
-# Contributors
+﻿# Contributors
 
 Here you can see an list of all contributors and used assets from external authors.
 
@@ -18,3 +18,11 @@ Skybox was downloaded from http://opengameart.org/content/galaxy-skybox .
 Donation by hackcraft.de
 
 (see also specific license file in specific directory)
+
+# External music
+
+## Sci-Fi Menu Soundtracks
+
+Path: data/music/sci-fi-menus-2-shorts-tracks
+License: CC-BY 3.0
+Author: Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
