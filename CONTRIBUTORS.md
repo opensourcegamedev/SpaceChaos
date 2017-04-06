@@ -19,6 +19,13 @@ Donation by hackcraft.de
 
 (see also specific license file in specific directory)
 
+## Some asteroids
+
+Path: data/images/entities/asteroids2
+License: CC-BY-SA 3.0
+Author: phaelax
+Link: https://opengameart.org/content/asteroids
+
 ## Shield Effect
 
 Path: data/images/fx/shield-effect
