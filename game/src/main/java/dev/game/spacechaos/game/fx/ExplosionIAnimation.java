@@ -68,10 +68,6 @@ public class ExplosionIAnimation extends Entity implements UpdatableEntity, Draw
         }
     }
 
-    @Override public void destroy() {
-
-    }
-
     @Override public void start() {
         this.playing = true;
     }
@@ -88,4 +84,9 @@ public class ExplosionIAnimation extends Entity implements UpdatableEntity, Draw
         this.elapsed = 0;
         this.playing = false;
     }
+
+    @Override public void destroy() {
+        this.currentFrame.getTexture().dispose();
+    }
+
 }
