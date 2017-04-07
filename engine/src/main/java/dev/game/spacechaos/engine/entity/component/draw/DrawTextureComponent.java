@@ -34,6 +34,8 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
     float scaleY = 1f;
     float angle = 0;
 
+    protected boolean visible = true;
+
     public DrawTextureComponent(Texture texture) {
         if (texture == null) {
             throw new NullPointerException("texture cannot be null.");
@@ -65,27 +67,27 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
     }
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
-        //draw texture
-        //batch.draw(this.texture, this.positionComponent.getX(), this.positionComponent.getY(), this.positionComponent.getWidth(), this.positionComponent.getHeight());
-
-        //draw texture
-        batch.draw(this.texture,
-                this.positionComponent.getX() - originX,
-                this.positionComponent.getY() - originY,
-                originX,
-                originY,
-                getWidth(),
-                getHeight(),
-                scaleX,
-                scaleY,
-                angle,
-                0,//srcX
-                0,//srcY
-                this.texture.getWidth(),
-                this.texture.getHeight(),
-                false,
-                false
-        );
+        //only draw texture, if entity is visible
+        if (this.visible) {
+            //draw texture
+            batch.draw(this.texture,
+                    this.positionComponent.getX() - originX,
+                    this.positionComponent.getY() - originY,
+                    originX,
+                    originY,
+                    getWidth(),
+                    getHeight(),
+                    scaleX,
+                    scaleY,
+                    angle,
+                    0,//srcX
+                    0,//srcY
+                    this.texture.getWidth(),
+                    this.texture.getHeight(),
+                    false,
+                    false
+            );
+        }
     }
 
     @Override public ECSPriority getDrawOrder() {
@@ -122,6 +124,14 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
 
     public float getHeight () {
         return this.height;
+    }
+
+    public boolean isVisible () {
+        return this.visible;
+    }
+
+    public void setVisible (boolean visible) {
+        this.visible = visible;
     }
 
     public void addTextureChangedListener (TextureChangedListener listener) {
