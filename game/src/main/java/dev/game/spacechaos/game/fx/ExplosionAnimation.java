@@ -16,7 +16,7 @@ import dev.game.spacechaos.game.entities.Entity;
 /**
  * Created by Justin on 06.04.2017.
  */
-public class ExplosionIAnimation extends Entity implements UpdatableEntity, DrawableEntity, IAnimation {
+public class ExplosionAnimation extends Entity implements UpdatableEntity, DrawableEntity, IAnimation {
 
     protected Animation<TextureRegion> animation = null;
     protected TextureRegion currentFrame = null;
@@ -30,7 +30,7 @@ public class ExplosionIAnimation extends Entity implements UpdatableEntity, Draw
      * @param xPos x position
      * @param yPos y position
      */
-    public ExplosionIAnimation(float xPos, float yPos, int rows, int cols, float duration, Texture texture) {
+    public ExplosionAnimation(float xPos, float yPos, int rows, int cols, float duration, Texture texture) {
         super(xPos, yPos);
 
         if (texture == null) {

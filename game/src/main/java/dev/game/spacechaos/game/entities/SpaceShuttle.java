@@ -3,6 +3,7 @@ package dev.game.spacechaos.game.entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.DrawableEntity;
 import dev.game.spacechaos.engine.entity.UpdatableEntity;
@@ -16,6 +17,8 @@ public class SpaceShuttle extends Entity implements UpdatableEntity, DrawableEnt
 
     protected Texture shuttleTexture;
     protected TextureRegion shuttleTextureRegion;
+
+    protected Circle collisionCircle = null;
 
     public SpaceShuttle(Texture shuttleTexture, float xPos, float yPos) {
         super(xPos, yPos);
