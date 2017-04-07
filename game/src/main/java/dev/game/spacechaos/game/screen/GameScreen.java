@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
-import dev.game.spacechaos.engine.collision.Collidable;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
@@ -48,8 +47,6 @@ public class GameScreen extends BaseScreen {
 
     //list with all colliding objects, like meteorits
     protected List<CollisionObject> collisionObjectList = new ArrayList<>();
-
-    protected List<Collidable> collisionList = new ArrayList<>();
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
