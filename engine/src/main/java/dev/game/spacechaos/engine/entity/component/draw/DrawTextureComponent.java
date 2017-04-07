@@ -36,7 +36,7 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
 
     protected boolean visible = true;
 
-    public DrawTextureComponent(Texture texture) {
+    public DrawTextureComponent(Texture texture, float originX, float originY) {
         if (texture == null) {
             throw new NullPointerException("texture cannot be null.");
         }
@@ -52,6 +52,13 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
             this.width = this.texture.getWidth();
             this.height = this.texture.getHeight();
         }
+
+        this.originX = originX;
+        this.originY = originY;
+    }
+
+    public DrawTextureComponent(Texture texture) {
+        this(texture, 0, 0);
     }
 
     @Override
@@ -132,6 +139,14 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
 
     public void setVisible (boolean visible) {
         this.visible = visible;
+    }
+
+    public float getAngle () {
+        return this.angle;
+    }
+
+    public void setAngle (float angle) {
+        this.angle = angle;
     }
 
     public void addTextureChangedListener (TextureChangedListener listener) {

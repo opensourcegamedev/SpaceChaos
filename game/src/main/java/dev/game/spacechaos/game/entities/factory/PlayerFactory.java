@@ -20,7 +20,7 @@ public class PlayerFactory {
         player.addComponent(new PositionComponent(x, y), PositionComponent.class);
 
         //add texture component to draw texture
-        player.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
+        player.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2), DrawTextureComponent.class);
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
