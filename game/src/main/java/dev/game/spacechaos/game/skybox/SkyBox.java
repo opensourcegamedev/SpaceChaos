@@ -19,10 +19,25 @@ public class SkyBox implements DrawableEntity {
     protected float height = 0;
 
     public SkyBox (Texture[] skyboxTextures, float skyBoxWidth, float skyBoxHeight) {
+        if (skyboxTextures.length <= 0) {
+            throw new IllegalArgumentException("You have to specify one or more skybox textures.");
+        }
+
         this.skyboxTextures = skyboxTextures;
 
         this.width = skyBoxWidth;
         this.height = skyBoxHeight;
+    }
+
+    public SkyBox (Texture[] skyboxTextures) {
+        if (skyboxTextures.length <= 0) {
+            throw new IllegalArgumentException("You have to specify one or more skybox textures.");
+        }
+
+        this.skyboxTextures = skyboxTextures;
+
+        this.width = skyboxTextures[0].getWidth();
+        this.height = skyboxTextures[0].getHeight();
     }
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
@@ -42,13 +57,6 @@ public class SkyBox implements DrawableEntity {
         drawView(x1 - 1, y1 + 1, batch);
         drawView(x1 + 1, y1 - 1, batch);
         drawView(x1 + 1, y1 + 1, batch);
-
-        float posX0 = (x1 - 1) * width;
-        float posY0 = (y1 - 1) * width;
-        float posX1 = x1 * width;
-        float posY1 = y1 * width;
-        float posX2 = (x1 + 1) * width;
-        float posY2 = (y1 + 1) * height;
     }
 
     protected int getIndex (int x, int y) {
