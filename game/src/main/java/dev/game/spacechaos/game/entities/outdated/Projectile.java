@@ -1,4 +1,4 @@
-package dev.game.spacechaos.game.entities;
+package dev.game.spacechaos.game.entities.outdated;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,7 +12,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 /**
  * Created by Jo on 01.04.2017.
  */
-public abstract class Projectile extends Entity implements UpdatableEntity, DrawableEntity {
+public abstract class Projectile extends OldEntity implements UpdatableEntity, DrawableEntity {
 
     private Vector2 dir;
     private Texture projectileTexture;

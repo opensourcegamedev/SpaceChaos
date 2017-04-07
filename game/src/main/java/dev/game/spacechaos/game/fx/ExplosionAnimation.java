@@ -11,12 +11,12 @@ import dev.game.spacechaos.engine.entity.UpdatableEntity;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.AnimationTextureUtils;
-import dev.game.spacechaos.game.entities.Entity;
+import dev.game.spacechaos.game.entities.outdated.OldEntity;
 
 /**
  * Created by Justin on 06.04.2017.
  */
-public class ExplosionAnimation extends Entity implements UpdatableEntity, DrawableEntity, IAnimation {
+public class ExplosionAnimation extends OldEntity implements UpdatableEntity, DrawableEntity, IAnimation {
 
     protected Animation<TextureRegion> animation = null;
     protected TextureRegion currentFrame = null;

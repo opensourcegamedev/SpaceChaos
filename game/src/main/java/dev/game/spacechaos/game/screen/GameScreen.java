@@ -8,10 +8,9 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
-import dev.game.spacechaos.game.entities.EnemySpaceShuttle;
-import dev.game.spacechaos.game.entities.PlayerSpaceShuttle;
-import dev.game.spacechaos.game.entities.Projectile;
-import dev.game.spacechaos.game.entities.SpaceShuttle;
+import dev.game.spacechaos.game.entities.outdated.EnemySpaceShuttle;
+import dev.game.spacechaos.game.entities.outdated.PlayerSpaceShuttle;
+import dev.game.spacechaos.game.entities.outdated.SpaceShuttle;
 import dev.game.spacechaos.game.entities.collision.CollisionObject;
 import dev.game.spacechaos.game.skybox.SkyBox;
 

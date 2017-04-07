@@ -1,4 +1,4 @@
-package dev.game.spacechaos.game.entities;
+package dev.game.spacechaos.game.entities.outdated;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,7 +13,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 /**
  * Created by Jo on 29.03.2017.
  */
-public class SpaceShuttle extends Entity implements UpdatableEntity, DrawableEntity {
+public class SpaceShuttle extends OldEntity implements UpdatableEntity, DrawableEntity {
 
     protected Texture shuttleTexture;
     protected TextureRegion shuttleTextureRegion;

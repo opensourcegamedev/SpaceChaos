@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.DrawableEntity;
 import dev.game.spacechaos.engine.time.GameTime;
-import dev.game.spacechaos.game.entities.Player;
-import dev.game.spacechaos.game.entities.PlayerSpaceShuttle;
 
 /**
  * Created by Justin on 30.03.2017.

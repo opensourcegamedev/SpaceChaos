@@ -1,6 +1,5 @@
 package dev.game.spacechaos.game.entities.collision;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -9,13 +8,12 @@ import dev.game.spacechaos.engine.entity.DrawableEntity;
 import dev.game.spacechaos.engine.entity.UpdatableEntity;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
-import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
-import dev.game.spacechaos.game.entities.Entity;
+import dev.game.spacechaos.game.entities.outdated.OldEntity;
 
 /**
  * Created by Justin on 05.04.2017.
  */
-public class CollisionObject extends Entity implements UpdatableEntity, DrawableEntity {
+public class CollisionObject extends OldEntity implements UpdatableEntity, DrawableEntity {
 
     protected TextureRegion textureRegion = null;
     protected Rectangle collisionBox = new Rectangle(0, 0, 0, 0);

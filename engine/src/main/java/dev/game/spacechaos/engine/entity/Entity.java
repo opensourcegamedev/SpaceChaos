@@ -171,6 +171,12 @@ public class Entity {
         this.onComponentAdded(this, component, cls);
     }
 
+    public <T extends IComponent> void addComponent (T component) {
+        Class<T> cls = (Class<T>) component.getClass();
+
+        this.addComponent(component, cls);
+    }
+
     public <T extends IComponent> void removeComponent (Class<T> cls) {
         IComponent component = this.componentMap.get(cls);
 

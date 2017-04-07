@@ -1,9 +1,9 @@
-package dev.game.spacechaos.game.entities;
+package dev.game.spacechaos.game.entities.outdated;
 
 /**
  * Created by Justin on 29.03.2017.
  */
-public abstract class Entity {
+public abstract class OldEntity {
 
     //current absolute position of entity
     private volatile float xPos = 0;
@@ -19,7 +19,7 @@ public abstract class Entity {
      * @param xPos x position
      * @param yPos y position
      */
-    public Entity(float xPos, float yPos) {
+    public OldEntity(float xPos, float yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
     }

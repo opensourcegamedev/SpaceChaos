@@ -1,4 +1,4 @@
-package dev.game.spacechaos.game.entities;
+package dev.game.spacechaos.game.entities.outdated;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
