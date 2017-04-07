@@ -18,8 +18,6 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
 
     @Override
     public void onInit (BaseGame game, Entity entity) {
-        super.init(game, entity);
-
         this.entityPosition = entity.getComponent(PositionComponent.class);
 
         if (this.entityPosition == null) {

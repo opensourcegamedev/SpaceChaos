@@ -18,8 +18,6 @@ public class SmoothFollowCameraComponent extends BaseComponent implements IUpdat
 
     @Override
     public void onInit (BaseGame game, Entity entity) {
-        super.init(game, entity);
-
         this.entityPosition = entity.getComponent(PositionComponent.class);
 
         if (this.entityPosition == null) {
