@@ -136,6 +136,12 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         return this.y + (this.getHeight() / 2);
     }
 
+    /**
+     * move entity
+     *
+     * @param x speed x
+     * @param y speed y
+     */
     public void move (float x, float y) {
         this.setPosition(this.x + x, this.y + y);
     }
