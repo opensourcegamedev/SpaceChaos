@@ -131,7 +131,7 @@ public class GameScreen extends BaseScreen {
             float y = (float) Math.random() * game.getViewportHeight();
 
             //create and add new enemy space shuttle to entity-component-system
-            Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class));
+            Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity);
             this.ecs.addEntity(enemyEntity);
         }
     }

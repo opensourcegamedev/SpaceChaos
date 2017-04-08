@@ -29,7 +29,7 @@ public class PlayerFactory {
         player.addComponent(new MouseDependentDrawRotationAngle(), MouseDependentDrawRotationAngle.class);
 
         //add component to move entity
-        player.addComponent(new MoveComponent(1, 0, 2f), MoveComponent.class);
+        player.addComponent(new MoveComponent(1, 0, 1f), MoveComponent.class);
 
         //add component to move entity dependent on mouse position
         player.addComponent(new MouseDependentMovementComponent(texture.getWidth() / 2, texture.getHeight() / 2), MouseDependentMovementComponent.class);
