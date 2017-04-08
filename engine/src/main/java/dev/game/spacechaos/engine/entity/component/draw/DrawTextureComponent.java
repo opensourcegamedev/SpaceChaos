@@ -3,10 +3,7 @@ package dev.game.spacechaos.engine.entity.component.draw;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
-import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
-import dev.game.spacechaos.engine.entity.IDrawComponent;
-import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.listener.TextureChangedListener;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
@@ -18,23 +15,11 @@ import java.util.List;
 /**
  * Created by Justin on 10.02.2017.
  */
-public class DrawTextureComponent extends BaseComponent implements IDrawComponent {
+public class DrawTextureComponent extends DrawComponent {
 
-    protected PositionComponent positionComponent = null;
     protected List<TextureChangedListener> textureChangedListenerList = new ArrayList<>();
 
     protected Texture texture = null;
-
-    protected float originX = 0;
-    protected float originY = 0;
-
-    protected float width = 0;
-    protected float height = 0;
-    float scaleX = 1f;
-    float scaleY = 1f;
-    float angle = 0;
-
-    protected boolean visible = true;
 
     public DrawTextureComponent(Texture texture, float originX, float originY) {
         if (texture == null) {
@@ -49,8 +34,7 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
 
         if (this.texture != null) {
             //update dimension
-            this.width = this.texture.getWidth();
-            this.height = this.texture.getHeight();
+            this.setDimension(texture.getWidth(), texture.getHeight());
         }
 
         this.originX = originX;
@@ -62,18 +46,20 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
     }
 
     @Override
-    public void onInit (BaseGame game, Entity entity) {
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an PositionComponent.");
-        }
-
+    public void afterInit (BaseGame game, Entity entity) {
         //set new width and height of entity
         positionComponent.setDimension(texture.getWidth(), texture.getHeight());
+
+        //set dimension of texture
+        setDimension(texture.getWidth(), texture.getHeight());
     }
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //if no texture is set, we dont have to draw anything
+        if (this.texture == null) {
+            return;
+        }
+
         //only draw texture, if entity is visible
         if (this.visible) {
             //draw texture
@@ -109,6 +95,9 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
         Texture oldTexture = this.texture;
         this.texture = texture;
 
+        //set dimension of texture
+        setDimension(texture.getWidth(), texture.getHeight());
+
         if (setNewDimension) {
             //update width and height
             this.positionComponent.setDimension(texture.getWidth(), texture.getHeight());
@@ -123,30 +112,6 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
         this.textureChangedListenerList.stream().forEach(listener -> {
             listener.onTextureChanged(oldTexture, this.texture);
         });
-    }
-
-    public float getWidth () {
-        return this.width;
-    }
-
-    public float getHeight () {
-        return this.height;
-    }
-
-    public boolean isVisible () {
-        return this.visible;
-    }
-
-    public void setVisible (boolean visible) {
-        this.visible = visible;
-    }
-
-    public float getAngle () {
-        return this.angle;
-    }
-
-    public void setAngle (float angle) {
-        this.angle = angle;
     }
 
     public void addTextureChangedListener (TextureChangedListener listener) {

@@ -5,9 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
+import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.EntityManager;
+import dev.game.spacechaos.engine.entity.impl.ECS;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
+import dev.game.spacechaos.game.entities.factory.EnemyFactory;
+import dev.game.spacechaos.game.entities.factory.PlayerFactory;
 import dev.game.spacechaos.game.entities.outdated.EnemySpaceShuttle;
 import dev.game.spacechaos.game.entities.outdated.PlayerSpaceShuttle;
 import dev.game.spacechaos.game.entities.outdated.SpaceShuttle;
@@ -39,13 +44,23 @@ public class GameScreen extends BaseScreen {
     protected SkyBox skyBox = null;
 
     //spaceshuttle
-    protected SpaceShuttle spaceShuttle;
+    //protected SpaceShuttle spaceShuttle;
 
-    protected List<SpaceShuttle> enemySpaceShuttles = new ArrayList<>();
+    //protected List<SpaceShuttle> enemySpaceShuttles = new ArrayList<>();
     //protected List<Projectile> playerProjectiles = new ArrayList<>(); //one list for player and enemy projectiles?
 
     //list with all colliding objects, like meteorits
-    protected List<CollisionObject> collisionObjectList = new ArrayList<>();
+    //protected List<CollisionObject> collisionObjectList = new ArrayList<>();
+
+    //entity component system
+    protected EntityManager ecs = null;
+
+    //player entity
+    protected Entity playerEntity = null;
+
+    public GameScreen () {
+        //
+    }
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -75,8 +90,8 @@ public class GameScreen extends BaseScreen {
         //assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
         assetManager.finishLoadingAsset(ASTEROID1_IMAGE_PATH);
 
-        System.out.println("test");
-        System.out.println("test");
+        //create new entity component system
+        this.ecs = new ECS(game);
 
         //get asset
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
@@ -87,13 +102,13 @@ public class GameScreen extends BaseScreen {
         Texture skyBox4 = assetManager.get(SKYBOX_PLUS_Y);
 
         //create space shuttle img, x, y
-        spaceShuttle = new PlayerSpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth() / 2, game.getViewportHeight() / 2);
+        //spaceShuttle = new PlayerSpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth() / 2, game.getViewportHeight() / 2);
 
         //create skybox
         this.skyBox = new SkyBox(new Texture[]{skyBox1, skyBox2, skyBox3, skyBox4}, game.getViewportWidth(), game.getViewportHeight());
 
         //TODO: add some enemy space shuttles, check if its not in close proximity to any shuttle
-        for (int amount = 0; amount < 2; amount++) {
+        /*for (int amount = 0; amount < 2; amount++) {
             float x = (float) Math.random() * game.getViewportWidth();
             float y = (float) Math.random() * game.getViewportHeight();
             enemySpaceShuttles.add(new EnemySpaceShuttle(assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), x, y, spaceShuttle));
@@ -103,7 +118,22 @@ public class GameScreen extends BaseScreen {
         Texture texture = assetManager.get(ASTEROID1_IMAGE_PATH);
         TextureRegion textureRegion = new TextureRegion(texture);
 
-        this.collisionObjectList.add(new CollisionObject(game.getViewportWidth() / 2 - 100, game.getViewportHeight() / 2 - 100, 3, textureRegion));
+        this.collisionObjectList.add(new CollisionObject(game.getViewportWidth() / 2 - 100, game.getViewportHeight() / 2 - 100, 3, textureRegion));*/
+
+        //create new player entity and add to entity-component-system
+        this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class));
+        this.ecs.addEntity(this.playerEntity);
+
+        //TODO: add some enemy space shuttles, check if its not in close proximity to any shuttle
+        for (int amount = 0; amount < 2; amount++) {
+            //calculate random enemy position near player
+            float x = (float) Math.random() * game.getViewportWidth();
+            float y = (float) Math.random() * game.getViewportHeight();
+
+            //create and add new enemy space shuttle to entity-component-system
+            Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class));
+            this.ecs.addEntity(enemyEntity);
+        }
     }
 
     @Override
@@ -119,7 +149,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
         //get camera
-        CameraWrapper camera = game.getCamera();
+        /*CameraWrapper camera = game.getCamera();
 
         //update shuttle
         spaceShuttle.update(game, game.getCamera(), time);
@@ -132,7 +162,10 @@ public class GameScreen extends BaseScreen {
         //update enemy space shuttles
         this.enemySpaceShuttles.stream().forEach(shuttle -> {
             shuttle.update(game, game.getCamera(), time);
-        });
+        });*/
+
+        //update entities
+        this.ecs.update(game, time);
     }
 
     @Override
@@ -144,7 +177,7 @@ public class GameScreen extends BaseScreen {
         this.skyBox.draw(time, game.getCamera(), batch);
 
         //draw collision objects
-        this.collisionObjectList.stream().forEach(obj -> {
+        /*this.collisionObjectList.stream().forEach(obj -> {
             obj.draw(time, game.getCamera(), batch);
         });
 
@@ -154,12 +187,36 @@ public class GameScreen extends BaseScreen {
         });
 
         //draw shuttle
-        spaceShuttle.draw(time, game.getCamera(), batch);
+        spaceShuttle.draw(time, game.getCamera(), batch);*/
+
+        //set camera projection matrix
+        batch.setProjectionMatrix(game.getCamera().getCombined());
+
+        //draw entities
+        this.ecs.draw(time, game.getCamera(), batch);
+
+        //reset shader
+        batch.setShader(null);
+        batch.setProjectionMatrix(game.getCamera().getCombined());
+
+        //draw abilities and son on
+        this.ecs.drawUILayer(time, game.getCamera(), batch);
+
+        //draw lightmap (only for testing purposes)
+        //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);
+
+        batch.flush();
+
+        //reset shader, so default shader is used
+        batch.setShader(null);
     }
 
     @Override
     public void destroy() {
         assetManager.unload(BG_IMAGE_PATH);
+
+        //cleanUp entity-component-system
+        this.ecs.dispose();
     }
 
 }
