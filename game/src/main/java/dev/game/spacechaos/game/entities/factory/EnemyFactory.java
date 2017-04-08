@@ -6,6 +6,7 @@ import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.camera.SmoothFollowCameraComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
+import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 
 /**
  * Created by Justin on 07.04.2017.
@@ -21,6 +22,9 @@ public class EnemyFactory {
 
         //add texture component to draw texture
         enemyEntity.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2), DrawTextureComponent.class);
+
+        //add component to move entity
+        enemyEntity.addComponent(new MoveComponent(2f), MoveComponent.class);
 
         return enemyEntity;
     }

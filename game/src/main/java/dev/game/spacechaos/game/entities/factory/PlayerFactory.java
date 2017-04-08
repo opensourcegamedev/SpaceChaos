@@ -7,6 +7,7 @@ import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.camera.SmoothFollowCameraComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MouseDependentDrawRotationAngle;
+import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovement;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 
 /**
@@ -28,7 +29,10 @@ public class PlayerFactory {
         player.addComponent(new MouseDependentDrawRotationAngle(), MouseDependentDrawRotationAngle.class);
 
         //add component to move entity
-        player.addComponent(new MoveComponent(1, 0), MoveComponent.class);
+        player.addComponent(new MoveComponent(1, 0, 2f), MoveComponent.class);
+
+        //add component to move entity dependent on mouse position
+        player.addComponent(new MouseDependentMovement(texture.getWidth() / 2, texture.getHeight() / 2), MouseDependentMovement.class);
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);

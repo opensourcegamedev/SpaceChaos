@@ -25,12 +25,14 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     //temporary vector for calculations
     protected Vector2 tmpVector = new Vector2();
 
-    public MoveComponent (float speedX, float speedY) {
-        moveDirection.set(speedX, speedY);
+    public MoveComponent (float moveDirectionX, float moveDirectionY, float speed) {
+        moveDirection.set(moveDirectionX, moveDirectionY);
+        this.speed = speed;
     }
 
-    public MoveComponent () {
+    public MoveComponent (float speed) {
         moveDirection.set(0, 0);
+        this.speed = speed;
     }
 
     @Override
