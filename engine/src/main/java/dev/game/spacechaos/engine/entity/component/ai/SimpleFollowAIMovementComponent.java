@@ -14,7 +14,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 /**
  * Created by Justin on 08.04.2017.
  */
-public class SimpleFollowAIMovement extends BaseComponent implements IUpdateComponent {
+public class SimpleFollowAIMovementComponent extends BaseComponent implements IUpdateComponent {
 
     //required components
     protected PositionComponent positionComponent = null;
@@ -27,7 +27,7 @@ public class SimpleFollowAIMovement extends BaseComponent implements IUpdateComp
     //move direction
     private Vector2 moveDir = new Vector2(0, 0);
 
-    public SimpleFollowAIMovement(Entity targetEntity) {
+    public SimpleFollowAIMovementComponent(Entity targetEntity) {
         if (targetEntity == null) {
             throw new NullPointerException("target entity cannot be null.");
         }

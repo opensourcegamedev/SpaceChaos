@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
-import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovement;
-import dev.game.spacechaos.engine.entity.component.camera.SmoothFollowCameraComponent;
+import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovementComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
@@ -32,7 +31,7 @@ public class EnemyFactory {
         enemyEntity.addComponent(new MoveDependentDrawRotationComponent(), MoveDependentDrawRotationComponent.class);
 
         //add component to follow player
-        enemyEntity.addComponent(new SimpleFollowAIMovement(targetEntity), SimpleFollowAIMovement.class);
+        enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity), SimpleFollowAIMovementComponent.class);
 
         return enemyEntity;
     }
