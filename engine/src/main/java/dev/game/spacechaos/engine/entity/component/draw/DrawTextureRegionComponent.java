@@ -52,8 +52,8 @@ public class DrawTextureRegionComponent extends DrawComponent {
 
         //draw texture region
         batch.draw(this.textureRegion,
-                this.positionComponent.getX() - getOriginX(),
-                this.positionComponent.getY() - getOriginY(),
+                this.positionComponent.getX()/* - getOriginX()*/,
+                this.positionComponent.getY()/* - getOriginY()*/,
                 getOriginX(),
                 getOriginY(),
                 getWidth(),

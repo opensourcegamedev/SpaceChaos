@@ -123,4 +123,13 @@ public class MouseDependentMovement extends BaseComponent implements IUpdateComp
     public ECSPriority getDrawOrder() {
         return ECSPriority.VERY_LOW;
     }
+
+    public float getMinMouseDistance () {
+        return this.minMouseDistance;
+    }
+
+    public void setMinMouseDistance (float minMouseDistance) {
+        this.minMouseDistance = minMouseDistance;
+    }
+
 }

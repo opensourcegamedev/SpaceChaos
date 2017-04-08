@@ -32,6 +32,8 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
         if (this.positionComponent == null) {
             throw new IllegalStateException("entity doesnt have an PositionComponent.");
         }
+
+        afterInit(game, entity);
     }
 
     public abstract void afterInit (BaseGame game, Entity entity);
