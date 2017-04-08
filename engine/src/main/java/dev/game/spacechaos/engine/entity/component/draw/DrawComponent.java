@@ -79,10 +79,16 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
     }
 
     public void setRotationAngle (float angle) {
+        //normalize angle
         if (angle < 0) {
-            throw new IllegalArgumentException("rotation angle has to be >= 0 and <= 360 degree.");
+            float abs = Math.abs(angle);
+
+            int i = (int) abs / 360;
+            angle += i * 360;
+            angle += 360;
         }
 
+        //set angle
         this.angle = angle % 360;
     }
 

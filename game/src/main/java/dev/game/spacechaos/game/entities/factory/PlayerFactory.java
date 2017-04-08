@@ -6,6 +6,7 @@ import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.camera.SmoothFollowCameraComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
+import dev.game.spacechaos.engine.entity.component.draw.MouseDependentDrawRotationAngle;
 
 /**
  * Created by Justin on 07.04.2017.
@@ -21,6 +22,9 @@ public class PlayerFactory {
 
         //add texture component to draw texture
         player.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2), DrawTextureComponent.class);
+
+        //add component to rotate shuttle relative to mouse position
+        player.addComponent(new MouseDependentDrawRotationAngle(), MouseDependentDrawRotationAngle.class);
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
