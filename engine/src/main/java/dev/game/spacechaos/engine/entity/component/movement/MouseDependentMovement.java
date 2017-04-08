@@ -1,8 +1,13 @@
 package dev.game.spacechaos.engine.entity.component.movement;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.IDrawComponent;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
 import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
@@ -10,12 +15,13 @@ import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.MouseUtils;
+import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
 
 /**
  * Created by Justin on 08.04.2017.
  */
 @RequiredComponents(components = {PositionComponent.class, MoveComponent.class})
-public class MouseDependentMovement extends BaseComponent implements IUpdateComponent {
+public class MouseDependentMovement extends BaseComponent implements IUpdateComponent, IDrawComponent {
 
     protected PositionComponent positionComponent = null;
     protected MoveComponent moveComponent = null;
@@ -95,4 +101,26 @@ public class MouseDependentMovement extends BaseComponent implements IUpdateComp
         return ECSPriority.VERY_HIGH;
     }
 
+    @Override
+    public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //TODO: outsource this code to extra component
+
+        //draw center, only for debugging purposes
+        SpriteBatcherUtils.fillRectangle(batch, positionComponent.getMiddleX() - 10, positionComponent.getMiddleY() - 10, 20, 20, Color.YELLOW);
+
+        //draw mouse position
+        Vector3 mousePos = camera.getMousePosition();
+        SpriteBatcherUtils.fillRectangle(batch, mousePos.x - 5, mousePos.y - 5, 10, 10, Color.RED);
+
+        //draw position
+        SpriteBatcherUtils.fillRectangle(batch, positionComponent.getX() - 5, positionComponent.getY() - 5, 10, 10, Color.BLUE);
+
+        //draw front position
+        SpriteBatcherUtils.fillRectangle(batch, frontX - 5, frontY - 5, 10, 10, Color.GREEN);
+    }
+
+    @Override
+    public ECSPriority getDrawOrder() {
+        return ECSPriority.VERY_LOW;
+    }
 }
