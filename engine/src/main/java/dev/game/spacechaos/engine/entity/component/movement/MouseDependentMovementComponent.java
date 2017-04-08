@@ -21,7 +21,7 @@ import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
  * Created by Justin on 08.04.2017.
  */
 @RequiredComponents(components = {PositionComponent.class, MoveComponent.class})
-public class MouseDependentMovement extends BaseComponent implements IUpdateComponent, IDrawComponent {
+public class MouseDependentMovementComponent extends BaseComponent implements IUpdateComponent, IDrawComponent {
 
     protected PositionComponent positionComponent = null;
     protected MoveComponent moveComponent = null;
@@ -37,7 +37,7 @@ public class MouseDependentMovement extends BaseComponent implements IUpdateComp
     //minimum distance of mouse to entity which is needed to move entity
     protected float minMouseDistance = 20;
 
-    public MouseDependentMovement (float originX, float originY) {
+    public MouseDependentMovementComponent(float originX, float originY) {
         frontVec.set(originX, originY);
     }
 
