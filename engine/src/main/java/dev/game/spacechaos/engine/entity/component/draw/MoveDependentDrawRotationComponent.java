@@ -21,6 +21,8 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
     protected DrawTextureRegionComponent textureRegionComponent = null;
     protected DrawComponent drawComponent = null;
 
+    protected float lastAngle = 0;
+
     public MoveDependentDrawRotationComponent () {
         //
     }
@@ -50,8 +52,15 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
         //get move direction
         Vector2 moveDir = moveComponent.getMoveDirection();
 
-        //get angle
-        float angle = moveDir.angle() - 90;
+        float angle = 0;
+
+        if (moveComponent.isMoving()) {
+            //get angle
+            angle = moveDir.angle() - 90;
+            this.lastAngle = angle;
+        } else {
+            angle = this.lastAngle;
+        }
 
         drawComponent.setRotationAngle(angle);
     }
