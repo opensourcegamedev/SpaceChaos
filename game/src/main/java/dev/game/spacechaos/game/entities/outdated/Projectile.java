@@ -12,6 +12,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 /**
  * Created by Jo on 01.04.2017.
  */
+@Deprecated
 public abstract class Projectile extends OldEntity implements UpdatableEntity, DrawableEntity {
 
     private Vector2 dir;

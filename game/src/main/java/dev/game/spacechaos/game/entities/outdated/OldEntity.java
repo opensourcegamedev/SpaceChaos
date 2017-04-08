@@ -3,6 +3,7 @@ package dev.game.spacechaos.game.entities.outdated;
 /**
  * Created by Justin on 29.03.2017.
  */
+@Deprecated
 public abstract class OldEntity {
 
     //current absolute position of entity

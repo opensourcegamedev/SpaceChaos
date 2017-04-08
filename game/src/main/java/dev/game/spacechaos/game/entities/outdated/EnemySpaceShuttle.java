@@ -12,6 +12,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 /**
  * Created by Jo on 01.04.2017.
  */
+@Deprecated
 public class EnemySpaceShuttle extends SpaceShuttle implements UpdatableEntity, DrawableEntity {
 
     private SpaceShuttle target;

@@ -13,6 +13,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 /**
  * Created by Jo on 29.03.2017.
  */
+@Deprecated
 public class SpaceShuttle extends OldEntity implements UpdatableEntity, DrawableEntity {
 
     protected Texture shuttleTexture;
