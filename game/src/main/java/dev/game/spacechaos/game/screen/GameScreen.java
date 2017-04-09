@@ -94,24 +94,8 @@ public class GameScreen extends BaseScreen {
         Texture skyBox3 = assetManager.get(SKYBOX_MINUS_Y);
         Texture skyBox4 = assetManager.get(SKYBOX_PLUS_Y);
 
-        //create space shuttle img, x, y
-        //spaceShuttle = new PlayerSpaceShuttle(assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), game.getViewportWidth() / 2, game.getViewportHeight() / 2);
-
         //create skybox
         this.skyBox = new SkyBox(new Texture[]{skyBox1, skyBox2, skyBox3, skyBox4}, game.getViewportWidth(), game.getViewportHeight());
-
-        //TODO: add some enemy space shuttles, check if its not in close proximity to any shuttle
-        /*for (int amount = 0; amount < 2; amount++) {
-            float x = (float) Math.random() * game.getViewportWidth();
-            float y = (float) Math.random() * game.getViewportHeight();
-            enemySpaceShuttles.add(new EnemySpaceShuttle(assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), x, y, spaceShuttle));
-        }
-
-        //get texture of asteroids
-        Texture texture = assetManager.get(ASTEROID1_IMAGE_PATH);
-        TextureRegion textureRegion = new TextureRegion(texture);
-
-        this.collisionObjectList.add(new CollisionObject(game.getViewportWidth() / 2 - 100, game.getViewportHeight() / 2 - 100, 3, textureRegion));*/
 
         //create new player entity and add to entity-component-system
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class));
@@ -141,46 +125,14 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
-        //get camera
-        /*CameraWrapper camera = game.getCamera();
-
-        //update shuttle
-        spaceShuttle.update(game, game.getCamera(), time);
-
-        //update collision objects
-        this.collisionObjectList.stream().forEach(obj -> {
-            obj.update(game, game.getCamera(), time);
-        });
-
-        //update enemy space shuttles
-        this.enemySpaceShuttles.stream().forEach(shuttle -> {
-            shuttle.update(game, game.getCamera(), time);
-        });*/
-
         //update entities
         this.ecs.update(game, time);
     }
 
     @Override
     public void draw(GameTime time, SpriteBatch batch) {
-        //draw background skybox image
-        //batch.draw(this.bgTexture, 0, 0, game.getViewportWidth(), game.getViewportHeight());
-
         //draw skybox
         this.skyBox.draw(time, game.getCamera(), batch);
-
-        //draw collision objects
-        /*this.collisionObjectList.stream().forEach(obj -> {
-            obj.draw(time, game.getCamera(), batch);
-        });
-
-        //draw enemy space shuttles
-        this.enemySpaceShuttles.stream().forEach(shuttle -> {
-            shuttle.draw(time, game.getCamera(), batch);
-        });
-
-        //draw shuttle
-        spaceShuttle.draw(time, game.getCamera(), batch);*/
 
         //set camera projection matrix
         batch.setProjectionMatrix(game.getCamera().getCombined());
