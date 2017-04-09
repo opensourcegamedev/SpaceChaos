@@ -39,3 +39,9 @@ Author: Bonsaiheldin | http://bonsaiheld.org
 Path: data/music/sci-fi-menus-2-shorts-tracks, data/music/i-know-your-secret
 License: CC-BY 3.0
 Author: Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
+
+## Sonar Tuning Electro Track
+
+Path: data/music/sonar-tuning-electro-track
+License: CC-BY 3.0
+Author: SouljahdeShiva, https://opengameart.org/content/sonar-tuning-electro-track
