@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
+import dev.game.spacechaos.engine.entity.component.ai.RandomWalkComponent;
 import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovementComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
@@ -28,6 +29,9 @@ public class MeteoritFactory {
 
         //add component to move entity
         entity.addComponent(new MoveComponent(1f), MoveComponent.class);
+
+        //add component so meteorits move randomly
+        entity.addComponent(new RandomWalkComponent(), RandomWalkComponent.class);
 
         //add component to rotate entity
         entity.addComponent(new SimpleRotationComponent(1f), SimpleRotationComponent.class);

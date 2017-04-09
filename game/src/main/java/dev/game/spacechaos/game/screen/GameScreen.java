@@ -126,8 +126,8 @@ public class GameScreen extends BaseScreen {
         //add some random meteorits
         for (int i = 0; i < 10; i++) {
             //calculate random enemy position near player
-            float x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
-            float y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
+            float x = (float) Math.random() * game.getViewportWidth()/* * 3 - game.getViewportWidth()*/;
+            float y = (float) Math.random() * game.getViewportHeight()/* * 3 - game.getViewportHeight()*/;
 
             //create and add new meteorit
             Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager.get(ASTEROID1_IMAGE_PATH));
