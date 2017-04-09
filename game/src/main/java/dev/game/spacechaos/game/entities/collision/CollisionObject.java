@@ -13,6 +13,7 @@ import dev.game.spacechaos.game.entities.outdated.OldEntity;
 /**
  * Created by Justin on 05.04.2017.
  */
+@Deprecated
 public class CollisionObject extends OldEntity implements UpdatableEntity, DrawableEntity {
 
     protected TextureRegion textureRegion = null;
