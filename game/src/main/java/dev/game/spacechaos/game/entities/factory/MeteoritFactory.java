@@ -25,7 +25,7 @@ public class MeteoritFactory {
 
         //add texture component to draw texture
         entity.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2), DrawTextureComponent.class);
-        entity.getComponent(DrawTextureComponent.class).setScale(5);
+        entity.getComponent(DrawTextureComponent.class).setScale(2);
 
         //add component to move entity
         entity.addComponent(new MoveComponent(1f), MoveComponent.class);
