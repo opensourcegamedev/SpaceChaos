@@ -38,19 +38,12 @@ public class GameScreen extends BaseScreen {
 
     protected static final String ASTEROID1_IMAGE_PATH = "./data/images/entities/asteroids/asteroid1_brown.png";
 
+    protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
+
     //background image
     protected Texture bgTexture = null;
 
     protected SkyBox skyBox = null;
-
-    //spaceshuttle
-    //protected SpaceShuttle spaceShuttle;
-
-    //protected List<SpaceShuttle> enemySpaceShuttles = new ArrayList<>();
-    //protected List<Projectile> playerProjectiles = new ArrayList<>(); //one list for player and enemy projectiles?
-
-    //list with all colliding objects, like meteorits
-    //protected List<CollisionObject> collisionObjectList = new ArrayList<>();
 
     //entity component system
     protected EntityManager ecs = null;
