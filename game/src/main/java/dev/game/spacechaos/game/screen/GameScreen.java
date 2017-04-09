@@ -1,6 +1,7 @@
 package dev.game.spacechaos.game.screen;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -51,6 +52,8 @@ public class GameScreen extends BaseScreen {
     //player entity
     protected Entity playerEntity = null;
 
+    protected Music music = null;
+
     public GameScreen () {
         //
     }
@@ -72,6 +75,9 @@ public class GameScreen extends BaseScreen {
         //load collision objects
         assetManager.load(ASTEROID1_IMAGE_PATH, Texture.class);
 
+        //load background music
+        assetManager.load(BACKGROUND_MUSIC_PATH, Music.class);
+
         //wait while assets are loading
         assetManager.finishLoadingAsset(BG_IMAGE_PATH);
         assetManager.finishLoadingAsset(SKYBOX_MINUS_X);
@@ -82,6 +88,7 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
         //assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
         assetManager.finishLoadingAsset(ASTEROID1_IMAGE_PATH);
+        assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
 
         //create new entity component system
         this.ecs = new ECS(game);
@@ -93,6 +100,9 @@ public class GameScreen extends BaseScreen {
         Texture skyBox2 = assetManager.get(SKYBOX_PLUS_X);
         Texture skyBox3 = assetManager.get(SKYBOX_MINUS_Y);
         Texture skyBox4 = assetManager.get(SKYBOX_PLUS_Y);
+
+        //get background music
+        this.music = assetManager.get(BACKGROUND_MUSIC_PATH);
 
         //create skybox
         this.skyBox = new SkyBox(new Texture[]{skyBox1, skyBox2, skyBox3, skyBox4}, game.getViewportWidth(), game.getViewportHeight());
@@ -115,12 +125,15 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void onResume() {
-        //
+        //play background music
+        this.music.setVolume(0.8f);
+        this.music.play();
     }
 
     @Override
     public void onPause() {
-        //
+        //stop music
+        this.music.stop();
     }
 
     @Override
