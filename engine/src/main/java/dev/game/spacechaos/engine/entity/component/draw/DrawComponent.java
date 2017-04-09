@@ -76,6 +76,19 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
         this.visible = visible;
     }
 
+    public float getScaleX () {
+        return this.scaleX;
+    }
+
+    public float getScaleY () {
+        return this.scaleY;
+    }
+
+    public void setScale (float scale) {
+        this.scaleX = scale;
+        this.scaleY = scale;
+    }
+
     public float getRotationAngle () {
         return this.angle % 360;
     }

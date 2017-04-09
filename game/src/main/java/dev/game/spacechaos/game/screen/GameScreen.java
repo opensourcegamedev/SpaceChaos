@@ -13,6 +13,7 @@ import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
+import dev.game.spacechaos.game.entities.factory.MeteoritFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
 import dev.game.spacechaos.game.entities.outdated.EnemySpaceShuttle;
 import dev.game.spacechaos.game.entities.outdated.PlayerSpaceShuttle;
@@ -120,6 +121,17 @@ public class GameScreen extends BaseScreen {
             //create and add new enemy space shuttle to entity-component-system
             Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity);
             this.ecs.addEntity(enemyEntity);
+        }
+
+        //add some random meteorits
+        for (int i = 0; i < 10; i++) {
+            //calculate random enemy position near player
+            float x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
+            float y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
+
+            //create and add new meteorit
+            Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager.get(ASTEROID1_IMAGE_PATH));
+            this.ecs.addEntity(entity);
         }
     }
 
