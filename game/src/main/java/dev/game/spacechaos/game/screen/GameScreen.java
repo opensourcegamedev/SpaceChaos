@@ -15,10 +15,6 @@ import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
 import dev.game.spacechaos.game.entities.factory.MeteoritFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
-import dev.game.spacechaos.game.entities.outdated.EnemySpaceShuttle;
-import dev.game.spacechaos.game.entities.outdated.PlayerSpaceShuttle;
-import dev.game.spacechaos.game.entities.outdated.SpaceShuttle;
-import dev.game.spacechaos.game.entities.collision.CollisionObject;
 import dev.game.spacechaos.game.skybox.SkyBox;
 
 import java.util.ArrayList;
