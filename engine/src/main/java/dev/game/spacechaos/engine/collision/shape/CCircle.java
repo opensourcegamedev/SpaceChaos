@@ -58,6 +58,7 @@ public class CCircle extends CShape {
     @Override
     public void drawShape(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
         shapeRenderer.setColor(color);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.circle(this.x, this.y, this.radius);
     }
 
