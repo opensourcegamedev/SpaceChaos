@@ -1,6 +1,10 @@
 package dev.game.spacechaos.engine.collision.shape;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.collision.CShape;
+import dev.game.spacechaos.engine.time.GameTime;
 
 /**
  * Created by Justin on 10.04.2017.
@@ -49,6 +53,12 @@ public class CCircle extends CShape {
         } else {
             throw new IllegalArgumentException("shape class " + obj.getClass() + " isnt supported.");
         }
+    }
+
+    @Override
+    public void drawShape(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
+        shapeRenderer.setColor(color);
+        shapeRenderer.circle(this.x, this.y, this.radius);
     }
 
 }
