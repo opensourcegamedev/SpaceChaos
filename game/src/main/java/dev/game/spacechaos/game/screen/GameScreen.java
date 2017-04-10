@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
+import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.impl.ECS;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
@@ -46,7 +47,7 @@ public class GameScreen extends BaseScreen {
 
     protected Music music = null;
 
-    public GameScreen () {
+    public GameScreen() {
         //
     }
 
@@ -104,25 +105,36 @@ public class GameScreen extends BaseScreen {
         this.ecs.addEntity(this.playerEntity);
 
         //TODO: add some enemy space shuttles, check if its not in close proximity to any shuttle
-        for (int amount = 0; amount < 2; amount++) {
+        int amount = 5;
+        float[][] positions = new float[amount + 1][2]; //player + enemy positions
+        positions[0][0] = this.playerEntity.getComponent(PositionComponent.class).getMiddleX();
+        positions[0][1] = this.playerEntity.getComponent(PositionComponent.class).getMiddleY();
+        for (int n = 0; n < amount; n++) {
             //calculate random enemy position near player
             float x = (float) Math.random() * game.getViewportWidth();
             float y = (float) Math.random() * game.getViewportHeight();
 
+            boolean validPos = false;
+            while (!validPos) {
+                for (int k = 0; k < n + 1; k++) {
+                    if (Math.abs(positions[k][0] - x) > 300 ||
+                            Math.abs(positions[k][1] - y) > 300) {
+                        if (k == n) { //all positions are valid
+                            positions[k + 1][0] = x;
+                            positions[k + 1][1] = y;
+                            validPos = true;
+                        }
+                    } else {
+                        x = (float) Math.random() * game.getViewportWidth();
+                        y = (float) Math.random() * game.getViewportHeight();
+                        break; //recheck if valid
+                    }
+                }
+            }
+
             //create and add new enemy space shuttle to entity-component-system
             Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity);
             this.ecs.addEntity(enemyEntity);
-        }
-
-        //add some random meteorits
-        for (int i = 0; i < 90; i++) {
-            //calculate random enemy position near player
-            float x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
-            float y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
-
-            //create and add new meteorit
-            Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager.get(ASTEROID1_IMAGE_PATH));
-            this.ecs.addEntity(entity);
         }
     }
 
