@@ -4,8 +4,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.impl.ECS;
@@ -16,9 +14,6 @@ import dev.game.spacechaos.game.entities.factory.EnemyFactory;
 import dev.game.spacechaos.game.entities.factory.MeteoritFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
 import dev.game.spacechaos.game.skybox.SkyBox;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Justin on 28.03.2017.
