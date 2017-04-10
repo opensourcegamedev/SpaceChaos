@@ -1,11 +1,11 @@
 package dev.game.spacechaos.engine.collision.shape;
 
-import dev.game.spacechaos.engine.collision.CObject;
+import dev.game.spacechaos.engine.collision.CShape;
 
 /**
  * Created by Justin on 10.04.2017.
  */
-public class CRectangle extends CObject {
+public class CRectangle extends CShape {
 
     protected float x = 0;
     protected float y = 0;
@@ -58,7 +58,7 @@ public class CRectangle extends CObject {
     }
 
     @Override
-    public boolean overlaps(CObject obj) {
+    public boolean overlaps(CShape obj) {
         if (obj instanceof CRectangle) {
             //rectangle - rectangle - collision test
             CRectangle rect = (CRectangle) obj;

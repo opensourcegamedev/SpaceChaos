@@ -1,11 +1,11 @@
 package dev.game.spacechaos.engine.collision.shape;
 
-import dev.game.spacechaos.engine.collision.CObject;
+import dev.game.spacechaos.engine.collision.CShape;
 
 /**
  * Created by Justin on 10.04.2017.
  */
-public class CCircle extends CObject {
+public class CCircle extends CShape {
 
     protected float x = 0;
     protected float y = 0;
@@ -36,7 +36,7 @@ public class CCircle extends CObject {
     }
 
     @Override
-    public boolean overlaps(CObject obj) {
+    public boolean overlaps(CShape obj) {
         if (obj instanceof CCircle) {
             CCircle circle = (CCircle) obj;
 
