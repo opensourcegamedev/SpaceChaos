@@ -29,7 +29,6 @@ public class GameScreen extends BaseScreen {
     protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/starships/spaceshuttle.png";
     protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
     //protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
-
     protected static final String ASTEROID1_IMAGE_PATH = "./data/images/entities/asteroids/asteroid1_brown.png";
 
     protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
@@ -104,7 +103,7 @@ public class GameScreen extends BaseScreen {
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class));
         this.ecs.addEntity(this.playerEntity);
 
-        //add an specific amount of enemy shuttles
+        //add a specific amount of enemy shuttles
         int amount = 5;
         float[][] positions = new float[amount + 1][2]; //player + enemy positions
         positions[0][0] = this.playerEntity.getComponent(PositionComponent.class).getMiddleX();
