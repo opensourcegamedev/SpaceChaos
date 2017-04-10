@@ -16,6 +16,7 @@ import dev.game.spacechaos.game.entities.outdated.OldEntity;
 /**
  * Created by Justin on 06.04.2017.
  */
+@Deprecated
 public class ExplosionAnimation extends OldEntity implements UpdatableEntity, DrawableEntity, IAnimation {
 
     protected Animation<TextureRegion> animation = null;
