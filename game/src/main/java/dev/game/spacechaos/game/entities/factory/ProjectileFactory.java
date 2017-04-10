@@ -9,7 +9,7 @@ import dev.game.spacechaos.engine.entity.EntityManager;
  */
 public class ProjectileFactory {
 
-    public static Entity createProjectile (EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY) {
+    public static Entity createProjectile (EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed) {
         throw new UnsupportedOperationException("method isnt implemented yet.");
     }
 
