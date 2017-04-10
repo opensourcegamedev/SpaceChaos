@@ -104,7 +104,7 @@ public class GameScreen extends BaseScreen {
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class));
         this.ecs.addEntity(this.playerEntity);
 
-        //TODO: add some enemy space shuttles, check if its not in close proximity to any shuttle
+        //add an specific amount of enemy shuttles
         int amount = 5;
         float[][] positions = new float[amount + 1][2]; //player + enemy positions
         positions[0][0] = this.playerEntity.getComponent(PositionComponent.class).getMiddleX();
@@ -135,6 +135,16 @@ public class GameScreen extends BaseScreen {
             //create and add new enemy space shuttle to entity-component-system
             Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity);
             this.ecs.addEntity(enemyEntity);
+        }
+
+        //add some random meteorits
+        for (int i = 0; i < 90; i++) {
+            //calculate random enemy position near player
+            float x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
+            float y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
+            //create and add new meteorit
+            Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager.get(ASTEROID1_IMAGE_PATH));
+            this.ecs.addEntity(entity);
         }
     }
 
