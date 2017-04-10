@@ -6,6 +6,7 @@ import dev.game.spacechaos.engine.game.BaseGame;
 /**
  * Created by Justin on 29.03.2017.
  */
+@Deprecated
 public class SmoothCamera {
 
     private SmoothCamera() {
