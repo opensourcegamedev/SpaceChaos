@@ -1,9 +1,11 @@
 package dev.game.spacechaos.engine.collision;
 
+import com.badlogic.gdx.utils.Pool;
+
 /**
  * Created by Justin on 11.04.2017.
  */
-public class Range {
+public class Range implements Pool.Poolable {
 
     protected float min = 0;
     protected float max = 0;
@@ -53,4 +55,9 @@ public class Range {
         return this.hull(b, new Range());
     }
 
+    @Override
+    public void reset() {
+        this.min = 0;
+        this.max = 0;
+    }
 }
