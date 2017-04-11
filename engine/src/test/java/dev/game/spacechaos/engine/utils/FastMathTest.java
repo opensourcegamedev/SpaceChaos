@@ -12,6 +12,15 @@ import static org.junit.Assert.assertEquals;
 public class FastMathTest {
 
     @Test
+    public void testRotateVector90 () {
+        Vector2 v1 = new Vector2(1, 0);
+        Vector2 expected = new Vector2(0, 1);
+
+        Vector2 rotatedVector = FastMath.rotateVector90(v1);
+        assertEquals("wrong rotated vector calculation, expected: " + expected + ", calculated vector: " + rotatedVector, true, (expected.x == rotatedVector.x && expected.y == rotatedVector.y));
+    }
+
+    @Test
     public void testCheckVectorsParallel () {
         Vector2 v1 = new Vector2(1, 1);
         Vector2 v2 = new Vector2(1, 1);
