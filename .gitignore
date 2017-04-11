@@ -138,6 +138,8 @@ nb-configuration.xml
 *.iws
 *.iml
 
+*.jfr
+
 ## Additional for IntelliJ
 out/
 
