@@ -32,4 +32,8 @@ public class Range {
         this.max = max;
     }
 
+    public boolean overlaps (Range r) {
+        return ColliderUtils.overlaping(this.min, this.max, r.min, r.max);
+    }
+
 }
