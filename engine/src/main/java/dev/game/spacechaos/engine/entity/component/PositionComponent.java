@@ -45,10 +45,10 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
 
     protected AtomicBoolean readOnly = new AtomicBoolean(false);
 
-    protected Vector3 min = new Vector3(0, 0, 0);
-    protected Vector3 max = new Vector3(0, 0, 0);
+    //protected Vector3 min = new Vector3(0, 0, 0);
+    //protected Vector3 max = new Vector3(0, 0, 0);
 
-    protected BoundingBox boundingBox = new BoundingBox(min, max);
+    //protected BoundingBox boundingBox = new BoundingBox(min, max);
 
     public PositionComponent(float x, float y) {
         this.x = x;
@@ -196,22 +196,22 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
 
     protected void notifyPositionChangedListener (float oldX, float oldY, float newX, float newY) {
         //update bounding box
-        this.updateBoundingBox();
+        //this.updateBoundingBox();
 
-        try {
+        /*try {
             //lock list to avoid ConcurrentModificationException
             this.listenerLock.tryLock(LOCK_TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
             throw new RuntimeException("Couldnt lock changedListenerList on PositionComponent: " + e.getLocalizedMessage());
-        }
+        }*/
 
         //call listeners
-        this.changedListenerList.stream().forEach(listener -> {
+        for (PositionChangedListener listener : this.changedListenerList) {
             listener.onPositionChanged(oldX, oldY, newX, newY);
-        });
+        }
 
-        this.listenerLock.unlock();
+        //this.listenerLock.unlock();
     }
 
     protected void notifyDimensionChangedListener (float oldWidth, float oldHeight, float newWidth, float newHeight) {
@@ -274,14 +274,14 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     }
 
     public void updateBoundingBox () {
-        this.min.set(getX(), getY(), 0);
-        this.max.set(getX() + getWidth(), getY() + getHeight(), 0);
-        this.boundingBox.set(this.min, this.max);
+        //this.min.set(getX(), getY(), 0);
+        //this.max.set(getX() + getWidth(), getY() + getHeight(), 0);
+        //this.boundingBox.set(this.min, this.max);
     }
 
-    public BoundingBox getBoundingBox () {
+    /*public BoundingBox getBoundingBox () {
         return this.boundingBox;
-    }
+    }*/
 
     @Override public void loadFromJSON(JSONObject json) {
         if (json == null) {
