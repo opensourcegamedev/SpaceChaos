@@ -30,17 +30,19 @@ public abstract class ScreenBasedGame extends BaseGame {
     @Override
     protected final void update (GameTime time) {
         //update all screens
-        this.screenManager.listActiveScreens().stream().forEach(screen -> {
+        for (IScreen screen : this.screenManager.listActiveScreens()) {
+            //update screen
             screen.update(this, time);
-        });
+        }
     }
 
     @Override
     protected final void draw (GameTime time, SpriteBatch batch) {
         //draw all screens
-        this.screenManager.listActiveScreens().stream().forEach(screen -> {
+        for (IScreen screen : this.screenManager.listActiveScreens()) {
+            //draw screen
             screen.draw(time, batch);
-        });
+        }
     }
 
     @Override
