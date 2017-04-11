@@ -1,6 +1,7 @@
 package dev.game.spacechaos.engine.collision;
 
 import com.badlogic.gdx.utils.Pool;
+import dev.game.spacechaos.engine.collision.pool.RangePool;
 
 /**
  * Created by Justin on 11.04.2017.
@@ -52,7 +53,7 @@ public class Range implements Pool.Poolable {
     }
 
     public Range hull (Range b) {
-        return this.hull(b, new Range());
+        return this.hull(b, RangePool.create());
     }
 
     @Override

@@ -2,11 +2,14 @@ package dev.game.spacechaos.engine.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
+import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
 import dev.game.spacechaos.engine.entity.annotation.SharableComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
+import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -113,6 +116,21 @@ public class Entity {
     public <T extends IComponent> void addComponent (T component, Class<T> cls) {
         if (this.game == null) {
             throw new IllegalStateException("Please call init() before adding components.");
+        }
+
+        //check component requirements first
+        for (Annotation annotation : component.getClass().getDeclaredAnnotations()) {
+            if (annotation instanceof RequiredComponents) {
+                RequiredComponents requiredComponents = component.getClass().getAnnotation(RequiredComponents.class);
+
+                //check requirements
+                for (Class<? extends IComponent> classType : requiredComponents.components()) {
+                    //check, if class type is present
+                    if (!componentMap.containsKey(classType)) {
+                        throw new RequiredComponentNotFoundException("component '" + classType.getName() + "' is required by component '" + cls.getName() + "', but doesnt exists.");
+                    }
+                }
+            }
         }
 
         //initialize component
