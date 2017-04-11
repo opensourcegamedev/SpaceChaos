@@ -138,6 +138,7 @@ nb-configuration.xml
 *.iws
 *.iml
 
+# Java Mission Control Recordings (Profiler)
 *.jfr
 
 ## Additional for IntelliJ
