@@ -110,6 +110,10 @@ public class ColliderUtilsTest {
         Segment segment9 = new Segment(new Vector2(1, 0), new Vector2(0, 1));
         assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment9));
         assertEquals(true, ColliderUtils.testSegmentCollision(segment9, segment1));
+
+        Segment segment10 = new Segment(new Vector2(-1, -1), new Vector2(0, 0));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment10));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment10, segment1));
     }
 
 }
