@@ -21,8 +21,16 @@ public class Line {
         return this.base;
     }
 
+    public void setBase (float x, float y) {
+        this.base.set(x, y);
+    }
+
     public Vector2 getDirection () {
         return this.direction;
+    }
+
+    public void setDirection (float x, float y) {
+        this.direction.set(x, y);
     }
 
     public void dispose () {

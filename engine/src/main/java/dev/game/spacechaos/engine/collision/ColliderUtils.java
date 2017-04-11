@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.collision.shape.CPoint;
+import dev.game.spacechaos.engine.utils.FastMath;
 
 /**
  * Created by Justin on 10.04.2017.
@@ -25,6 +26,13 @@ public class ColliderUtils {
         float radiusSum = circle.getRadius();
 
         return distance <= radiusSum * radiusSum;
+    }
+
+    public static boolean testLineCollision (Line a, Line b) {
+        if (FastMath.checkVectorsParallel(a.getDirection(), b.getDirection())) {
+            return FastMath.checkIfLinesAreEquals(a, b);
+        } else {}
+        return true;
     }
 
     public static boolean overlaping (float minA, float maxA, float minB, float maxB) {

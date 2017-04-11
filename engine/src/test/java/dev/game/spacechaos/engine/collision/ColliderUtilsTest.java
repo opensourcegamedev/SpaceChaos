@@ -46,4 +46,34 @@ public class ColliderUtilsTest {
         assertEquals(true, ColliderUtils.testCirclePointCollision(circle, point4));
     }
 
+    @Test
+    public void testLineCollision () {
+        Line line1 = new Line(0, 0, 1, 1);
+        Line line2 = new Line(0, 0, 1, 1);
+
+        assertEquals(true, ColliderUtils.testLineCollision(line1, line2));
+
+        Line line3 = new Line(0, 0, -1, -1);
+        assertEquals(true, ColliderUtils.testLineCollision(line1, line3));
+        assertEquals(true, ColliderUtils.testLineCollision(line3, line1));
+
+        Line line4 = new Line(1, 1, 1, 1);
+        assertEquals(true, ColliderUtils.testLineCollision(line1, line4));
+        assertEquals(true, ColliderUtils.testLineCollision(line4, line1));
+
+        Line line5 = new Line(1, 2, 1, 1);
+        assertEquals(false, ColliderUtils.testLineCollision(line1, line5));
+        assertEquals(false, ColliderUtils.testLineCollision(line5, line1));
+
+        Line line6 = new Line(3, 5, 5, -1);
+        Line line7 = new Line(3, 5, 5, 2);
+        Line line8 = new Line(3, 2, 5, 2);
+        Line line9 = new Line(8, 4, 5, -1);
+
+        assertEquals(true, ColliderUtils.testLineCollision(line6, line7));
+        assertEquals(true, ColliderUtils.testLineCollision(line6, line8));
+        assertEquals(false, ColliderUtils.testLineCollision(line7, line8));
+        assertEquals(true, ColliderUtils.testLineCollision(line6, line9));
+    }
+
 }
