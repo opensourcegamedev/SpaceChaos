@@ -12,6 +12,10 @@ public class Range {
         set(min, max);
     }
 
+    public Range () {
+        //
+    }
+
     public float getMin () {
         return this.min;
     }
@@ -34,6 +38,19 @@ public class Range {
 
     public boolean overlaps (Range r) {
         return ColliderUtils.overlaping(this.min, this.max, r.min, r.max);
+    }
+
+    public Range hull (Range b, Range newRange) {
+        Range rangeHull = newRange;
+
+        rangeHull.min = this.min < b.min ? this.min : b.min;
+        rangeHull.max = this.max > b.max ? this.max : b.max;
+
+        return rangeHull;
+    }
+
+    public Range hull (Range b) {
+        return this.hull(b, new Range());
     }
 
 }

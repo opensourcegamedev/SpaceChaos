@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.collision.CShape;
+import dev.game.spacechaos.engine.collision.ColliderUtils;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
@@ -50,6 +51,8 @@ public class CCircle extends CShape {
             float radiusSum = radius + circle.radius;
 
             return distance <= radiusSum * radiusSum;
+        } else if (obj instanceof CPoint) {
+            return ColliderUtils.testCirclePointCollision(this, (CPoint) obj);
         } else {
             throw new IllegalArgumentException("shape class " + obj.getClass() + " isnt supported.");
         }

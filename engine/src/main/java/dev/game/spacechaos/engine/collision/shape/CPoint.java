@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.collision.CShape;
+import dev.game.spacechaos.engine.collision.ColliderUtils;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
@@ -36,7 +37,9 @@ public class CPoint extends CShape {
 
             //points only collide, if coordinates are equals
             return this.x == point.x && this.y == point.y;
-        } else {
+        } else if (obj instanceof CCircle) {
+            return ColliderUtils.testCirclePointCollision((CCircle) obj, this);
+        }  else {
             throw new IllegalArgumentException("shape class " + obj.getClass() + " isnt supported.");
         }
     }

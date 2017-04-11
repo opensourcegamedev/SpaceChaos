@@ -2,6 +2,8 @@ package dev.game.spacechaos.engine.collision;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+import dev.game.spacechaos.engine.collision.shape.CCircle;
+import dev.game.spacechaos.engine.collision.shape.CPoint;
 
 /**
  * Created by Justin on 10.04.2017.
@@ -14,6 +16,15 @@ public class ColliderUtils {
 
     public static boolean testCircleCircleCollision (Circle circle1, Circle circle2) {
         return circle1.overlaps(circle2);
+    }
+
+    public static boolean testCirclePointCollision (CCircle circle, CPoint point) {
+        float dx = circle.getCenterX() - point.getCenterX();
+        float dy = circle.getCenterY() - point.getCenterY();
+        float distance = dx * dx + dy * dy;
+        float radiusSum = circle.getRadius();
+
+        return distance <= radiusSum * radiusSum;
     }
 
     public static boolean overlaping (float minA, float maxA, float minB, float maxB) {

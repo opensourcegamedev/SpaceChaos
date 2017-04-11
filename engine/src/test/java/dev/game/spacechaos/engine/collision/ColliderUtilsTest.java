@@ -1,6 +1,8 @@
 package dev.game.spacechaos.engine.collision;
 
 import com.badlogic.gdx.math.Rectangle;
+import dev.game.spacechaos.engine.collision.shape.CCircle;
+import dev.game.spacechaos.engine.collision.shape.CPoint;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -25,6 +27,23 @@ public class ColliderUtilsTest {
         Rectangle rect2 = new Rectangle(99, 99, 100, 100);
 
         assertEquals("rectangle is overlaping, but collision test returns false.", true, ColliderUtils.testRectangleRectangleCollision(rect1, rect2));
+    }
+
+    @Test
+    public void testOverlapingCirclePoint () {
+        CCircle circle = new CCircle(0, 0, 5);
+        CPoint point1 = new CPoint(0, 0);
+
+        assertEquals(true, ColliderUtils.testCirclePointCollision(circle, point1));
+
+        CPoint point2 = new CPoint(5, 0);
+        assertEquals(true, ColliderUtils.testCirclePointCollision(circle, point2));
+
+        CPoint point3 = new CPoint(10, 10);
+        assertEquals(false, ColliderUtils.testCirclePointCollision(circle, point3));
+
+        CPoint point4 = new CPoint(0, -5);
+        assertEquals(true, ColliderUtils.testCirclePointCollision(circle, point4));
     }
 
 }

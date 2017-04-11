@@ -39,6 +39,10 @@ public class CRotatedRectangle extends CRectangle {
         this.angle = angle % 360;
     }
 
+    public void getEdge (int nr) {
+        //
+    }
+
     @Override
     public boolean overlaps(CShape obj) {
         //TODO: implement collision detection
