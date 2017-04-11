@@ -51,26 +51,34 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
 
     @Override
     public void update (BaseGame game, GameTime time) {
-        this.entityUpdateList.stream().forEach(entity -> {
+        for (Entity entity : this.entityUpdateList) {
             //update entity
             entity.update(game, time);
-        });
+        }
     }
 
     @Override
     public void draw (GameTime time, CameraWrapper camera, SpriteBatch batch) {
-        this.entityDrawList.stream().forEach(entity -> {
+        for (Entity entity : this.entityDrawList) {
             //draw entity
             entity.draw(time, camera, batch);
-        });
+        }
+        /*this.entityDrawList.stream().forEach(entity -> {
+            //draw entity
+            entity.draw(time, camera, batch);
+        });*/
     }
 
     @Override
     public void drawUILayer (GameTime time, CameraWrapper camera, SpriteBatch batch) {
-        this.entityUILayerDrawList.stream().forEach(entity -> {
+        for (Entity entity : this.entityUILayerDrawList) {
             //draw entity
             entity.drawUILayer(time, camera, batch);
-        });
+        }
+        /*this.entityUILayerDrawList.stream().forEach(entity -> {
+            //draw entity
+            entity.drawUILayer(time, camera, batch);
+        });*/
     }
 
     @Override
