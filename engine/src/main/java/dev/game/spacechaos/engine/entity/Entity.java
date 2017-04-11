@@ -57,23 +57,35 @@ public class Entity {
 
     public void update(BaseGame game, GameTime time) {
         //update all components
-        this.updateComponentList.stream().forEach(component -> {
+        for (IUpdateComponent component : this.updateComponentList) {
             component.update(game, time);
-        });
+        }
+
+        /*this.updateComponentList.stream().forEach(component -> {
+            component.update(game, time);
+        });*/
     }
 
     public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //draw all components
-        this.drawComponentList.stream().forEach(component -> {
+        for (IDrawComponent component : this.drawComponentList) {
             component.draw(time, camera, batch);
-        });
+        }
+
+        /*Üthis.drawComponentList.stream().forEach(component -> {
+            component.draw(time, camera, batch);
+        });*/
     }
 
     public void drawUILayer (GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //draw all components
-        this.drawUILayerComponentList.stream().forEach(component -> {
+        for (IDrawUILayerComponent component : this.drawUILayerComponentList) {
             component.drawUILayer(time, camera, batch);
-        });
+        }
+
+        /*this.drawUILayerComponentList.stream().forEach(component -> {
+            component.drawUILayer(time, camera, batch);
+        });*/
     }
 
     public long getEntityID () {

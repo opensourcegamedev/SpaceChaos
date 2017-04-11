@@ -63,6 +63,7 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
             //draw entity
             entity.draw(time, camera, batch);
         }
+
         /*this.entityDrawList.stream().forEach(entity -> {
             //draw entity
             entity.draw(time, camera, batch);
@@ -75,6 +76,7 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
             //draw entity
             entity.drawUILayer(time, camera, batch);
         }
+
         /*this.entityUILayerDrawList.stream().forEach(entity -> {
             //draw entity
             entity.drawUILayer(time, camera, batch);
