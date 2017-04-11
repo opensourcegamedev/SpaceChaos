@@ -17,6 +17,14 @@ public class Segment {
         this.point2 = point2;
     }
 
+    public Vector2 getPoint1 () {
+        return this.point1;
+    }
+
+    public Vector2 getPoint2 () {
+        return this.point2;
+    }
+
     public Range projectSegment (Vector2 onto) {
         //create new range or use an recycled range
         Range range = RangePool.create();

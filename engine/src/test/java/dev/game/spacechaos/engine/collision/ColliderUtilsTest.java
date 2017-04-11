@@ -1,6 +1,7 @@
 package dev.game.spacechaos.engine.collision;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.collision.shape.CPoint;
 import org.junit.Test;
@@ -74,6 +75,41 @@ public class ColliderUtilsTest {
         assertEquals(true, ColliderUtils.testLineCollision(line6, line8));
         assertEquals(false, ColliderUtils.testLineCollision(line7, line8));
         assertEquals(true, ColliderUtils.testLineCollision(line6, line9));
+    }
+
+    @Test
+    public void testSegmentCollision () {
+        Segment segment1 = new Segment(new Vector2(0, 0), new Vector2(1, 1));
+        Segment segment2 = new Segment(new Vector2(0, 0), new Vector2(1, 1));
+
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment2));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment2, segment1));
+
+        Segment segment3 = new Segment(new Vector2(2, 2), new Vector2(3, 3));
+        assertEquals(false, ColliderUtils.testSegmentCollision(segment1, segment3));
+        assertEquals(false, ColliderUtils.testSegmentCollision(segment1, segment3));
+
+        Segment segment4 = new Segment(new Vector2(0.5f, 0.5f), new Vector2(0.8f, 0.8f));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment4));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment4, segment1));
+
+        //Segment segment5 = new Segment(new Vector2(1, 0), new Vector2(0, 1));
+        Segment segment5 = new Segment(new Vector2(1, 1), new Vector2(0, 0));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment5));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment5, segment1));
+
+        Segment segment6 = new Segment(new Vector2(3, 4), new Vector2(11, 1));
+        Segment segment7 = new Segment(new Vector2(8, 4), new Vector2(11, 7));
+        assertEquals(false, ColliderUtils.testSegmentCollision(segment6, segment7));
+        assertEquals(false, ColliderUtils.testSegmentCollision(segment7, segment6));
+
+        Segment segment8 = new Segment(new Vector2(0, 1), new Vector2(1, 0));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment8));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment8, segment1));
+
+        Segment segment9 = new Segment(new Vector2(1, 0), new Vector2(0, 1));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment9));
+        assertEquals(true, ColliderUtils.testSegmentCollision(segment9, segment1));
     }
 
 }

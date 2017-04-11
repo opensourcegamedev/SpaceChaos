@@ -17,6 +17,10 @@ public class Line {
         this.direction.set(dirX, dirY);
     }
 
+    public Line () {
+        //
+    }
+
     public Vector2 getBase () {
         return this.base;
     }
@@ -25,12 +29,20 @@ public class Line {
         this.base.set(x, y);
     }
 
+    public void setBase (Vector2 v) {
+        this.base.set(v.x, v.y);
+    }
+
     public Vector2 getDirection () {
         return this.direction;
     }
 
     public void setDirection (float x, float y) {
         this.direction.set(x, y);
+    }
+
+    public void setDirection (Vector2 v) {
+        this.direction.set(v.x, v.y);
     }
 
     public void dispose () {
