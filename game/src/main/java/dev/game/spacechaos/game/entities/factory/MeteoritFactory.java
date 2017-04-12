@@ -37,7 +37,7 @@ public class MeteoritFactory {
 
         //add collision component, so player can collide with meteorits
         entity.addComponent(new CollisionComponent(), CollisionComponent.class);
-        entity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
+        entity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getHeight() / 2 * 2));
 
         //add component to rotate entity
         entity.addComponent(new SimpleRotationComponent(1f), SimpleRotationComponent.class);
