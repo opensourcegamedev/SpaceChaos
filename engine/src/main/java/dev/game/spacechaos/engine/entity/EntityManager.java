@@ -2,6 +2,7 @@ package dev.game.spacechaos.engine.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
+import dev.game.spacechaos.engine.entity.listener.ComponentListener;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 
@@ -37,6 +38,10 @@ public interface EntityManager {
     public <T extends IComponent> void onComponentAdded(Entity entity, T component, Class<T> cls);
 
     public <T extends IComponent> void onComponentRemoved(Entity entity, T component, Class<T> cls);
+
+    public void registerComponentListener (ComponentListener listener);
+
+    public void removeComponentListener (ComponentListener listener);
 
     public BaseGame getGame();
 
