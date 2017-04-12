@@ -25,18 +25,18 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     //temporary vector for calculations
     protected Vector2 tmpVector = new Vector2();
 
-    public MoveComponent(float moveDirectionX, float moveDirectionY, float speed) {
+    public MoveComponent (float moveDirectionX, float moveDirectionY, float speed) {
         moveDirection.set(moveDirectionX, moveDirectionY);
         this.speed = speed;
     }
 
-    public MoveComponent(float speed) {
+    public MoveComponent (float speed) {
         moveDirection.set(0, 0);
         this.speed = speed;
     }
 
     @Override
-    protected void onInit(BaseGame game, Entity entity) {
+    protected void onInit (BaseGame game, Entity entity) {
         //get required components
         this.positionComponent = entity.getComponent(PositionComponent.class);
 
@@ -46,7 +46,7 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     }
 
     @Override
-    public void update(BaseGame game, GameTime time) {
+    public void update (BaseGame game, GameTime time) {
         /*if (moveDirection.x == 0 && moveDirection.y == 0) {
             //set flag
             isMoving = false;
@@ -75,15 +75,15 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     }
 
     @Override
-    public ECSPriority getUpdateOrder() {
+    public ECSPriority getUpdateOrder () {
         return ECSPriority.LOW;
     }
 
-    public boolean isMoving() {
+    public boolean isMoving () {
         return this.isMoving;
     }
 
-    public void setMoving(boolean moving) {
+    public void setMoving (boolean moving) {
         this.isMoving = moving;
 
         if (!moving) {
@@ -91,11 +91,11 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         }
     }
 
-    public Vector2 getMoveDirection() {
+    public Vector2 getMoveDirection () {
         return this.moveDirection;
     }
 
-    public void setMoveDirection(float x, float y) {
+    public void setMoveDirection (float x, float y) {
         this.moveDirection.set(x, y);
 
         if (x == 0 && y == 0) {
@@ -106,11 +106,11 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         }
     }
 
-    public float getSpeed() {
+    public float getSpeed () {
         return this.speed;
     }
 
-    public void setSpeed(float speed) {
+    public void setSpeed (float speed) {
         this.speed = speed;
     }
 

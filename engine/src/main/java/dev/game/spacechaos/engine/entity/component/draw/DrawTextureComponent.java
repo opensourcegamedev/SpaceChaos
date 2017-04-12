@@ -21,7 +21,7 @@ public class DrawTextureComponent extends DrawComponent {
 
     protected Texture texture = null;
 
-    public DrawTextureComponent(Texture texture, float originX, float originY) {
+    public DrawTextureComponent (Texture texture, float originX, float originY) {
         if (texture == null) {
             throw new NullPointerException("texture cannot be null.");
         }
@@ -41,12 +41,12 @@ public class DrawTextureComponent extends DrawComponent {
         this.originY = originY;
     }
 
-    public DrawTextureComponent(Texture texture) {
+    public DrawTextureComponent (Texture texture) {
         this(texture, 0, 0);
     }
 
     @Override
-    public void afterInit(BaseGame game, Entity entity) {
+    public void afterInit (BaseGame game, Entity entity) {
         //set new width and height of entity
         positionComponent.setDimension(texture.getWidth(), texture.getHeight());
 
@@ -55,7 +55,7 @@ public class DrawTextureComponent extends DrawComponent {
     }
 
     @Override
-    public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+    public void draw (GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //if no texture is set, we don't have to draw anything
         if (this.texture == null) {
             return;
@@ -85,15 +85,15 @@ public class DrawTextureComponent extends DrawComponent {
     }
 
     @Override
-    public ECSPriority getDrawOrder() {
+    public ECSPriority getDrawOrder () {
         return ECSPriority.LOW;
     }
 
-    public Texture getTexture() {
+    public Texture getTexture () {
         return this.texture;
     }
 
-    public void setTexture(Texture texture, boolean setNewDimension) {
+    public void setTexture (Texture texture, boolean setNewDimension) {
         Texture oldTexture = this.texture;
         this.texture = texture;
 

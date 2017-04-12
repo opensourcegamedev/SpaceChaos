@@ -128,6 +128,10 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
         return ECSPriority.VERY_LOW;
     }
 
+    public Vector2 getFrontVec () {
+        return this.frontVec;
+    }
+
     public float getMinMouseDistance () {
         return this.minMouseDistance;
     }
