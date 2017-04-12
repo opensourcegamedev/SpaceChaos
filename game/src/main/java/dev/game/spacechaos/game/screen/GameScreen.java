@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -41,6 +42,7 @@ public class GameScreen extends BaseScreen {
     protected static final String ASTEROID1_IMAGE_PATH = "./data/images/entities/asteroids/asteroid1_brown.png";
 
     protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
+    protected static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
 
     protected static final Color COLLISION_BOX_COLOR = Color.BLUE;
     protected static final Color IN_COLLISION_COLOR = Color.YELLOW;
@@ -59,6 +61,9 @@ public class GameScreen extends BaseScreen {
     protected Entity playerEntity = null;
 
     protected Music music = null;
+    protected Sound beepSound = null;
+    protected long lastBeep = 0;
+    protected long beepInterval = 8000;
 
     protected ShapeRenderer shapeRenderer = null;
 
@@ -89,6 +94,9 @@ public class GameScreen extends BaseScreen {
         //load background music
         assetManager.load(BACKGROUND_MUSIC_PATH, Music.class);
 
+        //load sound effects
+        assetManager.load(BEEP_SOUND_PATH, Sound.class);
+
         //wait while assets are loading
         assetManager.finishLoadingAsset(BG_IMAGE_PATH);
         assetManager.finishLoadingAsset(SKYBOX_MINUS_X);
@@ -100,6 +108,7 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
         assetManager.finishLoadingAsset(ASTEROID1_IMAGE_PATH);
         assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
+        assetManager.finishLoadingAsset(BEEP_SOUND_PATH);
 
         //create new entity component system
         this.ecs = new ECS(game);
@@ -118,6 +127,9 @@ public class GameScreen extends BaseScreen {
 
         //get background music
         this.music = assetManager.get(BACKGROUND_MUSIC_PATH);
+
+        //get sound effects
+        this.beepSound = assetManager.get(BEEP_SOUND_PATH);
 
         //create skybox
         this.skyBox = new SkyBox(new Texture[]{skyBox1, skyBox2, skyBox3, skyBox4}, game.getViewportWidth(), game.getViewportHeight());
@@ -174,6 +186,7 @@ public class GameScreen extends BaseScreen {
     public void onResume() {
         //play background music
         this.music.setVolume(0.8f);
+        this.music.setLooping(true);
         this.music.play();
     }
 
@@ -195,6 +208,19 @@ public class GameScreen extends BaseScreen {
             projectile.getComponent(DrawTextureComponent.class).setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
             projectile.getComponent(MoveComponent.class).setMoving(true);
             this.ecs.addEntity(projectile);
+        }
+
+        if (lastBeep == 0) {
+            lastBeep = System.currentTimeMillis();
+        }
+
+        //play beep sound every 8 seconds
+        if (lastBeep + beepInterval < System.currentTimeMillis()) {
+            beepSound.play();
+            lastBeep = System.currentTimeMillis();
+
+            //calculate new random beep interval
+            beepInterval = 5000 + (long) (Math.random() * 5000);
         }
     }
 
