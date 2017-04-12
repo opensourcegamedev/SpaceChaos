@@ -13,6 +13,7 @@ import dev.game.spacechaos.engine.entity.listener.ComponentListener;
 import dev.game.spacechaos.engine.time.GameTime;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class DefaultCollisionManager implements CollisionManager, ComponentListe
     }
 
     @Override
-    public boolean checkForCollision(Entity entity, CollisionComponent collisionComponent, PositionComponent positionComponent) {
+    public Collection<Entity> checkForCollision(Entity entity, CollisionComponent collisionComponent, PositionComponent positionComponent) {
         throw new UnsupportedOperationException("method isnt implemented yet.");
     }
 
