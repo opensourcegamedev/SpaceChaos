@@ -53,3 +53,9 @@ Author & Copyright: SouljahdeShiva, https://opengameart.org/content/sonar-tuning
 Path: data/sound/explosions1
 License: CC-BY 3.0
 Author & Copyright: Michel Baradari http://pollo-music.de
+
+## Rock breaking
+
+Path: data/sound/rock_breaking
+License: CC-BY 3.0
+Author & Copyright: Blender Foundation
