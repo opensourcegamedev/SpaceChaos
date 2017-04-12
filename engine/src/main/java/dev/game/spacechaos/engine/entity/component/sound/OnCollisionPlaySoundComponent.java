@@ -21,12 +21,18 @@ public class OnCollisionPlaySoundComponent extends BaseComponent implements Coll
     protected Sound sound = null;
     protected float soundVolume = 1f;
 
-    public OnCollisionPlaySoundComponent (String soundPath) {
+    public OnCollisionPlaySoundComponent (String soundPath, float volume) {
         this.soundPath = soundPath;
 
         if (!new File(soundPath).exists()) {
             throw new IllegalStateException("Could not found sound file: " + soundPath);
         }
+
+        this.soundVolume = volume;
+    }
+
+    public OnCollisionPlaySoundComponent (String soundPath) {
+        this(soundPath, 0.8f);
     }
 
     @Override

@@ -47,7 +47,7 @@ public class PlayerFactory {
         player.addComponent(new OnCollisionCameraShakeComponent(), OnCollisionCameraShakeComponent.class);
 
         //add component to play a sound, if the player collides
-        player.addComponent(new OnCollisionPlaySoundComponent("./data/sound/explosions1/explodemini.wav"), OnCollisionPlaySoundComponent.class);
+        player.addComponent(new OnCollisionPlaySoundComponent("./data/sound/explosions1/explodemini.wav", 0.6f), OnCollisionPlaySoundComponent.class);
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
