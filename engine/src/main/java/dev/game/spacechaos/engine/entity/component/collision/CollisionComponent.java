@@ -1,6 +1,11 @@
 package dev.game.spacechaos.engine.entity.component.collision;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dev.game.spacechaos.engine.camera.CameraWrapper;
+import dev.game.spacechaos.engine.collision.CShape;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
+import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
@@ -25,6 +30,11 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     //list with all collision listeners
     protected List<CollisionListener> listenerList = new ArrayList<>();
 
+    //list with all collision shapes
+    protected List<CShape> collisionShapes = new ArrayList<>();
+
+    protected CCircle hullShape = null;
+
     @Override
     protected void onInit(BaseGame game, Entity entity) {
         this.positionComponent = entity.getComponent(PositionComponent.class);
@@ -38,10 +48,22 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     @Override
     public void update(BaseGame game, GameTime time) {
         //TODO: check for collision with other entities
+
+        //TODO: call listeners
+
+        //TODO: call external triggers (stop movement and so on)
     }
 
     @Override
     public ECSPriority getUpdateOrder() {
         return ECSPriority.COLLISION_DETECTION;
     }
+
+    public void drawCollisionBoxes (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
+        //first, draw hull
+        if (this.hullShape != null) {
+            this.hullShape.drawShape(time, camera, shapeRenderer, color);
+        }
+    }
+
 }

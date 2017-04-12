@@ -2,11 +2,15 @@ package dev.game.spacechaos.game.screen;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
+import dev.game.spacechaos.engine.entity.component.collision.CollisionManager;
+import dev.game.spacechaos.engine.entity.component.collision.impl.DefaultCollisionManager;
 import dev.game.spacechaos.engine.entity.impl.ECS;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
@@ -33,6 +37,8 @@ public class GameScreen extends BaseScreen {
 
     protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
 
+    protected static final Color COLLISION_BOX_COLOR = Color.BLUE;
+
     //background image
     protected Texture bgTexture = null;
 
@@ -46,8 +52,13 @@ public class GameScreen extends BaseScreen {
 
     protected Music music = null;
 
+    protected ShapeRenderer shapeRenderer = null;
+
+    protected CollisionManager collisionManager = null;
+
     public GameScreen() {
-        //
+        //create shape renderer
+        this.shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -84,6 +95,9 @@ public class GameScreen extends BaseScreen {
 
         //create new entity component system
         this.ecs = new ECS(game);
+
+        //create collision manager
+        this.collisionManager = new DefaultCollisionManager(this.ecs);
 
         //get asset
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
@@ -191,6 +205,18 @@ public class GameScreen extends BaseScreen {
 
         //reset shader, so default shader is used
         batch.setShader(null);
+
+        batch.end();
+
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        this.shapeRenderer.setProjectionMatrix(game.getCamera().getCombined());
+
+        //draw colliding objects
+        this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR);
+
+        this.shapeRenderer.end();
+
+        batch.begin();
     }
 
     @Override
