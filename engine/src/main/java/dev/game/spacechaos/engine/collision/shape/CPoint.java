@@ -20,14 +20,22 @@ public class CPoint extends CShape {
         this.y = y;
     }
 
+    public float getX () {
+        return this.x + offsetX;
+    }
+
+    public float getY () {
+        return this.y = offsetY;
+    }
+
     @Override
     public float getCenterX() {
-        return this.x;
+        return this.x + offsetX;
     }
 
     @Override
     public float getCenterY() {
-        return this.y;
+        return this.y + offsetY;
     }
 
     @Override
@@ -46,7 +54,9 @@ public class CPoint extends CShape {
 
     @Override
     public void drawShape(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
-
+        shapeRenderer.setColor(color);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.circle(getCenterX(), getCenterY(), 3);
     }
 
 }

@@ -15,7 +15,7 @@ import java.util.Collection;
  */
 public interface CollisionManager {
 
-    public void drawCollisionBoxes (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color);
+    public void drawCollisionBoxes (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color, Color inCollisionColor);
 
     /**
     * list all entities, which are colliding with this entity

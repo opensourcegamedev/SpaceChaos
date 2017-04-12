@@ -1,10 +1,12 @@
 package dev.game.spacechaos.game.entities.factory;
 
 import com.badlogic.gdx.graphics.Texture;
+import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.camera.SmoothFollowCameraComponent;
+import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MouseDependentDrawRotationAngle;
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
@@ -33,6 +35,10 @@ public class PlayerFactory {
 
         //add component to move entity dependent on mouse position
         player.addComponent(new MouseDependentMovementComponent(texture.getWidth() / 2, texture.getHeight() / 2), MouseDependentMovementComponent.class);
+
+        //add collision component, so player can collide with other space shuttles or meteorits
+        player.addComponent(new CollisionComponent(), CollisionComponent.class);
+        player.getComponent(CollisionComponent.class).setHullShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);

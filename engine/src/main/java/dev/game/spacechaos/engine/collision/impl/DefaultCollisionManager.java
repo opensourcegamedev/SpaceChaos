@@ -24,22 +24,28 @@ public class DefaultCollisionManager implements CollisionManager, ComponentListe
     //list with all collider components
     protected List<CollisionComponent> collisionComponentList = new ArrayList<>();
 
+    protected List<Entity> tmpList = new ArrayList<>();
+
     public DefaultCollisionManager (EntityManager ecs) {
         //register component listener
         ecs.registerComponentListener(this);
     }
 
     @Override
-    public void drawCollisionBoxes(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
+    public void drawCollisionBoxes(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color, Color inCollisionColor) {
         for (CollisionComponent component : this.collisionComponentList) {
             //draw collision shapes
-            component.drawCollisionBoxes(time, camera, shapeRenderer, color);
+            component.drawCollisionBoxes(time, camera, shapeRenderer, color, inCollisionColor);
         }
     }
 
     @Override
     public Collection<Entity> checkForCollision(Entity entity, CollisionComponent collisionComponent, PositionComponent positionComponent) {
-        throw new UnsupportedOperationException("method isnt implemented yet.");
+        this.tmpList.clear();
+
+        //TODO: add code here
+
+        return this.tmpList;
     }
 
     @Override
@@ -47,8 +53,13 @@ public class DefaultCollisionManager implements CollisionManager, ComponentListe
         if (component instanceof CollisionComponent) {
             CollisionComponent collisionComponent = (CollisionComponent) component;
 
+            //set collision manager
+            collisionComponent.initCollider(this);
+
             //add component to list
             this.collisionComponentList.add(collisionComponent);
+
+            //TODO: add position changed listener for quadtree
         }
     }
 

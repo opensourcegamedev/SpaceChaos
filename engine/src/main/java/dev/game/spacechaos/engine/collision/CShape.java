@@ -10,6 +10,9 @@ import dev.game.spacechaos.engine.time.GameTime;
  */
 public abstract class CShape {
 
+    protected float offsetX = 0;
+    protected float offsetY = 0;
+
     public abstract float getCenterX ();
 
     public abstract float getCenterY ();
@@ -17,5 +20,10 @@ public abstract class CShape {
     public abstract boolean overlaps (CShape obj);
 
     public abstract void drawShape (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color);
+
+    public void setOffset (float x, float y) {
+        this.offsetX = x;
+        this.offsetY = y;
+    }
 
 }

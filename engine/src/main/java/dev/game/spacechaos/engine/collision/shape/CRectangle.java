@@ -36,11 +36,11 @@ public class CRectangle extends CShape {
     }
 
     public float getX () {
-        return this.x;
+        return this.x + offsetX;
     }
 
     public float getY () {
-        return this.y;
+        return this.y + offsetY;
     }
 
     public float getWidth () {
@@ -53,12 +53,12 @@ public class CRectangle extends CShape {
 
     @Override
     public float getCenterX() {
-        return x + (width / 2);
+        return x + (width / 2) + offsetX;
     }
 
     @Override
     public float getCenterY() {
-        return y + (height / 2);
+        return y + (height / 2) + offsetY;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class CRectangle extends CShape {
             CRectangle rect = (CRectangle) obj;
 
             //test, if rectangle overlaps other rectangle
-            return x <= rect.x + rect.width && x + width >= rect.x && y <= rect.y + rect.height && y + height >= rect.y;
+            return x <= rect.getX() + rect.width && getX() + width >= rect.getX() && getY() <= rect.getY() + rect.height && getY() + height >= rect.getY();
         } else {
             throw new IllegalArgumentException("shape class " + obj.getClass() + " isnt supported.");
         }
@@ -77,8 +77,8 @@ public class CRectangle extends CShape {
     @Override
     public void drawShape(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
         shapeRenderer.setColor(color);
-        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.rect(this.x, this.y, this.width, this.height);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.rect(this.getX(), this.getY(), this.width, this.height);
     }
 
 }

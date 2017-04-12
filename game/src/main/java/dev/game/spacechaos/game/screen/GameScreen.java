@@ -38,6 +38,7 @@ public class GameScreen extends BaseScreen {
     protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
 
     protected static final Color COLLISION_BOX_COLOR = Color.BLUE;
+    protected static final Color IN_COLLISION_COLOR = Color.YELLOW;
 
     //background image
     protected Texture bgTexture = null;
@@ -208,11 +209,12 @@ public class GameScreen extends BaseScreen {
 
         batch.end();
 
-        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setProjectionMatrix(game.getCamera().getCombined());
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        this.shapeRenderer.setColor(Color.BLACK);
 
         //draw colliding objects
-        this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR);
+        this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR, IN_COLLISION_COLOR);
 
         this.shapeRenderer.end();
 

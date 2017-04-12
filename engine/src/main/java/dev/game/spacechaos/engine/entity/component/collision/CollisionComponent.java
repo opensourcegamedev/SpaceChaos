@@ -35,15 +35,15 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     //list with all collision shapes
     protected List<CShape> collisionShapes = new ArrayList<>();
 
-    protected CCircle hullShape = null;
+    protected CShape hullShape = null;
 
     protected CollisionManager collisionManager = null;
     protected List<Entity> alreadyInCollisionEntities = new ArrayList<>();
     protected boolean alreadyInCollision = false;
     protected List<Entity> tmpList = new ArrayList<>();
 
-    public CollisionComponent (CollisionManager collisionManager) {
-        this.collisionManager = collisionManager;
+    public CollisionComponent () {
+        //
     }
 
     @Override
@@ -56,10 +56,33 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         }
     }
 
+    public void initCollider (CollisionManager collisionManager) {
+        this.collisionManager = collisionManager;
+    }
+
+    public CShape getHullShape () {
+        return this.hullShape;
+    }
+
+    public void setHullShape (CShape shape) {
+        this.hullShape = shape;
+    }
+
+    public List<CShape> listCollisionShapes () {
+        return this.collisionShapes;
+    }
+
     @Override
     public void update(BaseGame game, GameTime time) {
         //clear temporary list
         this.tmpList.clear();
+
+        //update shape positions
+        this.hullShape.setOffset(positionComponent.getX(), positionComponent.getY());
+
+        for (CShape shape : this.collisionShapes) {
+            shape.setOffset(positionComponent.getX(), positionComponent.getY());
+        }
 
         //check for collision with other entities
         Collection<Entity> collidedEntities = this.collisionManager.checkForCollision(entity, this, this.positionComponent);
@@ -142,7 +165,15 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         return ECSPriority.COLLISION_DETECTION;
     }
 
-    public void drawCollisionBoxes (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
+    public void drawCollisionBoxes (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color baseColor, Color inCollisionColor) {
+        Color color = null;
+
+        if (alreadyInCollision) {
+            color = inCollisionColor;
+        } else {
+            color = baseColor;
+        }
+
         //first, draw hull
         if (this.hullShape != null) {
             this.hullShape.drawShape(time, camera, shapeRenderer, color);

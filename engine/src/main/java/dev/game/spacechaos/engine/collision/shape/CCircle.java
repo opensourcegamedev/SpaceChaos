@@ -28,12 +28,12 @@ public class CCircle extends CShape {
 
     @Override
     public float getCenterX() {
-        return this.x;
+        return this.x + offsetX;
     }
 
     @Override
     public float getCenterY() {
-        return this.y;
+        return this.y + offsetY;
     }
 
     public float getRadius () {
@@ -45,8 +45,8 @@ public class CCircle extends CShape {
         if (obj instanceof CCircle) {
             CCircle circle = (CCircle) obj;
 
-            float dx = x - circle.x;
-            float dy = y - circle.y;
+            float dx = getCenterX() - circle.getCenterX();
+            float dy = getCenterY() - circle.getCenterY();
             float distance = dx * dx + dy * dy;
             float radiusSum = radius + circle.radius;
 
@@ -61,8 +61,8 @@ public class CCircle extends CShape {
     @Override
     public void drawShape(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
         shapeRenderer.setColor(color);
-        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.circle(this.x, this.y, this.radius);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.circle(getCenterX(), getCenterY(), this.radius);
     }
 
 }
