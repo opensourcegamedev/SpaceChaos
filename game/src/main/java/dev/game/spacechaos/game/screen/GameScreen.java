@@ -1,5 +1,7 @@
 package dev.game.spacechaos.game.screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +13,8 @@ import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.impl.DefaultCollisionManager;
+import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
+import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.impl.ECS;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
@@ -18,6 +22,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
 import dev.game.spacechaos.game.entities.factory.MeteoritFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
+import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 import dev.game.spacechaos.game.skybox.SkyBox;
 
 /**
@@ -32,7 +37,7 @@ public class GameScreen extends BaseScreen {
     protected static final String SKYBOX_MINUS_Y = "./data/images/skybox/galaxy/galaxy-Y.png";
     protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/starships/spaceshuttle.png";
     protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
-    //protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
+    protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
     protected static final String ASTEROID1_IMAGE_PATH = "./data/images/entities/asteroids/asteroid1_brown.png";
 
     protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
@@ -42,6 +47,8 @@ public class GameScreen extends BaseScreen {
 
     //background image
     protected Texture bgTexture = null;
+
+    protected Texture projectileTexture = null;
 
     protected SkyBox skyBox = null;
 
@@ -74,7 +81,7 @@ public class GameScreen extends BaseScreen {
         assetManager.load(SKYBOX_PLUS_Y, Texture.class);
         assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
         assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
-        //assetManager.load(PROJECTILE_IMAGE_PATH, Texture.class);
+        assetManager.load(PROJECTILE_IMAGE_PATH, Texture.class);
 
         //load collision objects
         assetManager.load(ASTEROID1_IMAGE_PATH, Texture.class);
@@ -90,7 +97,7 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(SKYBOX_PLUS_Y);
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
-        //assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
+        assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
         assetManager.finishLoadingAsset(ASTEROID1_IMAGE_PATH);
         assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
 
@@ -102,6 +109,7 @@ public class GameScreen extends BaseScreen {
 
         //get asset
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
+        this.projectileTexture = assetManager.get(PROJECTILE_IMAGE_PATH, Texture.class);
 
         Texture skyBox1 = assetManager.get(SKYBOX_MINUS_X);
         Texture skyBox2 = assetManager.get(SKYBOX_PLUS_X);
@@ -179,6 +187,15 @@ public class GameScreen extends BaseScreen {
     public void update(ScreenBasedGame game, GameTime time) {
         //update entities
         this.ecs.update(game, time);
+        //check for shoot
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            Entity projectile = ProjectileFactory.createProjectile(this.ecs, this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
+                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(), projectileTexture, this.playerEntity.getComponent(MoveComponent.class).getMoveDirection().x,
+                    this.playerEntity.getComponent(MoveComponent.class).getMoveDirection().y, 4f, 4000L);
+            projectile.getComponent(DrawTextureComponent.class).setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
+            projectile.getComponent(MoveComponent.class).setMoving(true);
+            this.ecs.addEntity(projectile);
+        }
     }
 
     @Override

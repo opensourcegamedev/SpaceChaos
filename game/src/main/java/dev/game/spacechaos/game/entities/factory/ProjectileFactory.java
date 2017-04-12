@@ -3,28 +3,50 @@ package dev.game.spacechaos.game.entities.factory;
 import com.badlogic.gdx.graphics.Texture;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
+import dev.game.spacechaos.engine.entity.component.PositionComponent;
+import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovementComponent;
+import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
+import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
+import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
+import dev.game.spacechaos.engine.entity.component.utils.TimedAutoRemoveComponent;
 
 /**
  * Created by Justin on 10.04.2017.
  */
+
 public class ProjectileFactory {
 
     /**
-    * create an new projectile entity
+     * create an new projectile entity
      *
-     * @param ecs entity component system
-     * @param x x start position of projectile
-     * @param y y start position of projectile
+     * @param ecs     entity component system
+     * @param x       x start position of projectile
+     * @param y       y start position of projectile
      * @param texture texture of projectile
-     * @param moveX x move direction (for example to move to left: x = -1, y = 0)
-     * @param moveY y move direction (for example to move to left: x = -1, y = 0)
-     * @param speed movement speed
-     * @param ttl time to live of projectile (after this time in milliseconds the entity will removed automatically)
-     *
+     * @param moveX   x move direction (for example to move to left: x = -1, y = 0)
+     * @param moveY   y move direction (for example to move to left: x = -1, y = 0)
+     * @param speed   movement speed
+     * @param ttl     time to live of projectile (after this time in milliseconds the entity will removed automatically)
      * @return projectile entity
-    */
-    public static Entity createProjectile (EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, float ttl) {
-        throw new UnsupportedOperationException("method isnt implemented yet.");
+     */
+
+    public static Entity createProjectile(EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, long ttl) {
+        //create new entity
+        Entity projectileEntity = new Entity(ecs);
+
+        //every entity requires a position component
+        projectileEntity.addComponent(new PositionComponent(x, y), PositionComponent.class);
+
+        //add texture component to draw texture
+        projectileEntity.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2), DrawTextureComponent.class);
+
+        //add component to move entity
+        projectileEntity.addComponent(new MoveComponent(moveX, moveY, speed), MoveComponent.class);
+
+        //add component to auto remove projectile after a given time
+        projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl));
+
+        return projectileEntity;
     }
 
 }

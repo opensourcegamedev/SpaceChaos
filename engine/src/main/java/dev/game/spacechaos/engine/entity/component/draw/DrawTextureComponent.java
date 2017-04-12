@@ -27,7 +27,7 @@ public class DrawTextureComponent extends DrawComponent {
         }
 
         if (!texture.isManaged()) {
-            throw new IllegalStateException("texture isnt loaded.");
+            throw new IllegalStateException("texture isn't loaded.");
         }
 
         this.texture = texture;
@@ -46,7 +46,7 @@ public class DrawTextureComponent extends DrawComponent {
     }
 
     @Override
-    public void afterInit (BaseGame game, Entity entity) {
+    public void afterInit(BaseGame game, Entity entity) {
         //set new width and height of entity
         positionComponent.setDimension(texture.getWidth(), texture.getHeight());
 
@@ -54,8 +54,9 @@ public class DrawTextureComponent extends DrawComponent {
         setDimension(texture.getWidth(), texture.getHeight());
     }
 
-    @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
-        //if no texture is set, we dont have to draw anything
+    @Override
+    public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //if no texture is set, we don't have to draw anything
         if (this.texture == null) {
             return;
         }
@@ -83,15 +84,16 @@ public class DrawTextureComponent extends DrawComponent {
         }
     }
 
-    @Override public ECSPriority getDrawOrder() {
+    @Override
+    public ECSPriority getDrawOrder() {
         return ECSPriority.LOW;
     }
 
-    public Texture getTexture () {
+    public Texture getTexture() {
         return this.texture;
     }
 
-    public void setTexture (Texture texture, boolean setNewDimension) {
+    public void setTexture(Texture texture, boolean setNewDimension) {
         Texture oldTexture = this.texture;
         this.texture = texture;
 
@@ -114,11 +116,11 @@ public class DrawTextureComponent extends DrawComponent {
         });
     }
 
-    public void addTextureChangedListener (TextureChangedListener listener) {
+    public void addTextureChangedListener(TextureChangedListener listener) {
         this.textureChangedListenerList.add(listener);
     }
 
-    public void removeTextureChangedListener (TextureChangedListener listener) {
+    public void removeTextureChangedListener(TextureChangedListener listener) {
         this.textureChangedListenerList.remove(listener);
     }
 
