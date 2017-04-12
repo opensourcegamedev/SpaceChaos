@@ -1,10 +1,12 @@
 package dev.game.spacechaos.game.entities.factory;
 
 import com.badlogic.gdx.graphics.Texture;
+import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovementComponent;
+import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
@@ -32,6 +34,10 @@ public class EnemyFactory {
 
         //add component to follow player
         enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity), SimpleFollowAIMovementComponent.class);
+
+        //add collision component, so player can collide with other space shuttles or meteorits
+        enemyEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
+        enemyEntity.getComponent(CollisionComponent.class).setHullShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         return enemyEntity;
     }
