@@ -138,7 +138,7 @@ public class GameScreen extends BaseScreen {
         this.fireSound = assetManager.get(FIRE_SHOOT_SOUND);
 
         //create skybox
-        this.skyBox = new SkyBox(new Texture[]{skyBox1, skyBox2, skyBox3, skyBox4}, game.getViewportWidth(), game.getViewportHeight());
+        this.skyBox = new SkyBox(new Texture[]{/*skyBox1, skyBox2, skyBox3, skyBox4*/skyBox2}, game.getViewportWidth(), game.getViewportHeight());
 
         //create new player entity and add to entity-component-system
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class));
