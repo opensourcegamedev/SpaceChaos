@@ -90,9 +90,13 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
         if (length > minMouseDistance) {
             //set movement direction
             moveComponent.setMoveDirection(tmpVector.x, tmpVector.y);
+
+            //set moving flag
+            moveComponent.setMoving(true);
         } else {
             //dont move entity
             moveComponent.setMoveDirection(0, 0);
+            moveComponent.setMoving(false);
         }
     }
 

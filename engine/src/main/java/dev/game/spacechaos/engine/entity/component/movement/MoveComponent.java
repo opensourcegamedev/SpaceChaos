@@ -47,13 +47,13 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        if (moveDirection.x == 0 && moveDirection.y == 0) {
+        /*if (moveDirection.x == 0 && moveDirection.y == 0) {
             //set flag
             isMoving = false;
         } else {
             //set flag
             isMoving = true;
-        }
+        }*/
 
         if (!isMoving) {
             //we dont have to move entity
@@ -97,11 +97,11 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
     public void setMoveDirection (float x, float y) {
         this.moveDirection.set(x, y);
-        this.moveDirection.nor();
 
-        if (moveDirection.x == 0 && moveDirection.y == 0) {
+        if (x == 0 && y == 0) {
             this.isMoving = false;
         } else {
+            this.moveDirection.nor();
             this.isMoving = true;
         }
     }

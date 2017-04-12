@@ -24,6 +24,8 @@ public class SimpleFollowAIMovementComponent extends BaseComponent implements IU
     protected Entity targetEntity = null;
     protected PositionComponent targetPosition = null;
 
+    protected float minLength = 1;
+
     //move direction
     private Vector2 moveDir = new Vector2(0, 0);
 
@@ -59,7 +61,21 @@ public class SimpleFollowAIMovementComponent extends BaseComponent implements IU
     @Override
     public void update(BaseGame game, GameTime time) {
         //calculate target direction and move in this direction
-        moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(), targetPosition.getMiddleY() - positionComponent.getMiddleY()).nor();
+        moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(), targetPosition.getMiddleY() - positionComponent.getMiddleY());
+
+        //get length
+        float length = moveDir.len();
+
+        //avoid jerky
+        if (length < this.minLength) {
+            //dont move entity
+            moveComponent.setMoveDirection(0, 0);
+            moveComponent.setMoving(false);
+
+            return;
+        }
+
+        moveDir.nor();
 
         //set move direction
         moveComponent.setMoveDirection(moveDir.x, moveDir.y);
