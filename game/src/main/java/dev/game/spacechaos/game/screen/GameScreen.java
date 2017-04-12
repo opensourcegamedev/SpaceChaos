@@ -43,6 +43,7 @@ public class GameScreen extends BaseScreen {
 
     protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
     protected static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
+    protected static final String FIRE_SHOOT_SOUND = "./data/sound/spaceshipshooting/Longshot.ogg";
 
     protected static final Color COLLISION_BOX_COLOR = Color.BLUE;
     protected static final Color IN_COLLISION_COLOR = Color.YELLOW;
@@ -64,6 +65,7 @@ public class GameScreen extends BaseScreen {
     protected Sound beepSound = null;
     protected long lastBeep = 0;
     protected long beepInterval = 8000;
+    protected Sound fireSound = null;
 
     protected ShapeRenderer shapeRenderer = null;
 
@@ -96,6 +98,7 @@ public class GameScreen extends BaseScreen {
 
         //load sound effects
         assetManager.load(BEEP_SOUND_PATH, Sound.class);
+        assetManager.load(FIRE_SHOOT_SOUND, Sound.class);
 
         //wait while assets are loading
         assetManager.finishLoadingAsset(BG_IMAGE_PATH);
@@ -109,6 +112,7 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(ASTEROID1_IMAGE_PATH);
         assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
         assetManager.finishLoadingAsset(BEEP_SOUND_PATH);
+        assetManager.finishLoadingAsset(FIRE_SHOOT_SOUND);
 
         //create new entity component system
         this.ecs = new ECS(game);
@@ -130,6 +134,7 @@ public class GameScreen extends BaseScreen {
 
         //get sound effects
         this.beepSound = assetManager.get(BEEP_SOUND_PATH);
+        this.fireSound = assetManager.get(FIRE_SHOOT_SOUND);
 
         //create skybox
         this.skyBox = new SkyBox(new Texture[]{skyBox1, skyBox2, skyBox3, skyBox4}, game.getViewportWidth(), game.getViewportHeight());
@@ -208,6 +213,9 @@ public class GameScreen extends BaseScreen {
             projectile.getComponent(DrawTextureComponent.class).setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
             projectile.getComponent(MoveComponent.class).setMoving(true);
             this.ecs.addEntity(projectile);
+
+            //play fire sound
+            this.fireSound.play(0.8f);
         }
 
         if (lastBeep == 0) {
