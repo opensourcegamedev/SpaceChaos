@@ -16,8 +16,6 @@ public class OnCollisionCameraShakeComponent extends BaseComponent implements Co
 
     protected CollisionComponent collisionComponent = null;
 
-    protected int i = 0;
-
     @Override
     protected void onInit(BaseGame game, Entity entity) {
         this.collisionComponent = entity.getComponent(CollisionComponent.class);

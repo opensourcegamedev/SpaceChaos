@@ -12,6 +12,7 @@ import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MouseDependentDrawRotationAngle;
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
+import dev.game.spacechaos.engine.entity.component.sound.OnCollisionPlaySoundComponent;
 
 /**
  * Created by Justin on 07.04.2017.
@@ -44,6 +45,9 @@ public class PlayerFactory {
 
         //add component to shake camera, if player collides with other objects
         player.addComponent(new OnCollisionCameraShakeComponent(), OnCollisionCameraShakeComponent.class);
+
+        //add component to play a sound, if the player collides
+        player.addComponent(new OnCollisionPlaySoundComponent("./data/sound/explosions1/explodemini.wav"), OnCollisionPlaySoundComponent.class);
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
