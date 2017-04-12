@@ -117,6 +117,8 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
                 //entity was already in collision
                 callCollisionStayListeners(collisionEntity);
             } else {
+                this.alreadyInCollisionEntities.add(collisionEntity);
+
                 //new collision
                 callCollisionEnterListeners(collisionEntity);
             }
@@ -181,6 +183,14 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
 
     public Entity getEntity () {
         return this.entity;
+    }
+
+    public void addCollisionListener (CollisionListener listener) {
+        this.listenerList.add(listener);
+    }
+
+    public void removeCollisionListener (CollisionListener listener) {
+        this.listenerList.remove(listener);
     }
 
     /**
