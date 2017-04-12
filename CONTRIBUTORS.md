@@ -12,7 +12,7 @@ Here you can see an list of all contributors and used assets from external autho
 
 Path: data/images/skybox/galaxy
 License: CC-BY 3.0 or CC-BY-SA 3.0 (Dual licensed)
-Author: hackcraft.de
+Author & Copyright: hackcraft.de
 
 Skybox was downloaded from http://opengameart.org/content/galaxy-skybox .
 Donation by hackcraft.de
@@ -23,14 +23,14 @@ Donation by hackcraft.de
 
 Path: data/images/entities/asteroids2
 License: CC-BY-SA 3.0
-Author: phaelax
+Author & Copyright: phaelax
 Link: https://opengameart.org/content/asteroids
 
 ## Shield Effect
 
 Path: data/images/fx/shield-effect
 License: CC-BY 3.0
-Author: Bonsaiheldin | http://bonsaiheld.org
+Author & Copyright: Bonsaiheldin | http://bonsaiheld.org
 
 # External music
 
@@ -38,10 +38,18 @@ Author: Bonsaiheldin | http://bonsaiheld.org
 
 Path: data/music/sci-fi-menus-2-shorts-tracks, data/music/i-know-your-secret
 License: CC-BY 3.0
-Author: Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
+Author & Copyright: Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
 
 ## Sonar Tuning Electro Track
 
 Path: data/music/sonar-tuning-electro-track
 License: CC-BY 3.0
-Author: SouljahdeShiva, https://opengameart.org/content/sonar-tuning-electro-track
+Author & Copyright: SouljahdeShiva, https://opengameart.org/content/sonar-tuning-electro-track
+
+# External sound effects
+
+## Explosion
+
+Path: data/sound/explosions1
+License: CC-BY 3.0
+Author & Copyright: Michel Baradari http://pollo-music.de
