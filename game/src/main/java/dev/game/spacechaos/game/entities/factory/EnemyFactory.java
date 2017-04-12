@@ -37,7 +37,8 @@ public class EnemyFactory {
 
         //add collision component, so player can collide with other space shuttles or meteorits
         enemyEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
-        enemyEntity.getComponent(CollisionComponent.class).setHullShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
+        //enemyEntity.getComponent(CollisionComponent.class).setHullShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
+        enemyEntity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         return enemyEntity;
     }

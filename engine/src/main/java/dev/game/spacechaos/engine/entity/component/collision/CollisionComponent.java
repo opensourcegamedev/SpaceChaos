@@ -70,6 +70,14 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         this.hullShape = shape;
     }
 
+    public void addInnerShape (CShape shape) {
+        this.collisionShapes.add(shape);
+    }
+
+    public void removeInnerShape (CShape shape) {
+        this.collisionShapes.remove(shape);
+    }
+
     public List<CShape> listCollisionShapes () {
         return this.collisionShapes;
     }
@@ -80,7 +88,9 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         this.tmpList.clear();
 
         //update shape positions
-        this.hullShape.setOffset(positionComponent.getX(), positionComponent.getY());
+        if (this.hullShape != null) {
+            this.hullShape.setOffset(positionComponent.getX(), positionComponent.getY());
+        }
 
         for (CShape shape : this.collisionShapes) {
             shape.setOffset(positionComponent.getX(), positionComponent.getY());
@@ -180,7 +190,13 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         //first check hull
         if (this.hullShape == null || this.hullShape.overlaps(collisionComponent.getHullShape())) {
             //check inner shapes
-            return true;
+            for (CShape shape : this.listCollisionShapes()) {
+                for (CShape shape1 : collisionComponent.listCollisionShapes()) {
+                    if (shape.overlaps(shape1)) {
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;
@@ -198,6 +214,11 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         //first, draw hull
         if (this.hullShape != null) {
             this.hullShape.drawShape(time, camera, shapeRenderer, color);
+        }
+
+        //draw inner shapes
+        for (CShape shape : this.collisionShapes) {
+            shape.drawShape(time, camera, shapeRenderer, color);
         }
     }
 
