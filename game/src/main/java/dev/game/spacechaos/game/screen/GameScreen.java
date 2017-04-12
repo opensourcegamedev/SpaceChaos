@@ -15,6 +15,7 @@ import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.impl.DefaultCollisionManager;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
+import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.impl.ECS;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
@@ -205,11 +206,17 @@ public class GameScreen extends BaseScreen {
     public void update(ScreenBasedGame game, GameTime time) {
         //update entities
         this.ecs.update(game, time);
+
         //check for shoot
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity.getComponent(MouseDependentMovementComponent.class);
+
+            float dirX = mouseDependentMovementComponent.getFrontVec().x;
+            float dirY = mouseDependentMovementComponent.getFrontVec().y;
+
             Entity projectile = ProjectileFactory.createProjectile(this.ecs, this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(), projectileTexture, this.playerEntity.getComponent(MoveComponent.class).getMoveDirection().x,
-                    this.playerEntity.getComponent(MoveComponent.class).getMoveDirection().y, 4f, 4000L);
+                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(), projectileTexture, dirX,
+                    dirY, 4f, 4000L);
             projectile.getComponent(DrawTextureComponent.class).setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
             projectile.getComponent(MoveComponent.class).setMoving(true);
             this.ecs.addEntity(projectile);
