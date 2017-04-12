@@ -3,7 +3,6 @@ package dev.game.spacechaos.engine.collision.shape;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by Justin on 10.04.2017.

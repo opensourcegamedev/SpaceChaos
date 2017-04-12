@@ -1,4 +1,4 @@
-package dev.game.spacechaos.engine.entity.component.collision.impl;
+package dev.game.spacechaos.engine.collision.impl;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -7,7 +7,7 @@ import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.IComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
-import dev.game.spacechaos.engine.entity.component.collision.CollisionManager;
+import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.entity.listener.ComponentListener;
 import dev.game.spacechaos.engine.time.GameTime;
 
