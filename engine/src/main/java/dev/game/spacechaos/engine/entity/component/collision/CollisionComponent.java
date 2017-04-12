@@ -10,6 +10,7 @@ import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
@@ -24,6 +25,7 @@ import java.util.List;
 /**
  * Created by Justin on 12.04.2017.
  */
+@RequiredComponents(components = PositionComponent.class)
 public class CollisionComponent extends BaseComponent implements IUpdateComponent {
 
     protected PositionComponent positionComponent = null;
@@ -91,6 +93,8 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
 
         if (!collided) {
             exitAllCollisions();
+
+            this.alreadyInCollision = collided;
 
             return;
         }
@@ -163,6 +167,23 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     @Override
     public ECSPriority getUpdateOrder() {
         return ECSPriority.COLLISION_DETECTION;
+    }
+
+    public Entity getEntity () {
+        return this.entity;
+    }
+
+    /**
+    * check, if entity collides with this entity
+    */
+    public boolean overlaps (CollisionComponent collisionComponent) {
+        //first check hull
+        if (this.hullShape == null || this.hullShape.overlaps(collisionComponent.getHullShape())) {
+            //check inner shapes
+            return true;
+        }
+
+        return false;
     }
 
     public void drawCollisionBoxes (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color baseColor, Color inCollisionColor) {

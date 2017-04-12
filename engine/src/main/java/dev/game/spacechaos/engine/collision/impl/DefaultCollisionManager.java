@@ -43,7 +43,22 @@ public class DefaultCollisionManager implements CollisionManager, ComponentListe
     public Collection<Entity> checkForCollision(Entity entity, CollisionComponent collisionComponent, PositionComponent positionComponent) {
         this.tmpList.clear();
 
-        //TODO: add code here
+        //TODO: use quadtree instead
+
+        for (CollisionComponent collisionComponent1 : this.collisionComponentList) {
+            Entity entity1 = collisionComponent1.getEntity();
+
+            if (entity == entity1) {
+                //its own entity
+                continue;
+            }
+
+            //check for collision
+            if (collisionComponent1.overlaps(collisionComponent)) {
+                //collision detected
+                tmpList.add(collisionComponent1.getEntity());
+            }
+        }
 
         return this.tmpList;
     }
