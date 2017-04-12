@@ -21,7 +21,7 @@ public interface CollisionListener {
      * @param entity entity which collides with other entity
      * @param otherEntity other entity
      */
-    public void onCollision (Entity entity, Entity otherEntity);
+    public void onStay(Entity entity, Entity otherEntity);
 
     /**
      * on exit collision (no colliding anymore)

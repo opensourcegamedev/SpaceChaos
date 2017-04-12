@@ -6,6 +6,7 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.IComponent;
+import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.entity.listener.ComponentListener;
@@ -33,6 +34,11 @@ public class DefaultCollisionManager implements CollisionManager, ComponentListe
             //draw collision shapes
             component.drawCollisionBoxes(time, camera, shapeRenderer, color);
         }
+    }
+
+    @Override
+    public boolean checkForCollision(Entity entity, CollisionComponent collisionComponent, PositionComponent positionComponent) {
+        throw new UnsupportedOperationException("method isnt implemented yet.");
     }
 
     @Override

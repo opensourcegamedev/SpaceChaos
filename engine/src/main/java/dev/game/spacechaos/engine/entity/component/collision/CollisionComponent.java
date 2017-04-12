@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.collision.CShape;
+import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.BaseComponent;
@@ -17,6 +18,7 @@ import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,6 +37,15 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
 
     protected CCircle hullShape = null;
 
+    protected CollisionManager collisionManager = null;
+    protected List<Entity> alreadyInCollisionEntities = new ArrayList<>();
+    protected boolean alreadyInCollision = false;
+    protected List<Entity> tmpList = new ArrayList<>();
+
+    public CollisionComponent (CollisionManager collisionManager) {
+        this.collisionManager = collisionManager;
+    }
+
     @Override
     protected void onInit(BaseGame game, Entity entity) {
         this.positionComponent = entity.getComponent(PositionComponent.class);
@@ -47,11 +58,83 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //TODO: check for collision with other entities
+        //clear temporary list
+        this.tmpList.clear();
 
-        //TODO: call listeners
+        //check for collision with other entities
+        Collection<Entity> collidedEntities = this.collisionManager.checkForCollision(entity, this, this.positionComponent);
+
+        boolean collided = collidedEntities.size() > 0;
+
+        if (!collided) {
+            exitAllCollisions();
+
+            return;
+        }
+
+        //entity is in collision
+
+        for (Entity collisionEntity : collidedEntities) {
+            //check, if entity was already in collision
+            if (this.alreadyInCollisionEntities.contains(collisionEntity)) {
+                //entity was already in collision
+                callCollisionStayListeners(collisionEntity);
+            } else {
+                //new collision
+                callCollisionEnterListeners(collisionEntity);
+            }
+        }
+
+        //check, if entities have exit collision
+        for (Entity collisionEntity : this.alreadyInCollisionEntities) {
+            if (!collidedEntities.contains(collisionEntity)) {
+                //entity has exit collision
+                callCollisionExitListeners(collisionEntity);
+
+                //add to list, so we can remove entity from list after iteration
+                tmpList.add(collisionEntity);
+            }
+        }
+
+        this.alreadyInCollisionEntities.removeAll(tmpList);
 
         //TODO: call external triggers (stop movement and so on)
+
+        //update flag
+        this.alreadyInCollision = collided;
+    }
+
+    protected void exitAllCollisions () {
+        for (Entity collisionEntity : this.alreadyInCollisionEntities) {
+            //call exit listeners
+            for (CollisionListener listener : this.listenerList) {
+                listener.onExit(entity, collisionEntity);
+            }
+        }
+
+        //clear list
+        this.alreadyInCollisionEntities.clear();
+    }
+
+    protected void callCollisionEnterListeners (Entity collisionEntity) {
+        //call collision listeners
+        for (CollisionListener listener : this.listenerList) {
+            listener.onEnter(entity, collisionEntity);
+        }
+    }
+
+    protected void callCollisionStayListeners (Entity collisionEntity) {
+        //call collision listeners
+        for (CollisionListener listener : this.listenerList) {
+            listener.onStay(entity, collisionEntity);
+        }
+    }
+
+    protected void callCollisionExitListeners (Entity collisionEntity) {
+        //call collision listeners
+        for (CollisionListener listener : this.listenerList) {
+            listener.onExit(entity, collisionEntity);
+        }
     }
 
     @Override
