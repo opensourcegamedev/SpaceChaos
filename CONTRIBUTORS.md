@@ -32,6 +32,12 @@ Path: data/images/fx/shield-effect
 License: CC-BY 3.0
 Author & Copyright: Bonsaiheldin | http://bonsaiheld.org
 
+## some space shooter graphics
+
+Path: data/images/entities/spaceshooter, data/images/entities/kenney_spaceShooterExtension
+License: CC0
+Author & Copyright: Kenney Vleugels (Kenney.nl)
+
 # External music
 
 ## Sci-Fi Menu Soundtracks
