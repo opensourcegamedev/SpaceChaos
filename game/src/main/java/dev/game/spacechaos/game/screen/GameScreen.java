@@ -19,6 +19,7 @@ import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMoveme
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.impl.ECS;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
+import dev.game.spacechaos.engine.input.InputStates;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
@@ -208,7 +209,7 @@ public class GameScreen extends BaseScreen {
         this.ecs.update(game, time);
 
         //check for shoot
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || InputStates.isLeftMouseButtonJustPressed()) {
             MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity.getComponent(MouseDependentMovementComponent.class);
 
             float dirX = mouseDependentMovementComponent.getFrontVec().x;
