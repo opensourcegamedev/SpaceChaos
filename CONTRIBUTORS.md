@@ -69,3 +69,7 @@ Author & Copyright: Blender Foundation
 ## Others
 
 Also thanks to https://opengameart.org/content/the-free-firearm-sound-library for some free sounds!
+
+# Fonts
+  - SparTakus (SIL Open Font License by Peter Wiegel, http://www.peter-wiegel.de/)
+  - Arial

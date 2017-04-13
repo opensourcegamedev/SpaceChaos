@@ -1,0 +1,5 @@
+https://github.com/JotJunior/PHP-Boleto-ZF2/blob/master/public/assets/fonts/arial.ttf
+
+Arial is an font from microsoft.
+For license, see microsoft website:
+https://www.microsoft.com/typography/fonts/font.aspx?FMID=1909
