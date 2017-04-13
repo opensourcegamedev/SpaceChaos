@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
@@ -192,11 +193,29 @@ public class GameScreen extends BaseScreen {
             this.enemyEntityList.add(enemyEntity);
         }
 
+        float minDistance = 800;
+
+        float playerPosX = playerEntity.getComponent(PositionComponent.class).getMiddleX();
+        float playerPosY = playerEntity.getComponent(PositionComponent.class).getMiddleY();
+
+        Vector2 tmpVector = new Vector2();
+
         //add some random meteorits
-        for (int i = 0; i < 90; i++) {
-            //calculate random enemy position near player
-            float x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
-            float y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
+        for (int i = 0; i < 60; i++) {
+            float distance = 0;
+
+            float x = 0;
+            float y = 0;
+
+            while (distance < minDistance) {
+                //calculate random enemy position near player
+                x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
+                y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
+
+                tmpVector.set(playerPosX - x, playerPosY - y);
+                distance = tmpVector.len();
+            }
+
             //create and add new meteorit
             Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager.get(ASTEROID1_IMAGE_PATH));
             this.ecs.addEntity(entity);
