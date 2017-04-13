@@ -19,6 +19,7 @@ import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.impl.ECS;
+import dev.game.spacechaos.engine.entity.listener.HPHitListener;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.input.InputStates;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
@@ -152,41 +153,6 @@ public class GameScreen extends BaseScreen {
 
         //create skybox
         this.skyBox = new SkyBox(new Texture[]{/*skyBox1, skyBox2, skyBox3, skyBox4*/skyBox2}, game.getViewportWidth(), game.getViewportHeight());
-
-        //create new player entity and add to entity-component-system
-        this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class));
-        this.ecs.addEntity(this.playerEntity);
-
-        //spawn enemy shuttles
-        spawnEnemyShuttles(5);
-
-        float minDistance = 800;
-
-        float playerPosX = playerEntity.getComponent(PositionComponent.class).getMiddleX();
-        float playerPosY = playerEntity.getComponent(PositionComponent.class).getMiddleY();
-
-        Vector2 tmpVector = new Vector2();
-
-        //add some random meteorits
-        for (int i = 0; i < 90; i++) {
-            float distance = 0;
-
-            float x = 0;
-            float y = 0;
-
-            while (distance < minDistance) {
-                //calculate random enemy position near player
-                x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
-                y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
-
-                tmpVector.set(playerPosX - x, playerPosY - y);
-                distance = tmpVector.len();
-            }
-
-            //create and add new meteorit
-            Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager.get(ASTEROID1_IMAGE_PATH));
-            this.ecs.addEntity(entity);
-        }
     }
 
     protected void spawnEnemyShuttles (int amount) {
@@ -234,6 +200,51 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void onResume() {
+        //remove all entities
+        this.ecs.removeAllEntities();
+        this.enemyEntityList.clear();
+
+        //create new player entity and add to entity-component-system
+        this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), new HPHitListener() {
+            @Override
+            public void onHit(float oldValue, float newValue, float maxHP) {
+                System.out.println("game over");
+            }
+        });
+
+        this.ecs.addEntity(this.playerEntity);
+
+        //spawn enemy shuttles
+        spawnEnemyShuttles(5);
+
+        float minDistance = 800;
+
+        float playerPosX = playerEntity.getComponent(PositionComponent.class).getMiddleX();
+        float playerPosY = playerEntity.getComponent(PositionComponent.class).getMiddleY();
+
+        Vector2 tmpVector = new Vector2();
+
+        //add some random meteorits
+        for (int i = 0; i < 90; i++) {
+            float distance = 0;
+
+            float x = 0;
+            float y = 0;
+
+            while (distance < minDistance) {
+                //calculate random enemy position near player
+                x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
+                y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
+
+                tmpVector.set(playerPosX - x, playerPosY - y);
+                distance = tmpVector.len();
+            }
+
+            //create and add new meteorit
+            Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager.get(ASTEROID1_IMAGE_PATH));
+            this.ecs.addEntity(entity);
+        }
+
         //play background music
         this.music.setVolume(0.8f);
         this.music.setLooping(true);
