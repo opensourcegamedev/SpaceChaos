@@ -36,7 +36,7 @@ Author & Copyright: Bonsaiheldin | http://bonsaiheld.org
 
 ## Sci-Fi Menu Soundtracks
 
-Path: data/music/sci-fi-menus-2-shorts-tracks, data/music/i-know-your-secret
+Path: data/music/sci-fi-menus-2-shorts-tracks, data/music/i-know-your-secret, data/music/a-million-light-years-between-us
 License: CC-BY 3.0
 Author & Copyright: Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
 

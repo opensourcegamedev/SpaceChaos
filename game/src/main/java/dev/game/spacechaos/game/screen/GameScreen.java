@@ -209,6 +209,8 @@ public class GameScreen extends BaseScreen {
             @Override
             public void onHit(float oldValue, float newValue, float maxHP) {
                 System.out.println("game over");
+
+                game.getScreenManager().leaveAllAndEnter("gameover");
             }
         });
 
@@ -326,7 +328,7 @@ public class GameScreen extends BaseScreen {
 
         //play beep sound every 8 seconds
         if (lastBeep + beepInterval < System.currentTimeMillis()) {
-            beepSound.play();
+            //beepSound.play();
             lastBeep = System.currentTimeMillis();
 
             //calculate new random beep interval

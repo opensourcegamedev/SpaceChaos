@@ -5,6 +5,7 @@ import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.IScreen;
 import dev.game.spacechaos.engine.screen.ScreenManager;
 import dev.game.spacechaos.game.screen.GameScreen;
+import dev.game.spacechaos.game.screen.GameoverScreen;
 import dev.game.spacechaos.game.screen.HUDOverlayScreen;
 
 /**
@@ -21,6 +22,7 @@ public class Game extends ScreenBasedGame {
         //add game screen
         screenManager.addScreen("game", new GameScreen());
         screenManager.addScreen("hud", new HUDOverlayScreen());
+        screenManager.addScreen("gameover", new GameoverScreen());
 
         //push screen
         screenManager.push("game");
