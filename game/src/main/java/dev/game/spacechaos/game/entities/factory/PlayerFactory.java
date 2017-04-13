@@ -14,6 +14,7 @@ import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMoveme
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.OnCollisionPlaySoundComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
+import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 
 /**
@@ -56,6 +57,9 @@ public class PlayerFactory {
 
         //add component to draw HP
         player.addComponent(new DrawHPBarComponent(texture.getWidth() / 3, 10, texture.getWidth() / 3, 5f), DrawHPBarComponent.class);
+
+        //add component to reduce HP on collision, reduce 100 points on every collision
+        player.addComponent(new ReduceHPOnCollisionComponent(100), ReduceHPOnCollisionComponent.class);
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
