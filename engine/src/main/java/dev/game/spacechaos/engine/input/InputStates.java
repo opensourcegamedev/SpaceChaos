@@ -19,6 +19,10 @@ public class InputStates {
         return Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.RIGHT);
     }
 
+    public static boolean isRightMouseButtonJustPressed() {
+        return isRightMouseButtonPressed() && Gdx.input.justTouched();
+    }
+
     public static boolean isSpacePressed() {
         return Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.SPACE);
     }

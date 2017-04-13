@@ -28,6 +28,9 @@ import dev.game.spacechaos.game.entities.factory.PlayerFactory;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 import dev.game.spacechaos.game.skybox.SkyBox;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Justin on 28.03.2017.
  */
@@ -41,6 +44,7 @@ public class GameScreen extends BaseScreen {
     protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/starships/spaceshuttle.png";
     protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
     protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
+    protected static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
     protected static final String ASTEROID1_IMAGE_PATH = "./data/images/entities/asteroids/asteroid1_brown.png";
 
     protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
@@ -54,6 +58,7 @@ public class GameScreen extends BaseScreen {
     protected Texture bgTexture = null;
 
     protected Texture projectileTexture = null;
+    protected Texture torpedoTexture = null;
 
     protected SkyBox skyBox = null;
 
@@ -73,6 +78,9 @@ public class GameScreen extends BaseScreen {
 
     protected CollisionManager collisionManager = null;
 
+    //list with all enemy entities
+    protected List<Entity> enemyEntityList = new ArrayList<>();
+
     public GameScreen() {
         //create shape renderer
         this.shapeRenderer = new ShapeRenderer();
@@ -91,6 +99,7 @@ public class GameScreen extends BaseScreen {
         assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
         assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
         assetManager.load(PROJECTILE_IMAGE_PATH, Texture.class);
+        assetManager.load(TORPEDO_IMAGE_PATH, Texture.class);
 
         //load collision objects
         assetManager.load(ASTEROID1_IMAGE_PATH, Texture.class);
@@ -111,6 +120,7 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
         assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
+        assetManager.finishLoadingAsset(TORPEDO_IMAGE_PATH);
         assetManager.finishLoadingAsset(ASTEROID1_IMAGE_PATH);
         assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
         assetManager.finishLoadingAsset(BEEP_SOUND_PATH);
@@ -125,6 +135,7 @@ public class GameScreen extends BaseScreen {
         //get asset
         this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
         this.projectileTexture = assetManager.get(PROJECTILE_IMAGE_PATH, Texture.class);
+        this.torpedoTexture = assetManager.get(TORPEDO_IMAGE_PATH);
 
         Texture skyBox1 = assetManager.get(SKYBOX_MINUS_X);
         Texture skyBox2 = assetManager.get(SKYBOX_PLUS_X);
@@ -176,6 +187,9 @@ public class GameScreen extends BaseScreen {
             //create and add new enemy space shuttle to entity-component-system
             Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity);
             this.ecs.addEntity(enemyEntity);
+
+            //add entity to enemy entity list
+            this.enemyEntityList.add(enemyEntity);
         }
 
         //add some random meteorits
@@ -215,15 +229,48 @@ public class GameScreen extends BaseScreen {
             float dirX = mouseDependentMovementComponent.getFrontVec().x;
             float dirY = mouseDependentMovementComponent.getFrontVec().y;
 
-            Entity projectile = ProjectileFactory.createProjectile(this.ecs, this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(), projectileTexture, dirX,
-                    dirY, 4f, this.playerEntity, 4000L);
+            Entity projectile = ProjectileFactory.createProjectile(
+                    this.ecs,
+                    this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
+                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(),
+                    projectileTexture,
+                    dirX,
+                    dirY,
+                    4f,
+                    this.playerEntity,
+                    4000L
+            );
+
             projectile.getComponent(DrawTextureComponent.class).setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
             projectile.getComponent(MoveComponent.class).setMoving(true);
             this.ecs.addEntity(projectile);
 
             //play fire sound
             this.fireSound.play(0.8f);
+        } else if (InputStates.isRightMouseButtonJustPressed()) {
+            //entity to follow
+            Entity enemyEntity = null;
+
+            //TODO: choose nearest enemy shuttle or hovered shuttle
+            for (Entity entity : this.enemyEntityList) {
+                enemyEntity = entity;
+            }
+
+            Entity projectile = ProjectileFactory.createTorpedoProjectile(
+                    this.ecs,
+                    this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
+                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(),
+                    torpedoTexture,
+                    4f,
+                    this.playerEntity,
+                    enemyEntity,
+                    3000L
+            );
+
+            projectile.getComponent(DrawTextureComponent.class).setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle()
+            );
+            projectile.getComponent(MoveComponent.class).setMoving(true);
+            this.ecs.addEntity(projectile);
         }
 
         if (lastBeep == 0) {
