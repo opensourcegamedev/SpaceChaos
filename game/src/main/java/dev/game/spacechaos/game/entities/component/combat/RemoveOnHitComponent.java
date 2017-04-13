@@ -20,6 +20,10 @@ public class RemoveOnHitComponent extends BaseComponent implements HPHitListener
         this.listener = listener;
     }
 
+    public RemoveOnHitComponent () {
+        //
+    }
+
     @Override
     protected void onInit(BaseGame game, Entity entity) {
         this.hpComponent = entity.getComponent(HPComponent.class);
@@ -33,7 +37,9 @@ public class RemoveOnHitComponent extends BaseComponent implements HPHitListener
 
     @Override
     public void onHit(float oldValue, float newValue, float maxHP) {
-        this.listener.beforeRemove(this.entity);
+        if (this.listener != null) {
+            this.listener.beforeRemove(this.entity);
+        }
 
         //remove entity
         game.runOnUIThread(() -> {

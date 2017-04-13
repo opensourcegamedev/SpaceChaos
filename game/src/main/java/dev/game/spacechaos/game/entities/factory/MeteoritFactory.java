@@ -12,6 +12,9 @@ import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.draw.SimpleRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
+import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraShakeComponent;
+import dev.game.spacechaos.game.entities.component.combat.HPComponent;
+import dev.game.spacechaos.game.entities.component.combat.RemoveOnHitComponent;
 
 /**
  * Created by Justin on 07.04.2017.
@@ -34,6 +37,12 @@ public class MeteoritFactory {
 
         //add component so meteorits move randomly
         entity.addComponent(new RandomWalkComponent(), RandomWalkComponent.class);
+
+        //add HP component, so player can destroy meteorits
+        entity.addComponent(new HPComponent(1500, 1500));
+
+        //add component to remove entity on hit
+        entity.addComponent(new RemoveOnHitComponent(), RemoveOnHitComponent.class);
 
         //add collision component, so player can collide with meteorits
         entity.addComponent(new CollisionComponent(), CollisionComponent.class);
