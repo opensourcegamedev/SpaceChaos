@@ -87,7 +87,7 @@ public class ProjectileFactory {
      * @return projectile entity
      */
 
-    public static Entity createTorpedoProjectile(EntityManager ecs, float x, float y, Texture texture, float speed, Entity playerEntity, Entity enemyEntity, long ttl) {
+    public static Entity createTorpedoProjectile(EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, Entity playerEntity, Entity enemyEntity, long ttl) {
         //create new entity
         Entity projectileEntity = new Entity(ecs);
 
@@ -98,7 +98,7 @@ public class ProjectileFactory {
         projectileEntity.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2), DrawTextureComponent.class);
 
         //add component to move entity
-        projectileEntity.addComponent(new MoveComponent(speed), MoveComponent.class);
+        projectileEntity.addComponent(new MoveComponent(moveX, moveY, speed), MoveComponent.class);
 
         //add component to rotate projectile dependent on move direction
         enemyEntity.addComponent(new MoveDependentDrawRotationComponent(), MoveDependentDrawRotationComponent.class);
@@ -123,7 +123,7 @@ public class ProjectileFactory {
         projectileEntity.addComponent(new AvoidRemoveOnCollisionComponent(playerEntity), AvoidRemoveOnCollisionComponent.class);
 
         //AI
-        projectileEntity.addComponent(new SimpleFollowAIMovementComponent(enemyEntity));
+        //projectileEntity.addComponent(new SimpleFollowAIMovementComponent(enemyEntity));
 
         //add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl));

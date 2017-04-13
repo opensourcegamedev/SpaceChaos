@@ -248,6 +248,11 @@ public class GameScreen extends BaseScreen {
             //play fire sound
             this.fireSound.play(0.8f);
         } else if (InputStates.isRightMouseButtonJustPressed()) {
+            MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity.getComponent(MouseDependentMovementComponent.class);
+
+            float dirX = mouseDependentMovementComponent.getFrontVec().x;
+            float dirY = mouseDependentMovementComponent.getFrontVec().y;
+
             //entity to follow
             Entity enemyEntity = null;
 
@@ -261,6 +266,8 @@ public class GameScreen extends BaseScreen {
                     this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
                     this.playerEntity.getComponent(PositionComponent.class).getMiddleY(),
                     torpedoTexture,
+                    dirX,
+                    dirY,
                     4f,
                     this.playerEntity,
                     enemyEntity,
