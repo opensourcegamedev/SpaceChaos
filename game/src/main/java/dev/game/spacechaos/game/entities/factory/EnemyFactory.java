@@ -10,6 +10,9 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
+import dev.game.spacechaos.game.entities.component.combat.HPComponent;
+import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
+import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 
 /**
  * Created by Justin on 07.04.2017.
@@ -39,6 +42,15 @@ public class EnemyFactory {
         enemyEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
         //enemyEntity.getComponent(CollisionComponent.class).setHullShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
         enemyEntity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
+
+        //add component for HP
+        enemyEntity.addComponent(new HPComponent(1000, 1000));
+
+        //add component to draw HP
+        enemyEntity.addComponent(new DrawHPBarComponent(texture.getWidth() / 3, 10, texture.getWidth() / 3, 5f), DrawHPBarComponent.class);
+
+        //add component to reduce HP on collision, reduce 100 points on every collision
+        enemyEntity.addComponent(new ReduceHPOnCollisionComponent(100), ReduceHPOnCollisionComponent.class);
 
         return enemyEntity;
     }
