@@ -12,14 +12,16 @@ import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotatio
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
+import dev.game.spacechaos.game.entities.component.combat.RemoveOnHitComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
+import dev.game.spacechaos.game.entities.listener.EntityRemoveListener;
 
 /**
  * Created by Justin on 07.04.2017.
  */
 public class EnemyFactory {
 
-    public static Entity createEnemyShuttle (EntityManager ecs, float x, float y, Texture texture, Entity targetEntity) {
+    public static Entity createEnemyShuttle (EntityManager ecs, float x, float y, Texture texture, Entity targetEntity, EntityRemoveListener listener) {
         //create new entity
         Entity enemyEntity = new Entity(ecs);
 
@@ -48,6 +50,9 @@ public class EnemyFactory {
 
         //add component to draw HP
         enemyEntity.addComponent(new DrawHPBarComponent(texture.getWidth() / 3, 10, texture.getWidth() / 3, 5f), DrawHPBarComponent.class);
+
+        //add component to remove entity on hit
+        enemyEntity.addComponent(new RemoveOnHitComponent(listener), RemoveOnHitComponent.class);
 
         //add component to reduce HP on collision, reduce 100 points on every collision
         enemyEntity.addComponent(new ReduceHPOnCollisionComponent(100), ReduceHPOnCollisionComponent.class);

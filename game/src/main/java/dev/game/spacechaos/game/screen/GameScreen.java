@@ -157,41 +157,8 @@ public class GameScreen extends BaseScreen {
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class));
         this.ecs.addEntity(this.playerEntity);
 
-        //add a specific amount of enemy shuttles
-        int amount = 5;
-        float[][] positions = new float[amount + 1][2]; //player + enemy positions
-        positions[0][0] = this.playerEntity.getComponent(PositionComponent.class).getMiddleX();
-        positions[0][1] = this.playerEntity.getComponent(PositionComponent.class).getMiddleY();
-        for (int n = 0; n < amount; n++) {
-            //calculate random enemy position near player
-            float x = (float) Math.random() * game.getViewportWidth();
-            float y = (float) Math.random() * game.getViewportHeight();
-
-            boolean validPos = false;
-            while (!validPos) {
-                for (int k = 0; k < n + 1; k++) {
-                    if (Math.abs(positions[k][0] - x) > 300 ||
-                            Math.abs(positions[k][1] - y) > 300) {
-                        if (k == n) { //all positions are valid
-                            positions[k + 1][0] = x;
-                            positions[k + 1][1] = y;
-                            validPos = true;
-                        }
-                    } else {
-                        x = (float) Math.random() * game.getViewportWidth();
-                        y = (float) Math.random() * game.getViewportHeight();
-                        break; //recheck if valid
-                    }
-                }
-            }
-
-            //create and add new enemy space shuttle to entity-component-system
-            Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity);
-            this.ecs.addEntity(enemyEntity);
-
-            //add entity to enemy entity list
-            this.enemyEntityList.add(enemyEntity);
-        }
+        //spawn enemy shuttles
+        spawnEnemyShuttles(5);
 
         float minDistance = 800;
 
@@ -201,7 +168,7 @@ public class GameScreen extends BaseScreen {
         Vector2 tmpVector = new Vector2();
 
         //add some random meteorits
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 90; i++) {
             float distance = 0;
 
             float x = 0;
@@ -220,6 +187,49 @@ public class GameScreen extends BaseScreen {
             Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager.get(ASTEROID1_IMAGE_PATH));
             this.ecs.addEntity(entity);
         }
+    }
+
+    protected void spawnEnemyShuttles (int amount) {
+        //execute this code after updating all entities
+        game.runOnUIThread(() -> {
+            //add a specific amount of enemy shuttles
+            float[][] positions = new float[amount + 1][2]; //player + enemy positions
+            positions[0][0] = this.playerEntity.getComponent(PositionComponent.class).getMiddleX();
+            positions[0][1] = this.playerEntity.getComponent(PositionComponent.class).getMiddleY();
+            for (int n = 0; n < amount; n++) {
+                //calculate random enemy position near player
+                float x = (float) Math.random() * game.getViewportWidth();
+                float y = (float) Math.random() * game.getViewportHeight();
+
+                boolean validPos = false;
+                while (!validPos) {
+                    for (int k = 0; k < n + 1; k++) {
+                        if (Math.abs(positions[k][0] - x) > 300 ||
+                                Math.abs(positions[k][1] - y) > 300) {
+                            if (k == n) { //all positions are valid
+                                positions[k + 1][0] = x;
+                                positions[k + 1][1] = y;
+                                validPos = true;
+                            }
+                        } else {
+                            x = (float) Math.random() * game.getViewportWidth();
+                            y = (float) Math.random() * game.getViewportHeight();
+                            break; //recheck if valid
+                        }
+                    }
+                }
+
+                //create and add new enemy space shuttle to entity-component-system
+                Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity, (Entity entity) -> {
+                    //respawn shuttle
+                    spawnEnemyShuttles(1);
+                });
+                this.ecs.addEntity(enemyEntity);
+
+                //add entity to enemy entity list
+                this.enemyEntityList.add(enemyEntity);
+            }
+        });
     }
 
     @Override
