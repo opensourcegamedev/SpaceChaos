@@ -7,13 +7,13 @@ A simple 2D java game to learn some libGDX
 
 ## Game Description
 
-**SpaceChaos** is an Space Game from some **Indie Developers** in Germany, where you have to fight
-against other enemy shuttles and destroy them all.
+**SpaceChaos** is a space game by some **Indie Developers** in Germany, in which you have to fight
+against enemy shuttles and try to destroy them all.
 Your shuttle has to survive as long as possible.
 
 ## Control
 
-You have to control the game with **Mouse** (Movement) and maybe **space key** to shoot an projectile.
+The shuttle can be controlled with **mouse** (movement) and **space key** (for now) to shoot.
 
 ## Start profiling
 
@@ -32,5 +32,5 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
 Also thanks to all other supports and the libGDX team!
   
 ### Assets
-Assets wasnt made by us, we have used some free (in most cases open source) graphics under an specific license.
+The assets were made by others. All graphics (in most cases open source) are under a specific license.
 You can find all graphic authors & contributors in **CONTRIBUTORS.md file**.
