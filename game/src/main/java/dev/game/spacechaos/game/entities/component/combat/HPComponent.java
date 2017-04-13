@@ -25,8 +25,8 @@ public class HPComponent extends BaseComponent {
     protected List<HPHitListener> hpHitListenerList = new ArrayList<>();
 
     public HPComponent (float currentHP, float maxHP) {
-        setCurrentHP(currentHP);
         setMaxHP(maxHP);
+        setCurrentHP(currentHP);
 
         //update percent
         this.updatePercent();

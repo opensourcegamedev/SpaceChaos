@@ -13,6 +13,8 @@ import dev.game.spacechaos.engine.entity.component.draw.MouseDependentDrawRotati
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.OnCollisionPlaySoundComponent;
+import dev.game.spacechaos.game.entities.component.combat.HPComponent;
+import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 
 /**
  * Created by Justin on 07.04.2017.
@@ -48,6 +50,12 @@ public class PlayerFactory {
 
         //add component to play a sound, if the player collides
         player.addComponent(new OnCollisionPlaySoundComponent("./data/sound/explosions1/explodemini.wav", 0.6f), OnCollisionPlaySoundComponent.class);
+
+        //add component for HP
+        player.addComponent(new HPComponent(1000, 1000));
+
+        //add component to draw HP
+        player.addComponent(new DrawHPBarComponent(texture.getWidth() / 3, 10, texture.getWidth() / 3, 5f), DrawHPBarComponent.class);
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
