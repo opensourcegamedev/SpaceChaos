@@ -43,8 +43,6 @@ public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerCom
 
     @Override
     public void onInit (BaseGame game, Entity entity) {
-        super.init(game, entity);
-
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.hpComponent = entity.getComponent(HPComponent.class);
 
