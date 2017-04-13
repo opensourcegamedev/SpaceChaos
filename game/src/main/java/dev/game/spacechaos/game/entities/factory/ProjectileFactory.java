@@ -7,6 +7,7 @@ import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovementComponent;
 import dev.game.spacechaos.engine.entity.component.collision.AutoRemoveOnCollisionComponent;
+import dev.game.spacechaos.engine.entity.component.collision.AvoidRemoveOnCollisionComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
@@ -64,6 +65,9 @@ public class ProjectileFactory {
 
         //add component to remove entity, if entity collides with an other entity
         projectileEntity.addComponent(new AutoRemoveOnCollisionComponent(), AutoRemoveOnCollisionComponent.class);
+
+        //dont remove, if projectile collides with player
+        projectileEntity.addComponent(new AvoidRemoveOnCollisionComponent(playerEntity), AvoidRemoveOnCollisionComponent.class);
 
         //add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl));

@@ -28,6 +28,11 @@ public class AutoRemoveOnCollisionComponent extends BaseComponent implements Col
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
+        if (entity.getComponent(AvoidRemoveOnCollisionComponent.class) != null && entity.getComponent(AvoidRemoveOnCollisionComponent.class).getOwnerEntity() == otherEntity) {
+            //dont remove entity
+            return;
+        }
+
         //auto remove entity on next gameloop cycle
         game.runOnUIThread(() -> {
             //remove entity from ecs
