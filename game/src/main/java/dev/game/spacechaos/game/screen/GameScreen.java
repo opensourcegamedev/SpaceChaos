@@ -216,7 +216,7 @@ public class GameScreen extends BaseScreen {
 
             Entity projectile = ProjectileFactory.createProjectile(this.ecs, this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
                     this.playerEntity.getComponent(PositionComponent.class).getMiddleY(), projectileTexture, dirX,
-                    dirY, 4f, 4000L);
+                    dirY, 4f, this.playerEntity, 4000L);
             projectile.getComponent(DrawTextureComponent.class).setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
             projectile.getComponent(MoveComponent.class).setMoving(true);
             this.ecs.addEntity(projectile);

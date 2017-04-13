@@ -1,14 +1,18 @@
 package dev.game.spacechaos.game.entities.factory;
 
 import com.badlogic.gdx.graphics.Texture;
+import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovementComponent;
+import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.utils.TimedAutoRemoveComponent;
+import dev.game.spacechaos.game.entities.component.collision.AvoidCollisionCameraShakeComponent;
+import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
 
 /**
  * Created by Justin on 10.04.2017.
@@ -30,7 +34,7 @@ public class ProjectileFactory {
      * @return projectile entity
      */
 
-    public static Entity createProjectile(EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, long ttl) {
+    public static Entity createProjectile(EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, Entity playerEntity, long ttl) {
         //create new entity
         Entity projectileEntity = new Entity(ecs);
 
@@ -42,6 +46,15 @@ public class ProjectileFactory {
 
         //add component to move entity
         projectileEntity.addComponent(new MoveComponent(moveX, moveY, speed), MoveComponent.class);
+
+        //add collision component, so player can collide with other space shuttles or meteorits
+        projectileEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
+        projectileEntity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
+
+        //add attack component
+        projectileEntity.addComponent(new AttackComponent(playerEntity, 100));
+
+        projectileEntity.addComponent(new AvoidCollisionCameraShakeComponent(), AvoidCollisionCameraShakeComponent.class);
 
         //add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl));

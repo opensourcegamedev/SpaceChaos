@@ -7,7 +7,7 @@ import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.camera.SmoothFollowCameraComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
-import dev.game.spacechaos.engine.entity.component.collision.OnCollisionCameraShakeComponent;
+import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraShakeComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MouseDependentDrawRotationAngle;
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;

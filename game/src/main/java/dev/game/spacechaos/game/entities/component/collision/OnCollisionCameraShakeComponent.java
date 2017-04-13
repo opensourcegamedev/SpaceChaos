@@ -1,12 +1,14 @@
-package dev.game.spacechaos.engine.entity.component.collision;
+package dev.game.spacechaos.game.entities.component.collision;
 
 import dev.game.spacechaos.engine.camera.impl.Shake1CameraModification;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
+import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
 
 /**
  * Created by Justin on 12.04.2017.
@@ -29,6 +31,16 @@ public class OnCollisionCameraShakeComponent extends BaseComponent implements Co
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
+        /*if (entity.getComponent(AttackComponent.class) != null || otherEntity.getComponent(AttackComponent.class) != null) {
+            //dont shake camera, if projectile collides
+            return;
+        }*/
+
+        if (otherEntity.getComponent(AvoidCollisionCameraShakeComponent.class) != null) {
+            //dont shake camera
+            return;
+        }
+
         //shake camera
         game.getCamera().activateMod(Shake1CameraModification.class);
         game.getCamera().getMod(Shake1CameraModification.class).shake(10, 500);
