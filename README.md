@@ -9,6 +9,7 @@ A simple 2D java game to learn some libGDX
 
 **SpaceChaos** is an Space Game from some **Indie Developers** in Germany, where you have to fight
 against other enemy shuttles and destroy them all.
+Your shuttle has to survive as long as possible.
 
 ## Control
 
