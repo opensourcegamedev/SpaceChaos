@@ -10,6 +10,7 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
+import dev.game.spacechaos.engine.entity.component.sound.AvoidCollisionSoundComponent;
 import dev.game.spacechaos.engine.entity.component.utils.TimedAutoRemoveComponent;
 import dev.game.spacechaos.game.entities.component.collision.AvoidCollisionCameraShakeComponent;
 import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
@@ -54,7 +55,11 @@ public class ProjectileFactory {
         //add attack component
         projectileEntity.addComponent(new AttackComponent(playerEntity, 100));
 
+        //add component to avoid camera shake, if player fires projectile (if projectile starts, projectile is in player collision hull)
         projectileEntity.addComponent(new AvoidCollisionCameraShakeComponent(), AvoidCollisionCameraShakeComponent.class);
+
+        //add component to avoid collision sound
+        projectileEntity.addComponent(new AvoidCollisionSoundComponent(), AvoidCollisionSoundComponent.class);
 
         //add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl));

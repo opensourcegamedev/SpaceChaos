@@ -55,6 +55,11 @@ public class OnCollisionPlaySoundComponent extends BaseComponent implements Coll
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
+        if (otherEntity.getComponent(AvoidCollisionSoundComponent.class) != null) {
+            //dont play collision sound
+            return;
+        }
+
         this.sound.stop();
         this.sound.play(soundVolume);
     }
