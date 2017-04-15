@@ -164,8 +164,8 @@ public class GameScreen extends BaseScreen {
             positions[0][1] = this.playerEntity.getComponent(PositionComponent.class).getMiddleY();
             for (int enemyNumber = 0; enemyNumber < amount; enemyNumber++) {
                 //calculate random enemy position near player
-                float x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 3);
-                float y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 3);
+                float x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 2);
+                float y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 2);
 
                 boolean validPos = false;
                 while (!validPos) {
@@ -173,8 +173,8 @@ public class GameScreen extends BaseScreen {
                             (y > game.getViewportHeight() * 2 && y < game.getViewportHeight() * 3)){
                         validPos = true;
                     } else {
-                        x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 3);
-                        y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 3);
+                        x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 2);
+                        y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 2);
                         break; //recheck if valid
                     }
                 }
