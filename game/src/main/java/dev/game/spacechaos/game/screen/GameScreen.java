@@ -155,7 +155,7 @@ public class GameScreen extends BaseScreen {
         this.skyBox = new SkyBox(new Texture[]{/*skyBox1, skyBox2, skyBox3, skyBox4*/skyBox2}, game.getViewportWidth(), game.getViewportHeight());
     }
 
-    protected void spawnEnemyShuttles (int amount) {
+    protected void spawnEnemyShuttles(int amount) {
         //execute this code after updating all entities
         game.runOnUIThread(() -> {
             //add a specific amount of enemy shuttles
@@ -273,8 +273,8 @@ public class GameScreen extends BaseScreen {
 
             Entity projectile = ProjectileFactory.createProjectile(
                     this.ecs,
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(),
+                    dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 20,
+                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20,
                     projectileTexture,
                     dirX,
                     dirY,
@@ -305,8 +305,8 @@ public class GameScreen extends BaseScreen {
 
             Entity projectile = ProjectileFactory.createTorpedoProjectile(
                     this.ecs,
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(),
+                    dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 30,
+                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 30,
                     torpedoTexture,
                     dirX,
                     dirY,
