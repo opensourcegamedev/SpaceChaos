@@ -6,7 +6,6 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.collision.CShape;
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
-import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
@@ -17,7 +16,6 @@ import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

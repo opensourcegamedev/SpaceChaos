@@ -242,7 +242,7 @@ public class GameScreen extends BaseScreen {
         }
 
         //play background music
-        this.music.setVolume(0.8f);
+        this.music.setVolume(0.6f);
         this.music.setLooping(true);
         this.music.play();
     }
@@ -282,7 +282,7 @@ public class GameScreen extends BaseScreen {
             this.ecs.addEntity(projectile);
 
             //play fire sound
-            this.fireSound.play(0.8f);
+            this.fireSound.play(0.6f);
         } else if (InputStates.isRightMouseButtonJustPressed()) {
             MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity.getComponent(MouseDependentMovementComponent.class);
 
