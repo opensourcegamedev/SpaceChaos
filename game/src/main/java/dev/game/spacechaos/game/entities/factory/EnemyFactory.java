@@ -10,6 +10,7 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
+import dev.game.spacechaos.game.entities.component.ai.EnemyShuttleAIComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnHitComponent;
@@ -38,7 +39,10 @@ public class EnemyFactory {
         enemyEntity.addComponent(new MoveDependentDrawRotationComponent(), MoveDependentDrawRotationComponent.class);
 
         //add component to follow player
-        enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity), SimpleFollowAIMovementComponent.class);
+        //enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity), SimpleFollowAIMovementComponent.class);
+
+        //add AI
+        enemyEntity.addComponent(new EnemyShuttleAIComponent(targetEntity), EnemyShuttleAIComponent.class);
 
         //add collision component, so player can collide with other space shuttles or meteorits
         enemyEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
