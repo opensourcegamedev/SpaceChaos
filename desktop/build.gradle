@@ -43,3 +43,70 @@ dependencies {
 
     compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
 }
+
+/**
+ * task to write start script
+ */
+task startScriptFile {
+    //
+}
+
+compileJava.dependsOn startScriptFile
+build.dependsOn startScriptFile
+
+jar {
+    manifest {
+        //set main class and classpath
+
+        attributes (
+                'Main-Class': mainClassName,
+                //'Class-Path': configurations.runtime.files.collect { jarDir+"/$it.name" }.join(' ')
+
+                "Class-Path": configurations.compile.collect { "lib/" + it.getName() }.join(' ')
+        )
+    }
+}
+
+/**
+ * task to assembly an zip file
+ *
+ * @link http://stackoverflow.com/questions/6022280/gradle-zip-task-to-do-multiple-sub-trees
+ */
+
+task buildZip(type: Zip, dependsOn: [jar, startScriptFile]) {
+    //from compileJava
+    //from processResources
+
+    println "build zip, current dir: " + new File(".").getAbsolutePath()
+
+    into('lib') {
+        from configurations.runtime
+        //from fileTree(dir: "lib", include: "*")
+    }
+
+    into('data') {
+        //include "*"
+        from "data"
+    }
+
+    into('plugins') {
+        from "plugins"
+    }
+
+    //add pentaquin-client jar
+    from jar.outputs.files
+    from fileTree(dir: "$buildDir/startscripts", include: "*")
+    from fileTree(dir: ".", include: "test.png")
+    from('bar/') {
+        into('bar')
+    }
+}
+
+
+//build.dependsOn buildZip
+install.dependsOn startScriptFile
+install.dependsOn buildZip
+
+startScripts {
+    //classpath = files("./lib/*")
+}
