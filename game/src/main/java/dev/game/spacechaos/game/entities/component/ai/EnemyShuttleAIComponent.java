@@ -39,8 +39,8 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
     protected long elapsed = 0;
     protected long shootInterval = 1000;
-    protected int minShootInterval = 1000;
-    protected int maxShootInterval = 4000;
+    protected int minShootInterval = 2000;
+    protected int maxShootInterval = 5000;
 
     protected Texture projectileTexture = null;
 
