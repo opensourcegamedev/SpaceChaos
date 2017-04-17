@@ -71,6 +71,7 @@ public class HUDOverlayScreen extends BaseScreen {
             this.timeText = this.timeText + "" + this.seconds;
         }
 
+        game.getSharedData().put("lastElapsedTimeText", this.timeText);
     }
 
     @Override

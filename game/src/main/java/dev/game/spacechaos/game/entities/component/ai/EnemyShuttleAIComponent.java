@@ -39,8 +39,8 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
     protected long elapsed = 0;
     protected long shootInterval = 1000;
-    protected int minShootInterval = 3;
-    protected int maxShootInterval = 8;
+    protected int minShootInterval = 1000;
+    protected int maxShootInterval = 4000;
 
     protected Texture projectileTexture = null;
 
@@ -60,7 +60,7 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
         }
 
         //generate random shoot interval
-        this.shootInterval = RandomUtils.getRandomNumber(minShootInterval, maxShootInterval) * 1000;
+        this.shootInterval = RandomUtils.getRandomNumber(minShootInterval, maxShootInterval);
     }
 
     @Override

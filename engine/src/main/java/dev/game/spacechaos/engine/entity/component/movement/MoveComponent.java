@@ -26,13 +26,16 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     protected Vector2 tmpVector = new Vector2();
 
     public MoveComponent (float moveDirectionX, float moveDirectionY, float speed) {
+        if (speed < 0) {
+            throw new IllegalArgumentException("speed has to be >= 0.");
+        }
+
         moveDirection.set(moveDirectionX, moveDirectionY);
         this.speed = speed;
     }
 
     public MoveComponent (float speed) {
-        moveDirection.set(0, 0);
-        this.speed = speed;
+        this(0, 0, speed);
     }
 
     @Override

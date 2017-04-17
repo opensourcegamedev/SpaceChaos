@@ -33,7 +33,7 @@ public class EnemyFactory {
         enemyEntity.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2), DrawTextureComponent.class);
 
         //add component to move entity
-        enemyEntity.addComponent(new MoveComponent(1f), MoveComponent.class);
+        enemyEntity.addComponent(new MoveComponent(1.5f), MoveComponent.class);
 
         //add component to rotate shuttle dependent on move direction
         enemyEntity.addComponent(new MoveDependentDrawRotationComponent(), MoveDependentDrawRotationComponent.class);
