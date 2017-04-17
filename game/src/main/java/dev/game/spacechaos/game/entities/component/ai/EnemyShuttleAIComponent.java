@@ -61,8 +61,6 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
         //generate random shoot interval
         this.shootInterval = RandomUtils.getRandomNumber(minShootInterval, maxShootInterval) * 1000;
-
-        System.out.println("shoot interval: " + shootInterval);
     }
 
     @Override
@@ -150,8 +148,6 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
         projectile.getComponent(MoveComponent.class).setMoving(true);
 
         game.runOnUIThread(() -> {
-            System.out.println("shoot projectile.");
-
             //add entity on next gameloop cycle
             this.entity.getEntityComponentSystem().addEntity(projectile);
         });
