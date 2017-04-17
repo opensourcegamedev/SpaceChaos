@@ -70,4 +70,8 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
         return ECSPriority.VERY_LOW;
     }
 
+    public Vector2 getFrontVec () {
+        return moveComponent.getMoveDirection();
+    }
+
 }

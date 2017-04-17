@@ -180,7 +180,7 @@ public class GameScreen extends BaseScreen {
                 }
 
                 //create and add new enemy space shuttle to entity-component-system
-                Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity, (Entity entity) -> {
+                Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y, assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity, projectileTexture, (Entity entity) -> {
                     //respawn shuttle
                     spawnEnemyShuttles(1);
                 });

@@ -22,7 +22,7 @@ import dev.game.spacechaos.game.entities.listener.EntityRemoveListener;
  */
 public class EnemyFactory {
 
-    public static Entity createEnemyShuttle (EntityManager ecs, float x, float y, Texture texture, Entity targetEntity, EntityRemoveListener listener) {
+    public static Entity createEnemyShuttle (EntityManager ecs, float x, float y, Texture texture, Entity targetEntity, Texture projectileTexture, EntityRemoveListener listener) {
         //create new entity
         Entity enemyEntity = new Entity(ecs);
 
@@ -42,7 +42,7 @@ public class EnemyFactory {
         //enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity), SimpleFollowAIMovementComponent.class);
 
         //add AI
-        enemyEntity.addComponent(new EnemyShuttleAIComponent(targetEntity), EnemyShuttleAIComponent.class);
+        enemyEntity.addComponent(new EnemyShuttleAIComponent(targetEntity, projectileTexture), EnemyShuttleAIComponent.class);
 
         //add collision component, so player can collide with other space shuttles or meteorits
         enemyEntity.addComponent(new CollisionComponent(), CollisionComponent.class);

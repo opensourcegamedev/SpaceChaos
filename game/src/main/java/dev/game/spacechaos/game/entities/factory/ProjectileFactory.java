@@ -37,7 +37,7 @@ public class ProjectileFactory {
      * @return projectile entity
      */
 
-    public static Entity createProjectile(EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, Entity playerEntity, long ttl) {
+    public static Entity createProjectile(EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, Entity ownEntity, long ttl) {
         //create new entity
         Entity projectileEntity = new Entity(ecs);
 
@@ -55,7 +55,7 @@ public class ProjectileFactory {
         projectileEntity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         //add attack component
-        projectileEntity.addComponent(new AttackComponent(playerEntity, 100));
+        projectileEntity.addComponent(new AttackComponent(ownEntity, 100));
 
         //add component to avoid camera shake, if player fires projectile (if projectile starts, projectile is in player collision hull)
         projectileEntity.addComponent(new AvoidCollisionCameraShakeComponent(), AvoidCollisionCameraShakeComponent.class);
@@ -67,7 +67,7 @@ public class ProjectileFactory {
         projectileEntity.addComponent(new AutoRemoveOnCollisionComponent(), AutoRemoveOnCollisionComponent.class);
 
         //dont remove, if projectile collides with player
-        projectileEntity.addComponent(new AvoidRemoveOnCollisionComponent(playerEntity), AvoidRemoveOnCollisionComponent.class);
+        projectileEntity.addComponent(new AvoidRemoveOnCollisionComponent(ownEntity), AvoidRemoveOnCollisionComponent.class);
 
         //add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl));
