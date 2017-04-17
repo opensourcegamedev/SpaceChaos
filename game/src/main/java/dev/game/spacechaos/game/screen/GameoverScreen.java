@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
+import dev.game.spacechaos.engine.hud.ColoredTextButton;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 
@@ -23,6 +24,9 @@ public class GameoverScreen extends BaseScreen {
     protected Sound sound = null;
 
     protected BitmapFont font = null;
+    protected BitmapFont buttonFont = null;
+
+    protected ColoredTextButton replayButton = null;
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -35,6 +39,17 @@ public class GameoverScreen extends BaseScreen {
 
         //generate fonts
         this.font = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
+        this.buttonFont = BitmapFontFactory.createFont("data/font/arial/arial.ttf", 32, Color.RED);
+
+        this.replayButton = new ColoredTextButton("Replay", this.buttonFont);
+        this.replayButton.setBackgroundColor(Color.WHITE);
+        this.replayButton.setBackgroundHoverColor(Color.YELLOW);
+        this.replayButton.setDimension(200, 50);
+        this.replayButton.setPosition(game.getViewportWidth() / 2 - (replayButton.getWidth() / 2), 100);
+
+        this.replayButton.setClickListener(() -> {
+            game.getScreenManager().leaveAllAndEnter("game");
+        });
     }
 
     @Override
@@ -50,7 +65,7 @@ public class GameoverScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
-
+        this.replayButton.update(game, time);
     }
 
     @Override
@@ -60,6 +75,9 @@ public class GameoverScreen extends BaseScreen {
         batch.draw(this.bgTexture, 0, 0);
 
         this.font.draw(batch, "GAME OVER", game.getViewportWidth() / 2 - 200, game.getViewportHeight() / 2);
+
+        //draw replay button
+        this.replayButton.drawLayer0(time, batch);
     }
 
     @Override

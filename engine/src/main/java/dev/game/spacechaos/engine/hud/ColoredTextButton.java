@@ -62,15 +62,23 @@ public class ColoredTextButton extends BaseHUDWidget {
     public void drawLayer0(GameTime time, SpriteBatch batch) {
         //draw background texture
         if (hovered) {
-            SpriteBatcherUtils.fillRectangle(batch, getX(), getY(), getWidth(), getHeight(), this.color);
-        } else {
             SpriteBatcherUtils.fillRectangle(batch, getX(), getY(), getWidth(), getHeight(), this.hoverColor);
+        } else {
+            SpriteBatcherUtils.fillRectangle(batch, getX(), getY(), getWidth(), getHeight(), this.color);
         }
 
         float paddingBottom = (this.height / 2) - 32;
 
         //draw button text
-        this.font.draw(batch, text, x + 80, y + 60);
+        this.font.draw(batch, text, x + 40/* + 80*/, y + 50);
+    }
+
+    public void setBackgroundColor (Color color) {
+        this.color = color;
+    }
+
+    public void setBackgroundHoverColor (Color color) {
+        this.hoverColor = color;
     }
 
     protected boolean isInner (float mouseX, float mouseY) {
