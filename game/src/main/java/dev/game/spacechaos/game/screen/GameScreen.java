@@ -198,6 +198,9 @@ public class GameScreen extends BaseScreen {
         this.ecs.removeAllEntities();
         this.enemyEntityList.clear();
 
+        //push HUD overlay screen (GUI)
+        game.getScreenManager().push("hud");
+
         //create new player entity and add to entity-component-system
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2, game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), new HPHitListener() {
             @Override

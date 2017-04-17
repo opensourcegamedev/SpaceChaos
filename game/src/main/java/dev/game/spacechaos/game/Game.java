@@ -28,7 +28,7 @@ public class Game extends ScreenBasedGame {
         screenManager.push("game");
 
         //push HUD overlay screen (GUI)
-        screenManager.push("hud");
+        //screenManager.push("hud");
     }
 
 }
