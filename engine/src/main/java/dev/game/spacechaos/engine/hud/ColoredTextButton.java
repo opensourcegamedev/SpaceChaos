@@ -70,7 +70,7 @@ public class ColoredTextButton extends BaseHUDWidget {
         float paddingBottom = (this.height / 2) - 32;
 
         //draw button text
-        this.font.draw(batch, text, x + 40/* + 80*/, y + 50);
+        this.font.draw(batch, text, x + 50/* + 80*/, y + 40);
     }
 
     public void setBackgroundColor (Color color) {
