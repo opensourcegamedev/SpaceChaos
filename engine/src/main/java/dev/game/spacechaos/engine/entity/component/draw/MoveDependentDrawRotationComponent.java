@@ -23,8 +23,10 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
 
     protected float lastAngle = 0;
 
+    protected Vector2 frontVector = new Vector2(0, 0);
+
     public MoveDependentDrawRotationComponent () {
-        //
+        frontVector.setLength(1);
     }
 
     @Override
@@ -62,6 +64,10 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
             angle = this.lastAngle;
         }
 
+        frontVector.set(0, 1);
+        frontVector.setLength(1);
+        frontVector.setAngle(angle + 90);
+
         drawComponent.setRotationAngle(angle);
     }
 
@@ -71,7 +77,7 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
     }
 
     public Vector2 getFrontVec () {
-        return moveComponent.getMoveDirection();
+        return frontVector;
     }
 
 }
