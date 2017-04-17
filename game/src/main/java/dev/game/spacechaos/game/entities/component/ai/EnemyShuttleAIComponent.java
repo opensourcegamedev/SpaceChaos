@@ -60,7 +60,7 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
         }
 
         //generate random shoot interval
-        //this.shootInterval = RandomUtils.getRandomNumber(minShootInterval, maxShootInterval) * 1000;
+        this.shootInterval = RandomUtils.getRandomNumber(minShootInterval, maxShootInterval) * 1000;
 
         System.out.println("shoot interval: " + shootInterval);
     }

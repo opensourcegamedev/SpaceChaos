@@ -50,6 +50,9 @@ public class ProjectileFactory {
         //add component to move entity
         projectileEntity.addComponent(new MoveComponent(moveX, moveY, speed), MoveComponent.class);
 
+        //add component to rotate shuttle dependent on move direction
+        projectileEntity.addComponent(new MoveDependentDrawRotationComponent(), MoveDependentDrawRotationComponent.class);
+
         //add collision component, so player can collide with other space shuttles or meteorits
         projectileEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
         projectileEntity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
