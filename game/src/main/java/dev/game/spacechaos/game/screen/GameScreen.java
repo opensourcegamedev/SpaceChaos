@@ -155,33 +155,27 @@ public class GameScreen extends BaseScreen {
         this.skyBox = new SkyBox(new Texture[]{/*skyBox1, skyBox2, skyBox3, skyBox4*/skyBox2}, game.getViewportWidth(), game.getViewportHeight());
     }
 
-    protected void spawnEnemyShuttles (int amount) {
+    protected void spawnEnemyShuttles(int amount) {
         //execute this code after updating all entities
         game.runOnUIThread(() -> {
             //add a specific amount of enemy shuttles
             float[][] positions = new float[amount + 1][2]; //player + enemy positions
             positions[0][0] = this.playerEntity.getComponent(PositionComponent.class).getMiddleX();
             positions[0][1] = this.playerEntity.getComponent(PositionComponent.class).getMiddleY();
-            for (int n = 0; n < amount; n++) {
+            for (int enemyNumber = 0; enemyNumber < amount; enemyNumber++) {
                 //calculate random enemy position near player
-                float x = (float) Math.random() * game.getViewportWidth();
-                float y = (float) Math.random() * game.getViewportHeight();
+                float x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 2);
+                float y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 2);
 
                 boolean validPos = false;
                 while (!validPos) {
-                    for (int k = 0; k < n + 1; k++) {
-                        if (Math.abs(positions[k][0] - x) > 300 ||
-                                Math.abs(positions[k][1] - y) > 300) {
-                            if (k == n) { //all positions are valid
-                                positions[k + 1][0] = x;
-                                positions[k + 1][1] = y;
-                                validPos = true;
-                            }
-                        } else {
-                            x = (float) Math.random() * game.getViewportWidth();
-                            y = (float) Math.random() * game.getViewportHeight();
-                            break; //recheck if valid
-                        }
+                    if((x > game.getViewportWidth() * 2 && x < game.getViewportWidth() * 3) &&
+                            (y > game.getViewportHeight() * 2 && y < game.getViewportHeight() * 3)){
+                        validPos = true;
+                    } else {
+                        x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 2);
+                        y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 2);
+                        break; //recheck if valid
                     }
                 }
 
@@ -248,7 +242,7 @@ public class GameScreen extends BaseScreen {
         }
 
         //play background music
-        this.music.setVolume(0.8f);
+        this.music.setVolume(0.6f);
         this.music.setLooping(true);
         this.music.play();
     }
@@ -273,8 +267,8 @@ public class GameScreen extends BaseScreen {
 
             Entity projectile = ProjectileFactory.createProjectile(
                     this.ecs,
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(),
+                    dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 20,
+                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20,
                     projectileTexture,
                     dirX,
                     dirY,
@@ -288,7 +282,7 @@ public class GameScreen extends BaseScreen {
             this.ecs.addEntity(projectile);
 
             //play fire sound
-            this.fireSound.play(0.8f);
+            this.fireSound.play(0.6f);
         } else if (InputStates.isRightMouseButtonJustPressed()) {
             MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity.getComponent(MouseDependentMovementComponent.class);
 
@@ -305,8 +299,8 @@ public class GameScreen extends BaseScreen {
 
             Entity projectile = ProjectileFactory.createTorpedoProjectile(
                     this.ecs,
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
-                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY(),
+                    dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 30,
+                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 30,
                     torpedoTexture,
                     dirX,
                     dirY,

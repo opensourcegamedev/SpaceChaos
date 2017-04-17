@@ -51,7 +51,7 @@ public class PlayerFactory {
         player.addComponent(new OnCollisionCameraShakeComponent(), OnCollisionCameraShakeComponent.class);
 
         //add component to play a sound, if the player collides
-        player.addComponent(new OnCollisionPlaySoundComponent("./data/sound/explosions1/explodemini.wav", 0.6f), OnCollisionPlaySoundComponent.class);
+        player.addComponent(new OnCollisionPlaySoundComponent("./data/sound/explosions1/explodemini.wav", 0.4f), OnCollisionPlaySoundComponent.class);
 
         //add component for HP
         player.addComponent(new HPComponent(1000, 1000));
