@@ -44,6 +44,8 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
     protected Texture projectileTexture = null;
 
+    protected Vector2 tmpVector = new Vector2(0, 0);
+
     public EnemyShuttleAIComponent(Entity targetEntity, Texture projectileTexture) {
         if (targetEntity == null) {
             throw new NullPointerException("target entity cannot be null.");
@@ -132,10 +134,13 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
         float dirX = moveDependentDrawRotationComponent.getFrontVec().x;
         float dirY = moveDependentDrawRotationComponent.getFrontVec().y;
 
+        tmpVector.set(dirX, dirY);
+        tmpVector.setLength(100);
+
         Entity projectile = ProjectileFactory.createProjectile(
                 entity.getEntityComponentSystem(),
-                dirX + positionComponent.getMiddleX() - 20,
-                dirY + positionComponent.getMiddleY() - 20,
+                dirX + positionComponent.getMiddleX() + tmpVector.x - 20,
+                dirY + positionComponent.getMiddleY() + tmpVector.y - 20,
                 projectileTexture,
                 dirX,
                 dirY,
