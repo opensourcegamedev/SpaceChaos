@@ -237,10 +237,6 @@ public class GameScreen extends BaseScreen {
             float x = 0;
             float y = 0;
 
-            //get player position
-            float offsetX = playerEntity.getComponent(PositionComponent.class).getMiddleX();
-            float offsetY = playerEntity.getComponent(PositionComponent.class).getMiddleY();
-
             while (distance < minDistance) {
                 //calculate random enemy position near player
                 //x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
