@@ -19,6 +19,12 @@ Path: data/images/entities/pfau
 License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/de/)
 Author & Copyright: Paul Funk (pfau)
 
+## Shuttle graphics by SupressWarnings (Constantin Schulte)
+
+Path: data/images/entities/supressWarnings
+License: Closed Source, All Rights Reserved.
+Author & Copyright: Constantin Schulte
+
 # External images
 
 ## Galaxy Skybox
