@@ -43,7 +43,7 @@ public class GameScreen extends BaseScreen {
     protected static final String SKYBOX_MINUS_X = "./data/images/skybox/galaxy/galaxy-X.png";
     protected static final String SKYBOX_PLUS_Y = "./data/images/skybox/galaxy/galaxy+Y.png";
     protected static final String SKYBOX_MINUS_Y = "./data/images/skybox/galaxy/galaxy-Y.png";
-    protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/starships/spaceshuttle.png";
+    protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/pfau/shuttle.png";
     protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
     protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
     protected static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
