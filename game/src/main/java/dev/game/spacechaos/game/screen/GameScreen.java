@@ -363,9 +363,6 @@ public class GameScreen extends BaseScreen {
         //draw abilities and son on
         this.ecs.drawUILayer(time, game.getCamera(), batch);
 
-        //draw lightmap (only for testing purposes)
-        //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);
-
         batch.flush();
 
         //reset shader, so default shader is used
