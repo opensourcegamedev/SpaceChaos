@@ -9,6 +9,15 @@ public class SpawnUtils {
 
     protected static Vector2 tmpVector = new Vector2(0, 0);
 
+    public static Vector2 getRandomSpawnPosition (float minDistance, float maxDistance, float offsetX, float offsetY) {
+        Vector2 pos = getRandomSpawnPosition(minDistance, maxDistance);
+
+        pos.x += offsetX;
+        pos.y = offsetY;
+
+        return pos;
+    }
+
     public static Vector2 getRandomSpawnPosition (float minDistance, float maxDistance) {
         if (minDistance < 0) {
             throw new IllegalArgumentException("minDistance has to be >= 0.");

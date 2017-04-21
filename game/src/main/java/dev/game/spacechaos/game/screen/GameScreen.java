@@ -24,6 +24,7 @@ import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.input.InputStates;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
+import dev.game.spacechaos.engine.utils.SpawnUtils;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
 import dev.game.spacechaos.game.entities.factory.MeteoritFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
@@ -164,8 +165,11 @@ public class GameScreen extends BaseScreen {
             positions[0][1] = this.playerEntity.getComponent(PositionComponent.class).getMiddleY();
             for (int enemyNumber = 0; enemyNumber < amount; enemyNumber++) {
                 //calculate random enemy position near player
-                float x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 2);
-                float y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 2);
+                Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(1000, 3000, this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - game.getViewportWidth() / 2, this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - game.getViewportHeight() / 2);
+                float x = randomPos.x;
+                float y = randomPos.y;
+                //float x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 2);
+                //float y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 2);
 
                 boolean validPos = false;
                 while (!validPos) {
@@ -219,7 +223,7 @@ public class GameScreen extends BaseScreen {
         //spawn enemy shuttles
         spawnEnemyShuttles(5);
 
-        float minDistance = 800;
+        float minDistance = 1000;
 
         float playerPosX = playerEntity.getComponent(PositionComponent.class).getMiddleX();
         float playerPosY = playerEntity.getComponent(PositionComponent.class).getMiddleY();
@@ -227,16 +231,25 @@ public class GameScreen extends BaseScreen {
         Vector2 tmpVector = new Vector2();
 
         //add some random meteorits
-        for (int i = 0; i < 90; i++) {
+        for (int i = 0; i < 180; i++) {
             float distance = 0;
 
             float x = 0;
             float y = 0;
 
+            //get player position
+            float offsetX = playerEntity.getComponent(PositionComponent.class).getMiddleX();
+            float offsetY = playerEntity.getComponent(PositionComponent.class).getMiddleY();
+
             while (distance < minDistance) {
                 //calculate random enemy position near player
-                x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
-                y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
+                //x = (float) Math.random() * game.getViewportWidth() * 3 - game.getViewportWidth();
+                //y = (float) Math.random() * game.getViewportHeight() * 3 - game.getViewportHeight();
+
+                //calculate random enemy position near player
+                Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(100, game.getViewportWidth() * 2);
+                x = randomPos.x;
+                y = randomPos.y;
 
                 tmpVector.set(playerPosX - x, playerPosY - y);
                 distance = tmpVector.len();
@@ -369,7 +382,7 @@ public class GameScreen extends BaseScreen {
         this.shapeRenderer.setColor(Color.BLACK);
 
         //draw colliding objects
-        this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR, IN_COLLISION_COLOR);
+        //this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR, IN_COLLISION_COLOR);
 
         this.shapeRenderer.end();
 
