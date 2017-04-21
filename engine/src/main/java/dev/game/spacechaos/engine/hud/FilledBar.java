@@ -100,4 +100,12 @@ public class FilledBar extends BaseHUDWidget {
         return this.percent * 100;
     }
 
+    public void setBackgroundColor (Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public void setForegroundColor (Color foregroundColor) {
+        this.foregroundColor = foregroundColor;
+    }
+
 }
