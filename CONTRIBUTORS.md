@@ -5,6 +5,15 @@ Here you can see an list of all contributors and used assets from external autho
 ## Programming
  - Justin Künzel (JuKuSoft.com)
 
+# Internal Images
+
+Internal graphics was created specially for this project.
+
+## Shuttle graphic by Paul Funk (pfau).
+
+Path: data/images/entities/pfau
+License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/de/)
+Author & Copyright: Paul Funk (pfau)
 
 # External images
 
