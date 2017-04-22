@@ -7,6 +7,7 @@ import dev.game.spacechaos.engine.screen.ScreenManager;
 import dev.game.spacechaos.game.screen.GameScreen;
 import dev.game.spacechaos.game.screen.GameoverScreen;
 import dev.game.spacechaos.game.screen.HUDOverlayScreen;
+import dev.game.spacechaos.game.screen.MainMenuScreen;
 
 /**
  * Created by Justin on 06.02.2017.
@@ -23,9 +24,10 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("game", new GameScreen());
         screenManager.addScreen("hud", new HUDOverlayScreen());
         screenManager.addScreen("gameover", new GameoverScreen());
+        screenManager.addScreen("menu", new MainMenuScreen());
 
         //push screen
-        screenManager.push("game");
+        screenManager.push("menu");
 
         //push HUD overlay screen (GUI)
         //screenManager.push("hud");
