@@ -85,6 +85,12 @@ Path: data/sound/rock_breaking\
 License: CC-BY 3.0\
 Author & Copyright: Blender Foundation
 
+## Menu Selection Sound
+
+Path: data/sound/menu_selection_click\
+License: CC-BY 3.0\
+Author & Copyright: NenadSimic
+
 ## Others
 
 Also thanks to https://opengameart.org/content/the-free-firearm-sound-library for some free sounds!
