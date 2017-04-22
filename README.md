@@ -41,7 +41,7 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
 ### Community, Marketing & PR Management
   - Constantion Schulte / SupressWarnings
   
-Also thanks to all other supports and the libGDX team!
+Also thanks to all other supporters and the libGDX team!
   
 ### Assets
 The assets were made by others. All graphics (in most cases open source) are under a specific license.
