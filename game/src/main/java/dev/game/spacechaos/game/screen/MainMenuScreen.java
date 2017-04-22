@@ -66,7 +66,7 @@ public class MainMenuScreen extends BaseScreen {
         this.multiplayerButton.setClickListener(() -> {
             //game.getScreenManager().leaveAllAndEnter("game");
         });
-        this.hud.addWidget(this.multiplayerButton);
+        //this.hud.addWidget(this.multiplayerButton);
 
         this.creditsButton = new TextButton("Credits", this.buttonFont, startX, 280f);
         this.creditsButton.setDimension(400, 50);
