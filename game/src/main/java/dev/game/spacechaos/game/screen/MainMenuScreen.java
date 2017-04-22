@@ -34,7 +34,11 @@ public class MainMenuScreen extends BaseScreen {
     protected ShapeRenderer shapeRenderer = null;
     protected HUD hud = null;
 
+    //buttons
     protected TextButton newGameButton = null;
+    protected TextButton multiplayerButton = null;
+    protected TextButton creditsButton = null;
+    protected TextButton settingsButton = null;
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -50,12 +54,33 @@ public class MainMenuScreen extends BaseScreen {
         //create UI
         float startX = game.getViewportWidth() / 2 - 200;
 
-        this.newGameButton = new TextButton("New Game (Singleplayer)", this.buttonFont, startX, 400f);
+        this.newGameButton = new TextButton("New Singleplayer Game", this.buttonFont, startX, 400f);
         this.newGameButton.setDimension(400, 50);
         this.newGameButton.setClickListener(() -> {
             game.getScreenManager().leaveAllAndEnter("game");
         });
         this.hud.addWidget(this.newGameButton);
+
+        this.multiplayerButton = new TextButton("Multiplayer Lobby", this.buttonFont, startX, 340f);
+        this.multiplayerButton.setDimension(400, 50);
+        this.multiplayerButton.setClickListener(() -> {
+            //game.getScreenManager().leaveAllAndEnter("game");
+        });
+        this.hud.addWidget(this.multiplayerButton);
+
+        this.creditsButton = new TextButton("Credits", this.buttonFont, startX, 280f);
+        this.creditsButton.setDimension(400, 50);
+        this.creditsButton.setClickListener(() -> {
+            //game.getScreenManager().leaveAllAndEnter("game");
+        });
+        this.hud.addWidget(this.creditsButton);
+
+        this.settingsButton = new TextButton("Settings", this.buttonFont, startX, 220f);
+        this.settingsButton.setDimension(400, 50);
+        this.settingsButton.setClickListener(() -> {
+            //game.getScreenManager().leaveAllAndEnter("game");
+        });
+        this.hud.addWidget(this.settingsButton);
     }
 
     @Override
@@ -74,6 +99,9 @@ public class MainMenuScreen extends BaseScreen {
 
         //set hover sounds
         this.newGameButton.setHoverSound(this.selectSound);
+        this.multiplayerButton.setHoverSound(this.selectSound);
+        this.creditsButton.setHoverSound(this.selectSound);
+        this.settingsButton.setHoverSound(this.selectSound);
     }
 
     @Override
