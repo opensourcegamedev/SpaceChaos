@@ -56,6 +56,16 @@ public abstract class BaseHUDWidget implements HUDWidget {
         this.groupY = groupY;
     }
 
+    protected boolean isInner (float mouseX, float mouseY) {
+        if (mouseX >= getX() && mouseX <= (getX() + getWidth())) {
+            if (mouseY >= getY() && mouseY <= (getY() + getHeight())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public void dispose () {
         //
