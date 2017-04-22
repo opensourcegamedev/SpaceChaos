@@ -8,6 +8,7 @@ Here you can see an list of all contributors and used assets from external autho
   - Constantin Schulte - Testing, Community, Marketing & PR-Management, Graphics
   - Javanewbie - Programming, Graphics
   - Paul Funk - Graphics
+  - damios - Programming
 
 # Internal Images
 
