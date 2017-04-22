@@ -3,20 +3,16 @@ package dev.game.spacechaos.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
+import dev.game.spacechaos.engine.hud.HUD;
+import dev.game.spacechaos.engine.hud.widgets.TextButton;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
-import dev.game.spacechaos.engine.skin.SkinFactory;
-import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
@@ -31,79 +27,32 @@ public class MainMenuScreen extends BaseScreen {
     protected Texture bgImage = null;
     protected Sound selectSound = null;
 
+    //fonts
+    protected BitmapFont buttonFont = null;
+
     //UI
-    protected Skin uiSkin = null;
-    protected Stage uiStage = null;
+    protected ShapeRenderer shapeRenderer = null;
+    protected HUD hud = null;
 
-    //UI buttons
     protected TextButton newGameButton = null;
-    protected TextButton lobbyButton = null;
-    protected TextButton creditsButton = null;
-    protected TextButton settingsButton = null;
-
-    protected InputListener soundInputListener = new InputListener() {
-
-        @Override
-        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-            System.out.println("enter");
-
-            //play sound
-            selectSound.play(VolumeManager.getInstance().getEnvVolume());
-        }
-
-        @Override
-        public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-            //
-        }
-
-    };
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
-        //create stage for user interface (UI)
-        this.uiStage = new Stage();
+        //create new HUD
+        this.hud = new HUD();
 
-        //add support for window resizing
-        game.addResizeListener(((width, height) -> {
-            //update viewport of stage
-            uiStage.getViewport().update(width, height, true);
-        }));
+        //create new shape renderer
+        this.shapeRenderer = new ShapeRenderer();
 
-        //create and load ui skin from json file
-        this.uiSkin = SkinFactory.createSkin(UI_SKIN_PATH);
+        //create font
+        this.buttonFont = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 32, Color.WHITE);
 
         //create UI
         float startX = game.getViewportWidth() / 2 - 200;
 
-        //create new game button
-        this.newGameButton = new TextButton("New Game (Singleplayer)", this.uiSkin);
-        this.newGameButton.setPosition(startX, 400);
-        this.newGameButton.setWidth(400);
-        this.newGameButton.setHeight(50);
-        /*this.newGameButton.addListener(new ClickListener() {
-
-            protected boolean hovered = true;
-
-            @Override
-            public void clicked (InputEvent event, float x, float y) {
-                game.getScreenManager().leaveAllAndEnter("game");
-            }
-
-            public boolean mouseMoved (InputEvent event, float x, float y) {
-                super.mouseMoved(event, x, y);
-
-                System.out.println("mouseMoved.");
-
-                if (!hovered) {
-                    //
-                }
-
-                return false;
-            }
-
-        });*/
-        this.newGameButton.addCaptureListener(this.soundInputListener);
-        this.uiStage.addActor(this.newGameButton);
+        this.newGameButton = new TextButton("New Game (Singleplayer)", this.buttonFont, startX, 400f);
+        this.newGameButton.setDimension(400, 50);
+        this.hud.addWidget(this.newGameButton);
     }
 
     @Override
@@ -120,8 +69,8 @@ public class MainMenuScreen extends BaseScreen {
         this.bgImage = assetManager.get(BG_IMAGE_PATH, Texture.class);
         this.selectSound = assetManager.get(SELECT_SOUND_PATH, Sound.class);
 
-        //set input processor so UI stage can handle input events
-        Gdx.input.setInputProcessor(this.uiStage);
+        //set hover sounds
+        this.newGameButton.setHoverSound(this.selectSound);
     }
 
     @Override
@@ -134,7 +83,8 @@ public class MainMenuScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
-
+        //update HUD
+        this.hud.update(game, time);
     }
 
     @Override
@@ -145,10 +95,21 @@ public class MainMenuScreen extends BaseScreen {
         //draw background
         batch.draw(this.bgImage, 0, 0, game.getViewportWidth(), game.getViewportHeight());
 
+        //draw first (SpriteBatch) layer of HUD
+        this.hud.drawLayer0(time, batch);
         batch.flush();
+        batch.end();
 
-        //draw UI widgets
-        this.uiStage.draw();
+        //draw second layer (ShapeRenderer) of HUD
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        this.shapeRenderer.setProjectionMatrix(game.getUICamera().combined);
+        this.hud.drawLayer1(time, this.shapeRenderer);
+        this.shapeRenderer.end();
+
+        //draw last (SpriteBatch) layer of HUD
+        batch.begin();
+        batch.setProjectionMatrix(game.getUICamera().combined);
+        this.hud.drawLayer2(time, batch);
     }
 
     @Override
