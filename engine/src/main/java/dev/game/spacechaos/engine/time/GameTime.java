@@ -15,7 +15,7 @@ public class GameTime {
     protected static GameTime instance = null;
 
     protected GameTime () {
-        //set time, wenn game was started
+        //set time, when game was started
         this.appStartUpTime = System.currentTimeMillis();
     }
 
