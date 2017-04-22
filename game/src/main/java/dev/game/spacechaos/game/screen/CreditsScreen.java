@@ -29,7 +29,10 @@ public class CreditsScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
-        //
+        if (Gdx.input.isTouched()) {
+            //back to main menu
+            game.getScreenManager().leaveAllAndEnter("menu");
+        }
     }
 
     @Override

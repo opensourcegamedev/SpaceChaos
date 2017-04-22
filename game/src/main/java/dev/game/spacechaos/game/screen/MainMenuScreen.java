@@ -71,7 +71,7 @@ public class MainMenuScreen extends BaseScreen {
         this.creditsButton = new TextButton("Credits", this.buttonFont, startX, 280f);
         this.creditsButton.setDimension(400, 50);
         this.creditsButton.setClickListener(() -> {
-            //game.getScreenManager().leaveAllAndEnter("game");
+            game.getScreenManager().leaveAllAndEnter("credits");
         });
         this.hud.addWidget(this.creditsButton);
 

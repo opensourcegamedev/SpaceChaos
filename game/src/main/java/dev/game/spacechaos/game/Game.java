@@ -4,10 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.IScreen;
 import dev.game.spacechaos.engine.screen.ScreenManager;
-import dev.game.spacechaos.game.screen.GameScreen;
-import dev.game.spacechaos.game.screen.GameoverScreen;
-import dev.game.spacechaos.game.screen.HUDOverlayScreen;
-import dev.game.spacechaos.game.screen.MainMenuScreen;
+import dev.game.spacechaos.game.screen.*;
 
 /**
  * Created by Justin on 06.02.2017.
@@ -25,6 +22,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("hud", new HUDOverlayScreen());
         screenManager.addScreen("gameover", new GameoverScreen());
         screenManager.addScreen("menu", new MainMenuScreen());
+        screenManager.addScreen("credits", new CreditsScreen());
 
         //push screen
         screenManager.push("menu");
