@@ -20,15 +20,20 @@ import java.awt.*;
  */
 public class TextButton extends BaseHUDWidget {
 
-    protected Color bgColor = Color.ORANGE;
-    protected Color hoverColor = Color.YELLOW;
+    protected Color bgColor = Color.RED;
+    protected Color hoverColor = Color.ORANGE;
     protected String text = "";
     protected ClickListener clickListener = null;
     protected boolean hovered = false;
+    protected boolean isClicked = false;
 
     protected BitmapFont font = null;
 
     protected Sound hoverSound = null;
+
+    //Text padding
+    protected float paddingTop = 10;
+    protected float paddingLeft = 20;
 
     public TextButton (String text, BitmapFont font, float x, float y) {
         this.text = text;
@@ -59,12 +64,30 @@ public class TextButton extends BaseHUDWidget {
         } else {
             hovered = false;
         }
+
+        boolean oldClicked = this.isClicked;
+
+        if (isMouseInner(game) && Gdx.input.isTouched()) {
+            this.isClicked = true;
+        } else {
+            this.isClicked = false;
+
+            //check, if user has released button
+            if (oldClicked == true) {
+                //user has clicked button
+                if (clickListener != null) {
+                    clickListener.onClick();
+                }
+            }
+        }
     }
 
     @Override
     public void drawLayer0(GameTime time, SpriteBatch batch) {
         //draw rectangle
         SpriteBatcherUtils.fillRectangle(batch, getX(), getY(), getWidth(), getHeight(), this.hovered ? this.hoverColor : this.bgColor);
+
+        this.font.draw(batch, this.text, getX() + paddingLeft, getY() + getHeight() - paddingTop);
     }
 
     @Override

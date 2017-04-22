@@ -52,6 +52,9 @@ public class MainMenuScreen extends BaseScreen {
 
         this.newGameButton = new TextButton("New Game (Singleplayer)", this.buttonFont, startX, 400f);
         this.newGameButton.setDimension(400, 50);
+        this.newGameButton.setClickListener(() -> {
+            game.getScreenManager().leaveAllAndEnter("game");
+        });
         this.hud.addWidget(this.newGameButton);
     }
 
