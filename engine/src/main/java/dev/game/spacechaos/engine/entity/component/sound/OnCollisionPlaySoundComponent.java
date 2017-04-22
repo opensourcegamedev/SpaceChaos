@@ -7,6 +7,7 @@ import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.engine.sound.VolumeManager;
 
 import java.io.File;
 
@@ -61,7 +62,7 @@ public class OnCollisionPlaySoundComponent extends BaseComponent implements Coll
         }
 
         this.sound.stop();
-        this.sound.play(soundVolume);
+        this.sound.play(VolumeManager.getInstance().getEnvVolume());
     }
 
     @Override

@@ -10,6 +10,7 @@ import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.hud.ColoredTextButton;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
+import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
@@ -57,7 +58,7 @@ public class GameoverScreen extends BaseScreen {
     @Override
     public void onResume () {
         //play sound
-        sound.play();
+        sound.play(VolumeManager.getInstance().getBackgroundMusicVolume());
 
         this.timeText = game.getSharedData().get("lastElapsedTimeText", String.class);
     }

@@ -298,7 +298,7 @@ public class GameScreen extends BaseScreen {
             this.ecs.addEntity(projectile);
 
             //play fire sound
-            this.fireSound.play(0.6f);
+            this.fireSound.play(VolumeManager.getInstance().getEnvVolume());
         } else if (InputStates.isRightMouseButtonJustPressed()) {
             MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity.getComponent(MouseDependentMovementComponent.class);
 
