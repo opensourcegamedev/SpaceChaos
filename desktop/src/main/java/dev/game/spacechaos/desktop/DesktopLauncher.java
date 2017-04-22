@@ -33,7 +33,7 @@ public class DesktopLauncher {
                 e1.printStackTrace();
             }
 
-            System.exit(0);
+            System.exit(-1);
         }
     }
 
