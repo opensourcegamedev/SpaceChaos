@@ -23,6 +23,7 @@ import dev.game.spacechaos.engine.entity.listener.HPHitListener;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.input.InputStates;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
+import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.SpawnUtils;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
@@ -257,7 +258,7 @@ public class GameScreen extends BaseScreen {
         }
 
         //play background music
-        this.music.setVolume(0.6f);
+        this.music.setVolume(VolumeManager.getInstance().getBackgroundMusicVolume());
         this.music.setLooping(true);
         this.music.play();
     }
