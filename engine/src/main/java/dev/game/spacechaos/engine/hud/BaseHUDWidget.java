@@ -1,7 +1,9 @@
 package dev.game.spacechaos.engine.hud;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
@@ -54,6 +56,24 @@ public abstract class BaseHUDWidget implements HUDWidget {
     public void onMoveGroup (float groupX, float groupY) {
         this.groupX = groupX;
         this.groupY = groupY;
+    }
+
+    protected boolean isInner (float mouseX, float mouseY) {
+        if (mouseX >= getX() && mouseX <= (getX() + getWidth())) {
+            if (mouseY >= getY() && mouseY <= (getY() + getHeight())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected boolean isMouseInner (BaseGame game) {
+        //get mouse coordinates
+        float mouseX = Gdx.input.getX();
+        float mouseY = game.getViewportHeight() - Gdx.input.getY();
+
+        return isInner(mouseX, mouseY);
     }
 
     @Override
