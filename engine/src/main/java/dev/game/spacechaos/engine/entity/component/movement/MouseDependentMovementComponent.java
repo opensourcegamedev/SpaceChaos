@@ -114,13 +114,13 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
 
         //draw mouse position
         Vector3 mousePos = camera.getMousePosition();
-        SpriteBatcherUtils.fillRectangle(batch, mousePos.x - 5, mousePos.y - 5, 10, 10, Color.RED);
+        //SpriteBatcherUtils.fillRectangle(batch, mousePos.x - 5, mousePos.y - 5, 10, 10, Color.RED);
 
         //draw position
-        SpriteBatcherUtils.fillRectangle(batch, positionComponent.getX() - 5, positionComponent.getY() - 5, 10, 10, Color.BLUE);
+        //SpriteBatcherUtils.fillRectangle(batch, positionComponent.getX() - 5, positionComponent.getY() - 5, 10, 10, Color.BLUE);
 
         //draw front position
-        SpriteBatcherUtils.fillRectangle(batch, frontX - 5, frontY - 5, 10, 10, Color.GREEN);
+        //SpriteBatcherUtils.fillRectangle(batch, frontX - 5, frontY - 5, 10, 10, Color.GREEN);
     }
 
     @Override
