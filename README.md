@@ -13,7 +13,7 @@ Your shuttle has to survive as long as possible.
 
 ## Control
 
-The shuttle can be controlled with **mouse** (movement) and **space key and left/right mouse** (for now) to shoot.
+The shuttle can be controlled with **mouse** (movement) and **space key & left/right mouse** to shoot.
 
 ## Start profiling
 
