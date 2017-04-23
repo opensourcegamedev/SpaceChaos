@@ -1,6 +1,6 @@
 ﻿# Contributors
 
-Here you can see an list of all contributors and used assets from external authors.
+Here you can see a list of all contributors and used assets from external authors.
 
 ## Internal Credits
   - Justin Künzel (JuKuSoft.com) - Programming, Communication-Management, Projectmanagement
@@ -12,12 +12,12 @@ Here you can see an list of all contributors and used assets from external autho
 
 # Internal Images
 
-Internal graphics was created specially for this project.
+The internal graphics were specifically created for this project.
 
 ## Shuttle graphic by Paul Funk (pfau).
 
 Path: data/images/entities/pfau\
-License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/de/)\
+License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/de/) \
 Author & Copyright: Paul Funk (pfau)
 
 ## Shuttle graphics by SupressWarnings (Constantin Schulte)
@@ -32,31 +32,30 @@ Author & Copyright: Constantin Schulte
 
 Path: data/images/skybox/galaxy\
 License: CC-BY 3.0 or CC-BY-SA 3.0 (Dual licensed)\
-Author & Copyright: hackcraft.de\
+Author & Copyright: hackcraft.de
 
 Skybox was downloaded from http://opengameart.org/content/galaxy-skybox .\
 Donation by hackcraft.de
 
-(see also specific license file in specific directory)
+(see also the specific license file in the specific directory)
 
 ## Some asteroids
 
 Path: data/images/entities/asteroids2\
 License: CC-BY-SA 3.0\
-Author & Copyright: phaelax\
-Link: https://opengameart.org/content/asteroids
+Author & Copyright: phaelax, https://opengameart.org/content/asteroids
 
 ## Shield Effect
 
 Path: data/images/fx/shield-effect\
 License: CC-BY 3.0\
-Author & Copyright: Bonsaiheldin | http://bonsaiheld.org
+Author & Copyright: Bonsaiheldin, http://bonsaiheld.org
 
 ## some space shooter graphics
 
 Path: data/images/entities/spaceshooter, data/images/entities/kenney_spaceShooterExtension\
 License: CC0\
-Author & Copyright: Kenney Vleugels (Kenney.nl)
+Author & Copyright: Kenney Vleugels, http://kenney.nl/
 
 # External music
 
