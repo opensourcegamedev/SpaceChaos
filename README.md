@@ -46,3 +46,6 @@ Also thanks to all other supporters and the libGDX team!
 ### Assets
 The assets were made by others. All graphics (in most cases open source) are under a specific license.
 You can find all graphic authors & contributors in **CONTRIBUTORS.md file**.
+
+## Like this game
+Give us a thumbs-up on pewn.de:<a href="https://pewn.de/games/815998-SpaceChaos/?vote=notify"><img src="https://pewn.de/signature/pewn3_general.png" alt="Pewn"/></a>
