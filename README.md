@@ -13,7 +13,7 @@ Your shuttle has to survive as long as possible.
 
 ## Control
 
-The shuttle can be controlled with **mouse** (movement) and **space key** (for now) to shoot.
+The shuttle can be controlled with **mouse** (movement) and **space key and left/right mouse** (for now) to shoot.
 
 ## Start profiling
 
@@ -28,18 +28,18 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
 
 ### Programmers
   - Justin Künzel
-  - Dogemagni (Cromewell)
-  - Constantin Schulte / SupressWarnings
+  - Cromewell (dogemani)
+  - Constantin Schulte (SupressWarnings)
   - javanewbie
   - damios
   
 ### Graphics
   - Paul Funk (pfau)
-  - Constantin Schulte / SupressWarnings
+  - Constantin Schulte (SupressWarnings)
   - javanewbie
   
 ### Community, Marketing & PR Management
-  - Constantin Schulte / SupressWarnings
+  - Constantin Schulte (SupressWarnings)
   
 Also thanks to all other supporters and the libGDX team!
   
