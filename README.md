@@ -29,17 +29,17 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
 ### Programmers
   - Justin Künzel
   - Dogemagni (Cromewell)
-  - Constantion Schulte / SupressWarnings
+  - Constantin Schulte / SupressWarnings
   - javanewbie
   - damios
   
 ### Graphics
   - Paul Funk (pfau)
-  - Constantion Schulte / SupressWarnings
+  - Constantin Schulte / SupressWarnings
   - javanewbie
   
 ### Community, Marketing & PR Management
-  - Constantion Schulte / SupressWarnings
+  - Constantin Schulte / SupressWarnings
   
 Also thanks to all other supporters and the libGDX team!
   
