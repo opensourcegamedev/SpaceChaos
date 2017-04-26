@@ -25,7 +25,7 @@ public class Shake2CameraModification implements CameraModification {
     @Override
     public void onUpdate(GameTime time, TempCameraParams camera, ModificationFinishedListener listener) {
         if (!isActive) {
-            //mod isnt active, so we dont need to update mod
+            //mod isn't active, so we don't need to update mod
             return;
         }
 

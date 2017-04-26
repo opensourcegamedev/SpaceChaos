@@ -67,7 +67,7 @@ public class CRectangle extends CShape {
             //rectangle - rectangle - collision test
             CRectangle rect = (CRectangle) obj;
 
-            //test, if rectangle overlaps other rectangle
+            //test if rectangle overlaps other rectangle
             return x <= rect.getX() + rect.width && getX() + width >= rect.getX() && getY() <= rect.getY() + rect.height && getY() + height >= rect.getY();
         } else {
             throw new IllegalArgumentException("shape class " + obj.getClass() + " isnt supported.");
