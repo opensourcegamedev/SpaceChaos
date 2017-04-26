@@ -87,7 +87,7 @@ public class DrawTextureRegionComponent extends DrawComponent {
         }
 
         this.textureRegionChangedListenerList.stream().forEach(listener -> {
-            //check, if dev mode is enabled
+            //check if dev mode is enabled
             /*if (DevMode.isEnabled()) {
                 //log listener
                 System.out.println("DrawTextureRegionComponent call listener: " + listener.getClass().getName());

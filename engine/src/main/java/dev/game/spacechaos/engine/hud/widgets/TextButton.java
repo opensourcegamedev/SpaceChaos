@@ -49,7 +49,7 @@ public class TextButton extends BaseHUDWidget {
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //check, if mouse is inner
+        //check if mouse is inner
         if (isMouseInner(game)) {
             if (!hovered) {
                 //mouse enter widget
@@ -72,7 +72,7 @@ public class TextButton extends BaseHUDWidget {
         } else {
             this.isClicked = false;
 
-            //check, if user has released button
+            //check if user has released button
             if (oldClicked == true) {
                 //user has clicked button
                 if (clickListener != null) {

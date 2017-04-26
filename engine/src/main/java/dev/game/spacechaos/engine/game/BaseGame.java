@@ -149,7 +149,7 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         int fps = getFPS();
         if (fps <= 59 && fps != 0) {
-            //check, if warning was already log this second
+            //check if warning was already logged this second
             long now = System.currentTimeMillis();
             long nowWarnSecond = now / 1000;
             long lastWarnSecond = lastFPSWarning / 1000;

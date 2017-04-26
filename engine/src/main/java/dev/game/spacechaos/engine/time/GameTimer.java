@@ -82,7 +82,7 @@ public class GameTimer {
     }
 
     public void update (GameTime time) {
-        //check, if timer isnt running
+        //check if timer isnt running
         if (!isRunning) {
             //we dont need to update timer
             return;

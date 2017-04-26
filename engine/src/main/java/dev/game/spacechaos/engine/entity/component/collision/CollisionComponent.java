@@ -110,7 +110,7 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         //entity is in collision
 
         for (Entity collisionEntity : collidedEntities) {
-            //check, if entity was already in collision
+            //check if entity was already in collision
             if (this.alreadyInCollisionEntities.contains(collisionEntity)) {
                 //entity was already in collision
                 callCollisionStayListeners(collisionEntity);
@@ -122,7 +122,7 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
             }
         }
 
-        //check, if entities have exit collision
+        //check if entities have exit collision
         for (Entity collisionEntity : this.alreadyInCollisionEntities) {
             if (!collidedEntities.contains(collisionEntity)) {
                 //entity has exit collision
@@ -192,7 +192,7 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     }
 
     /**
-    * check, if entity collides with this entity
+    * check if entity collides with this entity
     */
     public boolean overlaps (CollisionComponent collisionComponent) {
         //first check hull

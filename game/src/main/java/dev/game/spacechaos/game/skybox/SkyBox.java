@@ -77,9 +77,9 @@ public class SkyBox implements DrawableEntity {
         //update bounding box
         this.rectangle.set(minVector, maxVector);
 
-        //check, if skybox part is in viewport
+        //check if skybox part is in viewport
         if (!camera.getOriginalCamera().frustum.boundsInFrustum(this.rectangle)) {
-            //we dont have to draw this skybox part
+            //we don't have to draw this skybox part
             //return;
         }
 

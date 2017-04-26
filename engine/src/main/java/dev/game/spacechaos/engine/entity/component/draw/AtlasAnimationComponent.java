@@ -127,7 +127,7 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
     }
 
     public void setCurrentAnimationName (String animationName) {
-        //check, if animation name was changed
+        //check if animation name was changed
         if (this.currentAnimationName.equals(animationName)) {
             return;
         }

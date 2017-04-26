@@ -41,7 +41,7 @@ public class DefaultSharedData implements SharedData {
         //get object
         Object obj = this.get(name);
 
-        //because null object cannot be casted, check, if object is null
+        //because null object cannot be casted, check if object is null
         if (obj == null) {
             return null;
         }

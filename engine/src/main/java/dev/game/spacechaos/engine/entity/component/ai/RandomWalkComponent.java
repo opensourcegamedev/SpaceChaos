@@ -55,7 +55,7 @@ public class RandomWalkComponent extends BaseComponent implements IUpdateCompone
             initialized = true;
         }
 
-        //check, if entity is near target
+        //check if entity is near target
         tmpVector.set(targetPos.x - positionComponent.getMiddleX(), targetPos.y - positionComponent.getMiddleY());
         float length = tmpVector.len();
 

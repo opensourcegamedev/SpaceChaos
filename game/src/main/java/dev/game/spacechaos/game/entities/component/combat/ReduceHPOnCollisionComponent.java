@@ -40,11 +40,11 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
-        //check, if other entity is an projectile or other attacking entity
+        //check if the other entity is a projectile or another attacking entity
         AttackComponent attackComponent = otherEntity.getComponent(AttackComponent.class);
 
         if (attackComponent != null) {
-            //dont reduce HP, because this is an task of fighting system
+            //don't reduce HP, because this is an task of the fighting system
             return;
         }
 

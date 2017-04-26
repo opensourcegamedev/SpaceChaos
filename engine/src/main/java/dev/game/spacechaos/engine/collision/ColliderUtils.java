@@ -114,7 +114,7 @@ public class ColliderUtils {
             minB = b;
         }
 
-        //check, if values are overlaping
+        //check if values are overlaping
         return minB <= maxA && minA <= maxB;
     }
 

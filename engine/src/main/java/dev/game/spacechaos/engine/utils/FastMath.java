@@ -40,7 +40,7 @@ public class FastMath {
     }
 
     public static boolean checkIfLinesAreEquals (Line a, Line b) {
-        //check, if lines are parallel, else they cannot be equals
+        //check if lines are parallel, else they cannot be equals
         if (!checkVectorsParallel(a.getDirection(), b.getDirection())) {
             return false;
         }

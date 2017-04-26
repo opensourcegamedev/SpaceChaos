@@ -37,7 +37,7 @@ public class SimpleFollowAIMovementComponent extends BaseComponent implements IU
         this.targetEntity = targetEntity;
         this.targetPosition = targetEntity.getComponent(PositionComponent.class);
 
-        //check, if required component exists
+        //check if required component exists
         if (this.targetPosition == null) {
             throw new RequiredComponentNotFoundException("PositionComponent is required on target entity, but cannot be found.");
         }

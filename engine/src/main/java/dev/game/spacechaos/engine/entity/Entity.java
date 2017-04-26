@@ -125,7 +125,7 @@ public class Entity {
 
                 //check requirements
                 for (Class<? extends IComponent> classType : requiredComponents.components()) {
-                    //check, if class type is present
+                    //check if class type is present
                     if (!componentMap.containsKey(classType)) {
                         throw new RequiredComponentNotFoundException("component '" + classType.getName() + "' is required by component '" + cls.getName() + "', but doesnt exists.");
                     }
@@ -141,7 +141,7 @@ public class Entity {
         //add component to map
         this.componentMap.put(cls, component);
 
-        //check, if component needs to update
+        //check if component needs to update
         if (component instanceof IUpdateComponent) {
             this.updateComponentList.add((IUpdateComponent) component);
 
@@ -174,7 +174,7 @@ public class Entity {
             System.out.println("Order: " + component1.getUpdateOrder().getValue() + ", Classname: " + component1.getClass().getName());
         }*/
 
-        //check, if component needs to draw
+        //check if component needs to draw
         if (component instanceof IDrawComponent) {
             this.drawComponentList.add((IDrawComponent) component);
 
@@ -186,7 +186,7 @@ public class Entity {
             });
         }
 
-        //check, if component needs to draw on user interface layer
+        //check if component needs to draw on user interface layer
         if (component instanceof IDrawUILayerComponent) {
             this.drawUILayerComponentList.add((IDrawUILayerComponent) component);
 

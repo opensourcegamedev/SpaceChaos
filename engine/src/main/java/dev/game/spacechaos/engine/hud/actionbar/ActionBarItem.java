@@ -73,7 +73,7 @@ public class ActionBarItem extends BaseHUDWidget {
         //update cooldown timer
         this.cooldownTimer.update(time);
 
-        //check, if hovered
+        //check if hovered
         hovered = false;
 
         Vector3 mousePos = MouseUtils.getMousePositionWithCamera(game.getUICamera());
@@ -160,7 +160,7 @@ public class ActionBarItem extends BaseHUDWidget {
     }
 
     public void onClick () {
-        //check, if cooldown timer is running
+        //check if cooldown timer is running
         if (useCooldown && this.cooldownTimer.isRunning()) {
             //we cannot execute action, because cooldown timer is running
             return;
@@ -169,7 +169,7 @@ public class ActionBarItem extends BaseHUDWidget {
         if (this.clickable && this.command != null) {
             this.command.execute();
 
-            //check, if action requires an cooldown timer
+            //check if action requires an cooldown timer
             if (useCooldown) {
                 //start cooldown timer
                 this.cooldownTimer.start();

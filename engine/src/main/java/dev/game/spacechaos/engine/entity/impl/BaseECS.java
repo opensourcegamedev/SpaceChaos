@@ -118,7 +118,7 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
             throw new NullPointerException("entity cannot be null.");
         }
 
-        //check, if unique name is already in use
+        //check if unique name is already in use
         if (this.namedEntitiesMap.get(uniqueName) != null) {
             throw new IllegalStateException("entity name '" + uniqueName + "' is already in use.");
         }
@@ -239,7 +239,7 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
 
     @Override
     public void removeAllEntities () {
-        //ierate through all entities
+        //iterate through all entities
         for (Map.Entry<Long,Entity> entry : this.entityMap.entrySet()) {
             if (entry.getValue() != null) {
                 //remove entity
