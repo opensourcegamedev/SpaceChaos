@@ -56,7 +56,7 @@ public class GameoverScreen extends BaseScreen {
     }
 
     @Override
-    public void onResume () {
+    public void onResume() {
         //play sound
         sound.play(VolumeManager.getInstance().getBackgroundMusicVolume());
 
@@ -64,7 +64,7 @@ public class GameoverScreen extends BaseScreen {
     }
 
     @Override
-    public void onPause () {
+    public void onPause() {
         //
     }
 
