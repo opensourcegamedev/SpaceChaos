@@ -1,18 +1,17 @@
 package dev.game.spacechaos.game.entities.factory;
 
 import com.badlogic.gdx.graphics.Texture;
+
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.ai.RandomWalkComponent;
-import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovementComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
-import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.draw.SimpleRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
-import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraShakeComponent;
+import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnHitComponent;
 
@@ -21,37 +20,54 @@ import dev.game.spacechaos.game.entities.component.combat.RemoveOnHitComponent;
  */
 public class MeteoritFactory {
 
-    public static Entity createMeteorit (EntityManager ecs, float x, float y, Texture texture) {
-        //create new entity
-        Entity entity = new Entity(ecs);
+	/**
+	 * Creates a meteorit.
+	 * 
+	 * @param ecs
+	 *            The entity component system.
+	 * @param x
+	 *            The x-coordinate of the position.
+	 * @param y
+	 *            The y-coordinate of the position.
+	 * @param texture
+	 *            The texture of the meteorit.
+	 * @param size
+	 *            The size of the meteorit.
+	 * @return
+	 */
+	public static Entity createMeteorit(EntityManager ecs, float x, float y, Texture texture) {
+		//create new entity
+		Entity entity = new Entity(ecs);
 
-        //every entity requires an position component
-        entity.addComponent(new PositionComponent(x, y), PositionComponent.class);
+		//every entity requires an position component
+		entity.addComponent(new PositionComponent(x, y), PositionComponent.class);
 
-        //add texture component to draw texture
-        entity.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2), DrawTextureComponent.class);
-        entity.getComponent(DrawTextureComponent.class).setScale(2);
+		//add texture component to draw texture
+		entity.addComponent(new DrawTextureComponent(texture, texture.getWidth() / 2, texture.getHeight() / 2),
+				DrawTextureComponent.class);
+		entity.getComponent(DrawTextureComponent.class).setScale(1);
 
-        //add component to move entity
-        entity.addComponent(new MoveComponent(1f), MoveComponent.class);
+		//add component to move entity
+		entity.addComponent(new MoveComponent(1f), MoveComponent.class);
 
-        //add component so meteorits move randomly
-        entity.addComponent(new RandomWalkComponent(), RandomWalkComponent.class);
+		//add component so meteorits move randomly
+		entity.addComponent(new RandomWalkComponent(), RandomWalkComponent.class);
 
-        //add HP component, so player can destroy meteorits
-        entity.addComponent(new HPComponent(1500, 1500));
+		//add HP component, so player can destroy meteorits
+		entity.addComponent(new HPComponent(1500, 1500));
 
-        //add component to remove entity on hit
-        entity.addComponent(new RemoveOnHitComponent(), RemoveOnHitComponent.class);
+		//add component to remove entity on hit
+		entity.addComponent(new RemoveOnHitComponent(), RemoveOnHitComponent.class);
 
-        //add collision component, so player can collide with meteorits
-        entity.addComponent(new CollisionComponent(), CollisionComponent.class);
-        entity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getHeight() / 2 * 2));
+		//add collision component, so player can collide with meteorits
+		entity.addComponent(new CollisionComponent(), CollisionComponent.class);
+		entity.getComponent(CollisionComponent.class).addInnerShape(
+				new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getHeight() / 2));
 
-        //add component to rotate entity
-        entity.addComponent(new SimpleRotationComponent(1f), SimpleRotationComponent.class);
+		//add component to rotate entity
+		entity.addComponent(new SimpleRotationComponent(RandomUtils.getRandomNumber(0, 8)/10F), SimpleRotationComponent.class);
 
-        return entity;
-    }
+		return entity;
+	}
 
 }
