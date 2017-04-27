@@ -91,6 +91,11 @@ Path: data/sound/menu_selection_click\
 License: CC-BY 3.0\
 Author & Copyright: NenadSimic
 
+## Torpedo Sound
+Path: data/sound/spaceshipshooting/torpedo.wav
+License: CC-BY 3.0\
+Author: Bart Kelsey
+
 ## Others
 
 Also thanks to https://opengameart.org/content/the-free-firearm-sound-library for some free sounds!
