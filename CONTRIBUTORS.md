@@ -92,7 +92,7 @@ License: CC-BY 3.0\
 Author & Copyright: NenadSimic
 
 ## Torpedo Sound
-Path: data/sound/spaceshipshooting/torpedo.wav
+Path: data/sound/spaceshipshooting/torpedo.wav\
 License: CC-BY 3.0\
 Author: Bart Kelsey
 
