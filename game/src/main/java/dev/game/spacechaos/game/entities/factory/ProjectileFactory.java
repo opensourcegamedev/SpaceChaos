@@ -60,7 +60,7 @@ public class ProjectileFactory {
         //add attack component
         projectileEntity.addComponent(new AttackComponent(ownEntity, 100));
 
-        //add component to avoid camera shake, if player fires projectile (if projectile starts, projectile is in player collision hull)
+        //add component to avoid camera shake, if player fires projectile (when projectile starts, projectile is in player collision hull)
         projectileEntity.addComponent(new AvoidCollisionCameraShakeComponent(), AvoidCollisionCameraShakeComponent.class);
 
         //add component to avoid collision sound
