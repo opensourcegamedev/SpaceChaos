@@ -31,8 +31,6 @@ public class MeteoritFactory {
 	 *            The y-coordinate of the position.
 	 * @param texture
 	 *            The texture of the meteorit.
-	 * @param size
-	 *            The size of the meteorit.
 	 * @return
 	 */
 	public static Entity createMeteorit(EntityManager ecs, float x, float y, Texture texture) {
