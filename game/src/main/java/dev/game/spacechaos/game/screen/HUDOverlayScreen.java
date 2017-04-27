@@ -14,6 +14,7 @@ import dev.game.spacechaos.engine.hud.HUD;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
+import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 
 /**
  * Created by Justin on 11.04.2017.
@@ -27,6 +28,7 @@ public class HUDOverlayScreen extends BaseScreen {
     protected BitmapFont font2 = null;
 
     protected String timeText = "";
+    protected String torpedoAmountText = "";
     protected long minutes = 0;
     protected long seconds = 0;
 
@@ -86,6 +88,9 @@ public class HUDOverlayScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
+
+        this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedosLeft());
+
         //calculate elapsed time
         this.elapsedTime = System.currentTimeMillis() - this.startTime;
 
@@ -132,6 +137,10 @@ public class HUDOverlayScreen extends BaseScreen {
         } else {
             this.font1.draw(batch, this.timeText, game.getViewportWidth() - 220, game.getViewportHeight() - 50);
         }
+
+        //draw ammo hud
+        this.font2.draw(batch, this.torpedoAmountText, game.getViewportWidth() - 220, 70);
+        this.font1.draw(batch, this.torpedoAmountText, game.getViewportWidth() - 220, 70);
 
         //draw first (SpriteBatch) layer of HUD
         this.hud.drawLayer0(time, batch);
