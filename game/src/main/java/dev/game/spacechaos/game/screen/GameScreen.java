@@ -326,32 +326,34 @@ public class GameScreen extends BaseScreen {
             //play fire sound
             this.fireSound.play(VolumeManager.getInstance().getEnvVolume());
         } else if (InputStates.isRightMouseButtonJustPressed()) {
-            MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity
-                    .getComponent(MouseDependentMovementComponent.class);
+            if(ProjectileFactory.canShootTorpedo()) {
+                MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity
+                        .getComponent(MouseDependentMovementComponent.class);
 
-            float dirX = mouseDependentMovementComponent.getFrontVec().x;
-            float dirY = mouseDependentMovementComponent.getFrontVec().y;
+                float dirX = mouseDependentMovementComponent.getFrontVec().x;
+                float dirY = mouseDependentMovementComponent.getFrontVec().y;
 
-            //entity to follow
-            Entity enemyEntity = null;
+                //entity to follow
+                Entity enemyEntity = null;
 
-            //TODO: choose nearest enemy shuttle or hovered shuttle
-            for (Entity entity : this.enemyEntityList) {
-                enemyEntity = entity;
+                //TODO: choose nearest enemy shuttle or hovered shuttle
+                for (Entity entity : this.enemyEntityList) {
+                    enemyEntity = entity;
+                }
+
+                Entity projectile = ProjectileFactory.createTorpedoProjectile(this.ecs,
+                        dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 30,
+                        dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 30, torpedoTexture,
+                        dirX, dirY, 4f, this.playerEntity, enemyEntity, 3000L);
+
+                projectile.getComponent(DrawTextureComponent.class)
+                        .setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
+                projectile.getComponent(MoveComponent.class).setMoving(true);
+                this.ecs.addEntity(projectile);
+
+                //play torpedo sound
+                this.torpedoSound.play(VolumeManager.getInstance().getEnvVolume() - 0.4f);
             }
-
-            Entity projectile = ProjectileFactory.createTorpedoProjectile(this.ecs,
-                    dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 30,
-                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 30, torpedoTexture,
-                    dirX, dirY, 4f, this.playerEntity, enemyEntity, 3000L);
-
-            projectile.getComponent(DrawTextureComponent.class)
-                    .setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
-            projectile.getComponent(MoveComponent.class).setMoving(true);
-            this.ecs.addEntity(projectile);
-
-            //play torpedo sound
-            this.torpedoSound.play(VolumeManager.getInstance().getEnvVolume() - 0.4f);
         }
 
         if (lastBeep == 0) {

@@ -23,6 +23,9 @@ import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
 
 public class ProjectileFactory {
 
+    protected static long lastTorpedoShot = 0;
+    protected static int torpedoCooldown = 2000; //milliseconds
+
     /**
      * create an new projectile entity
      *
@@ -91,6 +94,7 @@ public class ProjectileFactory {
      */
 
     public static Entity createTorpedoProjectile(EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, Entity playerEntity, Entity enemyEntity, long ttl) {
+
         //create new entity
         Entity projectileEntity = new Entity(ecs);
 
@@ -132,6 +136,15 @@ public class ProjectileFactory {
         projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl));
 
         return projectileEntity;
+    }
+
+    public static boolean canShootTorpedo() {
+        if (System.currentTimeMillis() - lastTorpedoShot > torpedoCooldown) {
+            lastTorpedoShot = System.currentTimeMillis();
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
