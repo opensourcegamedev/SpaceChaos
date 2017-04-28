@@ -20,9 +20,8 @@ import dev.game.spacechaos.engine.time.GameTime;
  */
 public class MainMenuScreen extends BaseScreen {
 
-    protected static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy2/galaxy2.jpg";
+    protected static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy3/space.png";
     protected static final String SELECT_SOUND_PATH = "./data/sound/menu_selection_click/menu_selection_click_16bit.wav";
-    protected static final String UI_SKIN_PATH = "./data/ui/skin/libgdx/uiSkin.json";
 
     protected Texture bgImage = null;
     protected Sound selectSound = null;
@@ -124,7 +123,7 @@ public class MainMenuScreen extends BaseScreen {
         batch.setProjectionMatrix(game.getUICamera().combined);
 
         //draw background
-        batch.draw(this.bgImage, 0, 0, game.getViewportWidth(), game.getViewportHeight());
+        batch.draw(this.bgImage, 0, 0, game.getViewportWidth(), game.getViewportHeight() );
 
         //draw first (SpriteBatch) layer of HUD
         this.hud.drawLayer0(time, batch);

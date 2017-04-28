@@ -39,6 +39,18 @@ Donation by hackcraft.de
 
 (see also the specific license file in the specific directory)
 
+## Space Skybox
+
+Path: data/images/skybox/space\
+License: CC-BY-SA 3.0\
+Author & Copyright: fraang, https://opengameart.org/content/space-backgrounds-0
+
+## Space Wallpaper
+
+Path: data/wallpaper/galaxy3\
+License: CC-BY-SA 3.0\
+Author & Copyright: NoLogoGames, https://opengameart.org/content/space-nebulas-skybox
+
 ## Some asteroids
 
 Path: data/images/entities/asteroids2\

@@ -41,12 +41,9 @@ import dev.game.spacechaos.game.skybox.SkyBox;
  * Created by Justin on 28.03.2017.
  */
 public class GameScreen extends BaseScreen {
-
-    protected static final String BG_IMAGE_PATH = "./data/images/skybox/galaxy/galaxy+X.png";
-    protected static final String SKYBOX_PLUS_X = "./data/images/skybox/galaxy/galaxy+X.png";
-    protected static final String SKYBOX_MINUS_X = "./data/images/skybox/galaxy/galaxy-X.png";
-    protected static final String SKYBOX_PLUS_Y = "./data/images/skybox/galaxy/galaxy+Y.png";
-    protected static final String SKYBOX_MINUS_Y = "./data/images/skybox/galaxy/galaxy-Y.png";
+	
+    protected static final String SKYBOX_1 = "./data/images/skybox/space/space.png";
+    protected static final String SKYBOX_2 = "./data/images/skybox/space/space-1.png";
     protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/pfau/shuttle.png";
     protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
     protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
@@ -102,11 +99,8 @@ public class GameScreen extends BaseScreen {
         //load all necessary assets
 
         //load skybox
-        assetManager.load(BG_IMAGE_PATH, Texture.class);
-        assetManager.load(SKYBOX_MINUS_X, Texture.class);
-        assetManager.load(SKYBOX_PLUS_X, Texture.class);
-        assetManager.load(SKYBOX_MINUS_Y, Texture.class);
-        assetManager.load(SKYBOX_PLUS_Y, Texture.class);
+        assetManager.load(SKYBOX_1, Texture.class);
+        assetManager.load(SKYBOX_2, Texture.class);
         assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
         assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
         assetManager.load(PROJECTILE_IMAGE_PATH, Texture.class);
@@ -126,11 +120,8 @@ public class GameScreen extends BaseScreen {
         assetManager.load(TORPEDO_SHOOT_SOUND, Sound.class);
 
         //wait while assets are loading
-        assetManager.finishLoadingAsset(BG_IMAGE_PATH);
-        assetManager.finishLoadingAsset(SKYBOX_MINUS_X);
-        assetManager.finishLoadingAsset(SKYBOX_PLUS_X);
-        assetManager.finishLoadingAsset(SKYBOX_MINUS_Y);
-        assetManager.finishLoadingAsset(SKYBOX_PLUS_Y);
+        assetManager.finishLoadingAsset(SKYBOX_1);
+        assetManager.finishLoadingAsset(SKYBOX_2);
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
         assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
@@ -150,14 +141,12 @@ public class GameScreen extends BaseScreen {
         this.collisionManager = new DefaultCollisionManager(this.ecs);
 
         //get asset
-        this.bgTexture = assetManager.get(BG_IMAGE_PATH, Texture.class);
         this.projectileTexture = assetManager.get(PROJECTILE_IMAGE_PATH, Texture.class);
         this.torpedoTexture = assetManager.get(TORPEDO_IMAGE_PATH);
 
-        Texture skyBox1 = assetManager.get(SKYBOX_MINUS_X);
-        Texture skyBox2 = assetManager.get(SKYBOX_PLUS_X);
-        Texture skyBox3 = assetManager.get(SKYBOX_MINUS_Y);
-        Texture skyBox4 = assetManager.get(SKYBOX_PLUS_Y);
+        Texture skyBox1 = assetManager.get(SKYBOX_1);
+        Texture skyBox2 = assetManager.get(SKYBOX_2);
+
 
         //get background music
         this.music = assetManager.get(BACKGROUND_MUSIC_PATH);
@@ -169,7 +158,7 @@ public class GameScreen extends BaseScreen {
 
         //create skybox
         this.skyBox = new SkyBox(
-                new Texture[]{ /* skyBox1, skyBox2, skyBox3, skyBox4 */skyBox2}, game.getViewportWidth(),
+                new Texture[]{/*skyBox2, */ skyBox1}, game.getViewportWidth(),
                 game.getViewportHeight());
     }
 
@@ -398,8 +387,8 @@ public class GameScreen extends BaseScreen {
         this.shapeRenderer.setColor(Color.BLACK);
 
         //draw colliding objects
-        this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR,
-                IN_COLLISION_COLOR);
+        //this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR,
+        //        IN_COLLISION_COLOR);
 
         this.shapeRenderer.end();
 
@@ -408,8 +397,6 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void destroy() {
-        assetManager.unload(BG_IMAGE_PATH);
-
         //cleaning up entity-component-system
         this.ecs.dispose();
     }

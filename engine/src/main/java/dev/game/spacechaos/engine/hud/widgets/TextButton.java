@@ -20,7 +20,7 @@ import java.awt.*;
  */
 public class TextButton extends BaseHUDWidget {
 
-    protected Color bgColor = Color.RED;
+    protected Color bgColor = Color.FIREBRICK;//Color.CHARTREUSE
     protected Color hoverColor = Color.ORANGE;
     protected String text = "";
     protected ClickListener clickListener = null;

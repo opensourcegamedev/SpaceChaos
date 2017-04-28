@@ -48,8 +48,8 @@ public class HUDOverlayScreen extends BaseScreen {
         //create new Head-Up-Display
         this.hud = new HUD();
         this.filledBar = new FilledBar(this.font1);
-        this.filledBar.setPosition(game.getViewportWidth() - 380, game.getViewportHeight() - 90);
-        this.filledBar.setDimension(100, 40);
+        this.filledBar.setPosition(game.getViewportWidth() - 400, game.getViewportHeight() - 85);
+        this.filledBar.setDimension(155, 35);
         this.hud.addWidget(this.filledBar);
 
         this.shapeRenderer = new ShapeRenderer();
