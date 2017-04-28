@@ -23,6 +23,10 @@ import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
 
 public class ProjectileFactory {
 
+    protected static long lastTorpedoShot = 0;
+    protected static int torpedoCooldown = 2000; //milliseconds
+    protected static int torpedosLeft = 10;
+
     /**
      * create an new projectile entity
      *
@@ -33,7 +37,7 @@ public class ProjectileFactory {
      * @param moveX   x move direction (for example to move to left: x = -1, y = 0)
      * @param moveY   y move direction (for example to move to left: x = -1, y = 0)
      * @param speed   movement speed
-     * @param ttl     time to live of projectile (after this time in milliseconds the entity will removed automatically)
+     * @param ttl     time to live of projectile (after this time in milliseconds the entity will be removed automatically)
      * @return projectile entity
      */
 
@@ -91,6 +95,7 @@ public class ProjectileFactory {
      */
 
     public static Entity createTorpedoProjectile(EntityManager ecs, float x, float y, Texture texture, float moveX, float moveY, float speed, Entity playerEntity, Entity enemyEntity, long ttl) {
+
         //create new entity
         Entity projectileEntity = new Entity(ecs);
 
@@ -131,7 +136,21 @@ public class ProjectileFactory {
         //add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl));
 
+        torpedosLeft--;
+
         return projectileEntity;
     }
 
+    public static boolean canShootTorpedo() {
+        if (System.currentTimeMillis() - lastTorpedoShot > torpedoCooldown) {
+            lastTorpedoShot = System.currentTimeMillis();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static int getTorpedosLeft() {
+        return torpedosLeft;
+    }
 }
