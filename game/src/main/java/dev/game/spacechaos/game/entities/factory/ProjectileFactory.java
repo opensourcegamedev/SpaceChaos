@@ -24,7 +24,7 @@ import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
 public class ProjectileFactory {
 
     protected static long lastTorpedoShot = 0;
-    protected static int torpedoCooldown = 2000; //milliseconds
+    protected static int torpedoCooldown = 1000; //milliseconds
     protected static int torpedosLeft = 10;
 
     /**
