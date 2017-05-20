@@ -3,10 +3,10 @@ package dev.game.spacechaos.game.entities.listener;
 import dev.game.spacechaos.engine.entity.Entity;
 
 /**
- * Created by Justin on 13.04.2017.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public interface EntityRemoveListener {
-
-    public void beforeRemove (Entity entity);
-
+    void beforeRemove(Entity entity);
 }

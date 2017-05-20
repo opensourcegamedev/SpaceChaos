@@ -16,28 +16,27 @@ import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
- * Created by Justin on 22.04.2017.
+ * The screen of the main menu contains several buttons, so far it's only the singleplayer-button.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class MainMenuScreen extends BaseScreen {
 
-    protected static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy3/space.png";
-    protected static final String SELECT_SOUND_PATH = "./data/sound/menu_selection_click/menu_selection_click_16bit.wav";
+    private static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy3/space.png";
+    private static final String SELECT_SOUND_PATH = "./data/sound/menu_selection_click/menu_selection_click_16bit.wav";
 
-    protected Texture bgImage = null;
-    protected Sound selectSound = null;
-
-    //fonts
-    protected BitmapFont buttonFont = null;
+    private Texture bgImage = null;
 
     //UI
-    protected ShapeRenderer shapeRenderer = null;
-    protected HUD hud = null;
+    private ShapeRenderer shapeRenderer = null;
+    private HUD hud = null;
 
     //buttons
-    protected TextButton newGameButton = null;
-    protected TextButton multiplayerButton = null;
-    protected TextButton creditsButton = null;
-    protected TextButton settingsButton = null;
+    private TextButton newGameButton = null;
+    private TextButton multiplayerButton = null;
+    private TextButton creditsButton = null;
+    private TextButton settingsButton = null;
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -48,33 +47,29 @@ public class MainMenuScreen extends BaseScreen {
         this.shapeRenderer = new ShapeRenderer();
 
         //create font
-        this.buttonFont = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 32, Color.WHITE);
+        BitmapFont buttonFont = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 32, Color.WHITE);
 
         //create UI
         float startX = game.getViewportWidth() / 2 - 200;
 
-        this.newGameButton = new TextButton("New Singleplayer Game", this.buttonFont, startX, 400f);
+        this.newGameButton = new TextButton("New Singleplayer Game", buttonFont, startX, 400f);
         this.newGameButton.setDimension(400, 50);
-        this.newGameButton.setClickListener(() -> {
-            game.getScreenManager().leaveAllAndEnter("game");
-        });
+        this.newGameButton.setClickListener(() -> game.getScreenManager().leaveAllAndEnter("game"));
         this.hud.addWidget(this.newGameButton);
 
-        this.multiplayerButton = new TextButton("Multiplayer Lobby", this.buttonFont, startX, 340f);
+        this.multiplayerButton = new TextButton("Multiplayer Lobby", buttonFont, startX, 340f);
         this.multiplayerButton.setDimension(400, 50);
         this.multiplayerButton.setClickListener(() -> {
             //game.getScreenManager().leaveAllAndEnter("game");
         });
         //this.hud.addWidget(this.multiplayerButton);
 
-        this.creditsButton = new TextButton("Credits", this.buttonFont, startX, 280f);
+        this.creditsButton = new TextButton("Credits", buttonFont, startX, 280f);
         this.creditsButton.setDimension(400, 50);
-        this.creditsButton.setClickListener(() -> {
-            game.getScreenManager().leaveAllAndEnter("credits");
-        });
+        this.creditsButton.setClickListener(() -> game.getScreenManager().leaveAllAndEnter("credits"));
         //this.hud.addWidget(this.creditsButton);
 
-        this.settingsButton = new TextButton("Settings", this.buttonFont, startX, 220f);
+        this.settingsButton = new TextButton("Settings", buttonFont, startX, 220f);
         this.settingsButton.setDimension(400, 50);
         this.settingsButton.setClickListener(() -> {
             //game.getScreenManager().leaveAllAndEnter("game");
@@ -94,13 +89,13 @@ public class MainMenuScreen extends BaseScreen {
 
         //get assets
         this.bgImage = assetManager.get(BG_IMAGE_PATH, Texture.class);
-        this.selectSound = assetManager.get(SELECT_SOUND_PATH, Sound.class);
+        Sound selectSound = assetManager.get(SELECT_SOUND_PATH, Sound.class);
 
         //set hover sounds
-        this.newGameButton.setHoverSound(this.selectSound);
-        this.multiplayerButton.setHoverSound(this.selectSound);
-        this.creditsButton.setHoverSound(this.selectSound);
-        this.settingsButton.setHoverSound(this.selectSound);
+        this.newGameButton.setHoverSound(selectSound);
+        this.multiplayerButton.setHoverSound(selectSound);
+        this.creditsButton.setHoverSound(selectSound);
+        this.settingsButton.setHoverSound(selectSound);
     }
 
     @Override

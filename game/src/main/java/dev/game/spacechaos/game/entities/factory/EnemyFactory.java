@@ -1,11 +1,11 @@
 package dev.game.spacechaos.game.entities.factory;
 
 import com.badlogic.gdx.graphics.Texture;
+
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
-import dev.game.spacechaos.engine.entity.component.ai.SimpleFollowAIMovementComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
@@ -18,7 +18,10 @@ import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 import dev.game.spacechaos.game.entities.listener.EntityRemoveListener;
 
 /**
- * Created by Justin on 07.04.2017.
+ * Creating a new entity which follows the player and tries to shoot him.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class EnemyFactory {
 
@@ -44,7 +47,7 @@ public class EnemyFactory {
         //add AI
         enemyEntity.addComponent(new EnemyShuttleAIComponent(targetEntity, projectileTexture), EnemyShuttleAIComponent.class);
 
-        //add collision component, so player can collide with other space shuttles or meteorits
+        //add collision component, so player can collide with other space shuttles or meteorites
         enemyEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
         //enemyEntity.getComponent(CollisionComponent.class).setHullShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
         enemyEntity.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));

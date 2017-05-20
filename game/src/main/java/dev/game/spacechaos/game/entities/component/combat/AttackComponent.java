@@ -7,14 +7,15 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
- * Created by Justin on 13.04.2017.
+ * Adds an attack-component to entities which are able to shoot.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class AttackComponent extends BaseComponent implements CollisionListener {
 
-    protected CollisionComponent collisionComponent = null;
-
-    protected Entity ownerEntity = null;
-    protected float reduceHP = 0;
+    private Entity ownerEntity = null;
+    private float reduceHP = 0;
 
     public AttackComponent (Entity ownerEntity, float reduceHP) {
         this.ownerEntity = ownerEntity;
@@ -23,20 +24,20 @@ public class AttackComponent extends BaseComponent implements CollisionListener 
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        this.collisionComponent = entity.getComponent(CollisionComponent.class);
+        CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
 
-        if (this.collisionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an CollisionComponent.");
+        if (collisionComponent == null) {
+            throw new IllegalStateException("entity doesn't have an CollisionComponent.");
         }
 
         //register collision listener
-        this.collisionComponent.addCollisionListener(this);
+        collisionComponent.addCollisionListener(this);
     }
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
         if (otherEntity == ownerEntity) {
-            //dont attack shuttles, which fires this entity
+            //don't attack shuttles, which fires this entity
             return;
         }
 
@@ -44,7 +45,7 @@ public class AttackComponent extends BaseComponent implements CollisionListener 
         HPComponent hpComponent = otherEntity.getComponent(HPComponent.class);
 
         if (hpComponent == null) {
-            //dont reduce HP, maybe its an meteorit
+            //don't reduce HP, maybe its an meteorite
             return;
         }
 

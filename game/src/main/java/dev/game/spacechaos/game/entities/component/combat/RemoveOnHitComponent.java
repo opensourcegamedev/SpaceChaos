@@ -2,19 +2,19 @@ package dev.game.spacechaos.game.entities.component.combat;
 
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
-import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.listener.HPHitListener;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.game.entities.listener.EntityRemoveListener;
 
 /**
- * Created by Justin on 13.04.2017.
+ * Adds an remove-component to an entity, so if it gets destroyed, it will be removed from the game.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class RemoveOnHitComponent extends BaseComponent implements HPHitListener {
 
-    protected HPComponent hpComponent = null;
-
-    protected EntityRemoveListener listener = null;
+    private EntityRemoveListener listener = null;
 
     public RemoveOnHitComponent (EntityRemoveListener listener) {
         this.listener = listener;
@@ -26,13 +26,13 @@ public class RemoveOnHitComponent extends BaseComponent implements HPHitListener
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        this.hpComponent = entity.getComponent(HPComponent.class);
+        HPComponent hpComponent = entity.getComponent(HPComponent.class);
 
-        if (this.hpComponent == null) {
-            throw new IllegalStateException("entity doesnt have an HPComponent.");
+        if (hpComponent == null) {
+            throw new IllegalStateException("entity doesn't have an HPComponent.");
         }
 
-        this.hpComponent.addHitListener(this);
+        hpComponent.addHitListener(this);
     }
 
     @Override

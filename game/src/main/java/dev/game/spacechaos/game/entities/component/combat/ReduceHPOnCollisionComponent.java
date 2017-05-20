@@ -3,19 +3,20 @@ package dev.game.spacechaos.game.entities.component.combat;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
-import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
- * Created by Justin on 13.04.2017.
+ * Adds an health-reducing-component to an entity so it gets damage and later, destroyed.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class ReduceHPOnCollisionComponent extends BaseComponent implements CollisionListener {
 
-    protected CollisionComponent collisionComponent = null;
-    protected HPComponent hpComponent = null;
+    private HPComponent hpComponent = null;
 
-    protected float reduceValue = 100;
+    private float reduceValue = 100;
 
     public ReduceHPOnCollisionComponent (float reduceValue) {
         this.reduceValue = reduceValue;
@@ -23,19 +24,19 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        this.collisionComponent = entity.getComponent(CollisionComponent.class);
+        CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
         this.hpComponent = entity.getComponent(HPComponent.class);
 
-        if (this.collisionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an CollisionComponent.");
+        if (collisionComponent == null) {
+            throw new IllegalStateException("entity doesn't have an CollisionComponent.");
         }
 
         if (this.hpComponent == null) {
-            throw new IllegalStateException("entity doesnt have an HPComponent.");
+            throw new IllegalStateException("entity doesn't have an HPComponent.");
         }
 
         //register collision listener
-        this.collisionComponent.addCollisionListener(this);
+        collisionComponent.addCollisionListener(this);
     }
 
     @Override
@@ -53,12 +54,8 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
     }
 
     @Override
-    public void onStay(Entity entity, Entity otherEntity) {
-
-    }
+    public void onStay(Entity entity, Entity otherEntity) {}
 
     @Override
-    public void onExit(Entity entity, Entity otherEntity) {
-
-    }
+    public void onExit(Entity entity, Entity otherEntity) {}
 }

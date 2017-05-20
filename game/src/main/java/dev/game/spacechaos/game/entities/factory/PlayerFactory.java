@@ -1,6 +1,7 @@
 package dev.game.spacechaos.game.entities.factory;
 
 import com.badlogic.gdx.graphics.Texture;
+
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
@@ -19,7 +20,10 @@ import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionCom
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 
 /**
- * Created by Justin on 07.04.2017.
+ * Creates a new entity controlled by the mouse representing the player.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class PlayerFactory {
 
@@ -42,9 +46,8 @@ public class PlayerFactory {
         //add component to move entity dependent on mouse position
         player.addComponent(new MouseDependentMovementComponent(texture.getWidth() / 2, texture.getHeight() / 2), MouseDependentMovementComponent.class);
 
-        //add collision component, so player can collide with other space shuttles or meteorits
+        //add collision component, so player can collide with other space shuttles or meteorites
         player.addComponent(new CollisionComponent(), CollisionComponent.class);
-        //player.getComponent(CollisionComponent.class).setHullShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
         player.getComponent(CollisionComponent.class).addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         //add component to shake camera, if player collides with other objects

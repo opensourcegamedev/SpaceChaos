@@ -5,7 +5,9 @@ import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
- * Created by Justin on 13.04.2017.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class AvoidCollisionCameraShakeComponent extends BaseComponent {
 

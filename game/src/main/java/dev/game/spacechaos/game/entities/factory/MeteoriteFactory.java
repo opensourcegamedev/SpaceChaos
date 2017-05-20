@@ -16,24 +16,27 @@ import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnHitComponent;
 
 /**
- * Created by Justin on 07.04.2017.
+ * Creating a new randomly moving entity representing a meteorite.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
-public class MeteoritFactory {
+public class MeteoriteFactory {
 
 	/**
-	 * Creates a meteorit.
+	 * Creates a meteorite which moves around randomly.
 	 * 
 	 * @param ecs
 	 *            The entity component system.
 	 * @param x
-	 *            The x-coordinate of the position.
+	 *            The x-coordinate of the meteorite which is created.
 	 * @param y
-	 *            The y-coordinate of the position.
+	 *            The y-coordinate of the meteorite which is created.
 	 * @param texture
-	 *            The texture of the meteorit.
-	 * @return
+	 *            The texture of the meteorite.
+	 * @return A meteorite-entity.
 	 */
-	public static Entity createMeteorit(EntityManager ecs, float x, float y, Texture texture) {
+	public static Entity createMeteorite(EntityManager ecs, float x, float y, Texture texture) {
 		//create new entity
 		Entity entity = new Entity(ecs);
 
@@ -48,16 +51,16 @@ public class MeteoritFactory {
 		//add component to move entity
 		entity.addComponent(new MoveComponent(1f), MoveComponent.class);
 
-		//add component so meteorits move randomly
+		//add component so meteorites move randomly
 		entity.addComponent(new RandomWalkComponent(), RandomWalkComponent.class);
 
-		//add HP component, so player can destroy meteorits
+		//add HP component, so player can destroy meteorites
 		entity.addComponent(new HPComponent(1500, 1500));
 
 		//add component to remove entity on hit
 		entity.addComponent(new RemoveOnHitComponent(), RemoveOnHitComponent.class);
 
-		//add collision component, so player can collide with meteorits
+		//add collision component, so player can collide with meteorites
 		entity.addComponent(new CollisionComponent(), CollisionComponent.class);
 		entity.getComponent(CollisionComponent.class).addInnerShape(
 				new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getHeight() / 2));

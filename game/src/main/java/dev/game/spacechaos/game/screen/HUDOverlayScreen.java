@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dev.game.spacechaos.engine.entity.Entity;
-import dev.game.spacechaos.engine.entity.listener.UpdateHPListener;
 import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.hud.FilledBar;
@@ -17,29 +16,29 @@ import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 
 /**
- * Created by Justin on 11.04.2017.
+ * The screen is overlaying the gamescreen. It shows the amount of torpedos you got left, the time you already survived and a health-bar.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class HUDOverlayScreen extends BaseScreen {
 
-    protected long startTime = 0;
-    protected long elapsedTime = 0;
+    private long startTime = 0;
+    private long elapsedTime = 0;
 
-    protected BitmapFont font1 = null;
-    protected BitmapFont font2 = null;
+    private BitmapFont font1 = null;
+    private BitmapFont font2 = null;
 
-    protected String timeText = "";
-    protected String torpedoAmountText = "";
-    protected long minutes = 0;
-    protected long seconds = 0;
+    private String timeText = "";
+    private String torpedoAmountText = "";
+    private long seconds = 0;
 
-    //player entity and health component
-    protected Entity playerEntity = null;
-    protected HPComponent hpComponent = null;
+    private HPComponent hpComponent = null;
 
-    protected HUD hud = null;
-    protected ShapeRenderer shapeRenderer = null;
+    private HUD hud = null;
+    private ShapeRenderer shapeRenderer = null;
 
-    protected FilledBar filledBar = null;
+    private FilledBar filledBar = null;
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -62,19 +61,16 @@ public class HUDOverlayScreen extends BaseScreen {
         this.startTime = System.currentTimeMillis();
 
         //get player entity and health component
-        this.playerEntity = game.getSharedData().get("playerEntity", Entity.class);
-        this.hpComponent = this.playerEntity.getComponent(HPComponent.class);
+        Entity playerEntity = game.getSharedData().get("playerEntity", Entity.class);
+        this.hpComponent = playerEntity.getComponent(HPComponent.class);
 
         //set values and add listener to auto update values on change
         this.filledBar.setMaxValue(this.hpComponent.getMaxHP());
         this.filledBar.setValue(this.hpComponent.getCurrentHP());
-        this.hpComponent.addUpdateListener(new UpdateHPListener() {
-            @Override
-            public void onHPUpdate(float oldValue, float newValue, float maxValue) {
-                //update values on filled bar (HUD)
-                filledBar.setMaxValue(hpComponent.getMaxHP());
-                filledBar.setValue(hpComponent.getCurrentHP());
-            }
+        this.hpComponent.addUpdateListener((oldValue, newValue, maxValue) -> {
+            //update values on filled bar (HUD)
+            filledBar.setMaxValue(hpComponent.getMaxHP());
+            filledBar.setValue(hpComponent.getCurrentHP());
         });
 
         //set HP bar colors
@@ -89,7 +85,7 @@ public class HUDOverlayScreen extends BaseScreen {
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
 
-        this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedosLeft());
+        this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedoesLeft());
 
         //calculate elapsed time
         this.elapsedTime = System.currentTimeMillis() - this.startTime;
@@ -98,18 +94,18 @@ public class HUDOverlayScreen extends BaseScreen {
         this.seconds = this.elapsedTime / 1000;
 
         //get minutes
-        this.minutes = this.seconds / 60;
+        long minutes = this.seconds / 60;
 
         //correct seconds
-        this.seconds -= this.minutes * 60;
+        this.seconds -= minutes * 60;
 
         //generate text
         this.timeText = "";
 
-        if (this.minutes < 10) {
-            this.timeText = " " + this.minutes;
+        if (minutes < 10) {
+            this.timeText = " " + minutes;
         } else {
-            this.timeText = "" + this.minutes;
+            this.timeText = "" + minutes;
         }
 
         this.timeText = this.timeText + ":";

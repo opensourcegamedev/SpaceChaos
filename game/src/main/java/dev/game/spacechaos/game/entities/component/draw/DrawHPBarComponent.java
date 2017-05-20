@@ -14,29 +14,31 @@ import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 
 /**
- * Created by Justin on 14.03.2017.
+ * Draws the health-bar of the entity added to.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerComponent {
 
-    protected PositionComponent positionComponent = null;
-    protected HPComponent hpComponent = null;
+    private PositionComponent positionComponent = null;
+    private HPComponent hpComponent = null;
 
-    protected float offsetX = 0;
-    protected float offsetY = 0;
+    private float offsetX = 0;
+    private float offsetY = 0;
 
-    protected Color backgroundColor = Color.RED;
-    protected Color foregroundColor = Color.GREEN;
-    protected float barWidth = 0;
-    protected float barHeight = 5;
+    private Color backgroundColor = Color.RED;
+    private Color foregroundColor = Color.GREEN;
+    private float barWidth = 0;
+    private float barHeight = 5;
 
     public DrawHPBarComponent(float offsetX, float offsetY, float width, float height) {
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
+        this(offsetX, offsetY);
         this.barWidth = width;
         this.barHeight = height;
     }
 
-    public DrawHPBarComponent(float offsetX, float offsetY) {
+    private DrawHPBarComponent(float offsetX, float offsetY) {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
     }
@@ -47,11 +49,11 @@ public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerCom
         this.hpComponent = entity.getComponent(HPComponent.class);
 
         if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an PositionComponent.");
+            throw new IllegalStateException("entity doesn't have an PositionComponent.");
         }
 
         if (this.hpComponent == null) {
-            throw new IllegalStateException("entity doesnt have an HPComponent.");
+            throw new IllegalStateException("entity doesn't have an HPComponent.");
         }
 
         if (this.barWidth == 0) {

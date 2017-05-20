@@ -1,13 +1,15 @@
 package dev.game.spacechaos.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.IScreen;
 import dev.game.spacechaos.engine.screen.ScreenManager;
 import dev.game.spacechaos.game.screen.*;
 
 /**
- * Created by Justin on 06.02.2017.
+ * The class starts the game by creating all the necessary screens and then displays the menu.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class Game extends ScreenBasedGame {
 

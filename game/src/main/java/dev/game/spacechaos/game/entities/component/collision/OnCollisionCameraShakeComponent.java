@@ -8,36 +8,36 @@ import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
-import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
 
 /**
- * Created by Justin on 12.04.2017.
+ * Shakes the player's camera on colliding with specific entities.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 @RequiredComponents(components = CollisionComponent.class)
 public class OnCollisionCameraShakeComponent extends BaseComponent implements CollisionListener {
 
-    protected CollisionComponent collisionComponent = null;
-
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        this.collisionComponent = entity.getComponent(CollisionComponent.class);
+        CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
 
-        if (this.collisionComponent == null) {
-            throw new RequiredComponentNotFoundException("entity doesnt have an CollisionComponent.");
+        if (collisionComponent == null) {
+            throw new RequiredComponentNotFoundException("entity doesn't have an CollisionComponent.");
         }
 
-        this.collisionComponent.addCollisionListener(this);
+        collisionComponent.addCollisionListener(this);
     }
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
         /*if (entity.getComponent(AttackComponent.class) != null || otherEntity.getComponent(AttackComponent.class) != null) {
-            //dont shake camera, if projectile collides
+            //don't shake camera, if projectile collides
             return;
         }*/
 
         if (otherEntity.getComponent(AvoidCollisionCameraShakeComponent.class) != null) {
-            //dont shake camera
+            //don't shake camera
             return;
         }
 

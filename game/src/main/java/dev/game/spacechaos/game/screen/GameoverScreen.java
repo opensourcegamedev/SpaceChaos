@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.hud.ColoredTextButton;
@@ -14,22 +15,25 @@ import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
- * Created by Justin on 13.04.2017.
+ * The screen shown when you died contains a button to restart and a label which shows the time you survived.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class GameoverScreen extends BaseScreen {
 
-    protected static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy1/galaxy1.png";
-    protected static final String GAMEOVER_SOUND_PATH = "./data/sound/rock_breaking/rock_breaking.ogg";
+    private static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy1/galaxy1.png";
+    private static final String GAMEOVER_SOUND_PATH = "./data/sound/rock_breaking/rock_breaking.ogg";
 
-    protected Texture bgTexture = null;
-    protected Sound sound = null;
+    private Texture bgTexture = null;
+    private Sound sound = null;
 
-    protected BitmapFont font = null;
-    protected BitmapFont buttonFont = null;
+    private BitmapFont font = null;
+    private BitmapFont buttonFont = null;
 
-    protected ColoredTextButton replayButton = null;
+    private ColoredTextButton replayButton = null;
 
-    protected String timeText = "";
+    private String timeText = "";
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -50,9 +54,7 @@ public class GameoverScreen extends BaseScreen {
         this.replayButton.setDimension(200, 50);
         this.replayButton.setPosition(game.getViewportWidth() / 2 - (replayButton.getWidth() / 2), 100);
 
-        this.replayButton.setClickListener(() -> {
-            game.getScreenManager().leaveAllAndEnter("game");
-        });
+        this.replayButton.setClickListener(() -> game.getScreenManager().leaveAllAndEnter("game"));
     }
 
     @Override

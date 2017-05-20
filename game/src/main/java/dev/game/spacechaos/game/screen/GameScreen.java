@@ -23,7 +23,6 @@ import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.impl.ECS;
-import dev.game.spacechaos.engine.entity.listener.HPHitListener;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.input.InputStates;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
@@ -32,66 +31,63 @@ import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.engine.utils.SpawnUtils;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
-import dev.game.spacechaos.game.entities.factory.MeteoritFactory;
+import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 import dev.game.spacechaos.game.skybox.SkyBox;
 
 /**
- * Created by Justin on 28.03.2017.
+ * This Screen is the singleplayer-mainscreen.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class GameScreen extends BaseScreen {
 
-	protected static final String SKYBOX_1 = "./data/images/skybox/space/space.png";
-	protected static final String SKYBOX_2 = "./data/images/skybox/space/space-1.png";
-	protected static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/pfau/shuttle.png";
-	protected static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
-	protected static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
-	protected static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
-	protected static final String[] ASTEROID_IMAGE_PATHS = { "./data/images/entities/asteroids/1.png",
+	private static final String SKYBOX_1 = "./data/images/skybox/space/space.png";
+	private static final String SKYBOX_2 = "./data/images/skybox/space/space-1.png";
+	private static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/pfau/shuttle.png";
+	private static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
+	private static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
+	private static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
+	private static final String[] ASTEROID_IMAGE_PATHS = { "./data/images/entities/asteroids/1.png",
 			"./data/images/entities/asteroids/2.png", "./data/images/entities/asteroids/3.png",
 			"./data/images/entities/asteroids/4.png", "./data/images/entities/asteroids/5.png",
 			"./data/images/entities/asteroids/6.png", "./data/images/entities/asteroids/7.png",
 			"./data/images/entities/asteroids/8.png" };
-	protected static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
-	protected static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
-	protected static final String FIRE_SHOOT_SOUND = "./data/sound/spaceshipshooting/Longshot.ogg";
-	protected static final String TORPEDO_SHOOT_SOUND = "./data/sound/spaceshipshooting/torpedo.wav";
+	private static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
+	private static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
+	private static final String FIRE_SHOOT_SOUND = "./data/sound/spaceshipshooting/Longshot.ogg";
+	private static final String TORPEDO_SHOOT_SOUND = "./data/sound/spaceshipshooting/torpedo.wav";
 
-	protected static final Color COLLISION_BOX_COLOR = Color.BLUE;
-	protected static final Color IN_COLLISION_COLOR = Color.YELLOW;
+	private static final Color COLLISION_BOX_COLOR = Color.BLUE;
+    private static final Color IN_COLLISION_COLOR = Color.YELLOW;
 
-	//background image
-	protected Texture bgTexture = null;
+    private Texture projectileTexture = null;
+	private Texture torpedoTexture = null;
 
-	protected Texture projectileTexture = null;
-	protected Texture torpedoTexture = null;
-
-	protected SkyBox skyBox = null;
+	private SkyBox skyBox = null;
 
 	//entity component system
-	protected EntityManager ecs = null;
+    private EntityManager ecs = null;
 
 	//player entity
-	protected Entity playerEntity = null;
+    private Entity playerEntity = null;
 
-	protected Music music = null;
-	protected Sound beepSound = null;
-	protected long lastBeep = 0;
-	protected long beepInterval = 8000;
-	protected Sound fireSound = null;
-	protected Sound torpedoSound = null;
+	private Music music = null;
+    private long lastBeep = 0;
+	private long beepInterval = 8000;
+	private Sound fireSound = null;
+	private Sound torpedoSound = null;
 
-	protected ShapeRenderer shapeRenderer = null;
+	private ShapeRenderer shapeRenderer = null;
 
-	protected CollisionManager collisionManager = null;
+	private CollisionManager collisionManager = null;
 
 	//list with all enemy entities
-	protected List<Entity> enemyEntityList = new ArrayList<>();
-	
-	private boolean debug = false;
+    private List<Entity> enemyEntityList = new ArrayList<>();
 
-	public GameScreen() {
+    public GameScreen() {
 		//create shape renderer
 		this.shapeRenderer = new ShapeRenderer();
 	}
@@ -109,9 +105,9 @@ public class GameScreen extends BaseScreen {
 		assetManager.load(TORPEDO_IMAGE_PATH, Texture.class);
 
 		//load meteorits
-		for (int i = 0; i < ASTEROID_IMAGE_PATHS.length; i++) {
-			assetManager.load(ASTEROID_IMAGE_PATHS[i], Texture.class);
-		}
+        for (String ASTEROID_IMAGE_PATH : ASTEROID_IMAGE_PATHS) {
+            assetManager.load(ASTEROID_IMAGE_PATH, Texture.class);
+        }
 
 		//load background music
 		assetManager.load(BACKGROUND_MUSIC_PATH, Music.class);
@@ -128,9 +124,9 @@ public class GameScreen extends BaseScreen {
 		assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
 		assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
 		assetManager.finishLoadingAsset(TORPEDO_IMAGE_PATH);
-		for (int i = 0; i < ASTEROID_IMAGE_PATHS.length; i++) {
-			assetManager.finishLoadingAsset(ASTEROID_IMAGE_PATHS[i]);
-		}
+        for (String ASTEROID_IMAGE_PATH : ASTEROID_IMAGE_PATHS) {
+            assetManager.finishLoadingAsset(ASTEROID_IMAGE_PATH);
+        }
 		assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
 		assetManager.finishLoadingAsset(BEEP_SOUND_PATH);
 		assetManager.finishLoadingAsset(FIRE_SHOOT_SOUND);
@@ -147,14 +143,12 @@ public class GameScreen extends BaseScreen {
 		this.torpedoTexture = assetManager.get(TORPEDO_IMAGE_PATH);
 
 		Texture skyBox1 = assetManager.get(SKYBOX_1);
-		Texture skyBox2 = assetManager.get(SKYBOX_2);
 
-		//get background music
+        //get background music
 		this.music = assetManager.get(BACKGROUND_MUSIC_PATH);
 
 		//get sound effects
-		this.beepSound = assetManager.get(BEEP_SOUND_PATH);
-		this.fireSound = assetManager.get(FIRE_SHOOT_SOUND);
+        this.fireSound = assetManager.get(FIRE_SHOOT_SOUND);
 		this.torpedoSound = assetManager.get(TORPEDO_SHOOT_SOUND);
 
 		//create skybox
@@ -162,7 +156,7 @@ public class GameScreen extends BaseScreen {
 				game.getViewportHeight());
 	}
 
-	protected void spawnEnemyShuttles(int amount) {
+	private void spawnEnemyShuttles(int amount) {
 		//execute this code after updating all entities
 		game.runOnUIThread(() -> {
 			//add a specific amount of enemy shuttles
@@ -186,13 +180,12 @@ public class GameScreen extends BaseScreen {
 
 				boolean validPos = false;
 				while (!validPos) {
-					if ((x > game.getViewportWidth() * 2 && x < game.getViewportWidth() * 3)
-							&& (y > game.getViewportHeight() * 2 && y < game.getViewportHeight() * 3)) {
+					if ((x > 0 && x < game.getViewportWidth())
+							&& (y > 0 && y < game.getViewportHeight())) {
 						validPos = true;
 					} else {
 						x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 2);
 						y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 2);
-						break; //recheck if valid
 					}
 				}
 
@@ -220,14 +213,11 @@ public class GameScreen extends BaseScreen {
 
 		//create new player entity and add to entity-component-system
 		this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2,
-				game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), new HPHitListener() {
-					@Override
-					public void onHit(float oldValue, float newValue, float maxHP) {
-						System.out.println("game over");
+				game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), (oldValue, newValue, maxHP) -> {
+                    System.out.println("game over");
 
-						game.getScreenManager().leaveAllAndEnter("gameover");
-					}
-				});
+                    game.getScreenManager().leaveAllAndEnter("gameover");
+                });
 
 		this.ecs.addEntity(this.playerEntity);
 
@@ -271,7 +261,7 @@ public class GameScreen extends BaseScreen {
 			}
 
 			//create and add new meteorit
-			Entity entity = MeteoritFactory.createMeteorit(this.ecs, x, y, assetManager
+			Entity entity = MeteoriteFactory.createMeteorite(this.ecs, x, y, assetManager
 					.get(ASTEROID_IMAGE_PATHS[RandomUtils.getRandomNumber(0, ASTEROID_IMAGE_PATHS.length - 1)]));
 			this.ecs.addEntity(entity);
 		}
@@ -304,7 +294,7 @@ public class GameScreen extends BaseScreen {
 			Entity projectile = ProjectileFactory.createProjectile(this.ecs,
 					dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 20,
 					dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20, projectileTexture,
-					dirX, dirY, 4f, this.playerEntity, 4000L);
+					dirX, dirY, this.playerEntity);
 
 			projectile.getComponent(DrawTextureComponent.class)
 					.setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
@@ -332,7 +322,7 @@ public class GameScreen extends BaseScreen {
 				Entity projectile = ProjectileFactory.createTorpedoProjectile(this.ecs,
 						dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 30,
 						dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 30,
-						torpedoTexture, dirX, dirY, 4f, this.playerEntity, enemyEntity, 3000L);
+						torpedoTexture, dirX, dirY, this.playerEntity, enemyEntity);
 
 				projectile.getComponent(DrawTextureComponent.class)
 						.setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
@@ -388,7 +378,8 @@ public class GameScreen extends BaseScreen {
 		this.shapeRenderer.setColor(Color.BLACK);
 
 		//draw colliding objects
-		if (debug) {
+        boolean debug = true;
+        if (debug) {
 			this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR,
 					IN_COLLISION_COLOR);
 		}

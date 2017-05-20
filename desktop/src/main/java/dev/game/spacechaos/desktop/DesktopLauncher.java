@@ -1,18 +1,27 @@
 package dev.game.spacechaos.desktop;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import dev.game.spacechaos.engine.utils.FileUtils;
 import dev.game.spacechaos.game.Game;
+
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Created by Justin on 27.03.2017.
+ * Starts the application for the desktop-based builds.
+ *
+ * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @version 1.0.0-PreAlpha
  */
 public class DesktopLauncher {
 
+    /**
+     * The start-method for the whole application which is creating a new configuration for the stage and a new game so one could play.
+     *
+     * @param args Unused argument so far.
+     */
     public static void main (String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Space Chaos";
