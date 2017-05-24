@@ -66,8 +66,8 @@ public class GameoverScreen extends BaseScreen {
         this.buttonFont = BitmapFontFactory.createFont("data/font/arial/arial.ttf", 32, Color.RED);
 
         this.replayButton = new ImageButton(this.buttonTexture, this.hoverTexture);
-        this.replayButton.setDimension(200, 50);
-        this.replayButton.setPosition(game.getViewportWidth() / 2 - (replayButton.getWidth() / 2), 100);
+        this.replayButton.setDimension(/*200*/400, /*50*/128);
+        this.replayButton.setPosition(game.getViewportWidth() / 2 - (replayButton.getWidth() / 2), 128);
 
         this.replayButton.setClickListener(() -> game.getScreenManager().leaveAllAndEnter("game"));
     }

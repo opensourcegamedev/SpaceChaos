@@ -61,9 +61,9 @@ public class ImageButton extends BaseHUDWidget {
     public void drawLayer0(GameTime time, SpriteBatch batch) {
         //draw background texture
         if (hovered) {
-            batch.draw(this.texture, getX(), getY(), getWidth(), getHeight());
-        } else {
             batch.draw(this.hoverTexture, getX(), getY(), getWidth(), getHeight());
+        } else {
+            batch.draw(this.texture, getX(), getY(), getWidth(), getHeight());
         }
     }
 
