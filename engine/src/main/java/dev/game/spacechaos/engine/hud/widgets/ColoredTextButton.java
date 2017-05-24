@@ -37,7 +37,7 @@ public class ColoredTextButton extends BaseHUDWidget {
         float mouseY = game.getViewportHeight() - Gdx.input.getY();
 
         //check if mouse is inner button
-        if (isInner(mouseX, mouseY)) {
+        if (isMouseInner(game)) {
             this.hovered = true;
         } else {
             hovered = false;
@@ -45,7 +45,7 @@ public class ColoredTextButton extends BaseHUDWidget {
 
         boolean oldClicked = this.isClicked;
 
-        if (isInner(mouseX, mouseY) && Gdx.input.isTouched()) {
+        if (isMouseInner(game) && Gdx.input.isTouched()) {
             this.isClicked = true;
         } else {
             this.isClicked = false;
