@@ -64,7 +64,7 @@ public class PlayerFactory {
         player.addComponent(new DrawHPBarComponent(texture.getWidth() / 3, 10, texture.getWidth() / 3, 5f), DrawHPBarComponent.class);
 
         //add component to reduce HP on collision, reduce 100 points on every collision
-        player.addComponent(new ReduceHPOnCollisionComponent(100), ReduceHPOnCollisionComponent.class);
+        player.addComponent(new ReduceHPOnCollisionComponent(100, 3000l), ReduceHPOnCollisionComponent.class);
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);

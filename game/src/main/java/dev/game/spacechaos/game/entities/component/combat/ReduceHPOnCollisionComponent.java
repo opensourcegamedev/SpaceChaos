@@ -18,6 +18,22 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
 
     private float reduceValue = 100;
 
+    //time, when player enters collision
+    private long collisionStartTime = 0;
+
+    //interval, after an collision will be entered again, also if player also is in collision
+    private long collisionInterval = 0;
+
+    private float lastIntervalHPReduce = 0;
+
+    //quick & dirty fix
+    private boolean entered = false;
+
+    public ReduceHPOnCollisionComponent (float reduceValue, long collisionInterval) {
+        this.reduceValue = reduceValue;
+        this.collisionInterval = collisionInterval;
+    }
+
     public ReduceHPOnCollisionComponent (float reduceValue) {
         this.reduceValue = reduceValue;
     }
@@ -41,6 +57,9 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
+        //set flag
+        entered = true;
+
         //check if the other entity is a projectile or another attacking entity
         AttackComponent attackComponent = otherEntity.getComponent(AttackComponent.class);
 
@@ -51,11 +70,60 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
 
         //reduce HP
         this.hpComponent.subHP(this.reduceValue);
+
+        if (this.collisionStartTime == 0) {
+            //set new collision enter time
+            this.collisionStartTime = System.currentTimeMillis();
+        }
     }
 
     @Override
-    public void onStay(Entity entity, Entity otherEntity) {}
+    public void onStay(Entity entity, Entity otherEntity) {
+        if (!entered) {
+            return;
+        }
+
+        //check if the other entity is a projectile or another attacking entity
+        AttackComponent attackComponent = otherEntity.getComponent(AttackComponent.class);
+
+        if (attackComponent != null) {
+            //don't reduce HP, because this is an task of the fighting system
+            return;
+        }
+
+        if (collisionInterval > 0 && this.collisionStartTime > 0) {
+            long a = System.currentTimeMillis() - this.collisionStartTime;
+
+            if (a > collisionInterval) {
+                //reduce HP
+                this.hpComponent.subHP(this.reduceValue);
+
+                this.collisionStartTime = System.currentTimeMillis();
+                this.lastIntervalHPReduce = System.currentTimeMillis();
+            }
+
+            /*if ((this.collisionStartTime + collisionInterval) < System.currentTimeMillis()) {
+                if ((lastIntervalHPReduce  + collisionInterval) > System.currentTimeMillis()) {
+                    return;
+                }
+
+                System.out.println("reduce HP.");
+
+                //reduce HP
+                this.hpComponent.subHP(this.reduceValue);
+
+                this.collisionStartTime = System.currentTimeMillis();
+                this.lastIntervalHPReduce = System.currentTimeMillis();
+            }*/
+        }
+    }
 
     @Override
-    public void onExit(Entity entity, Entity otherEntity) {}
+    public void onExit(Entity entity, Entity otherEntity) {
+        //reset collision enter time
+        //this.collisionStartTime = 0;
+
+        //reset flag
+        entered = false;
+    }
 }

@@ -54,6 +54,9 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         if (this.positionComponent == null) {
             throw new RequiredComponentNotFoundException("entity doesnt have an PositionComponent.");
         }
+
+        this.alreadyInCollisionEntities.clear();
+        this.tmpList.clear();
     }
 
     public void initCollider (CollisionManager collisionManager) {
@@ -99,10 +102,10 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
 
         boolean collided = collidedEntities.size() > 0;
 
+        this.alreadyInCollision = collided;
+
         if (!collided) {
             exitAllCollisions();
-
-            this.alreadyInCollision = collided;
 
             return;
         }
@@ -144,9 +147,12 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     protected void exitAllCollisions () {
         for (Entity collisionEntity : this.alreadyInCollisionEntities) {
             //call exit listeners
-            for (CollisionListener listener : this.listenerList) {
+            /*for (CollisionListener listener : this.listenerList) {
                 listener.onExit(entity, collisionEntity);
-            }
+            }*/
+
+            //entity has exit collision
+            callCollisionExitListeners(collisionEntity);
         }
 
         //clear list
