@@ -1,10 +1,12 @@
-package dev.game.spacechaos.engine.hud;
+package dev.game.spacechaos.engine.hud.widgets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.engine.hud.BaseHUDWidget;
+import dev.game.spacechaos.engine.hud.ClickListener;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
 
