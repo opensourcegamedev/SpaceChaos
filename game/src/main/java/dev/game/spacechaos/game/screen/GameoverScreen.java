@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.hud.widgets.ColoredTextButton;
+import dev.game.spacechaos.engine.hud.widgets.ImageButton;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
@@ -25,18 +26,26 @@ public class GameoverScreen extends BaseScreen {
     private static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy1/galaxy1.png";
     private static final String GAMEOVER_SOUND_PATH = "./data/sound/rock_breaking/rock_breaking.ogg";
 
-    private Texture bgTexture = null;
-    private Sound sound = null;
+    private static final String BUTTON_IMAGE_PATH = "./data/images/hud/restart_button/restart_button.png";
+    private static final String BUTTON_HOVER_PATH = "./data/images/hud/restart_button/restart_button_hovered.png";
 
+    //font for buttons & text
     private BitmapFont font = null;
     private BitmapFont buttonFont = null;
 
-    private ColoredTextButton replayButton = null;
+    private Texture bgTexture = null;
+    private Sound sound = null;
+
+    //private ColoredTextButton replayButton = null;
+    private Texture buttonTexture = null;
+    private Texture hoverTexture = null;
+    private ImageButton replayButton = null;
 
     private String timeText = "";
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
+        //load & get assets
         game.getAssetManager().load(GAMEOVER_SOUND_PATH, Sound.class);
         game.getAssetManager().load(BG_IMAGE_PATH, Texture.class);
         game.getAssetManager().finishLoadingAsset(GAMEOVER_SOUND_PATH);
@@ -44,13 +53,19 @@ public class GameoverScreen extends BaseScreen {
         sound = game.getAssetManager().get(GAMEOVER_SOUND_PATH);
         this.bgTexture = game.getAssetManager().get(BG_IMAGE_PATH);
 
+        //load & get button textures
+        game.getAssetManager().load(BUTTON_IMAGE_PATH, Texture.class);
+        game.getAssetManager().load(BUTTON_HOVER_PATH, Texture.class);
+        game.getAssetManager().finishLoadingAsset(BUTTON_IMAGE_PATH);
+        game.getAssetManager().finishLoadingAsset(BUTTON_HOVER_PATH);
+        this.buttonTexture = game.getAssetManager().get(BUTTON_IMAGE_PATH, Texture.class);
+        this.hoverTexture = game.getAssetManager().get(BUTTON_HOVER_PATH, Texture.class);
+
         //generate fonts
         this.font = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
         this.buttonFont = BitmapFontFactory.createFont("data/font/arial/arial.ttf", 32, Color.RED);
 
-        this.replayButton = new ColoredTextButton("Replay", this.buttonFont);
-        this.replayButton.setBackgroundColor(Color.WHITE);
-        this.replayButton.setBackgroundHoverColor(Color.YELLOW);
+        this.replayButton = new ImageButton(this.buttonTexture, this.hoverTexture);
         this.replayButton.setDimension(200, 50);
         this.replayButton.setPosition(game.getViewportWidth() / 2 - (replayButton.getWidth() / 2), 100);
 
