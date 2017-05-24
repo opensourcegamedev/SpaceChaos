@@ -69,9 +69,13 @@ public abstract class BaseHUDWidget implements HUDWidget {
     }
 
     protected boolean isMouseInner (BaseGame game) {
+        //get relation between current window size and original viewport size
+        float a = Gdx.graphics.getWidth() / 1280f;
+        float b = Gdx.graphics.getHeight() / 720f;
+
         //get mouse coordinates
-        float mouseX = Gdx.input.getX();
-        float mouseY = game.getViewportHeight() - Gdx.input.getY();
+        float mouseX = Gdx.input.getX() / a;
+        float mouseY = game.getViewportHeight() - (Gdx.input.getY() / b);
 
         return isInner(mouseX, mouseY);
     }
