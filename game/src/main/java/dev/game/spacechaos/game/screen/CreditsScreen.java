@@ -39,11 +39,18 @@ public class CreditsScreen extends BaseScreen {
 
     //font
     protected BitmapFont titleFont = null;
+    protected BitmapFont font1 = null;
+    protected BitmapFont font2 = null;
 
     //credit lines
     protected String[] creditLines = new String[1];
 
     protected final int MAX_CHARS_PER_LINE = 30;
+
+    protected float startX = 50;
+    protected float startY = 0;
+    protected float textHeight = 30;
+    protected final float TEXT_SPEED = 50;
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -60,6 +67,8 @@ public class CreditsScreen extends BaseScreen {
         //generate fonts
         this.titleFont = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
         //this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.RED, Color.WHITE, 3);
+        this.font1 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 18, Color.WHITE);
+        this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 28, Color.WHITE, Color.RED, 3);
 
         //generate credits text array
         try {
@@ -82,6 +91,9 @@ public class CreditsScreen extends BaseScreen {
 
         //play music
         this.music.play();
+
+        //reset text start position
+        this.startY = 0;
     }
 
     @Override
@@ -104,6 +116,33 @@ public class CreditsScreen extends BaseScreen {
 
         //draw background
         batch.draw(this.bgTexture, 0, 0, game.getViewportWidth(), game.getViewportHeight());
+
+        //y position of last line
+        float lastYPos = 0;
+
+        //draw credits text
+        for (int i = 0; i < this.creditLines.length; i++) {
+            float y = startY - i * this.textHeight;
+            String line = this.creditLines[i];
+
+            if (line.contains("#")) {
+                this.font2.draw(batch, line, startX, y);
+            } else {
+                this.font1.draw(batch, line, startX, y);
+            }
+
+            lastYPos = y;
+        }
+
+        if (lastYPos > game.getViewportHeight() - 50) {
+            game.getScreenManager().leaveAllAndEnter("menu");
+        }
+
+        //move text
+        this.startY += time.getDeltaTime() * TEXT_SPEED;
+
+        //draw texture region of background
+        batch.draw(this.bgTexture, 0, game.getViewportHeight() - 120, game.getViewportWidth(), 120, bgTexture.getWidth(), 80, 0, 0);
 
         //draw title
         this.titleFont.draw(batch, "Credits", 50, game.getViewportHeight() - 50);
@@ -129,6 +168,11 @@ public class CreditsScreen extends BaseScreen {
             } else {
                 //add line to list
                 lines.add(line.replace("\\", ""));
+
+                if (line.contains("#")) {
+                    //add empty line
+                    lines.add("");
+                }
             }
         }
 
