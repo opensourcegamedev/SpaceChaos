@@ -45,7 +45,7 @@ public class CreditsScreen extends BaseScreen {
     //credit lines
     protected String[] creditLines = new String[1];
 
-    protected final int MAX_CHARS_PER_LINE = 30;
+    protected final int MAX_CHARS_PER_LINE = 100;
 
     protected float startX = 50;
     protected float startY = 0;
@@ -67,7 +67,7 @@ public class CreditsScreen extends BaseScreen {
         //generate fonts
         this.titleFont = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
         //this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.RED, Color.WHITE, 3);
-        this.font1 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 18, Color.WHITE);
+        this.font1 = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 18, Color.WHITE);
         this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 28, Color.WHITE, Color.RED, 3);
 
         //generate credits text array
