@@ -163,6 +163,8 @@ public class CreditsScreen extends BaseScreen {
 
         //look for too long lines
         for (String line : lines1) {
+            line = line.replace("\\", "");
+
             if (line.length() > MAX_CHARS_PER_LINE) {
                 //split line into 2 lines
                 lines.add(line.substring(0, MAX_CHARS_PER_LINE));
