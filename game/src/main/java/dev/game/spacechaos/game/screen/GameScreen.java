@@ -154,6 +154,8 @@ public class GameScreen extends BaseScreen {
 		//create skybox
 		this.skyBox = new SkyBox(new Texture[] { /* skyBox2, */ skyBox1 }, game.getViewportWidth(),
 				game.getViewportHeight());
+
+		game.getSharedData().put("can_shoot_torpedo", true);
 	}
 
 	private void spawnEnemyShuttles(int amount) {
@@ -283,6 +285,8 @@ public class GameScreen extends BaseScreen {
 		//update entities
 		this.ecs.update(game, time);
 
+		game.getSharedData().put("can_shoot_torpedo", ProjectileFactory.canShootTorpedo());
+
 		//check for shoot
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || InputStates.isLeftMouseButtonJustPressed()) {
 			MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity
@@ -305,6 +309,8 @@ public class GameScreen extends BaseScreen {
 			this.fireSound.play(VolumeManager.getInstance().getEnvVolume());
 		} else if (InputStates.isRightMouseButtonJustPressed()) {
 			if (ProjectileFactory.canShootTorpedo()) {
+				ProjectileFactory.setLastTorpedoShot();
+
 				MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity
 						.getComponent(MouseDependentMovementComponent.class);
 

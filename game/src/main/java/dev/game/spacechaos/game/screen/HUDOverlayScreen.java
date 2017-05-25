@@ -2,6 +2,7 @@ package dev.game.spacechaos.game.screen;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -22,6 +23,10 @@ import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
  * @version 1.0.0-PreAlpha
  */
 public class HUDOverlayScreen extends BaseScreen {
+
+    private static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
+
+    protected Texture torpedoTexture = null;
 
     private long startTime = 0;
     private long elapsedTime = 0;
@@ -45,6 +50,11 @@ public class HUDOverlayScreen extends BaseScreen {
         //generate fonts
         this.font1 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
         this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.RED, Color.WHITE, 3);
+
+        //load & get assets
+        assetManager.load(TORPEDO_IMAGE_PATH, Texture.class);
+        assetManager.finishLoadingAsset(TORPEDO_IMAGE_PATH);
+        this.torpedoTexture = assetManager.get(TORPEDO_IMAGE_PATH, Texture.class);
 
         //create new Head-Up-Display
         this.hud = new HUD();
@@ -149,10 +159,23 @@ public class HUDOverlayScreen extends BaseScreen {
         this.hud.drawLayer1(time, this.shapeRenderer);
         this.shapeRenderer.end();
 
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        this.shapeRenderer.setColor(Color.WHITE);
+        this.shapeRenderer.rect(game.getViewportWidth() - 100, 20, 80, 80);
+
+        this.shapeRenderer.end();
+
         //draw last (SpriteBatch) layer of HUD
         batch.begin();
         batch.setProjectionMatrix(game.getUICamera().combined);
         this.hud.drawLayer2(time, batch);
+
+        //draw torpedo, if available
+        boolean torpedoAvailable = game.getSharedData().get("can_shoot_torpedo", Boolean.class);
+
+        if (torpedoAvailable) {
+            batch.draw(this.torpedoTexture, game.getViewportWidth() - 91, 30);
+        }
     }
 
     @Override
