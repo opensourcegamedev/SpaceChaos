@@ -88,6 +88,7 @@ Author & Copyright: SouljahdeShiva, https://opengameart.org/content/sonar-tuning
 Path: data/music/neon-transit\
 License: CC-BY 3.0\
 Author & Copyright: Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
+Also see https://opengameart.org/content/projectarcheron .
 
 # External sound effects
 
