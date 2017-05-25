@@ -136,7 +136,7 @@ public class CreditsScreen extends BaseScreen {
             lastYPos = y;
         }
 
-        if (lastYPos > game.getViewportHeight() - 50) {
+        if (lastYPos > game.getViewportHeight() - 100) {
             game.getScreenManager().leaveAllAndEnter("menu");
         }
 
