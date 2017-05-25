@@ -68,7 +68,7 @@ public class CreditsScreen extends BaseScreen {
         this.titleFont = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
         //this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.RED, Color.WHITE, 3);
         this.font1 = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 18, Color.WHITE);
-        this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 28, Color.WHITE, Color.RED, 3);
+        this.font2 = BitmapFontFactory.createFont("./data/font/arial/arial-bold.ttf", 24, Color.WHITE, Color.RED, 3);
 
         //generate credits text array
         try {
