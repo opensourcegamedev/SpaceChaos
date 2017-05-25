@@ -83,6 +83,12 @@ Path: data/music/sonar-tuning-electro-track\
 License: CC-BY 3.0\
 Author & Copyright: SouljahdeShiva, https://opengameart.org/content/sonar-tuning-electro-track
 
+## Neon Transit
+
+Path: data/music/neon-transit\
+License: CC-BY 3.0\
+Author & Copyright: Alexandr Zhelanov, https://soundcloud.com/alexandr-zhelanov
+
 # External sound effects
 
 ## Explosion
