@@ -161,9 +161,16 @@ public class CreditsScreen extends BaseScreen {
         //read lines from file
         List<String> lines1 = FileUtils.readLines("./CONTRIBUTORS.md", StandardCharsets.UTF_8);
 
+        String lastLine = "";
+
         //look for too long lines
         for (String line : lines1) {
             line = line.replace("\\", "");
+
+            if (lastLine.equals("") && line.equals("")) {
+                //avoid 2 empty lines
+                continue;
+            }
 
             if (line.length() > MAX_CHARS_PER_LINE) {
                 //split line into 2 lines
@@ -176,8 +183,13 @@ public class CreditsScreen extends BaseScreen {
                 if (line.contains("#")) {
                     //add empty line
                     lines.add("");
+
+                    //set for last line
+                    line = "";
                 }
             }
+
+            lastLine = line;
         }
 
         //create new array and convert list to array for fast access
