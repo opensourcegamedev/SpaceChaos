@@ -13,6 +13,12 @@ import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
+import dev.game.spacechaos.engine.utils.FileUtils;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -34,6 +40,11 @@ public class CreditsScreen extends BaseScreen {
     //font
     protected BitmapFont titleFont = null;
 
+    //credit lines
+    protected String[] creditLines = new String[1];
+
+    protected final int MAX_CHARS_PER_LINE = 30;
+
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //load assets
@@ -49,6 +60,16 @@ public class CreditsScreen extends BaseScreen {
         //generate fonts
         this.titleFont = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
         //this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.RED, Color.WHITE, 3);
+
+        //generate credits text array
+        try {
+            this.generateCreditLines();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            //TODO: remove this line and handle exception with exception window
+            System.exit(0);
+        }
     }
 
     @Override
@@ -91,6 +112,29 @@ public class CreditsScreen extends BaseScreen {
     @Override
     public void destroy() {
 
+    }
+
+    protected void generateCreditLines () throws IOException {
+        List<String> lines = new ArrayList<>();
+
+        //read lines from file
+        List<String> lines1 = FileUtils.readLines("./CONTRIBUTORS.md", StandardCharsets.UTF_8);
+
+        //look for too long lines
+        for (String line : lines1) {
+            if (line.length() > MAX_CHARS_PER_LINE) {
+                //split line into 2 lines
+                lines.add(line.substring(0, MAX_CHARS_PER_LINE));
+                lines.add(line.substring(MAX_CHARS_PER_LINE));
+            } else {
+                //add line to list
+                lines.add(line.replace("\\", ""));
+            }
+        }
+
+        //create new array and convert list to array for fast access
+        this.creditLines = new String[lines.size()];
+        this.creditLines = lines.toArray(this.creditLines);
     }
 
 }
