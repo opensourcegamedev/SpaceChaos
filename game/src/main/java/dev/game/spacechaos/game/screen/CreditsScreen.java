@@ -79,6 +79,8 @@ public class CreditsScreen extends BaseScreen {
             //TODO: remove this line and handle exception with exception window
             System.exit(0);
         }
+
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
@@ -142,7 +144,7 @@ public class CreditsScreen extends BaseScreen {
         this.startY += time.getDeltaTime() * TEXT_SPEED;
 
         //draw texture region of background
-        batch.draw(this.bgTexture, 0, game.getViewportHeight() - 120, game.getViewportWidth(), 120, bgTexture.getWidth(), 80, 0, 0);
+        batch.draw(this.bgTexture, 0, game.getViewportHeight() - 120, 0, 0, bgTexture.getWidth(), 120);
 
         //draw title
         this.titleFont.draw(batch, "Credits", 50, game.getViewportHeight() - 50);
