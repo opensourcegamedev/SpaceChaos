@@ -138,7 +138,7 @@ public class ProjectileFactory {
 
     public static boolean canShootTorpedo() {
         int torpedoCoolDown = 500;
-        if (System.currentTimeMillis() - lastTorpedoShot > torpedoCoolDown) {
+        if (System.currentTimeMillis() - lastTorpedoShot > torpedoCoolDown && torpedoesLeft > 0) {
             //lastTorpedoShot = System.currentTimeMillis();
             return true;
         } else {
