@@ -49,11 +49,11 @@ public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerCom
         this.hpComponent = entity.getComponent(HPComponent.class);
 
         if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesn't have an PositionComponent.");
+            throw new IllegalStateException("Entity doesn't have a PositionComponent.");
         }
 
         if (this.hpComponent == null) {
-            throw new IllegalStateException("entity doesn't have an HPComponent.");
+            throw new IllegalStateException("Entity doesn't have a HPComponent.");
         }
 
         if (this.barWidth == 0) {

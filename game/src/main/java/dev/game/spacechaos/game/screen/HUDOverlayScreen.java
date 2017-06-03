@@ -14,6 +14,7 @@ import dev.game.spacechaos.engine.hud.HUD;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
+import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 
 /**
@@ -36,9 +37,12 @@ public class HUDOverlayScreen extends BaseScreen {
 
     private String timeText = "";
     private String torpedoAmountText = "";
+    private String scoreText = "";
     private long seconds = 0;
 
     private HPComponent hpComponent = null;
+
+    private ScoreComponent scoreComponent = null;
 
     private HUD hud = null;
     private ShapeRenderer shapeRenderer = null;
@@ -66,13 +70,14 @@ public class HUDOverlayScreen extends BaseScreen {
         this.shapeRenderer = new ShapeRenderer();
     }
 
-    public void onResume () {
+    public void onResume() {
         //set start time
         this.startTime = System.currentTimeMillis();
 
         //get player entity and health component
         Entity playerEntity = game.getSharedData().get("playerEntity", Entity.class);
         this.hpComponent = playerEntity.getComponent(HPComponent.class);
+        this.scoreComponent = playerEntity.getComponent(ScoreComponent.class);
 
         //set values and add listener to auto update values on change
         this.filledBar.setMaxValue(this.hpComponent.getMaxHP());
@@ -88,7 +93,7 @@ public class HUDOverlayScreen extends BaseScreen {
         this.filledBar.setForegroundColor(Color.GREEN);
     }
 
-    public void onPause () {
+    public void onPause() {
         //
     }
 
@@ -128,6 +133,8 @@ public class HUDOverlayScreen extends BaseScreen {
 
         game.getSharedData().put("lastElapsedTimeText", this.timeText);
 
+        this.scoreText = "SCORE: " + String.valueOf(scoreComponent.getScore() + seconds * 10);
+
         //update HUD
         this.hud.update(game, time);
     }
@@ -147,6 +154,10 @@ public class HUDOverlayScreen extends BaseScreen {
         //draw ammo hud
         this.font2.draw(batch, this.torpedoAmountText, game.getViewportWidth() - 220, 70);
         this.font1.draw(batch, this.torpedoAmountText, game.getViewportWidth() - 220, 70);
+
+        //draw score
+        font2.draw(batch, scoreText, 30, game.getViewportHeight() - 50);
+        font1.draw(batch, scoreText, 30, game.getViewportHeight() - 50);
 
         //draw first (SpriteBatch) layer of HUD
         this.hud.drawLayer0(time, batch);

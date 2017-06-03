@@ -17,6 +17,7 @@ import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.OnCollisionPlaySoundComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
+import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 
 /**
@@ -27,7 +28,7 @@ import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
  */
 public class PlayerFactory {
 
-    public static Entity createPlayer (EntityManager ecs, float x, float y, Texture texture, HPHitListener hpHitListener) {
+    public static Entity createPlayer(EntityManager ecs, float x, float y, Texture texture, HPHitListener hpHitListener) {
         //create new entity
         Entity player = new Entity(ecs);
 
@@ -68,6 +69,9 @@ public class PlayerFactory {
 
         //add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
+
+        //add component for score
+        player.addComponent(new ScoreComponent());
 
         return player;
     }
