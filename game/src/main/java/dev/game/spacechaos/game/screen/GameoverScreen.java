@@ -42,6 +42,7 @@ public class GameoverScreen extends BaseScreen {
     private ImageButton replayButton = null;
 
     private String timeText = "";
+    private String scoreText = "";
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -78,6 +79,7 @@ public class GameoverScreen extends BaseScreen {
         sound.play(VolumeManager.getInstance().getBackgroundMusicVolume());
 
         this.timeText = game.getSharedData().get("lastElapsedTimeText", String.class);
+        this.scoreText = game.getSharedData().get("score", String.class);
     }
 
     @Override
@@ -99,6 +101,7 @@ public class GameoverScreen extends BaseScreen {
         this.font.draw(batch, "GAME OVER", game.getViewportWidth() / 2 - 200, game.getViewportHeight() / 2);
 
         this.buttonFont.draw(batch, "Elapsed Time: " + this.timeText, 100, 100);
+        this.buttonFont.draw(batch, "Score: "+this.scoreText, 100, 50);
 
         //draw replay button
         this.replayButton.drawLayer0(time, batch);

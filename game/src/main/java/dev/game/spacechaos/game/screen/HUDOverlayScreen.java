@@ -133,7 +133,8 @@ public class HUDOverlayScreen extends BaseScreen {
 
         game.getSharedData().put("lastElapsedTimeText", this.timeText);
 
-        this.scoreText = "SCORE: " + String.valueOf(scoreComponent.getScore() + seconds * 10);
+        this.scoreText = "SCORE: " + String.valueOf(scoreComponent.getScore() + (minutes * 60 + seconds) * 10);
+        game.getSharedData().put("score", this.scoreText.substring(7));
 
         //update HUD
         this.hud.update(game, time);
