@@ -100,7 +100,7 @@ public class HUDOverlayScreen extends BaseScreen {
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
 
-        this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedoesLeft());
+        this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedosLeft());
 
         //calculate elapsed time
         this.elapsedTime = System.currentTimeMillis() - this.startTime;

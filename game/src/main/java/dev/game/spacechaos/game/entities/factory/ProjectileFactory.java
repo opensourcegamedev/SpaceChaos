@@ -26,7 +26,7 @@ import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
 public class ProjectileFactory {
 
     private static long lastTorpedoShot = 0;
-    private static int torpedoesLeft = 10;
+    private static int torpedosLeft = 10;
 
     /**
      * Creates a new entity moving straight forward and causing damage.
@@ -131,14 +131,14 @@ public class ProjectileFactory {
         //add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(3000L));
 
-        torpedoesLeft--;
+        torpedosLeft--;
 
         return projectileEntity;
     }
 
     public static boolean canShootTorpedo() {
         int torpedoCoolDown = 500;
-        if (System.currentTimeMillis() - lastTorpedoShot > torpedoCoolDown && torpedoesLeft > 0) {
+        if (System.currentTimeMillis() - lastTorpedoShot > torpedoCoolDown && torpedosLeft > 0) {
             //lastTorpedoShot = System.currentTimeMillis();
             return true;
         } else {
@@ -150,7 +150,7 @@ public class ProjectileFactory {
         lastTorpedoShot = System.currentTimeMillis();
     }
 
-    public static int getTorpedoesLeft() {
-        return torpedoesLeft;
+    public static int getTorpedosLeft() {
+        return torpedosLeft;
     }
 }
