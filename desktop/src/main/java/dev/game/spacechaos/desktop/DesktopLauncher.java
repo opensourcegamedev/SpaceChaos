@@ -20,7 +20,7 @@ public class DesktopLauncher {
     /**
      * The start-method for the whole application which is creating a new configuration for the stage and a new game so one could play.
      *
-     * @param args Unused argument so far.
+     * @param args So far unused start arguments.
      */
     public static void main (String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

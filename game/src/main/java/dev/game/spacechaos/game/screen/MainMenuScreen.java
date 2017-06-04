@@ -16,7 +16,9 @@ import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
- * The screen of the main menu contains several buttons, so far it's only the singleplayer-button.
+ * The screen of the main menu.
+ * <p>
+ * Contains several buttons, so far it's only the singleplayer-button.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha

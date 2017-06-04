@@ -13,7 +13,7 @@ import dev.game.spacechaos.engine.entity.component.draw.MouseDependentDrawRotati
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.OnCollisionPlaySoundComponent;
-import dev.game.spacechaos.engine.entity.listener.HPHitListener;
+import dev.game.spacechaos.engine.entity.listener.HPDeathListener;
 import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraShakeComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
@@ -30,7 +30,7 @@ import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 public class PlayerFactory {
 
 	public static Entity createPlayer(EntityManager ecs, float x, float y, Texture texture,
-			HPHitListener hpHitListener) {
+			HPDeathListener hpDeathListener) {
 		// create new entity
 		Entity player = new Entity(ecs);
 
@@ -66,7 +66,7 @@ public class PlayerFactory {
 
 		// add component for HP
 		player.addComponent(new HPComponent(1000, 1000));
-		player.getComponent(HPComponent.class).addHitListener(hpHitListener);
+		player.getComponent(HPComponent.class).addDeathListener(hpDeathListener);
 
 		// add component to draw HP
 		player.addComponent(new DrawHPBarComponent(texture.getWidth() / 3, 10, texture.getWidth() / 3, 5f),

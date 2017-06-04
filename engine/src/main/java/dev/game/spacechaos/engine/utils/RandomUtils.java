@@ -1,7 +1,9 @@
 package dev.game.spacechaos.engine.utils;
 
 /**
- * Created by Justin on 17.04.2017.
+ * A few utility methods for dealing with random numbers and chances.
+ * 
+ * @since 1.0.0-PreAlpha
  */
 public class RandomUtils {
 

@@ -6,7 +6,7 @@ import dev.game.spacechaos.engine.screen.ScreenManager;
 import dev.game.spacechaos.game.screen.*;
 
 /**
- * The class starts the game by creating all the necessary screens and then displays the menu.
+ * This class starts the game by creating all the necessary screens and then displaying the menu.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
