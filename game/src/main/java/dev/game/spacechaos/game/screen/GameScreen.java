@@ -9,6 +9,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -153,7 +155,7 @@ public class GameScreen extends BaseScreen {
         // create skybox
         this.skyBox = new SkyBox(new Texture[]{ /* skyBox2, */ skyBox1}, game.getViewportWidth(),
                 game.getViewportHeight());
-
+        
         game.getSharedData().put("can_shoot_torpedo", true);
     }
 
