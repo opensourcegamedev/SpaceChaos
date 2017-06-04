@@ -9,7 +9,15 @@ import com.badlogic.gdx.math.Vector2;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.time.GameTime;
+import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 
+/**
+ * This class is the subclass of all used particle effects.
+ * 
+ * @since 1.0.1-PreAlpha
+ * @see ParticleComponent The component that updates and renders the particles.
+ *
+ */
 public abstract class BaseParticleEffect {
 
     private ParticleEffectPool effectPool;
@@ -19,14 +27,50 @@ public abstract class BaseParticleEffect {
     private float scale;
     private float rotationDifference;
 
+    /**
+     * Instantiates a BaseParticleEffect.
+     * 
+     * @param effect
+     *            The respective {@linkplain ParticleEffect particle effect}.
+     * @param offsetX
+     *            The X position offset of the effect.
+     * @param offsetY
+     *            The Y position offset of the effect.
+     */
     public BaseParticleEffect(ParticleEffect effect, float offsetX, float offsetY) {
         this(effect, offsetX, offsetY, 1);
     }
 
+    /**
+     * Instantiates a BaseParticleEffect.
+     * 
+     * @param effect
+     *            The respective {@linkplain ParticleEffect particle effect}.
+     * @param offsetX
+     *            The X position offset of the effect.
+     * @param offsetY
+     *            The Y position offset of the effect.
+     * @param scale
+     *            The scale factor of the effect.
+     */
     public BaseParticleEffect(ParticleEffect effect, float offsetX, float offsetY, float scale) {
         this(effect, offsetX, offsetY, scale, 0);
     }
 
+    /**
+     * Instantiates a BaseParticleEffect.
+     * 
+     * @param effect
+     *            The respective {@linkplain ParticleEffect particle effect}.
+     * @param offsetX
+     *            The X position offset of the effect.
+     * @param offsetY
+     *            The Y position offset of the effect.
+     * @param scale
+     *            The scale factor of the effect.
+     * @param rotationDifference
+     *            This specifies a difference in the particle direction.
+     */
     public BaseParticleEffect(ParticleEffect effect, float offsetX, float offsetY, float scale,
             float rotationDifference) {
         this.offset = new Vector2(offsetX, offsetY);

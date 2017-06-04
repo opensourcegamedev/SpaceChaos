@@ -5,7 +5,15 @@ import com.badlogic.gdx.math.Vector2;
 
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
+import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 
+/**
+ * This is a particle effect that is dependent on the mouse movement and is used
+ * in the player.
+ * 
+ * @since 1.0.1-PreAlpha
+ *
+ */
 public class MouseDependentParticleEffect extends BaseParticleEffect {
 
     private Vector2 frontVec;

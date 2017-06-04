@@ -17,7 +17,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.fx.BaseParticleEffect;
 
 /**
- * Draws and updates the given particle effects.
+ * Draws and updates the given {@linkplain BaseParticleEffect particle effects}.
  * <p>
  * Requires a {@link PositionComponent}.
  *

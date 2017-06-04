@@ -4,7 +4,15 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
+import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 
+/**
+ * This is a particle effect that is based on the movement direction of an
+ * entity.
+ * 
+ * @since 1.0.1-PreAlpha
+ *
+ */
 public class MovementDirectionBasedParticleEffect extends BaseParticleEffect {
 
     private MoveComponent moveComp;
