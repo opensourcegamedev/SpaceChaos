@@ -42,6 +42,9 @@ public class RewardComponent extends BaseComponent implements HPDeathListener {
 
     @Override
     public void onDeath(Entity causingEntity) {
+        if (causingEntity == null)
+            return;
+        
         ScoreComponent scoreComp = causingEntity.getComponent(ScoreComponent.class);
         if (scoreComp != null) {
             scoreComp.addScore(score);
