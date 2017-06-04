@@ -22,18 +22,18 @@ public class ImageButton extends BaseHUDWidget {
     protected Texture texture = null;
     protected Texture hoverTexture = null;
 
-    public ImageButton (Texture texture, Texture hoverTexture) {
+    public ImageButton(Texture texture, Texture hoverTexture) {
         this.texture = texture;
         this.hoverTexture = hoverTexture;
     }
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //get mouse coordinates
+        // get mouse coordinates
         float mouseX = Gdx.input.getX();
         float mouseY = game.getViewportHeight() - Gdx.input.getY();
 
-        //check if mouse is inner button
+        // check if mouse is inner button
         if (isMouseInner(game)) {
             this.hovered = true;
         } else {
@@ -47,9 +47,9 @@ public class ImageButton extends BaseHUDWidget {
         } else {
             this.isClicked = false;
 
-            //check if user has released button
+            // check if user has released button
             if (oldClicked == true) {
-                //user has clicked button
+                // user has clicked button
                 if (clickListener != null) {
                     clickListener.onClick();
                 }
@@ -59,7 +59,7 @@ public class ImageButton extends BaseHUDWidget {
 
     @Override
     public void drawLayer0(GameTime time, SpriteBatch batch) {
-        //draw background texture
+        // draw background texture
         if (hovered) {
             batch.draw(this.hoverTexture, getX(), getY(), getWidth(), getHeight());
         } else {
@@ -67,15 +67,15 @@ public class ImageButton extends BaseHUDWidget {
         }
     }
 
-    public void setBackgroundTexture (Texture texture) {
+    public void setBackgroundTexture(Texture texture) {
         this.texture = texture;
     }
 
-    public void setBackgroundHoverTexture (Texture hoverTexture) {
+    public void setBackgroundHoverTexture(Texture hoverTexture) {
         this.hoverTexture = hoverTexture;
     }
 
-    protected boolean isInner (float mouseX, float mouseY) {
+    protected boolean isInner(float mouseX, float mouseY) {
         if (mouseX >= getX() && mouseX <= (getX() + getWidth())) {
             if (mouseY >= getY() && mouseY <= (getY() + getHeight())) {
                 return true;
@@ -85,7 +85,7 @@ public class ImageButton extends BaseHUDWidget {
         return false;
     }
 
-    public void setClickListener (ClickListener listener) {
+    public void setClickListener(ClickListener listener) {
         this.clickListener = listener;
     }
 

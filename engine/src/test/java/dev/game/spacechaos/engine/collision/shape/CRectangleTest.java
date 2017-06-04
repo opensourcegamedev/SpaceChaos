@@ -11,7 +11,7 @@ import static org.junit.Assert.assertNotEquals;
 public class CRectangleTest {
 
     @Test
-    public void testConstructor () {
+    public void testConstructor() {
         CRectangle rectangle = new CRectangle(10, 20, 100, 200);
 
         assertNotEquals(10, 10.1, 0);
@@ -22,17 +22,17 @@ public class CRectangleTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstructorException1 () {
+    public void testConstructorException1() {
         CRectangle rectangle = new CRectangle(10, 20, 0, 200);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstructorException2 () {
+    public void testConstructorException2() {
         CRectangle rectangle = new CRectangle(10, 20, 100, 0);
     }
 
     @Test
-    public void testOverlapsRectangle () {
+    public void testOverlapsRectangle() {
         CRectangle rect1 = new CRectangle(0, 0, 100, 100);
         CRectangle rect2 = new CRectangle(0, 0, 100, 100);
 

@@ -1,16 +1,21 @@
 package dev.game.spacechaos.engine.entity.component.movement;
 
 import com.badlogic.gdx.math.Vector2;
+
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
- * Created by Justin on 08.04.2017.
+ * Enables an entity to move.
+ * <p>
+ * The movement is done via a {@linkplain #moveDirection direction vector}.
+ * Requires a {@linkplain PositionComponent position component}.
  */
 public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
@@ -19,28 +24,49 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     protected Vector2 moveDirection = new Vector2(0, 0);
     protected float speed = 1;
 
-    //flag, if entity is moving
+    /**
+     * Indicates if the entity is currently moving.
+     */
     protected boolean isMoving = false;
 
-    //temporary vector for calculations
+    // temporary vector for calculations
     protected Vector2 tmpVector = new Vector2();
 
-    public MoveComponent (float moveDirectionX, float moveDirectionY, float speed) {
+    /**
+     * Creates a movement component.
+     * 
+     * @param moveDirectionX
+     *            The X value of the movement direction vector.
+     * @param moveDirectionY
+     *            The Y value of the movement direction vector.
+     * @param speed
+     *            The movement speed (is used to scale the vector). Has to be
+     *            greater than 0.
+     */
+    public MoveComponent(float moveDirectionX, float moveDirectionY, float speed) {
         if (speed < 0) {
             throw new IllegalArgumentException("speed has to be >= 0.");
         }
 
         moveDirection.set(moveDirectionX, moveDirectionY);
+        moveDirection.nor();
         this.speed = speed;
     }
 
-    public MoveComponent (float speed) {
+    /**
+     * Creates a movement component with the direction vector (0, 0).
+     * 
+     * @param speed
+     *            The movement speed (is used to scale the vector). Has to be
+     *            greater than 0.
+     */
+    public MoveComponent(float speed) {
         this(0, 0, speed);
     }
 
     @Override
-    protected void onInit (BaseGame game, Entity entity) {
-        //get required components
+    protected void onInit(BaseGame game, Entity entity) {
+        // get required components
         this.positionComponent = entity.getComponent(PositionComponent.class);
 
         if (this.positionComponent == null) {
@@ -49,44 +75,49 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     }
 
     @Override
-    public void update (BaseGame game, GameTime time) {
-        /*if (moveDirection.x == 0 && moveDirection.y == 0) {
-            //set flag
-            isMoving = false;
-        } else {
-            //set flag
-            isMoving = true;
-        }*/
+    public void update(BaseGame game, GameTime time) {
+        /*
+         * if (moveDirection.x == 0 && moveDirection.y == 0) { //set flag
+         * isMoving = false; } else { //set flag isMoving = true; }
+         */
 
         if (!isMoving) {
-            //we dont have to move entity
+            // we dont have to move entity
             return;
         }
 
-        //get delta time
         float dt = time.getDeltaTime();
 
-        //set vector values to temporary vector
+        // set vector values to temporary vector
         tmpVector.set(moveDirection.x, moveDirection.y);
 
-        //normalize and scale move vector
-        tmpVector.nor();
+        // normalize and scale move vector
         tmpVector.scl(this.speed * dt * 100f);
 
-        //move entity
+        // move entity
         positionComponent.move(tmpVector.x, tmpVector.y);
     }
 
     @Override
-    public ECSPriority getUpdateOrder () {
+    public ECSPriority getUpdateOrder() {
         return ECSPriority.LOW;
     }
 
-    public boolean isMoving () {
+    /**
+     * @return Returns if the entity is currently moving.
+     */
+    public boolean isMoving() {
         return this.isMoving;
     }
 
-    public void setMoving (boolean moving) {
+    /**
+     * Sets the {@linkplain #isMoving moving flag}.
+     * 
+     * @param moving
+     *            The value. If set to 0, the direction is set to (0, 0) and
+     *            thus the movement stopped.
+     */
+    public void setMoving(boolean moving) {
         this.isMoving = moving;
 
         if (!moving) {
@@ -94,11 +125,11 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         }
     }
 
-    public Vector2 getMoveDirection () {
+    public Vector2 getMoveDirection() {
         return this.moveDirection;
     }
 
-    public void setMoveDirection (float x, float y) {
+    public void setMoveDirection(float x, float y) {
         this.moveDirection.set(x, y);
 
         if (x == 0 && y == 0) {
@@ -109,11 +140,11 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         }
     }
 
-    public float getSpeed () {
+    public float getSpeed() {
         return this.speed;
     }
 
-    public void setSpeed (float speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 

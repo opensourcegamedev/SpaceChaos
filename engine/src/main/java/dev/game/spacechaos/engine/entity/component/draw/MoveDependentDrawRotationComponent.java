@@ -25,13 +25,13 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
 
     protected Vector2 frontVector = new Vector2(0, 0);
 
-    public MoveDependentDrawRotationComponent () {
+    public MoveDependentDrawRotationComponent() {
         frontVector.setLength(1);
     }
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        //get required components
+        // get required components
         this.moveComponent = entity.getComponent(MoveComponent.class);
         this.textureComponent = entity.getComponent(DrawTextureComponent.class);
         this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
@@ -40,8 +40,9 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
             throw new IllegalStateException("entity doesnt have an MoveComponent.");
         }
 
-        if (this.textureComponent ==  null && this.textureRegionComponent == null) {
-            throw new RequiredComponentNotFoundException("entity doesnt have an DrawTextureComponent or DrawTextureRegionComponent");
+        if (this.textureComponent == null && this.textureRegionComponent == null) {
+            throw new RequiredComponentNotFoundException(
+                    "entity doesnt have an DrawTextureComponent or DrawTextureRegionComponent");
         } else if (this.textureRegionComponent != null) {
             this.drawComponent = this.textureRegionComponent;
         } else if (this.textureComponent != null) {
@@ -51,13 +52,13 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //get move direction
+        // get move direction
         Vector2 moveDir = moveComponent.getMoveDirection();
 
         float angle = 0;
 
         if (moveComponent.isMoving()) {
-            //get angle
+            // get angle
             angle = moveDir.angle() - 90;
             this.lastAngle = angle;
         } else {
@@ -76,7 +77,7 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
         return ECSPriority.VERY_LOW;
     }
 
-    public Vector2 getFrontVec () {
+    public Vector2 getFrontVec() {
         return frontVector;
     }
 

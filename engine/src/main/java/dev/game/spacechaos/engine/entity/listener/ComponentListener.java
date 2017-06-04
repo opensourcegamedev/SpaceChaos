@@ -4,7 +4,7 @@ import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IComponent;
 
 /**
- * Created by Justin on 12.04.2017.
+ * The listener interface for receiving component events.
  */
 public interface ComponentListener {
 

@@ -17,7 +17,7 @@ import dev.game.spacechaos.engine.utils.MouseUtils;
  */
 public class MouseDependentDrawRotationAngle extends BaseComponent implements IUpdateComponent {
 
-    //required components
+    // required components
     protected PositionComponent positionComponent = null;
     protected DrawTextureComponent textureComponent = null;
     protected DrawTextureRegionComponent textureRegionComponent = null;
@@ -31,18 +31,19 @@ public class MouseDependentDrawRotationAngle extends BaseComponent implements IU
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        //get components
+        // get components
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.textureComponent = entity.getComponent(DrawTextureComponent.class);
         this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
 
-        //check, if components are available
+        // check, if components are available
         if (this.positionComponent == null) {
             throw new IllegalStateException("entity doesnt have an PositionComponent.");
         }
 
-        if (this.textureComponent ==  null && this.textureRegionComponent == null) {
-            throw new RequiredComponentNotFoundException("entity doesnt have an DrawTextureComponent or DrawTextureRegionComponent");
+        if (this.textureComponent == null && this.textureRegionComponent == null) {
+            throw new RequiredComponentNotFoundException(
+                    "entity doesnt have an DrawTextureComponent or DrawTextureRegionComponent");
         } else if (this.textureRegionComponent != null) {
             this.drawComponent = this.textureRegionComponent;
         } else if (this.textureComponent != null) {
@@ -52,13 +53,14 @@ public class MouseDependentDrawRotationAngle extends BaseComponent implements IU
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //get camera
+        // get camera
         CameraWrapper camera = game.getCamera();
 
-        //get mouse angle relative to shuttle
-        float angle = MouseUtils.getRelativeMouseAngle(camera, positionComponent.getMiddleX(), positionComponent.getMiddleY()) - 90;
+        // get mouse angle relative to shuttle
+        float angle = MouseUtils.getRelativeMouseAngle(camera, positionComponent.getMiddleX(),
+                positionComponent.getMiddleY()) - 90;
 
-        //rotate texture
+        // rotate texture
         this.drawComponent.setRotationAngle(angle);
     }
 

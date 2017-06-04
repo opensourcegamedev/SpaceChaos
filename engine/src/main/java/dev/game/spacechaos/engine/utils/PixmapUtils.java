@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Pixmap;
  */
 public class PixmapUtils {
 
-    public static Pixmap fillFormWithConstantColor (Pixmap pixmap, Color fillColor) {
-        //set fill color
+    public static Pixmap fillFormWithConstantColor(Pixmap pixmap, Color fillColor) {
+        // set fill color
         pixmap.setColor(fillColor);
 
         Color color = new Color();
@@ -19,7 +19,7 @@ public class PixmapUtils {
                 int colorInt = pixmap.getPixel(x, y);
                 color.set(colorInt);
 
-                //get color alpha value
+                // get color alpha value
                 float alpha = color.a;
 
                 if (alpha > 0) {

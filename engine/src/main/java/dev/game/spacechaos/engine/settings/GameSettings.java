@@ -9,13 +9,13 @@ import java.io.IOException;
 public interface GameSettings {
 
     /**
-    * load settings from file
-    */
+     * load settings from file
+     */
     public void loadFromFile(File file) throws IOException;
 
     /**
-    * get value
-    */
+     * get value
+     */
     public String get(String section, String key);
 
     /**
@@ -24,8 +24,8 @@ public interface GameSettings {
     public String getOrDefault(String section, String key, String defaultValue);
 
     /**
-    * get integer value
-    */
+     * get integer value
+     */
     public int getInt(String section, String key);
 
     /**

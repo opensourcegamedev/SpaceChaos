@@ -39,9 +39,9 @@ public interface EntityManager {
 
     public <T extends IComponent> void onComponentRemoved(Entity entity, T component, Class<T> cls);
 
-    public void registerComponentListener (ComponentListener listener);
+    public void registerComponentListener(ComponentListener listener);
 
-    public void removeComponentListener (ComponentListener listener);
+    public void removeComponentListener(ComponentListener listener);
 
     public BaseGame getGame();
 

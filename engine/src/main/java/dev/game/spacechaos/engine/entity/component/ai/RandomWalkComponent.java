@@ -18,7 +18,7 @@ import java.util.Random;
  */
 public class RandomWalkComponent extends BaseComponent implements IUpdateComponent {
 
-    //required components
+    // required components
     protected PositionComponent positionComponent = null;
     protected MoveComponent moveComponent = null;
 
@@ -35,7 +35,7 @@ public class RandomWalkComponent extends BaseComponent implements IUpdateCompone
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        //get required components
+        // get required components
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.moveComponent = entity.getComponent(MoveComponent.class);
 
@@ -55,7 +55,7 @@ public class RandomWalkComponent extends BaseComponent implements IUpdateCompone
             initialized = true;
         }
 
-        //check if entity is near target
+        // check if entity is near target
         tmpVector.set(targetPos.x - positionComponent.getMiddleX(), targetPos.y - positionComponent.getMiddleY());
         float length = tmpVector.len();
 
@@ -63,7 +63,8 @@ public class RandomWalkComponent extends BaseComponent implements IUpdateCompone
             generateNewRoute();
         }
 
-        moveComponent.setMoveDirection(targetPos.x - positionComponent.getMiddleX(), targetPos.y - positionComponent.getMiddleY());
+        moveComponent.setMoveDirection(targetPos.x - positionComponent.getMiddleX(),
+                targetPos.y - positionComponent.getMiddleY());
     }
 
     @Override
@@ -71,25 +72,25 @@ public class RandomWalkComponent extends BaseComponent implements IUpdateCompone
         return ECSPriority.VERY_HIGH;
     }
 
-    protected void generateNewRoute () {
-        //get current position
+    protected void generateNewRoute() {
+        // get current position
         this.startX = positionComponent.getMiddleX();
         this.startY = positionComponent.getMiddleY();
 
-        //get random angle
+        // get random angle
         float angle = (float) Math.random() * 360;
 
-        //get random length
+        // get random length
         float length = random.nextFloat() * (maxLength - minLength) + minLength;
 
         tmpVector.set(length, 0);
         tmpVector.setAngle(angle);
 
-        //set target position
+        // set target position
         targetPos.set(tmpVector.x + positionComponent.getMiddleX(), tmpVector.y + positionComponent.getMiddleY());
     }
 
-    public Vector2 getTargetPos () {
+    public Vector2 getTargetPos() {
         return this.targetPos;
     }
 

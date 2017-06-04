@@ -22,27 +22,28 @@ import java.util.List;
 
 /**
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @since 1.0.0-PreAlpha
  */
 public class CreditsScreen extends BaseScreen {
 
-    //asset paths
+    // asset paths
     protected final String MUSIC_PATH = "./data/music/neon-transit/Neon_Transit.ogg";
     protected final String BACKGROUND_IMAGE_PATH = "./data/images/skybox/galaxy/galaxy+X.png";
 
-    //background music soundtrack
+    // background music soundtrack
     protected Music music = null;
 
-    //background texture
+    // background texture
     protected Texture bgTexture = null;
 
-    //font
+    // font
     protected BitmapFont titleFont = null;
     protected BitmapFont font1 = null;
     protected BitmapFont font2 = null;
 
-    //credit lines
+    // credit lines
     protected String[] creditLines = new String[1];
 
     protected final int MAX_CHARS_PER_LINE = 100;
@@ -54,29 +55,32 @@ public class CreditsScreen extends BaseScreen {
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
-        //load assets
+        // load assets
         assetManager.load(MUSIC_PATH, Music.class);
         assetManager.load(BACKGROUND_IMAGE_PATH, Texture.class);
         assetManager.finishLoadingAsset(MUSIC_PATH);
         assetManager.finishLoadingAsset(BACKGROUND_IMAGE_PATH);
 
-        //get assets
+        // get assets
         this.music = assetManager.get(MUSIC_PATH, Music.class);
         this.bgTexture = assetManager.get(BACKGROUND_IMAGE_PATH, Texture.class);
 
-        //generate fonts
-        this.titleFont = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
-        //this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.RED, Color.WHITE, 3);
+        // generate fonts
+        this.titleFont = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE,
+                Color.BLUE, 3);
+        // this.font2 =
+        // BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf",
+        // 48, Color.RED, Color.WHITE, 3);
         this.font1 = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 18, Color.WHITE);
         this.font2 = BitmapFontFactory.createFont("./data/font/arial/arial-bold.ttf", 24, Color.WHITE, Color.RED, 3);
 
-        //generate credits text array
+        // generate credits text array
         try {
             this.generateCreditLines();
         } catch (IOException e) {
             e.printStackTrace();
 
-            //TODO: remove this line and handle exception with exception window
+            // TODO: remove this line and handle exception with exception window
             System.exit(0);
         }
 
@@ -84,45 +88,45 @@ public class CreditsScreen extends BaseScreen {
     }
 
     @Override
-    public void onResume () {
-        //set music volume
+    public void onResume() {
+        // set music volume
         this.music.setVolume(VolumeManager.getInstance().getBackgroundMusicVolume());
 
-        //set looping
+        // set looping
         this.music.setLooping(true);
 
-        //play music
+        // play music
         this.music.play();
 
-        //reset text start position
+        // reset text start position
         this.startY = 0;
     }
 
     @Override
-    public void onPause () {
+    public void onPause() {
         this.music.stop();
     }
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
         if (Gdx.input.isTouched()) {
-            //back to main menu
+            // back to main menu
             game.getScreenManager().leaveAllAndEnter("menu");
         }
     }
 
     @Override
     public void draw(GameTime time, SpriteBatch batch) {
-        //set UI camera
+        // set UI camera
         batch.setProjectionMatrix(this.game.getUICamera().combined);
 
-        //draw background
+        // draw background
         batch.draw(this.bgTexture, 0, 0, game.getViewportWidth(), game.getViewportHeight());
 
-        //y position of last line
+        // y position of last line
         float lastYPos = 0;
 
-        //draw credits text
+        // draw credits text
         for (int i = 0; i < this.creditLines.length; i++) {
             float y = startY - i * this.textHeight;
             String line = this.creditLines[i];
@@ -140,13 +144,13 @@ public class CreditsScreen extends BaseScreen {
             game.getScreenManager().leaveAllAndEnter("menu");
         }
 
-        //move text
+        // move text
         this.startY += time.getDeltaTime() * TEXT_SPEED;
 
-        //draw texture region of background
+        // draw texture region of background
         batch.draw(this.bgTexture, 0, game.getViewportHeight() - 120, 0, 0, bgTexture.getWidth(), 120);
 
-        //draw title
+        // draw title
         this.titleFont.draw(batch, "Credits", 50, game.getViewportHeight() - 50);
     }
 
@@ -155,36 +159,36 @@ public class CreditsScreen extends BaseScreen {
 
     }
 
-    protected void generateCreditLines () throws IOException {
+    protected void generateCreditLines() throws IOException {
         List<String> lines = new ArrayList<>();
 
-        //read lines from file
+        // read lines from file
         List<String> lines1 = FileUtils.readLines("./CONTRIBUTORS.md", StandardCharsets.UTF_8);
 
         String lastLine = "";
 
-        //look for too long lines
+        // look for too long lines
         for (String line : lines1) {
             line = line.replace("\\", "");
 
             if (lastLine.equals("") && line.equals("")) {
-                //avoid 2 empty lines
+                // avoid 2 empty lines
                 continue;
             }
 
             if (line.length() > MAX_CHARS_PER_LINE) {
-                //split line into 2 lines
+                // split line into 2 lines
                 lines.add(line.substring(0, MAX_CHARS_PER_LINE));
                 lines.add(line.substring(MAX_CHARS_PER_LINE));
             } else {
-                //add line to list
+                // add line to list
                 lines.add(line.replace("\\", ""));
 
                 if (line.contains("#")) {
-                    //add empty line
+                    // add empty line
                     lines.add("");
 
-                    //set for last line
+                    // set for last line
                     line = "";
                 }
             }
@@ -192,7 +196,7 @@ public class CreditsScreen extends BaseScreen {
             lastLine = line;
         }
 
-        //create new array and convert list to array for fast access
+        // create new array and convert list to array for fast access
         this.creditLines = new String[lines.size()];
         this.creditLines = lines.toArray(this.creditLines);
     }

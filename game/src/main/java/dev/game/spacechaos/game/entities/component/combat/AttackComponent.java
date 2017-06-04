@@ -7,17 +7,19 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
- * Adds an attack-component to entities which are able to shoot.
+ * Adds an attack-component to entities which are able to be shot and thus deal
+ * damage on collision.
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @since 1.0.0-PreAlpha
  */
 public class AttackComponent extends BaseComponent implements CollisionListener {
 
     private Entity ownerEntity = null;
     private float reduceHP = 0;
 
-    public AttackComponent (Entity ownerEntity, float reduceHP) {
+    public AttackComponent(Entity ownerEntity, float reduceHP) {
         this.ownerEntity = ownerEntity;
         this.reduceHP = reduceHP;
     }
@@ -30,26 +32,24 @@ public class AttackComponent extends BaseComponent implements CollisionListener 
             throw new IllegalStateException("entity doesn't have an CollisionComponent.");
         }
 
-        //register collision listener
+        // register collision listener
         collisionComponent.addCollisionListener(this);
     }
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
+        // don't attack shuttles, which fires this entity
         if (otherEntity == ownerEntity) {
-            //don't attack shuttles, which fires this entity
             return;
         }
 
-        //reduce HP of enemy shuttle
         HPComponent hpComponent = otherEntity.getComponent(HPComponent.class);
-
         if (hpComponent == null) {
-            //don't reduce HP, maybe its an meteorite
+            // don't reduce HP, maybe its an meteorite
             return;
         }
 
-        hpComponent.subHP(this.reduceHP);
+        hpComponent.subHP(this.reduceHP, ownerEntity);
     }
 
     @Override

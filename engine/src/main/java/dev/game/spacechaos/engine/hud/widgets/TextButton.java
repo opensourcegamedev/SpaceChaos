@@ -20,7 +20,7 @@ import java.awt.*;
  */
 public class TextButton extends BaseHUDWidget {
 
-    protected Color bgColor = Color.FIREBRICK;//Color.CHARTREUSE
+    protected Color bgColor = Color.FIREBRICK;// Color.CHARTREUSE
     protected Color hoverColor = Color.ORANGE;
     protected String text = "";
     protected ClickListener clickListener = null;
@@ -31,11 +31,11 @@ public class TextButton extends BaseHUDWidget {
 
     protected Sound hoverSound = null;
 
-    //Text padding
+    // Text padding
     protected float paddingTop = 10;
     protected float paddingLeft = 20;
 
-    public TextButton (String text, BitmapFont font, float x, float y) {
+    public TextButton(String text, BitmapFont font, float x, float y) {
         this.text = text;
         setPosition(x, y);
 
@@ -43,18 +43,18 @@ public class TextButton extends BaseHUDWidget {
         this.font = font;
     }
 
-    public TextButton (String text, BitmapFont font) {
+    public TextButton(String text, BitmapFont font) {
         this(text, font, 100, 100);
     }
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //check if mouse is inner
+        // check if mouse is inner
         if (isMouseInner(game)) {
             if (!hovered) {
-                //mouse enter widget
+                // mouse enter widget
 
-                //play sound
+                // play sound
                 if (this.hoverSound != null) {
                     this.hoverSound.play(VolumeManager.getInstance().getEnvVolume());
                 }
@@ -72,9 +72,9 @@ public class TextButton extends BaseHUDWidget {
         } else {
             this.isClicked = false;
 
-            //check if user has released button
+            // check if user has released button
             if (oldClicked == true) {
-                //user has clicked button
+                // user has clicked button
                 if (clickListener != null) {
                     clickListener.onClick();
                 }
@@ -84,8 +84,9 @@ public class TextButton extends BaseHUDWidget {
 
     @Override
     public void drawLayer0(GameTime time, SpriteBatch batch) {
-        //draw rectangle
-        SpriteBatcherUtils.fillRectangle(batch, getX(), getY(), getWidth(), getHeight(), this.hovered ? this.hoverColor : this.bgColor);
+        // draw rectangle
+        SpriteBatcherUtils.fillRectangle(batch, getX(), getY(), getWidth(), getHeight(),
+                this.hovered ? this.hoverColor : this.bgColor);
 
         this.font.draw(batch, this.text, getX() + paddingLeft, getY() + getHeight() - paddingTop);
     }
@@ -100,11 +101,11 @@ public class TextButton extends BaseHUDWidget {
         //
     }
 
-    public void setHoverSound (Sound sound) {
+    public void setHoverSound(Sound sound) {
         this.hoverSound = sound;
     }
 
-    public void setClickListener (ClickListener listener) {
+    public void setClickListener(ClickListener listener) {
         this.clickListener = listener;
     }
 

@@ -11,15 +11,15 @@ public class VolumeManager {
     protected float envVolume = 1f;
     protected float backgroundMusicVolume = 1f;
 
-    public VolumeManager () {
+    public VolumeManager() {
         //
     }
 
-    public float getMasterVolume () {
+    public float getMasterVolume() {
         return this.masterVolume;
     }
 
-    public void setMasterVolume (float volume) {
+    public void setMasterVolume(float volume) {
         if (volume < 0) {
             throw new IllegalArgumentException("master volume has to be >= 0.");
         }
@@ -31,11 +31,11 @@ public class VolumeManager {
         this.masterVolume = volume;
     }
 
-    public float getBackgroundMusicVolume () {
+    public float getBackgroundMusicVolume() {
         return this.getMasterVolume() * this.backgroundMusicVolume;
     }
 
-    public void setBackgroundMusicVolume (float volume) {
+    public void setBackgroundMusicVolume(float volume) {
         if (volume < 0) {
             throw new IllegalArgumentException("music volume has to be >= 0.");
         }
@@ -47,11 +47,11 @@ public class VolumeManager {
         this.backgroundMusicVolume = volume;
     }
 
-    public float getEnvVolume () {
+    public float getEnvVolume() {
         return this.getMasterVolume() * this.envVolume;
     }
 
-    public void setEnvVolume (float volume) {
+    public void setEnvVolume(float volume) {
         if (volume < 0) {
             throw new IllegalArgumentException("environment sounds volume has to be >= 0.");
         }
@@ -63,7 +63,7 @@ public class VolumeManager {
         this.envVolume = volume;
     }
 
-    public static VolumeManager getInstance () {
+    public static VolumeManager getInstance() {
         if (instance == null) {
             instance = new VolumeManager();
         }

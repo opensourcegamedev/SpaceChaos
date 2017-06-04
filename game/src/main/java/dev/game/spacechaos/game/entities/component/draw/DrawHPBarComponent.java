@@ -16,8 +16,9 @@ import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 /**
  * Draws the health-bar of the entity added to.
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @since 1.0.0-PreAlpha
  */
 public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerComponent {
 
@@ -44,16 +45,16 @@ public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerCom
     }
 
     @Override
-    public void onInit (BaseGame game, Entity entity) {
+    public void onInit(BaseGame game, Entity entity) {
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.hpComponent = entity.getComponent(HPComponent.class);
 
         if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesn't have an PositionComponent.");
+            throw new IllegalStateException("Entity doesn't have a PositionComponent.");
         }
 
         if (this.hpComponent == null) {
-            throw new IllegalStateException("entity doesn't have an HPComponent.");
+            throw new IllegalStateException("Entity doesn't have a HPComponent.");
         }
 
         if (this.barWidth == 0) {
@@ -62,19 +63,19 @@ public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerCom
     }
 
     @Override
-    public void drawUILayer (GameTime time, CameraWrapper camera, SpriteBatch batch) {
-        //get current HP in percent
+    public void drawUILayer(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        // get current HP in percent
         float percent = this.hpComponent.getPercent();
 
-        //calculate x and y position
+        // calculate x and y position
         float x = this.positionComponent.getX() + offsetX;
         float y = this.positionComponent.getY() + this.positionComponent.getHeight() + offsetY;
 
-        //draw background
+        // draw background
         SpriteBatcherUtils.fillRectangle(batch, x, y, barWidth, barHeight, backgroundColor);
 
-        //draw foreground
-        SpriteBatcherUtils.fillRectangle (batch, x, y, barWidth * percent, barHeight, foregroundColor);
+        // draw foreground
+        SpriteBatcherUtils.fillRectangle(batch, x, y, barWidth * percent, barHeight, foregroundColor);
     }
 
     @Override

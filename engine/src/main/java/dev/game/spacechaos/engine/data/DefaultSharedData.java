@@ -11,9 +11,10 @@ public class DefaultSharedData implements SharedData {
     /**
      * map with shared data
      */
-    protected Map<String,Object> dataMap = new ConcurrentHashMap<>();
+    protected Map<String, Object> dataMap = new ConcurrentHashMap<>();
 
-    @Override public void put(String name, Object obj) {
+    @Override
+    public void put(String name, Object obj) {
         if (name == null) {
             throw new NullPointerException("name cannot be null.");
         }
@@ -29,24 +30,27 @@ public class DefaultSharedData implements SharedData {
         this.dataMap.put(name, obj);
     }
 
-    @Override public boolean contains(String name) {
+    @Override
+    public boolean contains(String name) {
         return this.dataMap.get(name) != null;
     }
 
-    @Override public Object get(String name) {
+    @Override
+    public Object get(String name) {
         return this.dataMap.get(name);
     }
 
-    @Override public <T> T get(String name, Class<T> cls) {
-        //get object
+    @Override
+    public <T> T get(String name, Class<T> cls) {
+        // get object
         Object obj = this.get(name);
 
-        //because null object cannot be casted, check if object is null
+        // because null object cannot be casted, check if object is null
         if (obj == null) {
             return null;
         }
 
-        //cast and return object
+        // cast and return object
         return cls.cast(obj);
     }
 }

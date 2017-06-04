@@ -5,15 +5,15 @@ package dev.game.spacechaos.engine.animation;
  */
 public interface IAnimation {
 
-    public void start ();
+    public void start();
 
-    public void stop ();
+    public void stop();
 
-    public boolean isPlaying ();
+    public boolean isPlaying();
 
     /**
-    * reset animation
-    */
-    public void reset ();
+     * reset animation
+     */
+    public void reset();
 
 }

@@ -16,7 +16,7 @@ public class CCircle extends CShape {
     protected float y = 0;
     protected float radius = 0;
 
-    public CCircle (float x, float y, float radius) {
+    public CCircle(float x, float y, float radius) {
         if (radius <= 0) {
             throw new IllegalArgumentException("radius has to be greater than 0.");
         }
@@ -36,7 +36,7 @@ public class CCircle extends CShape {
         return this.y + offsetY;
     }
 
-    public float getRadius () {
+    public float getRadius() {
         return this.radius;
     }
 

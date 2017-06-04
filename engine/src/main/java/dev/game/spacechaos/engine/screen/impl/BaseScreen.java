@@ -12,20 +12,22 @@ public abstract class BaseScreen implements IScreen {
     protected ScreenBasedGame game;
     protected AssetManager assetManager;
 
-    public final void init (ScreenBasedGame game, AssetManager assetManager) {
+    public final void init(ScreenBasedGame game, AssetManager assetManager) {
         this.game = game;
         this.assetManager = assetManager;
 
         this.onInit(game, assetManager);
     }
 
-    protected abstract void onInit (ScreenBasedGame game, AssetManager assetManager);
+    protected abstract void onInit(ScreenBasedGame game, AssetManager assetManager);
 
-    @Override public void onPause() {
+    @Override
+    public void onPause() {
 
     }
 
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
 
     }
 

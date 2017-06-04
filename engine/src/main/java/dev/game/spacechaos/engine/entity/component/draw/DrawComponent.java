@@ -26,75 +26,76 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
     protected boolean visible = true;
 
     @Override
-    public final void onInit (BaseGame game, Entity entity) {
+    public final void onInit(BaseGame game, Entity entity) {
         this.positionComponent = entity.getComponent(PositionComponent.class);
 
         if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an PositionComponent.");
+            throw new IllegalStateException("Entity doesn't have a PositionComponent.");
         }
 
         afterInit(game, entity);
     }
 
-    public abstract void afterInit (BaseGame game, Entity entity);
+    public abstract void afterInit(BaseGame game, Entity entity);
 
-    @Override public ECSPriority getDrawOrder() {
+    @Override
+    public ECSPriority getDrawOrder() {
         return ECSPriority.LOW;
     }
 
-    public float getWidth () {
+    public float getWidth() {
         return this.width;
     }
 
-    public float getHeight () {
+    public float getHeight() {
         return this.height;
     }
 
-    public void setDimension (float width, float height) {
+    public void setDimension(float width, float height) {
         this.width = width;
         this.height = height;
     }
 
-    public float getOriginX () {
+    public float getOriginX() {
         return this.originX;
     }
 
-    public float getOriginY () {
+    public float getOriginY() {
         return this.originY;
     }
 
-    public void setOrigin (float originX, float originY) {
+    public void setOrigin(float originX, float originY) {
         this.originX = originX;
         this.originY = originY;
     }
 
-    public boolean isVisible () {
+    public boolean isVisible() {
         return this.visible;
     }
 
-    public void setVisible (boolean visible) {
+    public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
-    public float getScaleX () {
+    public float getScaleX() {
         return this.scaleX;
     }
 
-    public float getScaleY () {
+    public float getScaleY() {
         return this.scaleY;
     }
 
-    public void setScale (float scale) {
+    public void setScale(float scale) {
         this.scaleX = scale;
         this.scaleY = scale;
     }
 
-    public float getRotationAngle () {
+    public float getRotationAngle() {
         return this.angle % 360;
     }
 
-    public void setRotationAngle (float angle) {
-        //normalize angle
+    public void setRotationAngle(float angle) {
+        // normalize angle
         if (angle < 0) {
             float abs = Math.abs(angle);
 
@@ -103,7 +104,7 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
             angle += 360;
         }
 
-        //set angle
+        // set angle
         this.angle = angle % 360;
     }
 

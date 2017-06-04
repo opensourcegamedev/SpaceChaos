@@ -22,20 +22,21 @@ public class AutoRemoveOnCollisionComponent extends BaseComponent implements Col
             throw new IllegalStateException("entity doesnt have an CollisionComponent.");
         }
 
-        //register collision listener
+        // register collision listener
         this.collisionComponent.addCollisionListener(this);
     }
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
-        if (entity.getComponent(AvoidRemoveOnCollisionComponent.class) != null && entity.getComponent(AvoidRemoveOnCollisionComponent.class).getOwnerEntity() == otherEntity) {
-            //dont remove entity
+        if (entity.getComponent(AvoidRemoveOnCollisionComponent.class) != null
+                && entity.getComponent(AvoidRemoveOnCollisionComponent.class).getOwnerEntity() == otherEntity) {
+            // dont remove entity
             return;
         }
 
-        //auto remove entity on next gameloop cycle
+        // auto remove entity on next gameloop cycle
         game.runOnUIThread(() -> {
-            //remove entity from ecs
+            // remove entity from ecs
             this.entity.getEntityComponentSystem().removeEntity(this.entity);
         });
     }

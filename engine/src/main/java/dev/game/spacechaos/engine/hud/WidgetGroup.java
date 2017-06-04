@@ -14,52 +14,54 @@ import java.util.List;
 public class WidgetGroup extends BaseHUDWidget {
 
     /**
-    * list with all child widgets
-    */
+     * list with all child widgets
+     */
     protected List<HUDWidget> widgetList = new ArrayList<>();
 
-    @Override public void update(BaseGame game, GameTime time) {
+    @Override
+    public void update(BaseGame game, GameTime time) {
         this.widgetList.forEach(widget -> {
             widget.update(game, time);
         });
     }
 
-    @Override public void drawLayer0(GameTime time, SpriteBatch batch) {
+    @Override
+    public void drawLayer0(GameTime time, SpriteBatch batch) {
         this.widgetList.forEach(widget -> {
             widget.drawLayer0(time, batch);
         });
     }
 
     @Override
-    public void drawLayer1 (GameTime time, ShapeRenderer shapeRenderer) {
+    public void drawLayer1(GameTime time, ShapeRenderer shapeRenderer) {
         this.widgetList.forEach(widget -> {
             widget.drawLayer1(time, shapeRenderer);
         });
     }
 
     @Override
-    public void drawLayer2 (GameTime time, SpriteBatch batch) {
+    public void drawLayer2(GameTime time, SpriteBatch batch) {
         this.widgetList.forEach(widget -> {
             widget.drawLayer2(time, batch);
         });
     }
 
-    public void addWidget (HUDWidget widget) {
-        //calculate absolute position
+    public void addWidget(HUDWidget widget) {
+        // calculate absolute position
         widget.onMoveGroup(getX(), getY());
 
         this.widgetList.add(widget);
     }
 
-    public void removeWidget (HUDWidget widget) {
+    public void removeWidget(HUDWidget widget) {
         this.widgetList.remove(widget);
     }
 
     @Override
-    public void setPosition (float x, float y) {
+    public void setPosition(float x, float y) {
         super.setPosition(x, y);
 
-        //move widgets
+        // move widgets
         this.widgetList.forEach(widget -> {
             widget.onMoveGroup(x, y);
         });

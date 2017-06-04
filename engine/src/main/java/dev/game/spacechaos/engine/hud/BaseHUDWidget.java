@@ -19,46 +19,48 @@ public abstract class BaseHUDWidget implements HUDWidget {
     protected float groupX = 0;
     protected float groupY = 0;
 
-    @Override public void drawLayer1(GameTime time, ShapeRenderer shapeRenderer) {
+    @Override
+    public void drawLayer1(GameTime time, ShapeRenderer shapeRenderer) {
 
     }
 
-    @Override public void drawLayer2(GameTime time, SpriteBatch batch) {
+    @Override
+    public void drawLayer2(GameTime time, SpriteBatch batch) {
 
     }
 
-    public float getX () {
+    public float getX() {
         return this.x + groupX;
     }
 
-    public float getY () {
+    public float getY() {
         return this.y + groupY;
     }
 
-    public void setPosition (float x, float y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    public float getWidth () {
+    public float getWidth() {
         return this.width;
     }
 
-    public float getHeight () {
+    public float getHeight() {
         return this.height;
     }
 
-    public void setDimension (float width, float height) {
+    public void setDimension(float width, float height) {
         this.width = width;
         this.height = height;
     }
 
-    public void onMoveGroup (float groupX, float groupY) {
+    public void onMoveGroup(float groupX, float groupY) {
         this.groupX = groupX;
         this.groupY = groupY;
     }
 
-    protected boolean isInner (float mouseX, float mouseY) {
+    protected boolean isInner(float mouseX, float mouseY) {
         if (mouseX >= getX() && mouseX <= (getX() + getWidth())) {
             if (mouseY >= getY() && mouseY <= (getY() + getHeight())) {
                 return true;
@@ -68,12 +70,12 @@ public abstract class BaseHUDWidget implements HUDWidget {
         return false;
     }
 
-    protected boolean isMouseInner (BaseGame game) {
-        //get relation between current window size and original viewport size
+    protected boolean isMouseInner(BaseGame game) {
+        // get relation between current window size and original viewport size
         float a = Gdx.graphics.getWidth() / 1280f;
         float b = Gdx.graphics.getHeight() / 720f;
 
-        //get mouse coordinates
+        // get mouse coordinates
         float mouseX = Gdx.input.getX() / a;
         float mouseY = game.getViewportHeight() - (Gdx.input.getY() / b);
 
@@ -81,7 +83,7 @@ public abstract class BaseHUDWidget implements HUDWidget {
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
         //
     }
 

@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class CCircleTest {
 
     @Test
-    public void testConstructor () {
+    public void testConstructor() {
         CCircle circle = new CCircle(10, 20, 40);
 
         assertEquals(10, circle.getCenterX(), 0);
@@ -19,17 +19,17 @@ public class CCircleTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstructorException1 () {
+    public void testConstructorException1() {
         CCircle circle = new CCircle(10, 10, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstructorException2 () {
+    public void testConstructorException2() {
         CCircle circle = new CCircle(10, 10, -5);
     }
 
     @Test
-    public void testOverlapsCircle () {
+    public void testOverlapsCircle() {
         CCircle circle1 = new CCircle(0, 0, 50);
         CCircle circle2 = new CCircle(200, 200, 50);
 

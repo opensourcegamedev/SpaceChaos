@@ -33,7 +33,8 @@ public class ActionBarItem extends BaseHUDWidget {
 
     protected CustomHoverAdapter customHoverAdapter = null;
     protected CustomClickAdapter customClickAdapter = new CustomClickAdapter() {
-        @Override public boolean isPressed(BaseGame game, ActionBarItem item, GameTime time) {
+        @Override
+        public boolean isPressed(BaseGame game, ActionBarItem item, GameTime time) {
             Vector3 mousePos = MouseUtils.getMousePositionWithCamera(game.getUICamera());
             float mouseX = mousePos.x;
             float mouseY = mousePos.y;
@@ -42,21 +43,21 @@ public class ActionBarItem extends BaseHUDWidget {
         }
     };
 
-    //cooldown timer
+    // cooldown timer
     protected CooldownTimer cooldownTimer = null;
     protected boolean useCooldown = false;
 
-    public ActionBarItem (Texture texture, BitmapFont font) {
+    public ActionBarItem(Texture texture, BitmapFont font) {
         this.texture = texture;
         this.font = font;
 
         this.setDimension(texture.getWidth(), texture.getHeight());
 
-        //create new cooldown timer
+        // create new cooldown timer
         this.cooldownTimer = new CooldownTimer(0);
     }
 
-    public boolean isInner (float mouseX, float mouseY) {
+    public boolean isInner(float mouseX, float mouseY) {
         float x = getX();
         float y = getY();
 
@@ -69,11 +70,12 @@ public class ActionBarItem extends BaseHUDWidget {
         return false;
     }
 
-    @Override public void update(BaseGame game, GameTime time) {
-        //update cooldown timer
+    @Override
+    public void update(BaseGame game, GameTime time) {
+        // update cooldown timer
         this.cooldownTimer.update(time);
 
-        //check if hovered
+        // check if hovered
         hovered = false;
 
         Vector3 mousePos = MouseUtils.getMousePositionWithCamera(game.getUICamera());
@@ -99,32 +101,22 @@ public class ActionBarItem extends BaseHUDWidget {
             clicked = false;
         }
 
-        /*if (hovered) {
-            if (this.customClickAdapter.isPressed(game, this, time) && clickable) {
-                clicked = true;
-            } else {
-                if (clicked) {
-                    //execute onClick action
-                    this.onClick();
-                }
-
-                clicked = false;
-            }
-        } else {
-            if (clicked) {
-                //execute onClick action
-                this.onClick();
-            }
-
-            clicked = false;
-        }
-
-        if (!isHoverable) {
-            hovered = false;
-        }*/
+        /*
+         * if (hovered) { if (this.customClickAdapter.isPressed(game, this,
+         * time) && clickable) { clicked = true; } else { if (clicked) {
+         * //execute onClick action this.onClick(); }
+         * 
+         * clicked = false; } } else { if (clicked) { //execute onClick action
+         * this.onClick(); }
+         * 
+         * clicked = false; }
+         * 
+         * if (!isHoverable) { hovered = false; }
+         */
     }
 
-    @Override public void drawLayer0(GameTime time, SpriteBatch batch) {
+    @Override
+    public void drawLayer0(GameTime time, SpriteBatch batch) {
         if (hovered) {
             batch.setColor(hoverColor);
         }
@@ -133,11 +125,11 @@ public class ActionBarItem extends BaseHUDWidget {
 
         batch.setColor(1, 1, 1, 1);
 
-        //draw key text
+        // draw key text
         font.draw(batch, key.toUpperCase(), getX() + getWidth() - (textPaddingX * key.length()), getY() + textPaddingY);
     }
 
-    public void setTexture (Texture texture) {
+    public void setTexture(Texture texture) {
         Texture oldTexture = this.texture;
 
         this.texture = texture;
@@ -147,31 +139,31 @@ public class ActionBarItem extends BaseHUDWidget {
         }
     }
 
-    public void setKeyText (String key) {
+    public void setKeyText(String key) {
         this.key = key;
     }
 
-    public void setActionCommand (ActionCommand command) {
+    public void setActionCommand(ActionCommand command) {
         this.command = command;
     }
 
-    public void removeActionCommand () {
+    public void removeActionCommand() {
         this.command = null;
     }
 
-    public void onClick () {
-        //check if cooldown timer is running
+    public void onClick() {
+        // check if cooldown timer is running
         if (useCooldown && this.cooldownTimer.isRunning()) {
-            //we cannot execute action, because cooldown timer is running
+            // we cannot execute action, because cooldown timer is running
             return;
         }
 
         if (this.clickable && this.command != null) {
             this.command.execute();
 
-            //check if action requires an cooldown timer
+            // check if action requires an cooldown timer
             if (useCooldown) {
-                //start cooldown timer
+                // start cooldown timer
                 this.cooldownTimer.start();
             }
         }
@@ -179,40 +171,41 @@ public class ActionBarItem extends BaseHUDWidget {
         System.out.println("click.");
     }
 
-    public boolean isHovered () {
+    public boolean isHovered() {
         return this.hovered;
     }
 
-    public void setHoverable (boolean hoverable) {
+    public void setHoverable(boolean hoverable) {
         this.isHoverable = hoverable;
     }
 
-    public void setClickable (boolean clickable) {
+    public void setClickable(boolean clickable) {
         this.clickable = clickable;
     }
 
-    public void setCustomHoverAdapter (CustomHoverAdapter hoverAdapter) {
+    public void setCustomHoverAdapter(CustomHoverAdapter hoverAdapter) {
         this.customHoverAdapter = hoverAdapter;
     }
 
-    public void removeCustomHoverAdapter () {
+    public void removeCustomHoverAdapter() {
         this.customHoverAdapter = null;
     }
 
-    public void setCustomClickAdapter (CustomClickAdapter clickAdapter) {
+    public void setCustomClickAdapter(CustomClickAdapter clickAdapter) {
         this.customClickAdapter = clickAdapter;
     }
 
-    public void removeCustomClickAdapter () {
+    public void removeCustomClickAdapter() {
         this.customClickAdapter = null;
     }
 
     /**
-    * set cooldown timer interval in milliseconds
+     * set cooldown timer interval in milliseconds
      *
-     * @param interval interval in milliseconds
-    */
-    public void setCooldownTimerInterval (long interval) {
+     * @param interval
+     *            interval in milliseconds
+     */
+    public void setCooldownTimerInterval(long interval) {
         if (interval <= 0) {
             this.useCooldown = false;
         }

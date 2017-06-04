@@ -23,85 +23,82 @@ public class DrawTextureRegionComponent extends DrawComponent {
     protected TextureRegion textureRegion = null;
     protected List<TextureRegionChangedListener> textureRegionChangedListenerList = new ArrayList<>();
 
-    public DrawTextureRegionComponent (TextureRegion textureRegion) {
+    public DrawTextureRegionComponent(TextureRegion textureRegion) {
         this.textureRegion = textureRegion;
     }
 
-    public DrawTextureRegionComponent () {
+    public DrawTextureRegionComponent() {
         //
     }
 
     @Override
-    public void afterInit (BaseGame game, Entity entity) {
+    public void afterInit(BaseGame game, Entity entity) {
         if (this.textureRegion != null) {
-            //set new width and height of entity
+            // set new width and height of entity
             positionComponent.setDimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
 
             setDimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
         }
     }
 
-    @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+    @Override
+    public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         if (this.textureRegion == null) {
-            //System.err.println("texture region of DrawTextureRegionComponent is null.");
+            // System.err.println("texture region of DrawTextureRegionComponent
+            // is null.");
 
             return;
         }
 
-        //https://github.com/libgdx/libgdx/wiki/2D-Animation
+        // https://github.com/libgdx/libgdx/wiki/2D-Animation
 
-        //draw texture region
+        // draw texture region
         batch.draw(this.textureRegion,
-                this.positionComponent.getX()/* - getOriginX()*/,
-                this.positionComponent.getY()/* - getOriginY()*/,
-                getOriginX(),
-                getOriginY(),
-                getWidth(),
-                getHeight(),
-                scaleX,
-                scaleY,
-                getRotationAngle()
-        );
+                this.positionComponent.getX()/* - getOriginX() */,
+                this.positionComponent.getY()/* - getOriginY() */, getOriginX(), getOriginY(), getWidth(), getHeight(),
+                scaleX, scaleY, getRotationAngle());
     }
 
-    @Override public ECSPriority getDrawOrder() {
+    @Override
+    public ECSPriority getDrawOrder() {
         return ECSPriority.LOW;
     }
 
-    public TextureRegion getTextureRegion () {
+    public TextureRegion getTextureRegion() {
         return this.textureRegion;
     }
 
-    public void setTextureRegion (TextureRegion textureRegion, boolean setNewDimension) {
+    public void setTextureRegion(TextureRegion textureRegion, boolean setNewDimension) {
         TextureRegion oldTextureRegion = this.textureRegion;
         this.textureRegion = textureRegion;
 
         if (oldTextureRegion == this.textureRegion) {
-            //we dont need to notify listeners
+            // we dont need to notify listeners
             return;
         }
 
         if (setNewDimension) {
-            //set new width and height
+            // set new width and height
             this.positionComponent.setDimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
         }
 
         this.textureRegionChangedListenerList.stream().forEach(listener -> {
-            //check if dev mode is enabled
-            /*if (DevMode.isEnabled()) {
-                //log listener
-                System.out.println("DrawTextureRegionComponent call listener: " + listener.getClass().getName());
-            }*/
+            // check if dev mode is enabled
+            /*
+             * if (DevMode.isEnabled()) { //log listener
+             * System.out.println("DrawTextureRegionComponent call listener: " +
+             * listener.getClass().getName()); }
+             */
 
             listener.onTextureRegionChanged(oldTextureRegion, this.textureRegion);
         });
     }
 
-    public void addTextureRegionChangedListener (TextureRegionChangedListener listener) {
+    public void addTextureRegionChangedListener(TextureRegionChangedListener listener) {
         this.textureRegionChangedListenerList.add(listener);
     }
 
-    public void removeTextureRegionChangedListener (TextureRegionChangedListener listener) {
+    public void removeTextureRegionChangedListener(TextureRegionChangedListener listener) {
         this.textureRegionChangedListenerList.remove(listener);
     }
 

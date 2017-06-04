@@ -16,10 +16,14 @@ public class CRotatedRectangle extends CRectangle {
     /**
      * default constructor
      *
-     * @param x      x position of rectangle
-     * @param y      position of rectangle
-     * @param width  width of rectangle
-     * @param height of rectangle
+     * @param x
+     *            x position of rectangle
+     * @param y
+     *            position of rectangle
+     * @param width
+     *            width of rectangle
+     * @param height
+     *            of rectangle
      */
     public CRotatedRectangle(float x, float y, float width, float height, float angle) {
         super(x, y, width, height);
@@ -27,11 +31,11 @@ public class CRotatedRectangle extends CRectangle {
         this.angle = angle;
     }
 
-    public float getAngle () {
+    public float getAngle() {
         return this.angle;
     }
 
-    public void setAngle (float angle) {
+    public void setAngle(float angle) {
         if (angle < 0) {
             throw new IllegalArgumentException("angle has to be >= 0.");
         }
@@ -39,13 +43,13 @@ public class CRotatedRectangle extends CRectangle {
         this.angle = angle % 360;
     }
 
-    public void getEdge (int nr) {
+    public void getEdge(int nr) {
         //
     }
 
     @Override
     public boolean overlaps(CShape obj) {
-        //TODO: implement collision detection
+        // TODO: implement collision detection
 
         throw new IllegalArgumentException("shape class " + obj.getClass() + " isnt supported.");
     }
@@ -54,7 +58,8 @@ public class CRotatedRectangle extends CRectangle {
     public void drawShape(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color) {
         shapeRenderer.setColor(color);
         shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.rect(this.x, this.y, x + (width / 2), y + (height / 2), this.width, this.height, 1f, 1f, this.angle);
+        shapeRenderer.rect(this.x, this.y, x + (width / 2), y + (height / 2), this.width, this.height, 1f, 1f,
+                this.angle);
     }
 
 }

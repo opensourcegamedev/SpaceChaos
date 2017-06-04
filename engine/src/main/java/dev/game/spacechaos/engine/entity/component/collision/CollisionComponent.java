@@ -29,10 +29,10 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     protected PositionComponent positionComponent = null;
     protected MoveComponent moveComponent = null;
 
-    //list with all collision listeners
+    // list with all collision listeners
     protected List<CollisionListener> listenerList = new ArrayList<>();
 
-    //list with all collision shapes
+    // list with all collision shapes
     protected List<CShape> collisionShapes = new ArrayList<>();
 
     protected CShape hullShape = null;
@@ -42,7 +42,7 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     protected boolean alreadyInCollision = false;
     protected List<Entity> tmpList = new ArrayList<>();
 
-    public CollisionComponent () {
+    public CollisionComponent() {
         //
     }
 
@@ -59,36 +59,36 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         this.tmpList.clear();
     }
 
-    public void initCollider (CollisionManager collisionManager) {
+    public void initCollider(CollisionManager collisionManager) {
         this.collisionManager = collisionManager;
     }
 
-    public CShape getHullShape () {
+    public CShape getHullShape() {
         return this.hullShape;
     }
 
-    public void setHullShape (CShape shape) {
+    public void setHullShape(CShape shape) {
         this.hullShape = shape;
     }
 
-    public void addInnerShape (CShape shape) {
+    public void addInnerShape(CShape shape) {
         this.collisionShapes.add(shape);
     }
 
-    public void removeInnerShape (CShape shape) {
+    public void removeInnerShape(CShape shape) {
         this.collisionShapes.remove(shape);
     }
 
-    public List<CShape> listCollisionShapes () {
+    public List<CShape> listCollisionShapes() {
         return this.collisionShapes;
     }
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //clear temporary list
+        // clear temporary list
         this.tmpList.clear();
 
-        //update shape positions
+        // update shape positions
         if (this.hullShape != null) {
             this.hullShape.setOffset(positionComponent.getX(), positionComponent.getY());
         }
@@ -97,8 +97,9 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
             shape.setOffset(positionComponent.getX(), positionComponent.getY());
         }
 
-        //check for collision with other entities
-        Collection<Entity> collidedEntities = this.collisionManager.checkForCollision(entity, this, this.positionComponent);
+        // check for collision with other entities
+        Collection<Entity> collidedEntities = this.collisionManager.checkForCollision(entity, this,
+                this.positionComponent);
 
         boolean collided = collidedEntities.size() > 0;
 
@@ -110,71 +111,73 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
             return;
         }
 
-        //entity is in collision
+        // entity is in collision
 
         for (Entity collisionEntity : collidedEntities) {
-            //check if entity was already in collision
+            // check if entity was already in collision
             if (this.alreadyInCollisionEntities.contains(collisionEntity)) {
-                //entity was already in collision
+                // entity was already in collision
                 callCollisionStayListeners(collisionEntity);
             } else {
                 this.alreadyInCollisionEntities.add(collisionEntity);
 
-                //new collision
+                // new collision
                 callCollisionEnterListeners(collisionEntity);
             }
         }
 
-        //check if entities have exit collision
+        // check if entities have exit collision
         for (Entity collisionEntity : this.alreadyInCollisionEntities) {
             if (!collidedEntities.contains(collisionEntity)) {
-                //entity has exit collision
+                // entity has exit collision
                 callCollisionExitListeners(collisionEntity);
 
-                //add to list, so we can remove entity from list after iteration
+                // add to list, so we can remove entity from list after
+                // iteration
                 tmpList.add(collisionEntity);
             }
         }
 
         this.alreadyInCollisionEntities.removeAll(tmpList);
 
-        //TODO: call external triggers (stop movement and so on)
+        // TODO: call external triggers (stop movement and so on)
 
-        //update flag
+        // update flag
         this.alreadyInCollision = collided;
     }
 
-    protected void exitAllCollisions () {
+    protected void exitAllCollisions() {
         for (Entity collisionEntity : this.alreadyInCollisionEntities) {
-            //call exit listeners
-            /*for (CollisionListener listener : this.listenerList) {
-                listener.onExit(entity, collisionEntity);
-            }*/
+            // call exit listeners
+            /*
+             * for (CollisionListener listener : this.listenerList) {
+             * listener.onExit(entity, collisionEntity); }
+             */
 
-            //entity has exit collision
+            // entity has exit collision
             callCollisionExitListeners(collisionEntity);
         }
 
-        //clear list
+        // clear list
         this.alreadyInCollisionEntities.clear();
     }
 
-    protected void callCollisionEnterListeners (Entity collisionEntity) {
-        //call collision listeners
+    protected void callCollisionEnterListeners(Entity collisionEntity) {
+        // call collision listeners
         for (CollisionListener listener : this.listenerList) {
             listener.onEnter(entity, collisionEntity);
         }
     }
 
-    protected void callCollisionStayListeners (Entity collisionEntity) {
-        //call collision listeners
+    protected void callCollisionStayListeners(Entity collisionEntity) {
+        // call collision listeners
         for (CollisionListener listener : this.listenerList) {
             listener.onStay(entity, collisionEntity);
         }
     }
 
-    protected void callCollisionExitListeners (Entity collisionEntity) {
-        //call collision listeners
+    protected void callCollisionExitListeners(Entity collisionEntity) {
+        // call collision listeners
         for (CollisionListener listener : this.listenerList) {
             listener.onExit(entity, collisionEntity);
         }
@@ -185,25 +188,25 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         return ECSPriority.COLLISION_DETECTION;
     }
 
-    public Entity getEntity () {
+    public Entity getEntity() {
         return this.entity;
     }
 
-    public void addCollisionListener (CollisionListener listener) {
+    public void addCollisionListener(CollisionListener listener) {
         this.listenerList.add(listener);
     }
 
-    public void removeCollisionListener (CollisionListener listener) {
+    public void removeCollisionListener(CollisionListener listener) {
         this.listenerList.remove(listener);
     }
 
     /**
-    * check if entity collides with this entity
-    */
-    public boolean overlaps (CollisionComponent collisionComponent) {
-        //first check hull
+     * check if entity collides with this entity
+     */
+    public boolean overlaps(CollisionComponent collisionComponent) {
+        // first check hull
         if (this.hullShape == null || this.hullShape.overlaps(collisionComponent.getHullShape())) {
-            //check inner shapes
+            // check inner shapes
             for (CShape shape : this.listCollisionShapes()) {
                 for (CShape shape1 : collisionComponent.listCollisionShapes()) {
                     if (shape.overlaps(shape1)) {
@@ -216,7 +219,8 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
         return false;
     }
 
-    public void drawCollisionBoxes (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color baseColor, Color inCollisionColor) {
+    public void drawCollisionBoxes(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color baseColor,
+            Color inCollisionColor) {
         Color color = null;
 
         if (alreadyInCollision) {
@@ -225,12 +229,12 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
             color = baseColor;
         }
 
-        //first, draw hull
+        // first, draw hull
         if (this.hullShape != null) {
             this.hullShape.drawShape(time, camera, shapeRenderer, color);
         }
 
-        //draw inner shapes
+        // draw inner shapes
         for (CShape shape : this.collisionShapes) {
             shape.drawShape(time, camera, shapeRenderer, color);
         }

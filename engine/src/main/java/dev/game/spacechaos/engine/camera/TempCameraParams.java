@@ -15,41 +15,41 @@ public class TempCameraParams {
         this.zoom = zoom;
     }
 
-    public float getX () {
+    public float getX() {
         return this.x;
     }
 
-    public void setX (float x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public float getY () {
+    public float getY() {
         return this.y;
     }
 
-    public void setY (float y) {
+    public void setY(float y) {
         this.y = y;
     }
 
-    public void setPosition (float x, float y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    public void translate (float x, float y) {
+    public void translate(float x, float y) {
         this.x += x;
         this.y += y;
     }
 
-    public float getZoom () {
+    public float getZoom() {
         return this.zoom;
     }
 
-    public void setZoom (float zoom) {
+    public void setZoom(float zoom) {
         this.zoom = zoom;
     }
 
-    public void reset (float x, float y, float zoom) {
+    public void reset(float x, float y, float zoom) {
         this.x = x;
         this.y = y;
         this.zoom = zoom;

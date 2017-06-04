@@ -25,7 +25,7 @@ public class BasicAnimationComponent extends BaseComponent implements IUpdateCom
     protected int rows = 0;
     protected int cols = 0;
 
-    //https://github.com/libgdx/libgdx/wiki/2D-Animation
+    // https://github.com/libgdx/libgdx/wiki/2D-Animation
 
     protected float elapsed = 0;
     protected TextureRegion currentFrame = null;
@@ -42,12 +42,12 @@ public class BasicAnimationComponent extends BaseComponent implements IUpdateCom
         this.rows = rows;
         this.cols = cols;
 
-        //create animation
+        // create animation
         this.animation = AnimationTextureUtils.createAnimationFromTexture(texture, duration / 1000, rows, cols);
     }
 
     @Override
-    public void onInit (BaseGame game, Entity entity) {
+    public void onInit(BaseGame game, Entity entity) {
         super.init(game, entity);
 
         this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
@@ -56,31 +56,34 @@ public class BasicAnimationComponent extends BaseComponent implements IUpdateCom
             throw new IllegalStateException("entity doesnt have an DrawTextureRegionComponent.");
         }
 
-        //set current frame
+        // set current frame
         this.currentFrame = this.animation.getKeyFrame(1);
         this.textureRegionComponent.setTextureRegion(this.currentFrame, true);
     }
 
-    @Override public void update(BaseGame game, GameTime time) {
-        //calculate elapsed time in milliseconds
+    @Override
+    public void update(BaseGame game, GameTime time) {
+        // calculate elapsed time in milliseconds
         this.elapsed += time.getDeltaTime();
 
-        //get current frame of animation
+        // get current frame of animation
         TextureRegion region = animation.getKeyFrame(elapsed, true);
 
         if (this.currentFrame != region) {
             this.textureRegionComponent.setTextureRegion(this.currentFrame, true);
-            //positionComponent.setDimension(region.getRegionWidth(), region.getRegionHeight());
+            // positionComponent.setDimension(region.getRegionWidth(),
+            // region.getRegionHeight());
         }
 
         this.currentFrame = region;
     }
 
-    @Override public ECSPriority getUpdateOrder() {
+    @Override
+    public ECSPriority getUpdateOrder() {
         return ECSPriority.NORMAL;
     }
 
-    public TextureRegion getCurrentFrame () {
+    public TextureRegion getCurrentFrame() {
         return this.currentFrame;
     }
 

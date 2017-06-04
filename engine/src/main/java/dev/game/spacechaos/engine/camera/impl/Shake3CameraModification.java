@@ -25,18 +25,19 @@ public class Shake3CameraModification implements CameraModification {
     @Override
     public void onUpdate(GameTime time, TempCameraParams camera, ModificationFinishedListener listener) {
         if (!isActive) {
-            //mod isnt active, so we dont need to update mod
+            // mod isnt active, so we dont need to update mod
             return;
         }
 
         float delta = time.getDeltaTime() * 1000;
 
-        //http://www.netprogs.com/libgdx-screen-shaking/
+        // http://www.netprogs.com/libgdx-screen-shaking/
 
         // Only shake when required.
-        if(elapsed < duration) {
+        if (elapsed < duration) {
 
-            // Calculate the amount of shake based on how long it has been shaking already
+            // Calculate the amount of shake based on how long it has been
+            // shaking already
             float currentPower = intensity * camera.getZoom() * ((duration - elapsed) / duration);
             float x = (random.nextFloat() - 0.5f) * currentPower;
             float y = (random.nextFloat() - 0.5f) * currentPower;
@@ -54,17 +55,19 @@ public class Shake3CameraModification implements CameraModification {
 
     }
 
-    public boolean isShaking () {
+    public boolean isShaking() {
         return this.isActive;
     }
 
     /**
      * Start the screen shaking with a given power and duration
      *
-     * @param intensity How much intensity should the shaking use.
-     * @param duration Time in milliseconds the screen should shake.
+     * @param intensity
+     *            How much intensity should the shaking use.
+     * @param duration
+     *            Time in milliseconds the screen should shake.
      */
-    public void shake (float intensity, float duration) {
+    public void shake(float intensity, float duration) {
         this.elapsed = 0;
         this.intensity = intensity;
         this.duration = duration;
@@ -73,7 +76,7 @@ public class Shake3CameraModification implements CameraModification {
         this.isActive = true;
     }
 
-    public void startPermantentShake (float intensity) {
+    public void startPermantentShake(float intensity) {
         this.elapsed = 0;
         this.intensity = intensity;
 
@@ -81,7 +84,7 @@ public class Shake3CameraModification implements CameraModification {
         this.isActive = true;
     }
 
-    public void stopPermanentShake () {
+    public void stopPermanentShake() {
         this.permanentShake = false;
     }
 

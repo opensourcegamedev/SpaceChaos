@@ -1,19 +1,21 @@
 package dev.game.spacechaos.game.entities.component.combat;
 
-import dev.game.spacechaos.engine.entity.BaseComponent;
-import dev.game.spacechaos.engine.entity.Entity;
-import dev.game.spacechaos.engine.entity.listener.HPHitListener;
-import dev.game.spacechaos.engine.entity.listener.UpdateHPListener;
-import dev.game.spacechaos.engine.game.BaseGame;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.game.spacechaos.engine.entity.BaseComponent;
+import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.game.entity.listener.HPDeathListener;
+import dev.game.spacechaos.game.entity.listener.HPHitListener;
+import dev.game.spacechaos.game.entity.listener.UpdateHPListener;
+
 /**
- * Adds a health-component to an entity so it could be destroyed.
+ * Adds a health-component to an entity so it can be destroyed.
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @since 1.0.0-PreAlpha
  */
 public class HPComponent extends BaseComponent {
 
@@ -21,17 +23,16 @@ public class HPComponent extends BaseComponent {
     private float maxHP = 100;
     private float percent = 0;
 
-    //HP update listener list
+    // Listener
     private List<UpdateHPListener> updateHPListenerList = new ArrayList<>();
-
-    //HP hit listener list
+    private List<HPDeathListener> hpDeathListenerList = new ArrayList<>();
     private List<HPHitListener> hpHitListenerList = new ArrayList<>();
 
-    public HPComponent (float currentHP, float maxHP) {
+    public HPComponent(float currentHP, float maxHP) {
         setMaxHP(maxHP);
         setCurrentHP(currentHP);
 
-        //update percent
+        // update percent
         this.updatePercent();
     }
 
@@ -40,7 +41,7 @@ public class HPComponent extends BaseComponent {
 
     }
 
-    public float getPercent () {
+    public float getPercent() {
         return this.percent;
     }
 
@@ -48,7 +49,7 @@ public class HPComponent extends BaseComponent {
         this.percent = this.currentHP / this.maxHP;
     }
 
-    public float getMaxHP () {
+    public float getMaxHP() {
         return this.maxHP;
     }
 
@@ -58,11 +59,15 @@ public class HPComponent extends BaseComponent {
         this.updatePercent();
     }
 
-    public float getCurrentHP () {
+    public float getCurrentHP() {
         return this.currentHP;
     }
 
     private void setCurrentHP(float currentHP) {
+        setCurrentHP(currentHP, null);
+    }
+
+    private void setCurrentHP(float currentHP, Entity causingEntity) {
         float oldValue = this.currentHP;
 
         if (currentHP < 0) {
@@ -73,43 +78,58 @@ public class HPComponent extends BaseComponent {
             this.currentHP = currentHP;
         }
 
-        //update percent
         updatePercent();
 
-        //notify update listeners
+        // notify update listeners
         this.notifyUpdateListener(oldValue, this.currentHP, this.maxHP);
 
+        // notify hit listeners
+        if (currentHP < oldValue) {
+            this.notifyHitListener(oldValue, this.currentHP, this.maxHP, causingEntity);
+        }
+
+        // notify death listeners
         if (this.currentHP <= 0) {
-            //character was hit
-            this.notifyHitListener(oldValue, this.currentHP, this.maxHP);
+            this.notifyDeathListener(causingEntity);
         }
     }
 
+    void subHP(float hp, Entity causingEntity) {
+        setCurrentHP(getCurrentHP() - hp, causingEntity);
+    }
+
     void subHP(float hp) {
-        setCurrentHP(getCurrentHP() - hp);
+        subHP(hp, null);
     }
 
     private void notifyUpdateListener(float oldValue, float newValue, float maxValue) {
-        //call all HP update listeners
         for (UpdateHPListener listener : this.updateHPListenerList) {
-            //call listener
             listener.onHPUpdate(oldValue, newValue, maxValue);
         }
     }
 
-    public void addUpdateListener (UpdateHPListener listener) {
+    public void addUpdateListener(UpdateHPListener listener) {
         this.updateHPListenerList.add(listener);
     }
 
-    private void notifyHitListener(float oldValue, float newValue, float maxValue) {
-        //call listeners
+    private void notifyHitListener(float oldValue, float newValue, float maxValue, Entity causingEntity) {
         for (HPHitListener listener : this.hpHitListenerList) {
-            //call listener
-            listener.onHit(oldValue, newValue, maxValue);
+            listener.onHit(oldValue, newValue, maxValue, causingEntity);
         }
     }
 
-    public void addHitListener (HPHitListener listener) {
+    public void addHitListener(HPHitListener listener) {
         this.hpHitListenerList.add(listener);
     }
+
+    private void notifyDeathListener(Entity causingEntity) {
+        for (HPDeathListener listener : this.hpDeathListenerList) {
+            listener.onDeath(causingEntity);
+        }
+    }
+
+    public void addDeathListener(HPDeathListener listener) {
+        this.hpDeathListenerList.add(listener);
+    }
+
 }

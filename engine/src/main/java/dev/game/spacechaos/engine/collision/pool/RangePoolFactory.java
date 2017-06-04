@@ -11,12 +11,12 @@ public class RangePoolFactory {
 
     protected static Pool<Range> rangePool = null;
 
-    public static Pool<Range> createRectanglePool () {
+    public static Pool<Range> createRectanglePool() {
         if (rangePool == null) {
             rangePool = new Pool<Range>() {
 
                 @Override
-                protected Range newObject () {
+                protected Range newObject() {
                     return new Range();
                 }
 
@@ -26,11 +26,11 @@ public class RangePoolFactory {
         return rangePool;
     }
 
-    public static Pool<Range> createNewRectanglePool () {
+    public static Pool<Range> createNewRectanglePool() {
         return new Pool<Range>() {
 
             @Override
-            protected Range newObject () {
+            protected Range newObject() {
                 return new Range();
             }
 

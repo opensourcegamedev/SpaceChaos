@@ -22,7 +22,7 @@ public class OnCollisionPlaySoundComponent extends BaseComponent implements Coll
     protected Sound sound = null;
     protected float soundVolume = 1f;
 
-    public OnCollisionPlaySoundComponent (String soundPath, float volume) {
+    public OnCollisionPlaySoundComponent(String soundPath, float volume) {
         this.soundPath = soundPath;
 
         if (!new File(soundPath).exists()) {
@@ -32,7 +32,7 @@ public class OnCollisionPlaySoundComponent extends BaseComponent implements Coll
         this.soundVolume = volume;
     }
 
-    public OnCollisionPlaySoundComponent (String soundPath) {
+    public OnCollisionPlaySoundComponent(String soundPath) {
         this(soundPath, 0.8f);
     }
 
@@ -46,18 +46,18 @@ public class OnCollisionPlaySoundComponent extends BaseComponent implements Coll
 
         this.collisionComponent.addCollisionListener(this);
 
-        //load sound
+        // load sound
         game.getAssetManager().load(soundPath, Sound.class);
         game.getAssetManager().finishLoadingAsset(soundPath);
 
-        //get sound
+        // get sound
         this.sound = game.getAssetManager().get(soundPath);
     }
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
         if (otherEntity.getComponent(AvoidCollisionSoundComponent.class) != null) {
-            //dont play collision sound
+            // dont play collision sound
             return;
         }
 
@@ -75,7 +75,7 @@ public class OnCollisionPlaySoundComponent extends BaseComponent implements Coll
 
     }
 
-    public void setSoundVolume (float volume) {
+    public void setSoundVolume(float volume) {
         if (volume < 0 || volume > 1) {
             throw new IllegalArgumentException("volume cannot be lesser than 0 or greater than 1.");
         }

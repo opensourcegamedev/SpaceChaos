@@ -12,7 +12,7 @@ public class InputStates {
     }
 
     public static boolean isLeftMouseButtonJustPressed() {
-       return isLeftMouseButtonPressed() && Gdx.input.justTouched();
+        return isLeftMouseButtonPressed() && Gdx.input.justTouched();
     }
 
     public static boolean isRightMouseButtonPressed() {

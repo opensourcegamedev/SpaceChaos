@@ -29,15 +29,15 @@ public class CameraWrapper implements ModificationFinishedListener {
 
     protected OrthographicCamera camera = null;
 
-    protected Map<Class,CameraModification> cameraModificationMap = new ConcurrentHashMap<>();
+    protected Map<Class, CameraModification> cameraModificationMap = new ConcurrentHashMap<>();
     protected List<CameraModification> activeModifications = new ArrayList<>();
 
     protected TempCameraParams tempCameraParams = null;
 
-    //temporary vector to avoid creation of new vector in gameloop
+    // temporary vector to avoid creation of new vector in gameloop
     protected Vector3 tmpScreenVector = new Vector3(0, 0, 0);
 
-    public CameraWrapper (OrthographicCamera camera) {
+    public CameraWrapper(OrthographicCamera camera) {
         this.camera = camera;
 
         this.cameraOffsetX = this.camera.position.x;
@@ -45,15 +45,15 @@ public class CameraWrapper implements ModificationFinishedListener {
 
         this.tempCameraParams = new TempCameraParams(0, 0, 1);
 
-        //this.sync();
+        // this.sync();
 
-        //add some basic modifications
+        // add some basic modifications
         this.registerMod(new Shake1CameraModification(), Shake1CameraModification.class);
         this.registerMod(new Shake2CameraModification(), Shake2CameraModification.class);
         this.registerMod(new Shake3CameraModification(), Shake3CameraModification.class);
     }
 
-    public void translate (float x, float y, float zoom) {
+    public void translate(float x, float y, float zoom) {
         this.x += x;
         this.y += y;
         this.zoom += zoom;
@@ -61,37 +61,37 @@ public class CameraWrapper implements ModificationFinishedListener {
         camera.translate(x, y, zoom);
     }
 
-    public float getX () {
+    public float getX() {
         return this.x;
     }
 
-    public void setX (float x) {
+    public void setX(float x) {
         this.x = x;
 
         this.syncPosToCamera();
     }
 
-    public float getY () {
+    public float getY() {
         return this.y;
     }
 
-    public void setY (float y) {
+    public void setY(float y) {
         this.y = y;
 
         this.syncPosToCamera();
     }
 
-    public float getZoom () {
+    public float getZoom() {
         return this.zoom;
     }
 
-    public void setZoom (float zoom) {
+    public void setZoom(float zoom) {
         this.zoom = zoom;
 
         this.syncPosToCamera();
     }
 
-    public void setPosition (float x, float y, float zoom) {
+    public void setPosition(float x, float y, float zoom) {
         this.x = x;
         this.y = y;
         this.zoom = zoom;
@@ -99,14 +99,14 @@ public class CameraWrapper implements ModificationFinishedListener {
         this.syncPosToCamera();
     }
 
-    public void setPosition (float x, float y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
 
         this.syncPosToCamera();
     }
 
-    protected void sync () {
+    protected void sync() {
         this.x = camera.position.x;
         this.y = camera.position.y;
         this.zoom = camera.zoom;
@@ -115,33 +115,34 @@ public class CameraWrapper implements ModificationFinishedListener {
         this.cameraOffsetY = 0;
     }
 
-    protected void syncPosToCamera () {
+    protected void syncPosToCamera() {
         this.camera.position.x = x + cameraOffsetX;
         this.camera.position.y = y + cameraOffsetY;
         this.camera.zoom = zoom;
 
-        //System.out.println("offsetX: " + this.cameraOffsetX + ", offsetY: " + this.cameraOffsetY);
+        // System.out.println("offsetX: " + this.cameraOffsetX + ", offsetY: " +
+        // this.cameraOffsetY);
     }
 
-    public Matrix4 getCombined () {
+    public Matrix4 getCombined() {
         return this.camera.combined;
     }
 
-    public Frustum getFrustum () {
+    public Frustum getFrustum() {
         return this.camera.frustum;
     }
 
-    public Vector3 getMousePosition () {
+    public Vector3 getMousePosition() {
         this.tmpScreenVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
         return camera.unproject(this.tmpScreenVector);
     }
 
-    public void update (GameTime time) {
-        //reset temporary camera position
+    public void update(GameTime time) {
+        // reset temporary camera position
         this.tempCameraParams.reset(getX(), getY(), getZoom());
 
-        //update modifications first
+        // update modifications first
         for (CameraModification mod : this.activeModifications) {
             mod.onUpdate(time, this.tempCameraParams, this);
         }
@@ -154,20 +155,21 @@ public class CameraWrapper implements ModificationFinishedListener {
     }
 
     @Deprecated
-    public OrthographicCamera getOriginalCamera () {
+    public OrthographicCamera getOriginalCamera() {
         return this.camera;
     }
 
-    @Override public <T extends CameraModification> void onModificationFinished(T mod, Class<T> cls) {
+    @Override
+    public <T extends CameraModification> void onModificationFinished(T mod, Class<T> cls) {
         if (mod == null) {
             throw new NullPointerException("mod cannot be null.");
         }
 
         this.deactivateMod(cls);
-        //this.activeModifications.remove(mod);
+        // this.activeModifications.remove(mod);
     }
 
-    public <T extends CameraModification> void registerMod (T mod, Class<T> cls) {
+    public <T extends CameraModification> void registerMod(T mod, Class<T> cls) {
         if (mod == null) {
             throw new NullPointerException("mod cannot be null.");
         }
@@ -179,7 +181,7 @@ public class CameraWrapper implements ModificationFinishedListener {
         this.cameraModificationMap.put(cls, mod);
     }
 
-    public <T extends CameraModification> void removeMod (Class<T> cls) {
+    public <T extends CameraModification> void removeMod(Class<T> cls) {
         if (cls == null) {
             throw new NullPointerException("class cannot be null.");
         }
@@ -193,7 +195,7 @@ public class CameraWrapper implements ModificationFinishedListener {
         this.cameraModificationMap.remove(cls);
     }
 
-    public <T extends CameraModification> T getMod (Class<T> cls) {
+    public <T extends CameraModification> T getMod(Class<T> cls) {
         if (cls == null) {
             throw new NullPointerException("class cannot be null.");
         }
@@ -207,7 +209,7 @@ public class CameraWrapper implements ModificationFinishedListener {
         return cls.cast(mod);
     }
 
-    public <T extends CameraModification> void activateMod (Class<T> cls) {
+    public <T extends CameraModification> void activateMod(Class<T> cls) {
         if (cls == null) {
             throw new NullPointerException("class cannot be null.");
         }
@@ -223,7 +225,7 @@ public class CameraWrapper implements ModificationFinishedListener {
         }
     }
 
-    public <T extends CameraModification> void deactivateMod (Class<T> cls) {
+    public <T extends CameraModification> void deactivateMod(Class<T> cls) {
         if (cls == null) {
             throw new NullPointerException("class cannot be null.");
         }
@@ -239,7 +241,7 @@ public class CameraWrapper implements ModificationFinishedListener {
         }
     }
 
-    public int countActiveMods () {
+    public int countActiveMods() {
         return this.activeModifications.size();
     }
 

@@ -12,40 +12,40 @@ public class Line {
     protected Vector2 base = Vector2Pool.create();
     protected Vector2 direction = Vector2Pool.create();
 
-    public Line (float baseX, float baseY, float dirX, float dirY) {
+    public Line(float baseX, float baseY, float dirX, float dirY) {
         this.base.set(baseX, baseY);
         this.direction.set(dirX, dirY);
     }
 
-    public Line () {
+    public Line() {
         //
     }
 
-    public Vector2 getBase () {
+    public Vector2 getBase() {
         return this.base;
     }
 
-    public void setBase (float x, float y) {
+    public void setBase(float x, float y) {
         this.base.set(x, y);
     }
 
-    public void setBase (Vector2 v) {
+    public void setBase(Vector2 v) {
         this.base.set(v.x, v.y);
     }
 
-    public Vector2 getDirection () {
+    public Vector2 getDirection() {
         return this.direction;
     }
 
-    public void setDirection (float x, float y) {
+    public void setDirection(float x, float y) {
         this.direction.set(x, y);
     }
 
-    public void setDirection (Vector2 v) {
+    public void setDirection(Vector2 v) {
         this.direction.set(v.x, v.y);
     }
 
-    public void dispose () {
+    public void dispose() {
         if (base == null || direction == null) {
             return;
         }
@@ -57,7 +57,7 @@ public class Line {
     }
 
     @Override
-    public boolean equals (Object obj) {
+    public boolean equals(Object obj) {
         if (obj instanceof Line) {
             Line b = (Line) obj;
 
@@ -68,7 +68,7 @@ public class Line {
     }
 
     @Override
-    public void finalize () {
+    public void finalize() {
         dispose();
     }
 

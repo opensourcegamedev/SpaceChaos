@@ -13,44 +13,44 @@ public class CooldownTimer extends GameTimer {
     protected long interval = 0;
     protected long endTime = 0;
 
-    //list with listeners
+    // list with listeners
     protected List<CooldownTimerFinishedListener> timerFinishedListenerList = new ArrayList<>();
 
     protected boolean hasFinished = false;
 
-    public CooldownTimer (long interval) {
+    public CooldownTimer(long interval) {
         this.interval = interval;
     }
 
     @Override
-    protected void afterStart (GameTime time) {
-        //calculate end time
+    protected void afterStart(GameTime time) {
+        // calculate end time
         endTime = startTime + interval;
     }
 
     @Override
-    protected void afterStop (GameTime time) {
+    protected void afterStop(GameTime time) {
         //
     }
 
     @Override
-    protected void afterUpdate (GameTime time) {
+    protected void afterUpdate(GameTime time) {
         if (time.getTime() > this.endTime) {
-            //stop timer
+            // stop timer
             this.stop(time);
 
             this.hasFinished = true;
 
-            //call listeners
+            // call listeners
             onEndTimeReached(time);
         }
     }
 
-    public long getEndTime () {
+    public long getEndTime() {
         return this.startTime + interval;
     }
 
-    public long getRemainingTime () {
+    public long getRemainingTime() {
         long remainingTime = this.interval - this.elapsed;
 
         if (remainingTime < 0) {
@@ -60,33 +60,33 @@ public class CooldownTimer extends GameTimer {
         return remainingTime;
     }
 
-    public long getInterval () {
+    public long getInterval() {
         return this.interval;
     }
 
-    public void setInterval (long interval) {
+    public void setInterval(long interval) {
         this.interval = interval;
     }
 
-    public void reset (GameTime time) {
+    public void reset(GameTime time) {
         this.startTime = time.getTime();
         this.elapsed = 0;
         this.hasFinished = false;
     }
 
-    public void reset () {
+    public void reset() {
         this.reset(GameTime.getInstance());
     }
 
-    protected void onEndTimeReached (GameTime time) {
+    protected void onEndTimeReached(GameTime time) {
         this.timerFinishedListenerList.stream().forEach(listener -> {
-            //call listener
+            // call listener
             listener.onFinished(this.startTime, this.interval, time.getTime());
         });
     }
 
-    public void setFinishedListener (CooldownTimerFinishedListener listener) {
-        //clear list
+    public void setFinishedListener(CooldownTimerFinishedListener listener) {
+        // clear list
         this.timerFinishedListenerList.clear();
 
         if (listener != null) {
@@ -94,8 +94,8 @@ public class CooldownTimer extends GameTimer {
         }
     }
 
-    public void removeAllFinishedListeners () {
-        //clear listener list
+    public void removeAllFinishedListeners() {
+        // clear listener list
         this.timerFinishedListenerList.clear();
     }
 

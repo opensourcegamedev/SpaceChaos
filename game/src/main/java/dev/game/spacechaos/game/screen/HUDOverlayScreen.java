@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
@@ -14,13 +15,17 @@ import dev.game.spacechaos.engine.hud.HUD;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
+import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 
 /**
- * The screen is overlaying the gamescreen. It shows the amount of torpedos you got left, the time you already survived and a health-bar.
+ * The screen is on top of the {@link GameScreen}. It shows all the relevant
+ * information for the player, e.g. the amount of torpedos you got left, the
+ * time you already survived and the health-bar.
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @since 1.0.0-PreAlpha
  */
 public class HUDOverlayScreen extends BaseScreen {
 
@@ -36,9 +41,12 @@ public class HUDOverlayScreen extends BaseScreen {
 
     private String timeText = "";
     private String torpedoAmountText = "";
+    private String scoreText = "";
     private long seconds = 0;
 
     private HPComponent hpComponent = null;
+
+    private ScoreComponent scoreComponent = null;
 
     private HUD hud = null;
     private ShapeRenderer shapeRenderer = null;
@@ -47,16 +55,17 @@ public class HUDOverlayScreen extends BaseScreen {
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
-        //generate fonts
-        this.font1 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
+        // generate fonts
+        this.font1 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE,
+                3);
         this.font2 = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.RED, Color.WHITE, 3);
 
-        //load & get assets
+        // load & get assets
         assetManager.load(TORPEDO_IMAGE_PATH, Texture.class);
         assetManager.finishLoadingAsset(TORPEDO_IMAGE_PATH);
         this.torpedoTexture = assetManager.get(TORPEDO_IMAGE_PATH, Texture.class);
 
-        //create new Head-Up-Display
+        // create new Head-Up-Display
         this.hud = new HUD();
         this.filledBar = new FilledBar(this.font1);
         this.filledBar.setPosition(game.getViewportWidth() - 400, game.getViewportHeight() - 85);
@@ -66,60 +75,51 @@ public class HUDOverlayScreen extends BaseScreen {
         this.shapeRenderer = new ShapeRenderer();
     }
 
-    public void onResume () {
-        //set start time
+    public void onResume() {
+        // set start time
         this.startTime = System.currentTimeMillis();
 
-        //get player entity and health component
+        // get player entity and health component
         Entity playerEntity = game.getSharedData().get("playerEntity", Entity.class);
         this.hpComponent = playerEntity.getComponent(HPComponent.class);
+        this.scoreComponent = playerEntity.getComponent(ScoreComponent.class);
 
-        //set values and add listener to auto update values on change
+        // set values and add listener to auto update values on change
         this.filledBar.setMaxValue(this.hpComponent.getMaxHP());
         this.filledBar.setValue(this.hpComponent.getCurrentHP());
         this.hpComponent.addUpdateListener((oldValue, newValue, maxValue) -> {
-            //update values on filled bar (HUD)
+            // update values on filled bar (HUD)
             filledBar.setMaxValue(hpComponent.getMaxHP());
             filledBar.setValue(hpComponent.getCurrentHP());
         });
 
-        //set HP bar colors
+        // set HP bar colors
         this.filledBar.setBackgroundColor(Color.RED);
         this.filledBar.setForegroundColor(Color.GREEN);
     }
 
-    public void onPause () {
+    public void onPause() {
         //
     }
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
+        this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedosLeft());
 
-        this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedoesLeft());
-
-        //calculate elapsed time
+        // calculate elapsed time
         this.elapsedTime = System.currentTimeMillis() - this.startTime;
-
-        //get seconds
         this.seconds = this.elapsedTime / 1000;
-
-        //get minutes
         long minutes = this.seconds / 60;
-
-        //correct seconds
         this.seconds -= minutes * 60;
 
-        //generate text
+        // generate onscreen time text
         this.timeText = "";
-
         if (minutes < 10) {
             this.timeText = " " + minutes;
         } else {
             this.timeText = "" + minutes;
         }
-
         this.timeText = this.timeText + ":";
-
         if (this.seconds < 10) {
             this.timeText = this.timeText + "0" + this.seconds;
         } else {
@@ -128,32 +128,39 @@ public class HUDOverlayScreen extends BaseScreen {
 
         game.getSharedData().put("lastElapsedTimeText", this.timeText);
 
-        //update HUD
+        this.scoreText = "SCORE: " + String.valueOf(scoreComponent.getScore() + (this.elapsedTime / 100));
+        game.getSharedData().put("score", this.scoreText.substring(7));
+
+        // update HUD
         this.hud.update(game, time);
     }
 
     @Override
     public void draw(GameTime time, SpriteBatch batch) {
-        //set UI camera
+        // set UI camera
         batch.setProjectionMatrix(game.getUICamera().combined);
 
-        //draw time text
+        // draw time text
         if (seconds >= 0 && seconds <= 3 && this.elapsedTime > 5000) {
             this.font2.draw(batch, this.timeText, game.getViewportWidth() - 220, game.getViewportHeight() - 50);
         } else {
             this.font1.draw(batch, this.timeText, game.getViewportWidth() - 220, game.getViewportHeight() - 50);
         }
 
-        //draw ammo hud
+        // draw ammo hud
         this.font2.draw(batch, this.torpedoAmountText, game.getViewportWidth() - 220, 70);
         this.font1.draw(batch, this.torpedoAmountText, game.getViewportWidth() - 220, 70);
 
-        //draw first (SpriteBatch) layer of HUD
+        // draw score
+        font2.draw(batch, scoreText, 30, game.getViewportHeight() - 50);
+        font1.draw(batch, scoreText, 30, game.getViewportHeight() - 50);
+
+        // draw first (SpriteBatch) layer of HUD
         this.hud.drawLayer0(time, batch);
         batch.flush();
         batch.end();
 
-        //draw second layer (ShapeRenderer) of HUD
+        // draw second layer (ShapeRenderer) of HUD
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setProjectionMatrix(game.getUICamera().combined);
         this.hud.drawLayer1(time, this.shapeRenderer);
@@ -165,12 +172,12 @@ public class HUDOverlayScreen extends BaseScreen {
 
         this.shapeRenderer.end();
 
-        //draw last (SpriteBatch) layer of HUD
+        // draw last (SpriteBatch) layer of HUD
         batch.begin();
         batch.setProjectionMatrix(game.getUICamera().combined);
         this.hud.drawLayer2(time, batch);
 
-        //draw torpedo, if available
+        // draw torpedo, if available
         boolean torpedoAvailable = game.getSharedData().get("can_shoot_torpedo", Boolean.class);
 
         if (torpedoAvailable) {

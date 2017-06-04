@@ -17,7 +17,7 @@ public class SmoothFollowCameraComponent extends BaseComponent implements IUpdat
     protected PositionComponent entityPosition = null;
 
     @Override
-    public void onInit (BaseGame game, Entity entity) {
+    public void onInit(BaseGame game, Entity entity) {
         this.entityPosition = entity.getComponent(PositionComponent.class);
 
         if (this.entityPosition == null) {
@@ -25,47 +25,52 @@ public class SmoothFollowCameraComponent extends BaseComponent implements IUpdat
         }
     }
 
-    @Override public void update(BaseGame game, GameTime time) {
+    @Override
+    public void update(BaseGame game, GameTime time) {
         float dt = time.getDeltaTime();
 
-        //get screen resolution
+        // get screen resolution
         float screenWidth = game.getViewportWidth();
         float screenHeight = game.getViewportHeight();
 
-        //calculate camera middle
+        // calculate camera middle
         float currentCameraMiddleX = game.getCamera().getX() + (screenWidth / 2);
         float currentCameraMiddleY = game.getCamera().getY() + (screenHeight / 2);
 
-        float targetX = entityPosition.getX();//entityPosition.getMiddleX();
-        float targetY = entityPosition.getY();//entityPosition.getMiddleY();
+        float targetX = entityPosition.getX();// entityPosition.getMiddleX();
+        float targetY = entityPosition.getY();// entityPosition.getMiddleY();
 
-        //System.out.println("currentCameraMiddleX: " + currentCameraMiddleX + ", targetX: " + targetX);
-        //System.out.println("currentCameraMiddleY: " + currentCameraMiddleY + ", targetY: " + targetY);
+        // System.out.println("currentCameraMiddleX: " + currentCameraMiddleX +
+        // ", targetX: " + targetX);
+        // System.out.println("currentCameraMiddleY: " + currentCameraMiddleY +
+        // ", targetY: " + targetY);
 
-        //move camera
+        // move camera
         float deltaX = targetX - currentCameraMiddleX;
         float deltaY = targetY - currentCameraMiddleY;
 
-        //float newCameraX = targetX;
-        //float newCameraY = targetY;
+        // float newCameraX = targetX;
+        // float newCameraY = targetY;
 
         float newCameraX = currentCameraMiddleX + (deltaX * lerp);
         float newCameraY = currentCameraMiddleY + (deltaY * lerp);
 
-        //game.getCamera().setPosition(newCameraX, newCameraY);
-        game.getCamera().setPosition(newCameraX - (game.getViewportWidth() / 2), newCameraY - (game.getViewportHeight() / 2));
+        // game.getCamera().setPosition(newCameraX, newCameraY);
+        game.getCamera().setPosition(newCameraX - (game.getViewportWidth() / 2),
+                newCameraY - (game.getViewportHeight() / 2));
     }
 
-    @Override public ECSPriority getUpdateOrder() {
-        //camera should be updated after all entities
+    @Override
+    public ECSPriority getUpdateOrder() {
+        // camera should be updated after all entities
         return ECSPriority.VERY_LOW;
     }
 
-    public float getLerp () {
+    public float getLerp() {
         return this.lerp;
     }
 
-    public void setLerp (float lerp) {
+    public void setLerp(float lerp) {
         if (lerp < 0) {
             throw new IllegalStateException("lerp cannot be lesser than 0.");
         }
