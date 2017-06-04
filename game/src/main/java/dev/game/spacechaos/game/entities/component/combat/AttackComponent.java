@@ -49,7 +49,7 @@ public class AttackComponent extends BaseComponent implements CollisionListener 
             return;
         }
 
-        hpComponent.subHP(this.reduceHP, entity);
+        hpComponent.subHP(this.reduceHP, ownerEntity);
     }
 
     @Override
