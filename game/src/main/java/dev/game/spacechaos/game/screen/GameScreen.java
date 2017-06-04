@@ -2,7 +2,6 @@ package dev.game.spacechaos.game.screen;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.impl.DefaultCollisionManager;
 import dev.game.spacechaos.engine.entity.Entity;
@@ -51,11 +49,11 @@ public class GameScreen extends BaseScreen {
     private static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
     private static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
     private static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
-    private static final String[] ASTEROID_IMAGE_PATHS = { "./data/images/entities/asteroids/1.png",
+    private static final String[] ASTEROID_IMAGE_PATHS = {"./data/images/entities/asteroids/1.png",
             "./data/images/entities/asteroids/2.png", "./data/images/entities/asteroids/3.png",
             "./data/images/entities/asteroids/4.png", "./data/images/entities/asteroids/5.png",
             "./data/images/entities/asteroids/6.png", "./data/images/entities/asteroids/7.png",
-            "./data/images/entities/asteroids/8.png" };
+            "./data/images/entities/asteroids/8.png"};
     private static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
     private static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
     private static final String FIRE_SHOOT_SOUND = "./data/sound/spaceshipshooting/Longshot.ogg";
@@ -153,7 +151,7 @@ public class GameScreen extends BaseScreen {
         this.torpedoSound = assetManager.get(TORPEDO_SHOOT_SOUND);
 
         // create skybox
-        this.skyBox = new SkyBox(new Texture[] { /* skyBox2, */ skyBox1 }, game.getViewportWidth(),
+        this.skyBox = new SkyBox(new Texture[]{ /* skyBox2, */ skyBox1}, game.getViewportWidth(),
                 game.getViewportHeight());
 
         game.getSharedData().put("can_shoot_torpedo", true);
