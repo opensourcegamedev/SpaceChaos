@@ -10,13 +10,13 @@ import dev.game.spacechaos.engine.entity.Entity;
 @FunctionalInterface
 public interface HPDeathListener {
 
-	/**
-	 * Invoked when an entity dies.
-	 * 
-	 * @param causingEntity
-	 *            The entity that caused the death. Will be null if there is no
-	 *            other entity responsible.
-	 */
-	public void onDeath(Entity causingEntity);
+    /**
+     * Invoked when an entity dies.
+     * 
+     * @param causingEntity
+     *            The entity that caused the death. Will be null if there is no
+     *            other entity responsible.
+     */
+    public void onDeath(Entity causingEntity);
 
 }

@@ -9,34 +9,34 @@ import dev.game.spacechaos.engine.entity.Entity;
  */
 public interface CollisionListener {
 
-	/**
-	 * Invoked when an entity enters the collision zone.
-	 *
-	 * @param entity
-	 *            The colliding entity.
-	 * @param otherEntity
-	 *            The other entity.
-	 */
-	public void onEnter(Entity entity, Entity otherEntity);
+    /**
+     * Invoked when an entity enters the collision zone.
+     *
+     * @param entity
+     *            The colliding entity.
+     * @param otherEntity
+     *            The other entity.
+     */
+    public void onEnter(Entity entity, Entity otherEntity);
 
-	/**
-	 * Invoked when an entity enters the collision zone.
-	 *
-	 * @param entity
-	 *            The colliding entity.
-	 * @param otherEntity
-	 *            The other entity.
-	 */
-	public void onStay(Entity entity, Entity otherEntity);
+    /**
+     * Invoked when an entity enters the collision zone.
+     *
+     * @param entity
+     *            The colliding entity.
+     * @param otherEntity
+     *            The other entity.
+     */
+    public void onStay(Entity entity, Entity otherEntity);
 
-	/**
-	 * Invoked when an entity enters the collision zone.
-	 *
-	 * @param entity
-	 *            The colliding entity.
-	 * @param otherEntity
-	 *            The other entity.
-	 */
-	public void onExit(Entity entity, Entity otherEntity);
+    /**
+     * Invoked when an entity enters the collision zone.
+     *
+     * @param entity
+     *            The colliding entity.
+     * @param otherEntity
+     *            The other entity.
+     */
+    public void onExit(Entity entity, Entity otherEntity);
 
 }

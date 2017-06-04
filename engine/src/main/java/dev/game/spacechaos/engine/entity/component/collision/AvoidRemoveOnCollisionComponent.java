@@ -11,7 +11,7 @@ public class AvoidRemoveOnCollisionComponent extends BaseComponent {
 
     protected Entity ownerEntity = null;
 
-    public AvoidRemoveOnCollisionComponent (Entity ownerEntity) {
+    public AvoidRemoveOnCollisionComponent(Entity ownerEntity) {
         this.ownerEntity = ownerEntity;
     }
 
@@ -20,7 +20,7 @@ public class AvoidRemoveOnCollisionComponent extends BaseComponent {
         //
     }
 
-    public Entity getOwnerEntity () {
+    public Entity getOwnerEntity() {
         return this.ownerEntity;
     }
 

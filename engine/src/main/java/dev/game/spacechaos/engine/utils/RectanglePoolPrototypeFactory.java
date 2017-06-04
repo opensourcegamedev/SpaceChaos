@@ -10,12 +10,12 @@ public class RectanglePoolPrototypeFactory {
 
     protected static Pool<Rectangle> rectPool = null;
 
-    public static Pool<Rectangle> createRectanglePool () {
+    public static Pool<Rectangle> createRectanglePool() {
         if (rectPool == null) {
             rectPool = new Pool<Rectangle>() {
 
                 @Override
-                protected Rectangle newObject () {
+                protected Rectangle newObject() {
                     return new Rectangle();
                 }
 
@@ -25,11 +25,11 @@ public class RectanglePoolPrototypeFactory {
         return rectPool;
     }
 
-    public static Pool<Rectangle> createNewRectanglePool () {
+    public static Pool<Rectangle> createNewRectanglePool() {
         return new Pool<Rectangle>() {
 
             @Override
-            protected Rectangle newObject () {
+            protected Rectangle newObject() {
                 return new Rectangle();
             }
 

@@ -28,83 +28,85 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
     protected Animation<TextureRegion> currentAnimation = null;
     protected float sumDuration = 1f;
 
-    //map with all cached animations of entity
-    protected Map<String,Animation<TextureRegion>> animationMap = new ConcurrentHashMap<>();
+    // map with all cached animations of entity
+    protected Map<String, Animation<TextureRegion>> animationMap = new ConcurrentHashMap<>();
 
     protected float elapsed = 0;
     protected DrawTextureRegionComponent textureRegionComponent = null;
 
-    public AtlasAnimationComponent (String atlasPath, String startAnimationName, float sumDuration) {
+    public AtlasAnimationComponent(String atlasPath, String startAnimationName, float sumDuration) {
         this.textureAtlasPath = atlasPath;
         this.currentAnimationName = startAnimationName;
         this.sumDuration = sumDuration;
     }
 
     @Override
-    public void onInit (BaseGame game, Entity entity) {
+    public void onInit(BaseGame game, Entity entity) {
         super.init(game, entity);
 
-        //get required components
+        // get required components
         this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
 
         if (textureRegionComponent == null) {
-            throw new IllegalStateException("You have to set an TextureRegionComponent to entity to use AtlasAnimationComponent.");
+            throw new IllegalStateException(
+                    "You have to set an TextureRegionComponent to entity to use AtlasAnimationComponent.");
         }
 
-        //load texture atlas
+        // load texture atlas
         game.getAssetManager().load(this.textureAtlasPath, TextureAtlas.class);
         game.getAssetManager().finishLoadingAsset(this.textureAtlasPath);
         this.atlas = game.getAssetManager().get(this.textureAtlasPath, TextureAtlas.class);
 
-        Map<String,Integer> map = null;
+        Map<String, Integer> map = null;
 
         try {
-            //parse all available animations
+            // parse all available animations
             map = AtlasUtils.getAvailableAnimations(this.textureAtlasPath);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Couldnt parse texture altas: " + this.textureAtlasPath + ", exception: " + e.getLocalizedMessage());
+            throw new RuntimeException("Couldnt parse texture altas: " + this.textureAtlasPath + ", exception: "
+                    + e.getLocalizedMessage());
         }
 
-        //create all animations in cache
+        // create all animations in cache
         this.createCachedAnimations(map);
 
-        //little quick & dirty fix
+        // little quick & dirty fix
         String animationName = this.currentAnimationName;
         this.currentAnimationName = "";
 
-        //set first animation
+        // set first animation
         this.setCurrentAnimationName(animationName);
 
-        //update texture region component
+        // update texture region component
         updateTextureRegionComponent();
     }
 
-    protected void createCachedAnimations (Map<String,Integer> map) {
+    protected void createCachedAnimations(Map<String, Integer> map) {
         int i = 0;
 
-        for (Map.Entry<String,Integer> entry : map.entrySet()) {
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
             String animationName = entry.getKey();
             int frameCounter = entry.getValue();
 
-            //calculate duration per frame
+            // calculate duration per frame
             float durationPerFrame = this.sumDuration / frameCounter;
 
-            //get regions
+            // get regions
             Array<TextureAtlas.AtlasRegion> regions = this.atlas.findRegions(animationName);
 
-            //create animation
+            // create animation
             Animation<TextureRegion> anim = new Animation<>(durationPerFrame, regions, Animation.PlayMode.LOOP);
 
-            //add animation to map
+            // add animation to map
             this.animationMap.put(animationName, anim);
 
             i++;
         }
     }
 
-    public Animation<TextureRegion> getAnimationByName (String animationName) {
-        //get animation
+    public Animation<TextureRegion> getAnimationByName(String animationName) {
+        // get animation
         Animation<TextureRegion> animation = this.animationMap.get(animationName);
 
         if (animation == null) {
@@ -114,20 +116,20 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
         return animation;
     }
 
-    public String getTextureAtlasPath () {
+    public String getTextureAtlasPath() {
         return this.textureAtlasPath;
     }
 
-    public TextureAtlas getTextureAtlas () {
+    public TextureAtlas getTextureAtlas() {
         return this.atlas;
     }
 
-    public String getCurrentAnimationName () {
+    public String getCurrentAnimationName() {
         return this.currentAnimationName;
     }
 
-    public void setCurrentAnimationName (String animationName) {
-        //check if animation name was changed
+    public void setCurrentAnimationName(String animationName) {
+        // check if animation name was changed
         if (this.currentAnimationName.equals(animationName)) {
             return;
         }
@@ -135,44 +137,46 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
         String oldAnimationName = this.currentAnimationName;
         this.currentAnimationName = animationName;
 
-        //get animation
+        // get animation
         this.currentAnimation = this.getAnimationByName(animationName);
 
-        //reset elapsed time
+        // reset elapsed time
         this.elapsed = 0;
 
         this.onAnimationStateChanged(oldAnimationName, animationName);
     }
 
-    @Override public void update(BaseGame game, GameTime time) {
-        //calculate elapsed time
+    @Override
+    public void update(BaseGame game, GameTime time) {
+        // calculate elapsed time
         this.elapsed += time.getDeltaTime();
 
         if (this.currentAnimation == null) {
             throw new IllegalStateException("current animation is null.");
         }
 
-        //update texture region component
+        // update texture region component
         updateTextureRegionComponent();
     }
 
-    protected void updateTextureRegionComponent () {
+    protected void updateTextureRegionComponent() {
         TextureRegion currentTextureRegion = this.currentAnimation.getKeyFrame(this.elapsed);
 
         if (currentTextureRegion == null) {
             throw new NullPointerException("current texture region is null.");
         }
 
-        //set current frame
+        // set current frame
         this.textureRegionComponent.setTextureRegion(currentTextureRegion, true);
     }
 
-    @Override public ECSPriority getUpdateOrder() {
+    @Override
+    public ECSPriority getUpdateOrder() {
         return ECSPriority.VERY_LOW;
     }
 
-    protected void onAnimationStateChanged (String oldAnimationName, String newAnimationName) {
-        //TODO: call listeners
+    protected void onAnimationStateChanged(String oldAnimationName, String newAnimationName) {
+        // TODO: call listeners
     }
 
 }

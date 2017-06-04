@@ -25,16 +25,16 @@ public class Shake2CameraModification implements CameraModification {
     @Override
     public void onUpdate(GameTime time, TempCameraParams camera, ModificationFinishedListener listener) {
         if (!isActive) {
-            //mod isn't active, so we don't need to update mod
+            // mod isn't active, so we don't need to update mod
             return;
         }
 
         float delta = time.getDeltaTime() * 1000;
 
-        //tutorial: http://www.netprogs.com/libgdx-screen-shaking/
+        // tutorial: http://www.netprogs.com/libgdx-screen-shaking/
 
         // Only shake when required.
-        if(elapsed < duration || permanentShake) {
+        if (elapsed < duration || permanentShake) {
 
             // Calculate the shake based on the remaining radius.
             radius *= 0.9f; // diminish radius each frame
@@ -56,17 +56,20 @@ public class Shake2CameraModification implements CameraModification {
 
     }
 
-    public boolean isShaking () {
+    public boolean isShaking() {
         return this.isActive;
     }
 
     /**
      * Start the screen shaking with a given power and duration
      *
-     * @param radius The starting radius for the shake. The larger the radius, the large the shaking effect.
-     * @param duration Time in milliseconds the screen should shake.
+     * @param radius
+     *            The starting radius for the shake. The larger the radius, the
+     *            large the shaking effect.
+     * @param duration
+     *            Time in milliseconds the screen should shake.
      */
-    public void shake (float radius, float duration) {
+    public void shake(float radius, float duration) {
         this.elapsed = 0;
         this.radius = radius;
         this.duration = duration;
@@ -75,7 +78,7 @@ public class Shake2CameraModification implements CameraModification {
         this.isActive = true;
     }
 
-    public void startPermantentShake (float radius) {
+    public void startPermantentShake(float radius) {
         this.elapsed = 0;
         this.radius = radius;
         this.randomAngle = random.nextFloat() % 360f;
@@ -84,7 +87,7 @@ public class Shake2CameraModification implements CameraModification {
         this.isActive = true;
     }
 
-    public void stopPermanentShake () {
+    public void stopPermanentShake() {
         this.permanentShake = false;
     }
 

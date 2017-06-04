@@ -12,27 +12,27 @@ public class Segment {
     protected Vector2 point1 = null;
     protected Vector2 point2 = null;
 
-    public Segment (Vector2 point1, Vector2 point2) {
+    public Segment(Vector2 point1, Vector2 point2) {
         this.point1 = point1;
         this.point2 = point2;
     }
 
-    public Vector2 getPoint1 () {
+    public Vector2 getPoint1() {
         return this.point1;
     }
 
-    public Vector2 getPoint2 () {
+    public Vector2 getPoint2() {
         return this.point2;
     }
 
-    public Range projectSegment (Vector2 onto) {
-        //create new range or use an recycled range
+    public Range projectSegment(Vector2 onto) {
+        // create new range or use an recycled range
         Range range = RangePool.create();
 
-        //normailize vector
+        // normailize vector
         onto.nor();
 
-        //calculate min and max value with dot product
+        // calculate min and max value with dot product
         float min = onto.dot(point1);
         float max = onto.dot(point2);
         range.set(min, max);
@@ -40,8 +40,8 @@ public class Segment {
         return range;
     }
 
-    /*public boolean overlaps (Segment b) {
-        //
-    }*/
+    /*
+     * public boolean overlaps (Segment b) { // }
+     */
 
 }

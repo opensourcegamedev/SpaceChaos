@@ -16,17 +16,17 @@ import dev.game.spacechaos.engine.time.GameTime;
  */
 public class SimpleFollowAIMovementComponent extends BaseComponent implements IUpdateComponent {
 
-    //required components
+    // required components
     protected PositionComponent positionComponent = null;
     protected MoveComponent moveComponent = null;
 
-    //target entity to follow
+    // target entity to follow
     protected Entity targetEntity = null;
     protected PositionComponent targetPosition = null;
 
     protected float minLength = 1;
 
-    //move direction
+    // move direction
     private Vector2 moveDir = new Vector2(0, 0);
 
     public SimpleFollowAIMovementComponent(Entity targetEntity) {
@@ -37,15 +37,16 @@ public class SimpleFollowAIMovementComponent extends BaseComponent implements IU
         this.targetEntity = targetEntity;
         this.targetPosition = targetEntity.getComponent(PositionComponent.class);
 
-        //check if required component exists
+        // check if required component exists
         if (this.targetPosition == null) {
-            throw new RequiredComponentNotFoundException("PositionComponent is required on target entity, but cannot be found.");
+            throw new RequiredComponentNotFoundException(
+                    "PositionComponent is required on target entity, but cannot be found.");
         }
     }
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        //get required components
+        // get required components
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.moveComponent = entity.getComponent(MoveComponent.class);
 
@@ -60,15 +61,16 @@ public class SimpleFollowAIMovementComponent extends BaseComponent implements IU
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //calculate target direction and move in this direction
-        moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(), targetPosition.getMiddleY() - positionComponent.getMiddleY());
+        // calculate target direction and move in this direction
+        moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(),
+                targetPosition.getMiddleY() - positionComponent.getMiddleY());
 
-        //get length
+        // get length
         float length = moveDir.len();
 
-        //avoid jerky
+        // avoid jerky
         if (length < this.minLength) {
-            //dont move entity
+            // dont move entity
             moveComponent.setMoveDirection(0, 0);
             moveComponent.setMoving(false);
 
@@ -77,7 +79,7 @@ public class SimpleFollowAIMovementComponent extends BaseComponent implements IU
 
         moveDir.nor();
 
-        //set move direction
+        // set move direction
         moveComponent.setMoveDirection(moveDir.x, moveDir.y);
     }
 

@@ -10,12 +10,15 @@ import dev.game.spacechaos.engine.time.GameTime;
 public interface UpdatableEntity {
 
     /**
-    * update entity
+     * update entity
      *
-     * @param game instance of game
-     * @param camera current game camera
-     * @param time current game time
-    */
-    public void update (BaseGame game, CameraWrapper camera, GameTime time);
+     * @param game
+     *            The instance of the game.
+     * @param camera
+     *            The current camera.
+     * @param time
+     *            The game time.
+     */
+    public void update(BaseGame game, CameraWrapper camera, GameTime time);
 
 }

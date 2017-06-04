@@ -14,24 +14,26 @@ import static org.junit.Assert.assertEquals;
 public class ColliderUtilsTest {
 
     @Test
-    public void testOverlaping () {
+    public void testOverlaping() {
         assertEquals("values arent overlaping, but method returns true.", false, ColliderUtils.overlaping(0, 1, 2, 3));
-        assertEquals("values arent overlaping, but method returns true.", false, ColliderUtils.overlaping(2, 3, 3.1f, 4));
+        assertEquals("values arent overlaping, but method returns true.", false,
+                ColliderUtils.overlaping(2, 3, 3.1f, 4));
         assertEquals("values are overlaping, but method returns false.", true, ColliderUtils.overlaping(0, 3, 2, 3));
         assertEquals("values are overlaping, but method returns false.", true, ColliderUtils.overlaping(3, 4, 2, 3));
         assertEquals("values are overlaping, but method returns false.", true, ColliderUtils.overlaping(4, 3, 2, 3));
     }
 
     @Test
-    public void testRectangleRectangleCollisionTest () {
+    public void testRectangleRectangleCollisionTest() {
         Rectangle rect1 = new Rectangle(0, 0, 100, 100);
         Rectangle rect2 = new Rectangle(99, 99, 100, 100);
 
-        assertEquals("rectangle is overlaping, but collision test returns false.", true, ColliderUtils.testRectangleRectangleCollision(rect1, rect2));
+        assertEquals("rectangle is overlaping, but collision test returns false.", true,
+                ColliderUtils.testRectangleRectangleCollision(rect1, rect2));
     }
 
     @Test
-    public void testOverlapingCirclePoint () {
+    public void testOverlapingCirclePoint() {
         CCircle circle = new CCircle(0, 0, 5);
         CPoint point1 = new CPoint(0, 0);
 
@@ -48,7 +50,7 @@ public class ColliderUtilsTest {
     }
 
     @Test
-    public void testLineCollision () {
+    public void testLineCollision() {
         Line line1 = new Line(0, 0, 1, 1);
         Line line2 = new Line(0, 0, 1, 1);
 
@@ -78,7 +80,7 @@ public class ColliderUtilsTest {
     }
 
     @Test
-    public void testSegmentCollision () {
+    public void testSegmentCollision() {
         Segment segment1 = new Segment(new Vector2(0, 0), new Vector2(1, 1));
         Segment segment2 = new Segment(new Vector2(0, 0), new Vector2(1, 1));
 
@@ -93,7 +95,7 @@ public class ColliderUtilsTest {
         assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment4));
         assertEquals(true, ColliderUtils.testSegmentCollision(segment4, segment1));
 
-        //Segment segment5 = new Segment(new Vector2(1, 0), new Vector2(0, 1));
+        // Segment segment5 = new Segment(new Vector2(1, 0), new Vector2(0, 1));
         Segment segment5 = new Segment(new Vector2(1, 1), new Vector2(0, 0));
         assertEquals(true, ColliderUtils.testSegmentCollision(segment1, segment5));
         assertEquals(true, ColliderUtils.testSegmentCollision(segment5, segment1));

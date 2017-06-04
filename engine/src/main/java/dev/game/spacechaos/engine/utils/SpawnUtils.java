@@ -9,7 +9,7 @@ public class SpawnUtils {
 
     protected static Vector2 tmpVector = new Vector2(0, 0);
 
-    public static Vector2 getRandomSpawnPosition (float minDistance, float maxDistance, float offsetX, float offsetY) {
+    public static Vector2 getRandomSpawnPosition(float minDistance, float maxDistance, float offsetX, float offsetY) {
         Vector2 pos = getRandomSpawnPosition(minDistance, maxDistance);
 
         pos.x += offsetX;
@@ -18,7 +18,7 @@ public class SpawnUtils {
         return pos;
     }
 
-    public static Vector2 getRandomSpawnPosition (float minDistance, float maxDistance) {
+    public static Vector2 getRandomSpawnPosition(float minDistance, float maxDistance) {
         if (minDistance < 0) {
             throw new IllegalArgumentException("minDistance has to be >= 0.");
         }
@@ -27,13 +27,13 @@ public class SpawnUtils {
             throw new IllegalArgumentException("maxDistance has to be >= minDistance.");
         }
 
-        //calculate new random distance
+        // calculate new random distance
         float randomDistance = (float) (Math.random() * (maxDistance - minDistance) + minDistance);
 
-        //get new random angle
+        // get new random angle
         float angle = (float) Math.random() * 360;
 
-        //set length and angle of vector
+        // set length and angle of vector
         tmpVector.set(randomDistance, 0);
         tmpVector.setLength(randomDistance);
         tmpVector.setAngle(angle);

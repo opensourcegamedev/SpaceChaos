@@ -14,15 +14,15 @@ import dev.game.spacechaos.engine.utils.FastMath;
  */
 public class ColliderUtils {
 
-    public static boolean testRectangleRectangleCollision (Rectangle rect1, Rectangle rect2) {
+    public static boolean testRectangleRectangleCollision(Rectangle rect1, Rectangle rect2) {
         return rect1.overlaps(rect2);
     }
 
-    public static boolean testCircleCircleCollision (Circle circle1, Circle circle2) {
+    public static boolean testCircleCircleCollision(Circle circle1, Circle circle2) {
         return circle1.overlaps(circle2);
     }
 
-    public static boolean testCirclePointCollision (CCircle circle, CPoint point) {
+    public static boolean testCirclePointCollision(CCircle circle, CPoint point) {
         float dx = circle.getCenterX() - point.getCenterX();
         float dy = circle.getCenterY() - point.getCenterY();
         float distance = dx * dx + dy * dy;
@@ -31,27 +31,28 @@ public class ColliderUtils {
         return distance <= radiusSum * radiusSum;
     }
 
-    public static boolean testLineCollision (Line a, Line b) {
+    public static boolean testLineCollision(Line a, Line b) {
         if (FastMath.checkVectorsParallel(a.getDirection(), b.getDirection())) {
             return FastMath.checkIfLinesAreEquals(a, b);
-        } else {}
+        } else {
+        }
         return true;
     }
 
-    public static boolean onOneSide (Line axis, Segment s) {
+    public static boolean onOneSide(Line axis, Segment s) {
         Vector2 d1 = Vector2Pool.create(s.getPoint1()).sub(axis.getBase());
         Vector2 d2 = Vector2Pool.create(s.getPoint2()).sub(axis.getBase());
         Vector2 n = FastMath.rotateVector90(axis.getDirection(), Vector2Pool.create());
 
         float dotProduct = n.dot(d1) * n.dot(d2);
 
-        //recycle vectors
+        // recycle vectors
         Vector2Pool.free(d1, d2, n);
 
-        return dotProduct  > 0;
+        return dotProduct > 0;
     }
 
-    public static boolean testSegmentCollision (Segment a, Segment b) {
+    public static boolean testSegmentCollision(Segment a, Segment b) {
         Vector2 d = Vector2Pool.create(a.getPoint2()).sub(a.getPoint1());
 
         Line axisA = LinePool.create();
@@ -61,7 +62,7 @@ public class ColliderUtils {
         Line axisB = LinePool.create();
 
         if (onOneSide(axisA, b)) {
-            //recycle objects
+            // recycle objects
             LinePool.free(axisA, axisB);
             Vector2Pool.free(d);
 
@@ -74,7 +75,7 @@ public class ColliderUtils {
         axisB.setDirection(d);
 
         if (onOneSide(axisB, a)) {
-            //recycle objects
+            // recycle objects
             LinePool.free(axisA, axisB);
             Vector2Pool.free(d);
 
@@ -85,13 +86,13 @@ public class ColliderUtils {
             Range rangeA = a.projectSegment(axisA.getDirection());
             Range rangeB = b.projectSegment(axisB.getDirection());
 
-            //recycle objects
+            // recycle objects
             LinePool.free(axisA, axisB);
             Vector2Pool.free(d);
 
             return rangeA.overlaps(rangeB);
         } else {
-            //recycle objects
+            // recycle objects
             LinePool.free(axisA, axisB);
             Vector2Pool.free(d);
 
@@ -99,22 +100,22 @@ public class ColliderUtils {
         }
     }
 
-    public static boolean overlaping (float minA, float maxA, float minB, float maxB) {
+    public static boolean overlaping(float minA, float maxA, float minB, float maxB) {
         if (maxA < minA) {
-            //swap values
+            // swap values
             float a = maxA;
             maxA = minA;
             minA = a;
         }
 
         if (maxB < minB) {
-            //swap values
+            // swap values
             float b = minB;
             maxB = minB;
             minB = b;
         }
 
-        //check if values are overlapping
+        // check if values are overlapping
         return minB <= maxA && minA <= maxB;
     }
 

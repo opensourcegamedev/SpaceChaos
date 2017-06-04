@@ -10,11 +10,11 @@ public class RangePool {
 
     protected static Pool<Range> rangePool = RangePoolFactory.createRectanglePool();
 
-    public static Range create () {
+    public static Range create() {
         return rangePool.obtain();
     }
 
-    public static void free (Range range) {
+    public static void free(Range range) {
         rangePool.free(range);
     }
 

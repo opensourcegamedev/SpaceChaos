@@ -12,15 +12,17 @@ public class ImageWidget extends BaseHUDWidget {
 
     protected Texture texture = null;
 
-    public ImageWidget (Texture texture) {
+    public ImageWidget(Texture texture) {
         this.texture = texture;
     }
 
-    @Override public void update(BaseGame game, GameTime time) {
+    @Override
+    public void update(BaseGame game, GameTime time) {
         //
     }
 
-    @Override public void drawLayer0(GameTime time, SpriteBatch batch) {
+    @Override
+    public void drawLayer0(GameTime time, SpriteBatch batch) {
         batch.draw(this.texture, getX(), getY());
     }
 }

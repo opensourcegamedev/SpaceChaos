@@ -20,21 +20,21 @@ import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
 /**
  * Created by Justin on 08.04.2017.
  */
-@RequiredComponents(components = {PositionComponent.class, MoveComponent.class})
+@RequiredComponents(components = { PositionComponent.class, MoveComponent.class })
 public class MouseDependentMovementComponent extends BaseComponent implements IUpdateComponent, IDrawComponent {
 
     protected PositionComponent positionComponent = null;
     protected MoveComponent moveComponent = null;
 
-    //used to store front coordinates
+    // used to store front coordinates
     protected float frontX = 0;
     protected float frontY = 0;
 
-    //front vector: origin shuttle center.
+    // front vector: origin shuttle center.
     private Vector2 frontVec = new Vector2(0, 0);
     protected Vector2 tmpVector = new Vector2(0, 0);
 
-    //minimum distance of mouse to entity which is needed to move entity
+    // minimum distance of mouse to entity which is needed to move entity
     protected float minMouseDistance = 20;
 
     public MouseDependentMovementComponent(float originX, float originY) {
@@ -43,7 +43,7 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        //get required components
+        // get required components
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.moveComponent = entity.getComponent(MoveComponent.class);
 
@@ -58,43 +58,42 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //update front
+        // update front
         this.frontX = positionComponent.getMiddleX() + frontVec.x;
         this.frontY = positionComponent.getMiddleY() + frontVec.y;
 
-        //get mouse position relative to shuttle
+        // get mouse position relative to shuttle
         Vector2 vector = MouseUtils.getRelativePositionToEntity(game.getCamera(), frontX, frontY);
         float mouseX = vector.x;
         float mouseY = vector.y;
 
-        //get mouse angle relative to shuttle
-        float angle = MouseUtils.getRelativeMouseAngle(game.getCamera(), positionComponent.getMiddleX(), positionComponent.getMiddleY());
+        // get mouse angle relative to shuttle
+        float angle = MouseUtils.getRelativeMouseAngle(game.getCamera(), positionComponent.getMiddleX(),
+                positionComponent.getMiddleY());
 
-        //adjust front angle
+        // adjust front angle
         frontVec.setAngle(angle);
 
-        //avoid jerky
-        /*if (Math.abs(mouseX) < 5) { //changed from 1 to 5
-            mouseX = 0;
-        }
-
-        if (Math.abs(mouseY) < 5) { //changed from 1 to 5
-            mouseY = 0;
-        }*/
+        // avoid jerky
+        /*
+         * if (Math.abs(mouseX) < 5) { //changed from 1 to 5 mouseX = 0; }
+         * 
+         * if (Math.abs(mouseY) < 5) { //changed from 1 to 5 mouseY = 0; }
+         */
 
         tmpVector.set(mouseX, mouseY);
 
-        //calculate length of vector
+        // calculate length of vector
         float length = tmpVector.len();
 
         if (length > minMouseDistance) {
-            //set movement direction
+            // set movement direction
             moveComponent.setMoveDirection(tmpVector.x, tmpVector.y);
 
-            //set moving flag
+            // set moving flag
             moveComponent.setMoving(true);
         } else {
-            //dont move entity
+            // dont move entity
             moveComponent.setMoveDirection(0, 0);
             moveComponent.setMoving(false);
         }
@@ -107,20 +106,24 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
 
     @Override
     public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
-        //TODO: outsource this code to extra component
+        // TODO: outsource this code to extra component
 
-        //draw center, only for debugging purposes
-        SpriteBatcherUtils.fillRectangle(batch, positionComponent.getMiddleX() - 10, positionComponent.getMiddleY() - 10, 20, 20, Color.YELLOW);
+        // draw center, only for debugging purposes
+        SpriteBatcherUtils.fillRectangle(batch, positionComponent.getMiddleX() - 10,
+                positionComponent.getMiddleY() - 10, 20, 20, Color.YELLOW);
 
-        //draw mouse position
+        // draw mouse position
         Vector3 mousePos = camera.getMousePosition();
-        //SpriteBatcherUtils.fillRectangle(batch, mousePos.x - 5, mousePos.y - 5, 10, 10, Color.RED);
+        // SpriteBatcherUtils.fillRectangle(batch, mousePos.x - 5, mousePos.y -
+        // 5, 10, 10, Color.RED);
 
-        //draw position
-        //SpriteBatcherUtils.fillRectangle(batch, positionComponent.getX() - 5, positionComponent.getY() - 5, 10, 10, Color.BLUE);
+        // draw position
+        // SpriteBatcherUtils.fillRectangle(batch, positionComponent.getX() - 5,
+        // positionComponent.getY() - 5, 10, 10, Color.BLUE);
 
-        //draw front position
-        //SpriteBatcherUtils.fillRectangle(batch, frontX - 5, frontY - 5, 10, 10, Color.GREEN);
+        // draw front position
+        // SpriteBatcherUtils.fillRectangle(batch, frontX - 5, frontY - 5, 10,
+        // 10, Color.GREEN);
     }
 
     @Override
@@ -128,15 +131,15 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
         return ECSPriority.VERY_LOW;
     }
 
-    public Vector2 getFrontVec () {
+    public Vector2 getFrontVec() {
         return this.frontVec;
     }
 
-    public float getMinMouseDistance () {
+    public float getMinMouseDistance() {
         return this.minMouseDistance;
     }
 
-    public void setMinMouseDistance (float minMouseDistance) {
+    public void setMinMouseDistance(float minMouseDistance) {
         this.minMouseDistance = minMouseDistance;
     }
 

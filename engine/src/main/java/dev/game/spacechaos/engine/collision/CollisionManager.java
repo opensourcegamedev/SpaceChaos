@@ -15,11 +15,13 @@ import java.util.Collection;
  */
 public interface CollisionManager {
 
-    public void drawCollisionBoxes (GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color, Color inCollisionColor);
+    public void drawCollisionBoxes(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color,
+            Color inCollisionColor);
 
     /**
-    * list all entities, which are colliding with this entity
-    */
-    public Collection<Entity> checkForCollision (Entity entity, CollisionComponent collisionComponent, PositionComponent positionComponent);
+     * list all entities, which are colliding with this entity
+     */
+    public Collection<Entity> checkForCollision(Entity entity, CollisionComponent collisionComponent,
+            PositionComponent positionComponent);
 
 }

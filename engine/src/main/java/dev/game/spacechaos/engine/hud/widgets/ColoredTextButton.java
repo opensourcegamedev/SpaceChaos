@@ -25,18 +25,18 @@ public class ColoredTextButton extends BaseHUDWidget {
     protected boolean isClicked = false;
     protected ClickListener clickListener = null;
 
-    public ColoredTextButton (String text, BitmapFont font) {
+    public ColoredTextButton(String text, BitmapFont font) {
         this.text = text;
         this.font = font;
     }
 
     @Override
     public void update(BaseGame game, GameTime time) {
-        //get mouse coordinates
+        // get mouse coordinates
         float mouseX = Gdx.input.getX();
         float mouseY = game.getViewportHeight() - Gdx.input.getY();
 
-        //check if mouse is inner button
+        // check if mouse is inner button
         if (isMouseInner(game)) {
             this.hovered = true;
         } else {
@@ -50,9 +50,9 @@ public class ColoredTextButton extends BaseHUDWidget {
         } else {
             this.isClicked = false;
 
-            //check if user has released button
+            // check if user has released button
             if (oldClicked == true) {
-                //user has clicked button
+                // user has clicked button
                 if (clickListener != null) {
                     clickListener.onClick();
                 }
@@ -62,7 +62,7 @@ public class ColoredTextButton extends BaseHUDWidget {
 
     @Override
     public void drawLayer0(GameTime time, SpriteBatch batch) {
-        //draw background texture
+        // draw background texture
         if (hovered) {
             SpriteBatcherUtils.fillRectangle(batch, getX(), getY(), getWidth(), getHeight(), this.hoverColor);
         } else {
@@ -71,19 +71,19 @@ public class ColoredTextButton extends BaseHUDWidget {
 
         float paddingBottom = (this.height / 2) - 32;
 
-        //draw button text
-        this.font.draw(batch, text, x + 50/* + 80*/, y + 40);
+        // draw button text
+        this.font.draw(batch, text, x + 50/* + 80 */, y + 40);
     }
 
-    public void setBackgroundColor (Color color) {
+    public void setBackgroundColor(Color color) {
         this.color = color;
     }
 
-    public void setBackgroundHoverColor (Color color) {
+    public void setBackgroundHoverColor(Color color) {
         this.hoverColor = color;
     }
 
-    protected boolean isInner (float mouseX, float mouseY) {
+    protected boolean isInner(float mouseX, float mouseY) {
         if (mouseX >= getX() && mouseX <= (getX() + getWidth())) {
             if (mouseY >= getY() && mouseY <= (getY() + getHeight())) {
                 return true;
@@ -93,7 +93,7 @@ public class ColoredTextButton extends BaseHUDWidget {
         return false;
     }
 
-    public void setClickListener (ClickListener listener) {
+    public void setClickListener(ClickListener listener) {
         this.clickListener = listener;
     }
 

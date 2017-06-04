@@ -32,28 +32,28 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class BaseGame extends ApplicationAdapter {
 
     /**
-    * list with resize listeners
-    */
+     * list with resize listeners
+     */
     protected List<ResizeListener> resizeListeners = new ArrayList<>();
 
     /**
-    * instance of game time
-    */
+     * instance of game time
+     */
     protected GameTime time = GameTime.getInstance();
 
     /**
-    * backround color
-    */
+     * backround color
+     */
     protected Color bgColor = Color.BLACK;
 
     /**
-    * sprite batcher
-    */
+     * sprite batcher
+     */
     protected SpriteBatch batch = null;
 
     /**
-    * instance of asset manager
-    */
+     * instance of asset manager
+     */
     protected final AssetManager assetManager = new AssetManager();
 
     protected static int VIEWPORT_WIDTH = 1280;
@@ -68,16 +68,16 @@ public abstract class BaseGame extends ApplicationAdapter {
     protected String settingsDir = "./data/config/";
 
     /**
-    * map with all game settings
-    */
-    protected Map<String,GameSettings> settingsMap = new ConcurrentHashMap<>();
+     * map with all game settings
+     */
+    protected Map<String, GameSettings> settingsMap = new ConcurrentHashMap<>();
 
     protected FPSLogger fpsLogger = new FPSLogger();
     protected String shaderPath = "./data/shader/";
 
     protected CursorManager cursorManager = null;
 
-    //tasks which should be executed in OpenGL context thread
+    // tasks which should be executed in OpenGL context thread
     protected Queue<Runnable> uiQueue = new ConcurrentLinkedQueue<>();
 
     protected long lastFPSWarning = 0;
@@ -89,41 +89,41 @@ public abstract class BaseGame extends ApplicationAdapter {
         });
     }
 
-    public void addResizeListener (ResizeListener listener) {
+    public void addResizeListener(ResizeListener listener) {
         this.resizeListeners.add(listener);
     }
 
-    public void removeResizeListener (ResizeListener listener) {
+    public void removeResizeListener(ResizeListener listener) {
         this.resizeListeners.remove(listener);
     }
 
-    public AssetManager getAssetManager () {
+    public AssetManager getAssetManager() {
         return this.assetManager;
     }
 
     @Override
     public final void create() {
-        //create sprite batcher
+        // create sprite batcher
         this.batch = new SpriteBatch();
 
         this.VIEWPORT_WIDTH = Gdx.graphics.getWidth();
         this.VIEWPORT_HEIGHT = Gdx.graphics.getHeight();
 
-        //initialize camera
+        // initialize camera
         this.camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         this.camera.translate(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
-        //this.camera.update();
+        // this.camera.update();
         this.batch.setProjectionMatrix(this.camera.combined);
 
         this.cameraWrapper = new CameraWrapper(this.camera);
         this.cameraWrapper.update(this.time);
 
-        //initialize UI camera
+        // initialize UI camera
         this.uiCamera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         this.uiCamera.translate(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
         this.uiCamera.update();
 
-        //create new cursor manager
+        // create new cursor manager
         this.cursorManager = new DefaultCursorManager();
 
         try {
@@ -132,7 +132,7 @@ public abstract class BaseGame extends ApplicationAdapter {
             e.printStackTrace();
 
             try {
-                //write crash dump
+                // write crash dump
                 FileUtils.writeFile("./crash.log", e.getLocalizedMessage(), StandardCharsets.UTF_8);
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -144,12 +144,12 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     @Override
     public final void render() {
-        //update time
+        // update time
         this.time.update();
 
         int fps = getFPS();
         if (fps <= 59 && fps != 0) {
-            //check if warning was already logged this second
+            // check if warning was already logged this second
             long now = System.currentTimeMillis();
             long nowWarnSecond = now / 1000;
             long lastWarnSecond = lastFPSWarning / 1000;
@@ -161,7 +161,7 @@ public abstract class BaseGame extends ApplicationAdapter {
             }
         }
 
-        //execute tasks, which should be executed in OpenGL context thread
+        // execute tasks, which should be executed in OpenGL context thread
         Runnable runnable = uiQueue.poll();
 
         while (runnable != null) {
@@ -170,20 +170,20 @@ public abstract class BaseGame extends ApplicationAdapter {
             runnable = uiQueue.poll();
         }
 
-        //update game
+        // update game
         this.update(this.time);
 
-        //set cursor
+        // set cursor
         this.cursorManager.update(this, this.time);
 
-        //update camera
-        //this.camera.update();
+        // update camera
+        // this.camera.update();
         this.cameraWrapper.update(this.time);
 
-        //update UI camera
+        // update UI camera
         this.uiCamera.update();
 
-        //clear all color buffer bits and clear screen
+        // clear all color buffer bits and clear screen
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -191,50 +191,51 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         this.batch.setProjectionMatrix(this.camera.combined);
 
-        //draw game
+        // draw game
         this.draw(time, this.batch);
 
         this.batch.end();
 
-        //System.out.println("render calls: " + this.batch.renderCalls);
+        // System.out.println("render calls: " + this.batch.renderCalls);
 
-        //this.fpsLogger.log();
+        // this.fpsLogger.log();
     }
 
-    protected abstract void initGame ();
+    protected abstract void initGame();
 
-    public CameraWrapper getCamera () {
+    public CameraWrapper getCamera() {
         return this.cameraWrapper;
     }
 
-    public /*OrthographicCamera*/CameraWrapper getCamera2D () {
+    public /* OrthographicCamera */CameraWrapper getCamera2D() {
         return this.cameraWrapper;
     }
 
-    public Camera getUICamera () {
+    public Camera getUICamera() {
         return this.uiCamera;
     }
 
-    public int getFPS () {
+    public int getFPS() {
         return Gdx.graphics.getFramesPerSecond();
     }
 
-    public String getShaderDir () {
+    public String getShaderDir() {
         return this.shaderPath;
     }
 
-    public void runOnUIThread (Runnable runnable) {
+    public void runOnUIThread(Runnable runnable) {
         this.uiQueue.offer(runnable);
     }
 
     /**
-    * get instance of settings or null, if instance doesnst exists
+     * get instance of settings or null, if instance doesnst exists
      *
-     * @param name name of settings
+     * @param name
+     *            name of settings
      *
      * @return instance of settings
-    */
-    public GameSettings getSettings (String name) {
+     */
+    public GameSettings getSettings(String name) {
         name = name.toLowerCase();
 
         GameSettings settings = this.settingsMap.get(name);
@@ -251,15 +252,15 @@ public abstract class BaseGame extends ApplicationAdapter {
      *
      * @return instance of global settings
      */
-    public GameSettings getSettings () {
-        //get global settings
+    public GameSettings getSettings() {
+        // get global settings
         return this.getSettings("game");
     }
 
     /**
-    * load settings
-    */
-    public boolean loadSettings (String name, String path) {
+     * load settings
+     */
+    public boolean loadSettings(String name, String path) {
         name = name.toLowerCase();
         path = path.toLowerCase();
 
@@ -285,11 +286,11 @@ public abstract class BaseGame extends ApplicationAdapter {
         return true;
     }
 
-    public float getVolume () {
+    public float getVolume() {
         return this.getSettings().getFloat("Music", "volume");
     }
 
-    public float getVolume (float addVolume) {
+    public float getVolume(float addVolume) {
         float volume = this.getSettings().getFloat("Music", "volume");
 
         volume += addVolume;
@@ -301,25 +302,25 @@ public abstract class BaseGame extends ApplicationAdapter {
         return volume;
     }
 
-    public String getLang () {
+    public String getLang() {
         return this.getSettings().getOrDefault("Game", "lang", "en");
     }
 
-    public CursorManager getCursorManager () {
+    public CursorManager getCursorManager() {
         return this.cursorManager;
     }
 
-    public int getViewportWidth () {
+    public int getViewportWidth() {
         return this.VIEWPORT_WIDTH;
     }
 
-    public int getViewportHeight () {
+    public int getViewportHeight() {
         return this.VIEWPORT_HEIGHT;
     }
 
-    protected abstract void update (GameTime time);
+    protected abstract void update(GameTime time);
 
-    protected abstract void draw (GameTime time, SpriteBatch batch);
+    protected abstract void draw(GameTime time, SpriteBatch batch);
 
     @Override
     public final void dispose() {
@@ -328,6 +329,6 @@ public abstract class BaseGame extends ApplicationAdapter {
         this.batch.dispose();
     }
 
-    protected abstract void destroyGame ();
+    protected abstract void destroyGame();
 
 }

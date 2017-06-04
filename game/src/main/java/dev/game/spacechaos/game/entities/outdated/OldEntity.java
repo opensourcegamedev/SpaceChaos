@@ -6,19 +6,21 @@ package dev.game.spacechaos.game.entities.outdated;
 @Deprecated
 public abstract class OldEntity {
 
-    //current absolute position of entity
+    // current absolute position of entity
     private volatile float xPos = 0;
     private volatile float yPos = 0;
 
-    //current dimension of entity
+    // current dimension of entity
     private volatile float width = 0;
     protected volatile float height = 0;
 
     /**
      * default constructor
      *
-     * @param xPos x position
-     * @param yPos y position
+     * @param xPos
+     *            x position
+     * @param yPos
+     *            y position
      */
     public OldEntity(float xPos, float yPos) {
         this.xPos = xPos;
@@ -46,8 +48,10 @@ public abstract class OldEntity {
     /**
      * set absolute position of entity
      *
-     * @param x x position
-     * @param y y position
+     * @param x
+     *            x position
+     * @param y
+     *            y position
      */
     public void setPos(float x, float y) {
         this.xPos = x;
@@ -57,8 +61,10 @@ public abstract class OldEntity {
     /**
      * move entity
      *
-     * @param x speed x
-     * @param y speed y
+     * @param x
+     *            speed x
+     * @param y
+     *            speed y
      */
     public void move(float x, float y) {
         this.xPos += x;
@@ -86,8 +92,10 @@ public abstract class OldEntity {
     /**
      * set dimension of entity
      *
-     * @param width  width of entity
-     * @param height height of entity
+     * @param width
+     *            width of entity
+     * @param height
+     *            height of entity
      */
     public void setDimension(float width, float height) {
         this.width = width;

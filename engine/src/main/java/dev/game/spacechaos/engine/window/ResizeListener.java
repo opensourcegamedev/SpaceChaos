@@ -7,11 +7,13 @@ package dev.game.spacechaos.engine.window;
 public interface ResizeListener {
 
     /**
-    * method will be called, if window was resized
+     * method will be called, if window was resized
      *
-     * @param width new width of window
-     * @param height new height of window
-    */
+     * @param width
+     *            new width of window
+     * @param height
+     *            new height of window
+     */
     public void onResize(final int width, final int height);
 
 }

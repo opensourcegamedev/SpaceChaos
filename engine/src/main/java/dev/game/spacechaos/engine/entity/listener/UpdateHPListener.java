@@ -11,16 +11,16 @@ package dev.game.spacechaos.engine.entity.listener;
 @FunctionalInterface
 public interface UpdateHPListener {
 
-	/**
-	 * Invoked when an entities health gets changed.
-	 * 
-	 * @param oldValue
-	 *            The old hp value.
-	 * @param newValue
-	 *            The new hp value.
-	 * @param maxHP
-	 *            The max hp.
-	 */
-	public void onHPUpdate(float oldValue, float newValue, float maxValue);
+    /**
+     * Invoked when an entities health gets changed.
+     * 
+     * @param oldValue
+     *            The old hp value.
+     * @param newValue
+     *            The new hp value.
+     * @param maxHP
+     *            The max hp.
+     */
+    public void onHPUpdate(float oldValue, float newValue, float maxValue);
 
 }

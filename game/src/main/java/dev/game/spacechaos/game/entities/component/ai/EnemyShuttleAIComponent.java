@@ -18,23 +18,25 @@ import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 
 /**
- * Adds an AI-component to an entity, so it follows the player in a specific, non-suicidal way.
+ * Adds an AI-component to an entity, so it follows the player in a specific,
+ * non-suicidal way.
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
 public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateComponent {
 
-    //required components
+    // required components
     private PositionComponent positionComponent = null;
     private MoveComponent moveComponent = null;
     private MoveDependentDrawRotationComponent moveDependentDrawRotationComponent = null;
 
-    //target entity to follow
+    // target entity to follow
     private Entity targetEntity = null;
     private PositionComponent targetPosition = null;
 
-    //move direction
+    // move direction
     private Vector2 moveDir = new Vector2(0, 0);
 
     private long elapsed = 0;
@@ -54,12 +56,13 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
         this.targetEntity = targetEntity;
         this.targetPosition = targetEntity.getComponent(PositionComponent.class);
 
-        //check if required component exists
+        // check if required component exists
         if (this.targetPosition == null) {
-            throw new RequiredComponentNotFoundException("PositionComponent is required on target entity, but cannot be found.");
+            throw new RequiredComponentNotFoundException(
+                    "PositionComponent is required on target entity, but cannot be found.");
         }
 
-        //generate random shoot interval
+        // generate random shoot interval
         int minShootInterval = 2000;
         int maxShootInterval = 5000;
         this.shootInterval = RandomUtils.getRandomNumber(minShootInterval, maxShootInterval);
@@ -67,7 +70,7 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        //get required components
+        // get required components
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.moveComponent = entity.getComponent(MoveComponent.class);
         this.moveDependentDrawRotationComponent = entity.getComponent(MoveDependentDrawRotationComponent.class);
@@ -89,15 +92,16 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
     public void update(BaseGame game, GameTime time) {
         this.elapsed += time.getDeltaTime() * 1000;
 
-        //calculate target direction and move in this direction
-        moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(), targetPosition.getMiddleY() - positionComponent.getMiddleY());
+        // calculate target direction and move in this direction
+        moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(),
+                targetPosition.getMiddleY() - positionComponent.getMiddleY());
 
         if (canShoot()) {
             shootProjectile();
         }
 
         if (!isMovementRequired()) {
-            //don't move entity
+            // don't move entity
             moveComponent.setMoveDirection(0, 0);
             moveComponent.setMoving(false);
 
@@ -106,7 +110,7 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
         moveDir.nor();
 
-        //set move direction
+        // set move direction
         moveComponent.setMoveDirection(moveDir.x, moveDir.y);
     }
 
@@ -116,10 +120,11 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
     }
 
     private boolean isMovementRequired() {
-        //calculate target direction and move in this direction
-        moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(), targetPosition.getMiddleY() - positionComponent.getMiddleY());
+        // calculate target direction and move in this direction
+        moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(),
+                targetPosition.getMiddleY() - positionComponent.getMiddleY());
 
-        //get length
+        // get length
         float length = moveDir.len();
 
         float minDistance = 300;
@@ -131,32 +136,27 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
     }
 
     private void shootProjectile() {
-        //get projectile direction from enemy direction
+        // get projectile direction from enemy direction
         float dirX = moveDependentDrawRotationComponent.getFrontVec().x;
         float dirY = moveDependentDrawRotationComponent.getFrontVec().y;
 
         tmpVector.set(dirX, dirY);
         tmpVector.setLength(100);
 
-        Entity projectile = ProjectileFactory.createProjectile(
-                entity.getEntityComponentSystem(),
+        Entity projectile = ProjectileFactory.createProjectile(entity.getEntityComponentSystem(),
                 dirX + positionComponent.getMiddleX() + tmpVector.x - 20,
-                dirY + positionComponent.getMiddleY() + tmpVector.y - 20,
-                projectileTexture,
-                dirX,
-                dirY,
-                this.entity
-        );
+                dirY + positionComponent.getMiddleY() + tmpVector.y - 20, projectileTexture, dirX, dirY, this.entity);
 
-        projectile.getComponent(DrawTextureComponent.class).setRotationAngle(targetEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
+        projectile.getComponent(DrawTextureComponent.class)
+                .setRotationAngle(targetEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
         projectile.getComponent(MoveComponent.class).setMoving(true);
 
         game.runOnUIThread(() -> {
-            //add entity on next gameloop cycle
+            // add entity on next gameloop cycle
             this.entity.getEntityComponentSystem().addEntity(projectile);
         });
 
-        //reset elapsed time
+        // reset elapsed time
         this.elapsed = 0;
     }
 

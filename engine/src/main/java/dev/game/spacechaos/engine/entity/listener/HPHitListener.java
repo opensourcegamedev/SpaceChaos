@@ -11,19 +11,19 @@ import dev.game.spacechaos.engine.entity.Entity;
 @FunctionalInterface
 public interface HPHitListener {
 
-	/**
-	 * Invoked when an entity gets hit.
-	 * 
-	 * @param oldValue
-	 *            The old hp value.
-	 * @param newValue
-	 *            The new hp value.
-	 * @param maxHP
-	 *            The max hp.
-	 * @param causingEntity
-	 *            The entity that caused the hit. Will be null if there is no
-	 *            other entity responsible.
-	 */
-	public void onHit(float oldValue, float newValue, float maxHP, Entity causingEntity);
+    /**
+     * Invoked when an entity gets hit.
+     * 
+     * @param oldValue
+     *            The old hp value.
+     * @param newValue
+     *            The new hp value.
+     * @param maxHP
+     *            The max hp.
+     * @param causingEntity
+     *            The entity that caused the hit. Will be null if there is no
+     *            other entity responsible.
+     */
+    public void onHit(float oldValue, float newValue, float maxHP, Entity causingEntity);
 
 }

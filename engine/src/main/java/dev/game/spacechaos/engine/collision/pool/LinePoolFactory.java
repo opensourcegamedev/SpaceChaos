@@ -10,12 +10,12 @@ public class LinePoolFactory {
 
     protected static Pool<Line> LinePool = null;
 
-    public static Pool<Line> createLinePool () {
+    public static Pool<Line> createLinePool() {
         if (LinePool == null) {
             LinePool = new Pool<Line>() {
 
                 @Override
-                protected Line newObject () {
+                protected Line newObject() {
                     return new Line();
                 }
 
@@ -25,15 +25,15 @@ public class LinePoolFactory {
         return LinePool;
     }
 
-    public static Pool<Line> createNewLinePool () {
+    public static Pool<Line> createNewLinePool() {
         return new Pool<Line>() {
 
             @Override
-            protected Line newObject () {
+            protected Line newObject() {
                 return new Line();
             }
 
         };
     }
-    
+
 }

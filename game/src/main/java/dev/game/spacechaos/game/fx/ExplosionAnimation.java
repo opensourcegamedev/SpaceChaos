@@ -28,8 +28,10 @@ public class ExplosionAnimation extends OldEntity implements UpdatableEntity, Dr
     /**
      * default constructor
      *
-     * @param xPos x position
-     * @param yPos y position
+     * @param xPos
+     *            x position
+     * @param yPos
+     *            y position
      */
     public ExplosionAnimation(float xPos, float yPos, int rows, int cols, float duration, Texture texture) {
         super(xPos, yPos);
@@ -42,51 +44,58 @@ public class ExplosionAnimation extends OldEntity implements UpdatableEntity, Dr
             throw new IllegalStateException("texture isnt managed or wasnt loaded.");
         }
 
-        //create animation
+        // create animation
         this.animation = AnimationTextureUtils.createAnimationFromTexture(texture, duration / 1000, rows, cols);
         this.animation.setPlayMode(Animation.PlayMode.NORMAL);
 
-        //set current frame
+        // set current frame
         this.currentFrame = this.animation.getKeyFrame(1);
 
-        //update dimension
+        // update dimension
         setDimension(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
     }
 
-    @Override public void update(BaseGame game, CameraWrapper camera, GameTime time) {
+    @Override
+    public void update(BaseGame game, CameraWrapper camera, GameTime time) {
         if (playing) {
-            //calculate elapsed time in milliseconds
+            // calculate elapsed time in milliseconds
             this.elapsed += time.getDeltaTime();
 
-            //get current frame of animation
+            // get current frame of animation
             this.currentFrame = animation.getKeyFrame(elapsed, true);
         }
     }
 
-    @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+    @Override
+    public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         if (playing) {
             batch.draw(this.currentFrame, getX(), getY(), getWidth(), getHeight());
         }
     }
 
-    @Override public void start() {
+    @Override
+    public void start() {
         this.playing = true;
     }
 
-    @Override public void stop() {
+    @Override
+    public void stop() {
         this.playing = false;
     }
 
-    @Override public boolean isPlaying() {
+    @Override
+    public boolean isPlaying() {
         return this.playing;
     }
 
-    @Override public void reset() {
+    @Override
+    public void reset() {
         this.elapsed = 0;
         this.playing = false;
     }
 
-    @Override public void destroy() {
+    @Override
+    public void destroy() {
         this.currentFrame.getTexture().dispose();
     }
 

@@ -8,45 +8,49 @@ import java.util.Collection;
 public interface ScreenManager<T extends IScreen> {
 
     /**
-    * add screen
+     * add screen
      *
-     * @param name name of screen
-     * @param screen instance of screen
-    */
+     * @param name
+     *            name of screen
+     * @param screen
+     *            instance of screen
+     */
     public void addScreen(final String name, T screen);
 
     /**
-    * remove screen
+     * remove screen
      *
-     * @param name name of screen
-    */
+     * @param name
+     *            name of screen
+     */
     public void removeScreen(final String name);
 
     /**
-    * push screen
-    */
+     * push screen
+     */
     public void push(final String name);
 
     /**
-    * leave all active game states and enter an new one
+     * leave all active game states and enter an new one
      *
-     * @param name name of new game state
-    */
+     * @param name
+     *            name of new game state
+     */
     public void leaveAllAndEnter(final String name);
 
     /**
-    * pop screen
-    */
+     * pop screen
+     */
     public T pop();
 
     /**
-    * list all initialized screens
-    */
+     * list all initialized screens
+     */
     public Collection<T> listScreens();
 
     /**
-    * list all active screens
-    */
+     * list all active screens
+     */
     public Collection<T> listActiveScreens();
 
 }

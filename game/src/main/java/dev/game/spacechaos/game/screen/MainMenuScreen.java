@@ -20,7 +20,8 @@ import dev.game.spacechaos.engine.time.GameTime;
  * <p>
  * Contains several buttons, so far it's only the singleplayer-button.
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
 public class MainMenuScreen extends BaseScreen {
@@ -30,11 +31,11 @@ public class MainMenuScreen extends BaseScreen {
 
     private Texture bgImage = null;
 
-    //UI
+    // UI
     private ShapeRenderer shapeRenderer = null;
     private HUD hud = null;
 
-    //buttons
+    // buttons
     private TextButton newGameButton = null;
     private TextButton multiplayerButton = null;
     private TextButton creditsButton = null;
@@ -42,16 +43,16 @@ public class MainMenuScreen extends BaseScreen {
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
-        //create new HUD
+        // create new HUD
         this.hud = new HUD();
 
-        //create new shape renderer
+        // create new shape renderer
         this.shapeRenderer = new ShapeRenderer();
 
-        //create font
+        // create font
         BitmapFont buttonFont = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 32, Color.WHITE);
 
-        //create UI
+        // create UI
         float startX = game.getViewportWidth() / 2 - 200;
 
         this.newGameButton = new TextButton("New Singleplayer Game", buttonFont, startX, 400f);
@@ -62,9 +63,9 @@ public class MainMenuScreen extends BaseScreen {
         this.multiplayerButton = new TextButton("Multiplayer Lobby", buttonFont, startX, 340f);
         this.multiplayerButton.setDimension(400, 50);
         this.multiplayerButton.setClickListener(() -> {
-            //game.getScreenManager().leaveAllAndEnter("game");
+            // game.getScreenManager().leaveAllAndEnter("game");
         });
-        //this.hud.addWidget(this.multiplayerButton);
+        // this.hud.addWidget(this.multiplayerButton);
 
         this.creditsButton = new TextButton("Credits", buttonFont, startX, 280f);
         this.creditsButton.setDimension(400, 50);
@@ -74,26 +75,26 @@ public class MainMenuScreen extends BaseScreen {
         this.settingsButton = new TextButton("Settings", buttonFont, startX, 220f);
         this.settingsButton.setDimension(400, 50);
         this.settingsButton.setClickListener(() -> {
-            //game.getScreenManager().leaveAllAndEnter("game");
+            // game.getScreenManager().leaveAllAndEnter("game");
         });
-        //this.hud.addWidget(this.settingsButton);
+        // this.hud.addWidget(this.settingsButton);
     }
 
     @Override
-    public void onResume () {
-        //load assets
+    public void onResume() {
+        // load assets
         assetManager.load(BG_IMAGE_PATH, Texture.class);
         assetManager.load(SELECT_SOUND_PATH, Sound.class);
 
-        //load assets
+        // load assets
         assetManager.finishLoadingAsset(BG_IMAGE_PATH);
         assetManager.finishLoadingAsset(SELECT_SOUND_PATH);
 
-        //get assets
+        // get assets
         this.bgImage = assetManager.get(BG_IMAGE_PATH, Texture.class);
         Sound selectSound = assetManager.get(SELECT_SOUND_PATH, Sound.class);
 
-        //set hover sounds
+        // set hover sounds
         this.newGameButton.setHoverSound(selectSound);
         this.multiplayerButton.setHoverSound(selectSound);
         this.creditsButton.setHoverSound(selectSound);
@@ -101,7 +102,7 @@ public class MainMenuScreen extends BaseScreen {
     }
 
     @Override
-    public void onPause () {
+    public void onPause() {
         assetManager.unload(BG_IMAGE_PATH);
         assetManager.unload(SELECT_SOUND_PATH);
 
@@ -110,30 +111,30 @@ public class MainMenuScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
-        //update HUD
+        // update HUD
         this.hud.update(game, time);
     }
 
     @Override
     public void draw(GameTime time, SpriteBatch batch) {
-        //set camera projection matrix
+        // set camera projection matrix
         batch.setProjectionMatrix(game.getUICamera().combined);
 
-        //draw background
-        batch.draw(this.bgImage, 0, 0, game.getViewportWidth(), game.getViewportHeight() );
+        // draw background
+        batch.draw(this.bgImage, 0, 0, game.getViewportWidth(), game.getViewportHeight());
 
-        //draw first (SpriteBatch) layer of HUD
+        // draw first (SpriteBatch) layer of HUD
         this.hud.drawLayer0(time, batch);
         batch.flush();
         batch.end();
 
-        //draw second layer (ShapeRenderer) of HUD
+        // draw second layer (ShapeRenderer) of HUD
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setProjectionMatrix(game.getUICamera().combined);
         this.hud.drawLayer1(time, this.shapeRenderer);
         this.shapeRenderer.end();
 
-        //draw last (SpriteBatch) layer of HUD
+        // draw last (SpriteBatch) layer of HUD
         batch.begin();
         batch.setProjectionMatrix(game.getUICamera().combined);
         this.hud.drawLayer2(time, batch);

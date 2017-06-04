@@ -11,7 +11,8 @@ import dev.game.spacechaos.engine.time.GameTime;
 
 /**
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
 public class SkyBox implements DrawableEntity {
@@ -25,7 +26,7 @@ public class SkyBox implements DrawableEntity {
     private Vector3 minVector = new Vector3();
     private Vector3 maxVector = new Vector3();
 
-    public SkyBox (Texture[] skyboxTextures, float skyBoxWidth, float skyBoxHeight) {
+    public SkyBox(Texture[] skyboxTextures, float skyBoxWidth, float skyBoxHeight) {
         this(skyboxTextures);
 
         this.width = skyBoxWidth;
@@ -43,8 +44,9 @@ public class SkyBox implements DrawableEntity {
         this.height = skyboxTextures[0].getHeight();
     }
 
-    @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
-        //get current camera position
+    @Override
+    public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        // get current camera position
         float x = camera.getX();
         float y = camera.getY();
 
@@ -67,11 +69,11 @@ public class SkyBox implements DrawableEntity {
     }
 
     private void drawView(int x, int y, SpriteBatch batch) {
-        //set temporary values to vectors
+        // set temporary values to vectors
         minVector.set(x, y, 0);
         maxVector.set(x + width, y + height, 0);
 
-        //update bounding box
+        // update bounding box
         this.rectangle.set(minVector, maxVector);
 
         int index = getIndex(x, y);

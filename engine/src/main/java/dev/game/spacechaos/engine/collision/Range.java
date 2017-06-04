@@ -11,25 +11,25 @@ public class Range implements Pool.Poolable {
     protected float min = 0;
     protected float max = 0;
 
-    public Range (float min, float max) {
+    public Range(float min, float max) {
         set(min, max);
     }
 
-    public Range () {
+    public Range() {
         //
     }
 
-    public float getMin () {
+    public float getMin() {
         return this.min;
     }
 
-    public float getMax () {
+    public float getMax() {
         return this.max;
     }
 
-    public void set (float min, float max) {
+    public void set(float min, float max) {
         if (min > max) {
-            //swap values
+            // swap values
             float d = max;
             max = min;
             min = d;
@@ -39,11 +39,11 @@ public class Range implements Pool.Poolable {
         this.max = max;
     }
 
-    public boolean overlaps (Range r) {
+    public boolean overlaps(Range r) {
         return ColliderUtils.overlaping(this.min, this.max, r.min, r.max);
     }
 
-    public Range hull (Range b, Range newRange) {
+    public Range hull(Range b, Range newRange) {
         Range rangeHull = newRange;
 
         rangeHull.min = this.min < b.min ? this.min : b.min;
@@ -52,7 +52,7 @@ public class Range implements Pool.Poolable {
         return rangeHull;
     }
 
-    public Range hull (Range b) {
+    public Range hull(Range b) {
         return this.hull(b, RangePool.create());
     }
 

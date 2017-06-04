@@ -21,41 +21,43 @@ import java.util.List;
  */
 public class DefaultCollisionManager implements CollisionManager, ComponentListener {
 
-    //list with all collider components
+    // list with all collider components
     protected List<CollisionComponent> collisionComponentList = new ArrayList<>();
 
     protected List<Entity> tmpList = new ArrayList<>();
 
-    public DefaultCollisionManager (EntityManager ecs) {
-        //register component listener
+    public DefaultCollisionManager(EntityManager ecs) {
+        // register component listener
         ecs.registerComponentListener(this);
     }
 
     @Override
-    public void drawCollisionBoxes(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color, Color inCollisionColor) {
+    public void drawCollisionBoxes(GameTime time, CameraWrapper camera, ShapeRenderer shapeRenderer, Color color,
+            Color inCollisionColor) {
         for (CollisionComponent component : this.collisionComponentList) {
-            //draw collision shapes
+            // draw collision shapes
             component.drawCollisionBoxes(time, camera, shapeRenderer, color, inCollisionColor);
         }
     }
 
     @Override
-    public Collection<Entity> checkForCollision(Entity entity, CollisionComponent collisionComponent, PositionComponent positionComponent) {
+    public Collection<Entity> checkForCollision(Entity entity, CollisionComponent collisionComponent,
+            PositionComponent positionComponent) {
         this.tmpList.clear();
 
-        //TODO: use quadtree instead
+        // TODO: use quadtree instead
 
         for (CollisionComponent collisionComponent1 : this.collisionComponentList) {
             Entity entity1 = collisionComponent1.getEntity();
 
             if (entity == entity1) {
-                //its own entity
+                // its own entity
                 continue;
             }
 
-            //check for collision
+            // check for collision
             if (collisionComponent1.overlaps(collisionComponent)) {
-                //collision detected
+                // collision detected
                 tmpList.add(collisionComponent1.getEntity());
             }
         }
@@ -68,13 +70,13 @@ public class DefaultCollisionManager implements CollisionManager, ComponentListe
         if (component instanceof CollisionComponent) {
             CollisionComponent collisionComponent = (CollisionComponent) component;
 
-            //set collision manager
+            // set collision manager
             collisionComponent.initCollider(this);
 
-            //add component to list
+            // add component to list
             this.collisionComponentList.add(collisionComponent);
 
-            //TODO: add position changed listener for quadtree
+            // TODO: add position changed listener for quadtree
         }
     }
 
@@ -83,7 +85,7 @@ public class DefaultCollisionManager implements CollisionManager, ComponentListe
         if (component instanceof CollisionComponent) {
             CollisionComponent collisionComponent = (CollisionComponent) component;
 
-            //remove component to list
+            // remove component to list
             this.collisionComponentList.remove(collisionComponent);
         }
     }

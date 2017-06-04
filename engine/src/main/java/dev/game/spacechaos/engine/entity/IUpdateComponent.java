@@ -10,8 +10,8 @@ import dev.game.spacechaos.engine.time.GameTime;
 public interface IUpdateComponent {
 
     /**
-    * update
-    */
+     * update
+     */
     public void update(BaseGame game, GameTime time);
 
     public ECSPriority getUpdateOrder();

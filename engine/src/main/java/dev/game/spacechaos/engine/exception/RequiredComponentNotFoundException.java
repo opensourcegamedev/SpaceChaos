@@ -10,8 +10,8 @@ import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
  */
 public class RequiredComponentNotFoundException extends RuntimeException {
 
-	public RequiredComponentNotFoundException(String message) {
-		super(message);
-	}
+    public RequiredComponentNotFoundException(String message) {
+        super(message);
+    }
 
 }

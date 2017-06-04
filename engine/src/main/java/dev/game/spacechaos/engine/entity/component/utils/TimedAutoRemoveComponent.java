@@ -26,40 +26,42 @@ public class TimedAutoRemoveComponent extends BaseComponent implements IUpdateCo
         //
     }
 
-    @Override public void update(BaseGame game, GameTime time) {
+    @Override
+    public void update(BaseGame game, GameTime time) {
         if (startTime == 0) {
             startTime = time.getTime();
         }
 
-        //calculate elapsed time
+        // calculate elapsed time
         long elapsed = time.getTime() - startTime;
 
         if (elapsed > this.ttl) {
-            //auto remove entity on next gameloop cycle
+            // auto remove entity on next gameloop cycle
             game.runOnUIThread(() -> {
-                //remove entity from ecs
+                // remove entity from ecs
                 this.entity.getEntityComponentSystem().removeEntity(this.entity);
             });
         }
     }
 
-    @Override public ECSPriority getUpdateOrder() {
+    @Override
+    public ECSPriority getUpdateOrder() {
         return ECSPriority.NORMAL;
     }
 
-    public long getStartTime () {
+    public long getStartTime() {
         return this.startTime;
     }
 
-    public void setStartTime (long startTime) {
+    public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
 
-    public long getTTL () {
+    public long getTTL() {
         return this.ttl;
     }
 
-    public void setTTL (long ttl) {
+    public void setTTL(long ttl) {
         this.ttl = ttl;
     }
 

@@ -15,12 +15,12 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Justin on 10.02.2017.
  */
-public abstract class BaseECS implements EntityManager, EntityUpdateOrderChangedListener,
-        EntityDrawOrderChangedListener {
+public abstract class BaseECS
+        implements EntityManager, EntityUpdateOrderChangedListener, EntityDrawOrderChangedListener {
 
     /**
-    * list with entities
-    */
+     * list with entities
+     */
     protected List<Entity> entityUpdateList = new ArrayList<>();
 
     /**
@@ -34,60 +34,61 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     protected List<Entity> entityUILayerDrawList = new ArrayList<>();
 
     /**
-    * map with entities
-    */
-    protected Map<Long,Entity> entityMap = new ConcurrentHashMap<>();
+     * map with entities
+     */
+    protected Map<Long, Entity> entityMap = new ConcurrentHashMap<>();
 
     /**
-    * entities with unique name
-    */
-    protected Map<String,Entity> namedEntitiesMap = new ConcurrentHashMap<>();
+     * entities with unique name
+     */
+    protected Map<String, Entity> namedEntitiesMap = new ConcurrentHashMap<>();
 
     protected BaseGame game = null;
 
-    public BaseECS (BaseGame game) {
+    public BaseECS(BaseGame game) {
         this.game = game;
     }
 
     @Override
-    public void update (BaseGame game, GameTime time) {
+    public void update(BaseGame game, GameTime time) {
         for (Entity entity : this.entityUpdateList) {
-            //update entity
+            // update entity
             entity.update(game, time);
         }
     }
 
     @Override
-    public void draw (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+    public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         for (Entity entity : this.entityDrawList) {
-            //draw entity
+            // draw entity
             entity.draw(time, camera, batch);
         }
 
-        /*this.entityDrawList.stream().forEach(entity -> {
-            //draw entity
-            entity.draw(time, camera, batch);
-        });*/
+        /*
+         * this.entityDrawList.stream().forEach(entity -> { //draw entity
+         * entity.draw(time, camera, batch); });
+         */
     }
 
     @Override
-    public void drawUILayer (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+    public void drawUILayer(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         for (Entity entity : this.entityUILayerDrawList) {
-            //draw entity
+            // draw entity
             entity.drawUILayer(time, camera, batch);
         }
 
-        /*this.entityUILayerDrawList.stream().forEach(entity -> {
-            //draw entity
-            entity.drawUILayer(time, camera, batch);
-        });*/
+        /*
+         * this.entityUILayerDrawList.stream().forEach(entity -> { //draw entity
+         * entity.drawUILayer(time, camera, batch); });
+         */
     }
 
     @Override
     public void onEntityUpdateOrderChanged() {
-        //sort list
+        // sort list
         Collections.sort(this.entityUpdateList, new Comparator<Entity>() {
-            @Override public int compare(Entity o1, Entity o2) {
+            @Override
+            public int compare(Entity o1, Entity o2) {
                 return ((Integer) o2.getUpdateOrder().getValue()).compareTo(o1.getUpdateOrder().getValue());
             }
         });
@@ -95,9 +96,10 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
 
     @Override
     public void onEntityDrawOrderChanged() {
-        //sort list
+        // sort list
         Collections.sort(this.entityDrawList, new Comparator<Entity>() {
-            @Override public int compare(Entity o1, Entity o2) {
+            @Override
+            public int compare(Entity o1, Entity o2) {
                 return ((Integer) o2.getDrawOrder().getValue()).compareTo(o1.getDrawOrder().getValue());
             }
         });
@@ -105,25 +107,26 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
 
     @Override
     public void onEntityUILayerDrawOrderChanged() {
-        //sort list
+        // sort list
         Collections.sort(this.entityUILayerDrawList, new Comparator<Entity>() {
-            @Override public int compare(Entity o1, Entity o2) {
+            @Override
+            public int compare(Entity o1, Entity o2) {
                 return ((Integer) o2.getUILayerDrawOrder().getValue()).compareTo(o1.getUILayerDrawOrder().getValue());
             }
         });
     }
 
-    public void addEntity (final String uniqueName, final Entity entity) {
+    public void addEntity(final String uniqueName, final Entity entity) {
         if (entity == null) {
             throw new NullPointerException("entity cannot be null.");
         }
 
-        //check if unique name is already in use
+        // check if unique name is already in use
         if (this.namedEntitiesMap.get(uniqueName) != null) {
             throw new IllegalStateException("entity name '" + uniqueName + "' is already in use.");
         }
 
-        //initialize entity
+        // initialize entity
         entity.init(this.game, this);
 
         synchronized (this.entityUpdateList) {
@@ -138,27 +141,27 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
             this.entityUILayerDrawList.add(entity);
         }
 
-        //get entityID
+        // get entityID
         final long entityID = entity.getEntityID();
 
-        //add entity to maps
+        // add entity to maps
         this.entityMap.put(entityID, entity);
         this.namedEntitiesMap.put(uniqueName, entity);
 
-        //call listeners to sort lists
+        // call listeners to sort lists
         this.onEntityUpdateOrderChanged();
         this.onEntityDrawOrderChanged();
 
-        //call listeners
+        // call listeners
         this.onEntityAdded(entity);
     }
 
-    public void addEntity (Entity entity) {
+    public void addEntity(Entity entity) {
         if (entity == null) {
             throw new NullPointerException("entity cannot be null.");
         }
 
-        //initialize entity
+        // initialize entity
         entity.init(this.game, this);
 
         synchronized (this.entityUpdateList) {
@@ -173,54 +176,55 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
             this.entityUILayerDrawList.add(entity);
         }
 
-        //get entityID
+        // get entityID
         final long entityID = entity.getEntityID();
 
-        //add entity to map
+        // add entity to map
         this.entityMap.put(entityID, entity);
 
-        //call listeners to sort lists
+        // call listeners to sort lists
         this.onEntityUpdateOrderChanged();
         this.onEntityDrawOrderChanged();
 
-        //call listeners
+        // call listeners
         this.onEntityAdded(entity);
     }
 
-    public void removeEntity (Entity entity) {
+    public void removeEntity(Entity entity) {
         if (entity == null) {
             throw new NullPointerException("entity cannot be null.");
         }
 
-        //get entityID
+        // get entityID
         final long entityID = entity.getEntityID();
 
         synchronized (this.entityUpdateList) {
-            //remove entity
+            // remove entity
             this.entityUpdateList.remove(entity);
         }
 
         synchronized (this.entityDrawList) {
-            //remove entity
+            // remove entity
             this.entityDrawList.remove(entity);
         }
 
         synchronized (this.entityUILayerDrawList) {
-            //remove entity
+            // remove entity
             this.entityUILayerDrawList.remove(entity);
         }
 
         this.entityMap.remove(entityID);
 
-        //call listeners
+        // call listeners
         onEntityRemoved(entity);
 
-        //dispose entity
+        // dispose entity
         entity.dispose();
     }
 
-    @Override public void removeEntity(long entityID) {
-        //get entity by entityID
+    @Override
+    public void removeEntity(long entityID) {
+        // get entity by entityID
         Entity entity = this.entityMap.get(entityID);
 
         if (entity != null) {
@@ -228,8 +232,9 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
         }
     }
 
-    @Override public void removeEntity(final String uniqueName) {
-        //get entity by unique name
+    @Override
+    public void removeEntity(final String uniqueName) {
+        // get entity by unique name
         Entity entity = this.namedEntitiesMap.get(uniqueName);
 
         if (entity != null) {
@@ -238,27 +243,27 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     }
 
     @Override
-    public void removeAllEntities () {
-        //iterate through all entities
-        for (Map.Entry<Long,Entity> entry : this.entityMap.entrySet()) {
+    public void removeAllEntities() {
+        // iterate through all entities
+        for (Map.Entry<Long, Entity> entry : this.entityMap.entrySet()) {
             if (entry.getValue() != null) {
-                //remove entity
+                // remove entity
                 removeEntity(entry.getValue());
             }
         }
     }
 
-    protected abstract void onEntityAdded (Entity entity);
+    protected abstract void onEntityAdded(Entity entity);
 
-    protected abstract void onEntityRemoved (Entity entity);
+    protected abstract void onEntityRemoved(Entity entity);
 
     @Override
-    public BaseGame getGame () {
+    public BaseGame getGame() {
         return this.game;
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
         //
     }
 

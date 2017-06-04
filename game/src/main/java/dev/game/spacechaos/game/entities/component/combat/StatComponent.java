@@ -8,23 +8,24 @@ import dev.game.spacechaos.engine.game.BaseGame;
  * Holds statistics about the current player performance.
  * <p>
  * This component is the basis for the score calculation.
+ * 
  * @since 1.0.1-PreAlpha
  *
  */
 public class StatComponent extends BaseComponent {
 
-	private int enemyKills = 0;
+    private int enemyKills = 0;
 
-	@Override
-	protected void onInit(BaseGame game, Entity entity) {
+    @Override
+    protected void onInit(BaseGame game, Entity entity) {
 
-	}
+    }
 
-	public int getEnemyKills() {
-		return enemyKills;
-	}
+    public int getEnemyKills() {
+        return enemyKills;
+    }
 
-	public void addEnemyKill() {
-		this.enemyKills += 1;
-	}
+    public void addEnemyKill() {
+        this.enemyKills += 1;
+    }
 }

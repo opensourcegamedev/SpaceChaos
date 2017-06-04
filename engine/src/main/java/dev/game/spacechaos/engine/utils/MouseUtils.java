@@ -14,34 +14,35 @@ public class MouseUtils {
     protected static Vector3 tmpVector = new Vector3(0, 0, 0);
     protected static Vector2 tmpVector2 = new Vector2(0, 0);
 
-    public static float getMouseX (float x, CameraWrapper camera) {
-        return (x + camera.getX()) * 1 / camera.getZoom();/* - (viewportWidth / 2)*/
+    public static float getMouseX(float x, CameraWrapper camera) {
+        return (x + camera.getX()) * 1
+                / camera.getZoom();/* - (viewportWidth / 2) */
     }
 
-    public static float getMouseY (float y, CameraWrapper camera) {
-        //y = camera.getOriginalCamera().viewportHeight - y;
+    public static float getMouseY(float y, CameraWrapper camera) {
+        // y = camera.getOriginalCamera().viewportHeight - y;
         return (y + camera.getY()) * 1 / camera.getZoom();
     }
 
     @Deprecated
-    public static Vector3 getMousePositionWithCamera (Camera camera) {
+    public static Vector3 getMousePositionWithCamera(Camera camera) {
         tmpVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         return camera.unproject(tmpVector);
     }
 
-    public Vector3 getMousePositionWithCamera (CameraWrapper camera) {
+    public Vector3 getMousePositionWithCamera(CameraWrapper camera) {
         return camera.getMousePosition();
     }
 
-    public static float getRelativeMouseAngleInRadians (CameraWrapper camera, float entityX, float entityY) {
+    public static float getRelativeMouseAngleInRadians(CameraWrapper camera, float entityX, float entityY) {
         return (float) Math.toRadians(getRelativeMouseAngle(camera, entityX, entityY));
     }
 
-    public static float getRelativeMouseAngle (CameraWrapper camera, float entityX, float entityY) {
-        //get mouse position relative to entity
+    public static float getRelativeMouseAngle(CameraWrapper camera, float entityX, float entityY) {
+        // get mouse position relative to entity
         Vector2 relPos = getRelativePositionToEntity(camera, entityX, entityY);
 
-        //calculate mouse angle relative to entity
+        // calculate mouse angle relative to entity
         double angleRadians = (float) Math.atan2(relPos.y, relPos.x);
         float angle = (float) Math.toDegrees(angleRadians);
 
@@ -56,11 +57,11 @@ public class MouseUtils {
         return angle;
     }
 
-    public static Vector2 getRelativePositionToEntity(CameraWrapper camera, float entityX, float entityY){
-        //get mouse position relative to camera
+    public static Vector2 getRelativePositionToEntity(CameraWrapper camera, float entityX, float entityY) {
+        // get mouse position relative to camera
         Vector3 mousePos = camera.getMousePosition();
 
-        //calculate mouse position relative to entity
+        // calculate mouse position relative to entity
         float relX = mousePos.x - entityX;
         float relY = mousePos.y - entityY;
 

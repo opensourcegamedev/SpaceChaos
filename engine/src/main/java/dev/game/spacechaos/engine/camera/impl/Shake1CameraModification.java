@@ -25,29 +25,31 @@ public class Shake1CameraModification implements CameraModification {
     @Override
     public void onUpdate(GameTime time, TempCameraParams camera, ModificationFinishedListener listener) {
         if (!isActive) {
-            //mod isnt active, so we dont need to update mod
+            // mod isnt active, so we dont need to update mod
             return;
         }
 
         float delta = time.getDeltaTime() * 1000;
 
-        //http://www.netprogs.com/libgdx-screen-shaking/
+        // http://www.netprogs.com/libgdx-screen-shaking/
 
-        //shake only, if activated
-        if(elapsed < duration || permanentShake) {
-            // Calculate the amount of shake based on how long it has been shaking already
+        // shake only, if activated
+        if (elapsed < duration || permanentShake) {
+            // Calculate the amount of shake based on how long it has been
+            // shaking already
             float currentPower = intensity * camera.getZoom() * ((duration - elapsed) / duration);
             float x = (random.nextFloat() - 0.5f) * 2 * currentPower;
             float y = (random.nextFloat() - 0.5f) * 2 * currentPower;
             camera.translate(-x, -y);
 
             // Increase the elapsed time by the delta provided.
-            //elapsed = time.getTime() - startTime;
+            // elapsed = time.getTime() - startTime;
             elapsed += delta;
         } else {
-            //shake was finsihed
+            // shake was finsihed
             this.isActive = false;
-            //listener.onModificationFinished(this, Shake1CameraModification.class);
+            // listener.onModificationFinished(this,
+            // Shake1CameraModification.class);
         }
     }
 
@@ -56,17 +58,19 @@ public class Shake1CameraModification implements CameraModification {
 
     }
 
-    public boolean isShaking () {
+    public boolean isShaking() {
         return this.isActive;
     }
 
     /**
-    * Start the screen shaking with a given power and duration
+     * Start the screen shaking with a given power and duration
      *
-     * @param intensity How much intensity should the shaking use.
-     * @param duration Time in milliseconds the screen should shake.
-    */
-    public void shake (float intensity, float duration) {
+     * @param intensity
+     *            How much intensity should the shaking use.
+     * @param duration
+     *            Time in milliseconds the screen should shake.
+     */
+    public void shake(float intensity, float duration) {
         this.elapsed = 0;
         this.intensity = intensity;
         this.duration = duration;
@@ -75,7 +79,7 @@ public class Shake1CameraModification implements CameraModification {
         this.isActive = true;
     }
 
-    public void startPermantentShake (float intensity) {
+    public void startPermantentShake(float intensity) {
         this.elapsed = 0;
         this.intensity = intensity;
 
@@ -83,7 +87,7 @@ public class Shake1CameraModification implements CameraModification {
         this.isActive = true;
     }
 
-    public void stopPermanentShake () {
+    public void stopPermanentShake() {
         this.permanentShake = false;
     }
 

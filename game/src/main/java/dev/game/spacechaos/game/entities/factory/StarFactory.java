@@ -7,12 +7,13 @@ import dev.game.spacechaos.engine.entity.EntityManager;
 
 /**
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
 public class StarFactory {
 
-    public static Entity createStar (EntityManager ecs, float x, float y, Texture texture) {
+    public static Entity createStar(EntityManager ecs, float x, float y, Texture texture) {
         throw new UnsupportedOperationException("method isn't implemented yet.");
     }
 

@@ -19,9 +19,10 @@ public class DefaultCursorManager implements CursorManager {
     protected Pixmap newCursorImage = null;
     protected Cursor.SystemCursor cursor = null;
 
-    protected Map<Pixmap,Cursor> cursorCacheMap = new ConcurrentHashMap<>();
+    protected Map<Pixmap, Cursor> cursorCacheMap = new ConcurrentHashMap<>();
 
-    @Override public void setCursorTexture(Pixmap cursorImage) {
+    @Override
+    public void setCursorTexture(Pixmap cursorImage) {
         this.cursor = null;
 
         if (this.newCursorImage != cursorImage) {
@@ -30,7 +31,8 @@ public class DefaultCursorManager implements CursorManager {
         }
     }
 
-    @Override public void setSystemCursor(Cursor.SystemCursor cursor) {
+    @Override
+    public void setSystemCursor(Cursor.SystemCursor cursor) {
         this.newCursorImage = null;
 
         if (this.cursor != cursor) {
@@ -39,7 +41,8 @@ public class DefaultCursorManager implements CursorManager {
         }
     }
 
-    @Override public void update(BaseGame game, GameTime time) {
+    @Override
+    public void update(BaseGame game, GameTime time) {
         if (this.changed) {
             if (this.newCursorImage != null) {
                 Cursor currentCursor = this.cursorCacheMap.get(this.newCursorImage);
@@ -62,7 +65,8 @@ public class DefaultCursorManager implements CursorManager {
         this.changed = false;
     }
 
-    @Override public void resetCursor() {
+    @Override
+    public void resetCursor() {
         this.newCursorImage = null;
         this.cursor = null;
         changed = false;

@@ -28,31 +28,31 @@ public abstract class ScreenBasedGame extends BaseGame {
     }
 
     @Override
-    protected final void update (GameTime time) {
-        //update all screens
+    protected final void update(GameTime time) {
+        // update all screens
         for (IScreen screen : this.screenManager.listActiveScreens()) {
-            //update screen
+            // update screen
             screen.update(this, time);
         }
     }
 
     @Override
-    protected final void draw (GameTime time, SpriteBatch batch) {
-        //draw all screens
+    protected final void draw(GameTime time, SpriteBatch batch) {
+        // draw all screens
         for (IScreen screen : this.screenManager.listActiveScreens()) {
-            //draw screen
+            // draw screen
             screen.draw(time, batch);
         }
     }
 
     @Override
-    protected final void initGame () {
+    protected final void initGame() {
         this.onCreateScreens(this.screenManager);
     }
 
     @Override
-    protected final void destroyGame () {
-        //pause all active screens
+    protected final void destroyGame() {
+        // pause all active screens
         this.screenManager.listActiveScreens().forEach(screen -> {
             screen.onPause();
         });
@@ -60,25 +60,27 @@ public abstract class ScreenBasedGame extends BaseGame {
         this.onDestroyGame();
     }
 
-    protected abstract void onCreateScreens (ScreenManager<IScreen> screenManager);
+    protected abstract void onCreateScreens(ScreenManager<IScreen> screenManager);
 
-    public ScreenManager<IScreen> getScreenManager () {
+    public ScreenManager<IScreen> getScreenManager() {
         if (this.screenManager == null) {
-            throw new IllegalStateException("screen manager isnt initialized yet. Call constructor of ScreenBasedGame first!");
+            throw new IllegalStateException(
+                    "screen manager isnt initialized yet. Call constructor of ScreenBasedGame first!");
         }
 
         return this.screenManager;
     }
 
-    public SharedData getSharedData () {
+    public SharedData getSharedData() {
         if (this.sharedData == null) {
-            throw new IllegalStateException("shared data isnt inialized yet. Call constructor of ScreenBasedGame first!");
+            throw new IllegalStateException(
+                    "shared data isnt inialized yet. Call constructor of ScreenBasedGame first!");
         }
 
         return this.sharedData;
     }
 
-    protected void onDestroyGame () {
+    protected void onDestroyGame() {
         //
     }
 

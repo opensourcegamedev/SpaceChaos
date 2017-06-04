@@ -17,14 +17,18 @@ public class CRectangle extends CShape {
     protected float height = 0;
 
     /**
-    * default constructor
+     * default constructor
      *
-     * @param x x position of rectangle
-     * @param y position of rectangle
-     * @param width width of rectangle
-     * @param height of rectangle
-    */
-    public CRectangle (float x, float y, float width, float height) {
+     * @param x
+     *            x position of rectangle
+     * @param y
+     *            position of rectangle
+     * @param width
+     *            width of rectangle
+     * @param height
+     *            of rectangle
+     */
+    public CRectangle(float x, float y, float width, float height) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("width and height has to be greater than 0.");
         }
@@ -35,19 +39,19 @@ public class CRectangle extends CShape {
         this.height = height;
     }
 
-    public float getX () {
+    public float getX() {
         return this.x + offsetX;
     }
 
-    public float getY () {
+    public float getY() {
         return this.y + offsetY;
     }
 
-    public float getWidth () {
+    public float getWidth() {
         return this.width;
     }
 
-    public float getHeight () {
+    public float getHeight() {
         return this.height;
     }
 
@@ -64,11 +68,12 @@ public class CRectangle extends CShape {
     @Override
     public boolean overlaps(CShape obj) {
         if (obj instanceof CRectangle) {
-            //rectangle - rectangle - collision test
+            // rectangle - rectangle - collision test
             CRectangle rect = (CRectangle) obj;
 
-            //test if rectangle overlaps other rectangle
-            return x <= rect.getX() + rect.width && getX() + width >= rect.getX() && getY() <= rect.getY() + rect.height && getY() + height >= rect.getY();
+            // test if rectangle overlaps other rectangle
+            return x <= rect.getX() + rect.width && getX() + width >= rect.getX() && getY() <= rect.getY() + rect.height
+                    && getY() + height >= rect.getY();
         } else {
             throw new IllegalArgumentException("shape class " + obj.getClass() + " isnt supported.");
         }

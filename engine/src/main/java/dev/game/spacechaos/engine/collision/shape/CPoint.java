@@ -15,16 +15,16 @@ public class CPoint extends CShape {
     protected float x = 0;
     protected float y = 0;
 
-    public CPoint (float x, float y) {
+    public CPoint(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    public float getX () {
+    public float getX() {
         return this.x + offsetX;
     }
 
-    public float getY () {
+    public float getY() {
         return this.y = offsetY;
     }
 
@@ -43,11 +43,11 @@ public class CPoint extends CShape {
         if (obj instanceof CPoint) {
             CPoint point = (CPoint) obj;
 
-            //points only collide, if coordinates are equals
+            // points only collide, if coordinates are equals
             return this.x == point.x && this.y == point.y;
         } else if (obj instanceof CCircle) {
             return ColliderUtils.testCirclePointCollision((CCircle) obj, this);
-        }  else {
+        } else {
             throw new IllegalArgumentException("shape class " + obj.getClass() + " isnt supported.");
         }
     }

@@ -16,21 +16,21 @@ import dev.game.spacechaos.engine.game.BaseGame;
  */
 public class RemoveOnDeathComponent extends BaseComponent implements HPDeathListener {
 
-	@Override
-	protected void onInit(BaseGame game, Entity entity) {
-		HPComponent hpComponent = entity.getComponent(HPComponent.class);
+    @Override
+    protected void onInit(BaseGame game, Entity entity) {
+        HPComponent hpComponent = entity.getComponent(HPComponent.class);
 
-		if (hpComponent == null) {
-			throw new IllegalStateException("entity doesn't have an HPComponent.");
-		}
+        if (hpComponent == null) {
+            throw new IllegalStateException("entity doesn't have an HPComponent.");
+        }
 
-		hpComponent.addDeathListener(this);
-	}
+        hpComponent.addDeathListener(this);
+    }
 
-	@Override
-	public void onDeath(Entity causingEntity) {
-		game.runOnUIThread(() -> {
-			this.entity.getEntityComponentSystem().removeEntity(this.entity);
-		});
-	}
+    @Override
+    public void onDeath(Entity causingEntity) {
+        game.runOnUIThread(() -> {
+            this.entity.getEntityComponentSystem().removeEntity(this.entity);
+        });
+    }
 }

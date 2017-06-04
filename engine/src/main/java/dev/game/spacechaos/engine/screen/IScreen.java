@@ -11,33 +11,33 @@ import dev.game.spacechaos.engine.time.GameTime;
 public interface IScreen {
 
     /**
-    * initialize game screen
-    */
+     * initialize game screen
+     */
     public void init(ScreenBasedGame game, AssetManager assetManager);
 
     /**
-    * update game screen
-    */
+     * update game screen
+     */
     public void update(ScreenBasedGame game, GameTime time);
 
     /**
-    * draw game screen
-    */
+     * draw game screen
+     */
     public void draw(GameTime time, SpriteBatch batch);
 
     /**
-    * pause screen and switch to another screen
-    */
+     * pause screen and switch to another screen
+     */
     public void onPause();
 
     /**
-    * screen was pushed, so we have to resume this game screen
-    */
+     * screen was pushed, so we have to resume this game screen
+     */
     public void onResume();
 
     /**
-    * destroy game screen
-    */
+     * destroy game screen
+     */
     public void destroy();
 
 }

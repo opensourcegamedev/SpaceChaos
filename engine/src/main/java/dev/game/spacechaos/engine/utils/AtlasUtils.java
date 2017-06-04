@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class AtlasUtils {
 
-    public static Map<String,Integer> getAvailableAnimations (String atlasFile) throws IOException {
-        //create new empty list
-        Map<String,Integer> map = new HashMap<>();
+    public static Map<String, Integer> getAvailableAnimations(String atlasFile) throws IOException {
+        // create new empty list
+        Map<String, Integer> map = new HashMap<>();
 
         File f = new File(atlasFile);
 
@@ -25,33 +25,34 @@ public class AtlasUtils {
         }
 
         if (!f.canRead()) {
-            throw new FilePermissionException("Cannot read atlas file, please set right permissions for atlas file: " + atlasFile);
+            throw new FilePermissionException(
+                    "Cannot read atlas file, please set right permissions for atlas file: " + atlasFile);
         }
 
-        //read all lines from file
+        // read all lines from file
         List<String> lines = FileUtils.readLines(f.getAbsolutePath(), StandardCharsets.ISO_8859_1);
 
         int lineCounter = 0;
 
-        //iterate through all lines
+        // iterate through all lines
         for (String line : lines) {
             lineCounter++;
 
             if (lineCounter < 5) {
-                //skip line, because it belongs to header
+                // skip line, because it belongs to header
                 continue;
             }
 
             if (!line.startsWith(" ")) {
-                //line is an animation name
+                // line is an animation name
                 if (!map.containsKey(line)) {
-                    //add animation name to map with first frame
+                    // add animation name to map with first frame
                     map.put(line, 1);
                 } else {
-                    //get last frame counter
+                    // get last frame counter
                     Integer lastCounter = map.get(line);
 
-                    //increment frame counter, because we add an new frame
+                    // increment frame counter, because we add an new frame
                     lastCounter++;
 
                     map.put(line, lastCounter);

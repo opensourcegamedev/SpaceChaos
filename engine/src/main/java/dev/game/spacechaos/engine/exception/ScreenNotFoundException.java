@@ -5,7 +5,7 @@ package dev.game.spacechaos.engine.exception;
  */
 public class ScreenNotFoundException extends RuntimeException {
 
-    public ScreenNotFoundException (String message) {
+    public ScreenNotFoundException(String message) {
         super(message);
     }
 

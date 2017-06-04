@@ -95,7 +95,7 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
     }
 
     public void setRotationAngle(float angle) {
-        //normalize angle
+        // normalize angle
         if (angle < 0) {
             float abs = Math.abs(angle);
 
@@ -104,7 +104,7 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
             angle += 360;
         }
 
-        //set angle
+        // set angle
         this.angle = angle % 360;
     }
 

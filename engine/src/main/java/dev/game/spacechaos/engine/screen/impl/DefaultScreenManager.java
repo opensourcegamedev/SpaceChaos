@@ -15,30 +15,31 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class DefaultScreenManager implements ScreenManager<IScreen> {
 
     /**
-    * map with all initialized screens
-    */
-    protected Map<String,IScreen> screens = new ConcurrentHashMap<>();
+     * map with all initialized screens
+     */
+    protected Map<String, IScreen> screens = new ConcurrentHashMap<>();
 
     /**
-    * list with all active screens
-    */
+     * list with all active screens
+     */
     protected Deque<IScreen> activeScreens = new ConcurrentLinkedDeque<>();
 
     /**
-    * only for performance improvements!
+     * only for performance improvements!
      *
      * caching list
-    */
+     */
     protected List<IScreen> cachedScreenList = new ArrayList<>();
 
     protected final ScreenBasedGame game;
 
-    public DefaultScreenManager (ScreenBasedGame game) {
+    public DefaultScreenManager(ScreenBasedGame game) {
         this.game = game;
     }
 
-    @Override public void addScreen(String name, IScreen screen) {
-        //initialize screen first
+    @Override
+    public void addScreen(String name, IScreen screen) {
+        // initialize screen first
         screen.init(game, game.getAssetManager());
 
         this.screens.put(name, screen);
@@ -46,7 +47,8 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         this.cachedScreenList.add(screen);
     }
 
-    @Override public void removeScreen(String name) {
+    @Override
+    public void removeScreen(String name) {
         IScreen screen = this.screens.get(name);
 
         this.screens.remove(screen);
@@ -58,11 +60,13 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         }
     }
 
-    @Override public void push(String name) {
+    @Override
+    public void push(String name) {
         IScreen screen = this.screens.get(name);
 
         if (screen == null) {
-            throw new ScreenNotFoundException("Couldnt found initialized screen '" + name + "', add screen with method addScreen() first.");
+            throw new ScreenNotFoundException(
+                    "Couldnt found initialized screen '" + name + "', add screen with method addScreen() first.");
         }
 
         screen.onResume();
@@ -70,20 +74,22 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         this.activeScreens.push(screen);
     }
 
-    @Override public void leaveAllAndEnter(String name) {
-        //leave all active game states
+    @Override
+    public void leaveAllAndEnter(String name) {
+        // leave all active game states
         IScreen screen = pop();
 
-        //pop and pause all active screens
+        // pop and pause all active screens
         while (this.pop() != null) {
             screen = pop();
         }
 
-        //push new screen
+        // push new screen
         this.push(name);
     }
 
-    @Override public IScreen pop() {
+    @Override
+    public IScreen pop() {
         IScreen screen = this.activeScreens.poll();
 
         if (screen != null) {
@@ -93,11 +99,13 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         return screen;
     }
 
-    @Override public Collection<IScreen> listScreens() {
+    @Override
+    public Collection<IScreen> listScreens() {
         return this.cachedScreenList;
     }
 
-    @Override public Collection<IScreen> listActiveScreens() {
+    @Override
+    public Collection<IScreen> listActiveScreens() {
         return this.activeScreens;
     }
 

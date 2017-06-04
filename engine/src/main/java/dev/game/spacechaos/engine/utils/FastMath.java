@@ -10,9 +10,9 @@ import dev.game.spacechaos.engine.collision.pool.Vector2Pool;
 public class FastMath {
 
     /**
-    * rotate vector with 90 degrees
-    */
-    public static Vector2 rotateVector90 (Vector2 v, Vector2 newVector) {
+     * rotate vector with 90 degrees
+     */
+    public static Vector2 rotateVector90(Vector2 v, Vector2 newVector) {
         float x = -v.y;
         float y = v.x;
         newVector.set(x, y);
@@ -23,15 +23,15 @@ public class FastMath {
     /**
      * rotate vector with 90 degrees
      */
-    public static Vector2 rotateVector90 (Vector2 v) {
+    public static Vector2 rotateVector90(Vector2 v) {
         return rotateVector90(v, Vector2Pool.create());
     }
 
-    public static boolean checkVectorsParallel (Vector2 v1, Vector2 v2) {
-        //rotate vector 90 degrees
+    public static boolean checkVectorsParallel(Vector2 v1, Vector2 v2) {
+        // rotate vector 90 degrees
         Vector2 rotatedVector1 = rotateVector90(v1, Vector2Pool.create());
 
-        //2 vectors are parallel, if dot product = 0
+        // 2 vectors are parallel, if dot product = 0
         float dotProduct = rotatedVector1.dot(v2);
 
         Vector2Pool.free(rotatedVector1);
@@ -39,8 +39,8 @@ public class FastMath {
         return dotProduct == 0;
     }
 
-    public static boolean checkIfLinesAreEquals (Line a, Line b) {
-        //check if lines are parallel, else they cannot be equals
+    public static boolean checkIfLinesAreEquals(Line a, Line b) {
+        // check if lines are parallel, else they cannot be equals
         if (!checkVectorsParallel(a.getDirection(), b.getDirection())) {
             return false;
         }

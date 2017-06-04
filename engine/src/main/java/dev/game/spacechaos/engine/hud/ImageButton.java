@@ -13,7 +13,6 @@ import dev.game.spacechaos.engine.time.GameTime;
 @Deprecated
 public class ImageButton {
 
-
     protected float x = 0;
     protected float y = 0;
     protected float width = 200;
@@ -24,7 +23,7 @@ public class ImageButton {
 
     protected ClickListener clickListener = null;
 
-    //assets
+    // assets
     protected Texture bgTexture = null;
     protected Texture hoverTexture = null;
     protected BitmapFont font = null;
@@ -38,17 +37,17 @@ public class ImageButton {
         this.text = text;
     }
 
-    public void setPosition (float x, float y) {
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    public void update (BaseGame game, GameTime time) {
-        //get mouse coordinates
+    public void update(BaseGame game, GameTime time) {
+        // get mouse coordinates
         float mouseX = Gdx.input.getX();
         float mouseY = game.getViewportHeight() - Gdx.input.getY();
 
-        //check if mouse is inner button
+        // check if mouse is inner button
         if (isInner(mouseX, mouseY)) {
             this.hovered = true;
         } else {
@@ -62,9 +61,9 @@ public class ImageButton {
         } else {
             this.isClicked = false;
 
-            //check if user has released button
+            // check if user has released button
             if (oldClicked == true) {
-                //user has clicked button
+                // user has clicked button
                 if (clickListener != null) {
                     clickListener.onClick();
                 }
@@ -72,8 +71,8 @@ public class ImageButton {
         }
     }
 
-    public void draw (GameTime time, SpriteBatch batch) {
-        //draw background texture
+    public void draw(GameTime time, SpriteBatch batch) {
+        // draw background texture
         if (hovered) {
             batch.draw(this.hoverTexture, x, y);
         } else {
@@ -82,16 +81,16 @@ public class ImageButton {
 
         float paddingBottom = (this.height / 2) - 32;
 
-        //draw icon
+        // draw icon
         if (iconTexture != null) {
             batch.draw(iconTexture, x + 10, y + paddingBottom);
         }
 
-        //draw button text
+        // draw button text
         this.font.draw(batch, text, x + 80, y + 60);
     }
 
-    protected boolean isInner (float mouseX, float mouseY) {
+    protected boolean isInner(float mouseX, float mouseY) {
         if (mouseX >= x && mouseX <= (x + width)) {
             if (mouseY >= y && mouseY <= (y + height)) {
                 return true;
@@ -101,11 +100,11 @@ public class ImageButton {
         return false;
     }
 
-    public void setClickListener (ClickListener listener) {
+    public void setClickListener(ClickListener listener) {
         this.clickListener = listener;
     }
 
-    public void setIcon (Texture iconTexture) {
+    public void setIcon(Texture iconTexture) {
         this.iconTexture = iconTexture;
     }
 

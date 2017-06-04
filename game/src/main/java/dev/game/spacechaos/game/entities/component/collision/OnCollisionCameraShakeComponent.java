@@ -12,7 +12,8 @@ import dev.game.spacechaos.engine.game.BaseGame;
 /**
  * Shakes the player's camera on colliding with specific entities.
  *
- * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
+ * @author SpaceChaos-Team
+ *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
 @RequiredComponents(components = CollisionComponent.class)
@@ -31,17 +32,18 @@ public class OnCollisionCameraShakeComponent extends BaseComponent implements Co
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
-        /*if (entity.getComponent(AttackComponent.class) != null || otherEntity.getComponent(AttackComponent.class) != null) {
-            //don't shake camera, if projectile collides
-            return;
-        }*/
+        /*
+         * if (entity.getComponent(AttackComponent.class) != null ||
+         * otherEntity.getComponent(AttackComponent.class) != null) { //don't
+         * shake camera, if projectile collides return; }
+         */
 
         if (otherEntity.getComponent(AvoidCollisionCameraShakeComponent.class) != null) {
-            //don't shake camera
+            // don't shake camera
             return;
         }
 
-        //shake camera
+        // shake camera
         game.getCamera().activateMod(Shake1CameraModification.class);
         game.getCamera().getMod(Shake1CameraModification.class).shake(10, 500);
     }

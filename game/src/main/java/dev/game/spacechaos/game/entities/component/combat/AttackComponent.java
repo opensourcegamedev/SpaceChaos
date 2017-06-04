@@ -16,49 +16,49 @@ import dev.game.spacechaos.engine.game.BaseGame;
  */
 public class AttackComponent extends BaseComponent implements CollisionListener {
 
-	private Entity ownerEntity = null;
-	private float reduceHP = 0;
+    private Entity ownerEntity = null;
+    private float reduceHP = 0;
 
-	public AttackComponent(Entity ownerEntity, float reduceHP) {
-		this.ownerEntity = ownerEntity;
-		this.reduceHP = reduceHP;
-	}
+    public AttackComponent(Entity ownerEntity, float reduceHP) {
+        this.ownerEntity = ownerEntity;
+        this.reduceHP = reduceHP;
+    }
 
-	@Override
-	protected void onInit(BaseGame game, Entity entity) {
-		CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
+    @Override
+    protected void onInit(BaseGame game, Entity entity) {
+        CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
 
-		if (collisionComponent == null) {
-			throw new IllegalStateException("entity doesn't have an CollisionComponent.");
-		}
+        if (collisionComponent == null) {
+            throw new IllegalStateException("entity doesn't have an CollisionComponent.");
+        }
 
-		// register collision listener
-		collisionComponent.addCollisionListener(this);
-	}
+        // register collision listener
+        collisionComponent.addCollisionListener(this);
+    }
 
-	@Override
-	public void onEnter(Entity entity, Entity otherEntity) {
-		// don't attack shuttles, which fires this entity
-		if (otherEntity == ownerEntity) {
-			return;
-		}
+    @Override
+    public void onEnter(Entity entity, Entity otherEntity) {
+        // don't attack shuttles, which fires this entity
+        if (otherEntity == ownerEntity) {
+            return;
+        }
 
-		HPComponent hpComponent = otherEntity.getComponent(HPComponent.class);
-		if (hpComponent == null) {
-			// don't reduce HP, maybe its an meteorite
-			return;
-		}
+        HPComponent hpComponent = otherEntity.getComponent(HPComponent.class);
+        if (hpComponent == null) {
+            // don't reduce HP, maybe its an meteorite
+            return;
+        }
 
-		hpComponent.subHP(this.reduceHP, entity);
-	}
+        hpComponent.subHP(this.reduceHP, entity);
+    }
 
-	@Override
-	public void onStay(Entity entity, Entity otherEntity) {
+    @Override
+    public void onStay(Entity entity, Entity otherEntity) {
 
-	}
+    }
 
-	@Override
-	public void onExit(Entity entity, Entity otherEntity) {
+    @Override
+    public void onExit(Entity entity, Entity otherEntity) {
 
-	}
+    }
 }

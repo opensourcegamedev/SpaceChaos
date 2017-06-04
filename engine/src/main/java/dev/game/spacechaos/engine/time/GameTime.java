@@ -14,29 +14,29 @@ public class GameTime {
 
     protected static GameTime instance = null;
 
-    protected GameTime () {
-        //set time, when game was started
+    protected GameTime() {
+        // set time, when game was started
         this.appStartUpTime = System.currentTimeMillis();
     }
 
-    public void update () {
+    public void update() {
         this.time = System.currentTimeMillis();
         this.delta = Gdx.graphics.getDeltaTime();
     }
 
-    public long getTime () {
+    public long getTime() {
         return this.time;
     }
 
-    public float getDeltaTime () {
+    public float getDeltaTime() {
         return this.delta;
     }
 
-    public long getStartUpTime () {
+    public long getStartUpTime() {
         return this.appStartUpTime;
     }
 
-    public static GameTime getInstance () {
+    public static GameTime getInstance() {
         if (instance == null) {
             instance = new GameTime();
         }
