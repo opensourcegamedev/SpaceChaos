@@ -1,7 +1,9 @@
 package dev.game.spacechaos.engine.entity.listener;
 
 /**
- * Created by Justin on 10.02.2017.
+ * The listener interface for receiving entity movement events.
+ *
+ * @since 1.0.0-PreAlpha
  */
 public interface PositionChangedListener {
 

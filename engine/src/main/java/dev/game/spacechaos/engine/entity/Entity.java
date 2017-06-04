@@ -127,7 +127,7 @@ public class Entity {
                 for (Class<? extends IComponent> classType : requiredComponents.components()) {
                     //check if class type is present
                     if (!componentMap.containsKey(classType)) {
-                        throw new RequiredComponentNotFoundException("component '" + classType.getName() + "' is required by component '" + cls.getName() + "', but doesnt exists.");
+                        throw new RequiredComponentNotFoundException("component '" + classType.getName() + "' is required by component '" + cls.getName() + "', but doesn't exists.");
                     }
                 }
             }

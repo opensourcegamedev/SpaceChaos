@@ -6,8 +6,9 @@ import dev.game.spacechaos.engine.entity.listener.HPDeathListener;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
- * Adds an remove-component to an entity, so if it gets destroyed, it will be
- * removed from the game.
+ * Removes an entity from the game if it dies.
+ * <p>
+ * Requires a {@linkplain HPComponent health component}.
  *
  * @author SpaceChaos-Team
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)

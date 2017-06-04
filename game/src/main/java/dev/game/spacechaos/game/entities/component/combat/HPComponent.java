@@ -11,7 +11,7 @@ import dev.game.spacechaos.engine.entity.listener.UpdateHPListener;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
- * Adds a health-component to an entity so it could be destroyed.
+ * Adds a health-component to an entity so it can be destroyed.
  *
  * @author SpaceChaos-Team
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
