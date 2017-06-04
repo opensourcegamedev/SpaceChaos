@@ -1,4 +1,4 @@
-package dev.game.spacechaos.engine.entity.listener;
+package dev.game.spacechaos.game.entity.listener;
 
 import dev.game.spacechaos.engine.entity.Entity;
 

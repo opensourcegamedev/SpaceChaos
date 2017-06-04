@@ -13,12 +13,12 @@ import dev.game.spacechaos.engine.entity.component.draw.MouseDependentDrawRotati
 import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMovementComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.OnCollisionPlaySoundComponent;
-import dev.game.spacechaos.engine.entity.listener.HPDeathListener;
 import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraShakeComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
+import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 
 /**
  * Creates a new player entity.

@@ -1,4 +1,4 @@
-package dev.game.spacechaos.engine.entity.listener;
+package dev.game.spacechaos.game.entity.listener;
 
 /**
  * The listener interface for receiving health update events.

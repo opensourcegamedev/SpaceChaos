@@ -10,13 +10,13 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
-import dev.game.spacechaos.engine.entity.listener.HPDeathListener;
 import dev.game.spacechaos.game.entities.component.ai.EnemyShuttleAIComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnDeathComponent;
 import dev.game.spacechaos.game.entities.component.combat.RewardComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
+import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 
 /**
  * Creates the new enemy entities.

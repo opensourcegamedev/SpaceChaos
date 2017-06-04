@@ -2,8 +2,8 @@ package dev.game.spacechaos.game.entities.component.combat;
 
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
-import dev.game.spacechaos.engine.entity.listener.HPDeathListener;
 import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 
 /**
  * Removes an entity from the game if it dies.

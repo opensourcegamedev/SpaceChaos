@@ -5,10 +5,10 @@ import java.util.List;
 
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
-import dev.game.spacechaos.engine.entity.listener.HPDeathListener;
-import dev.game.spacechaos.engine.entity.listener.HPHitListener;
-import dev.game.spacechaos.engine.entity.listener.UpdateHPListener;
 import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.game.entity.listener.HPDeathListener;
+import dev.game.spacechaos.game.entity.listener.HPHitListener;
+import dev.game.spacechaos.game.entity.listener.UpdateHPListener;
 
 /**
  * Adds a health-component to an entity so it can be destroyed.
