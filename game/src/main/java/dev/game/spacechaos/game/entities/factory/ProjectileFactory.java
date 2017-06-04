@@ -21,7 +21,7 @@ import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
  * Creates different types of projectiles shot by real players or enemy-AIs.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class ProjectileFactory {
 

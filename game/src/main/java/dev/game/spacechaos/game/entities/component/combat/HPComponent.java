@@ -13,7 +13,7 @@ import java.util.List;
  * Adds a health-component to an entity so it could be destroyed.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class HPComponent extends BaseComponent {
 

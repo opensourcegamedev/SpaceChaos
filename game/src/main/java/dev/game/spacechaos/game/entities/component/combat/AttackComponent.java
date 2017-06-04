@@ -10,7 +10,7 @@ import dev.game.spacechaos.engine.game.BaseGame;
  * Adds an attack-component to entities which are able to shoot.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class AttackComponent extends BaseComponent implements CollisionListener {
 

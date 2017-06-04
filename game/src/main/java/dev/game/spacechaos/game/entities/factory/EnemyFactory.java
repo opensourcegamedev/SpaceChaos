@@ -21,7 +21,7 @@ import dev.game.spacechaos.game.entities.listener.EntityRemoveListener;
  * Creating a new entity which follows the player and tries to shoot him.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class EnemyFactory {
 

@@ -10,7 +10,7 @@ import dev.game.spacechaos.engine.game.BaseGame;
  * Adds an health-reducing-component to an entity so it gets damage and later, destroyed.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class ReduceHPOnCollisionComponent extends BaseComponent implements CollisionListener {
 

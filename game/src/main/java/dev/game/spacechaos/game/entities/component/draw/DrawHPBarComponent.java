@@ -17,7 +17,7 @@ import dev.game.spacechaos.game.entities.component.combat.HPComponent;
  * Draws the health-bar of the entity added to.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerComponent {
 

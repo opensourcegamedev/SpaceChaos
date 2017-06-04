@@ -10,7 +10,7 @@ import dev.game.spacechaos.game.entities.listener.EntityRemoveListener;
  * Adds an remove-component to an entity, so if it gets destroyed, it will be removed from the game.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class RemoveOnHitComponent extends BaseComponent implements HPHitListener {
 

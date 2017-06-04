@@ -19,7 +19,7 @@ import dev.game.spacechaos.engine.time.GameTime;
  * The screen shown when you died contains a button to restart and a label which shows the time you survived.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class GameoverScreen extends BaseScreen {
 

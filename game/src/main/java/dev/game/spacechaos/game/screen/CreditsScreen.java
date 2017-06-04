@@ -23,7 +23,7 @@ import java.util.List;
 /**
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class CreditsScreen extends BaseScreen {
 

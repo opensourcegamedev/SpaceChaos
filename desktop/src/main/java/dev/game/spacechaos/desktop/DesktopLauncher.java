@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
  * Starts the application for the desktop-based builds.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class DesktopLauncher {
 

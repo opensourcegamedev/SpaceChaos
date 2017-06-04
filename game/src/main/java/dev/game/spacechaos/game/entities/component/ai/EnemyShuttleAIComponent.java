@@ -21,7 +21,7 @@ import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
  * Adds an AI-component to an entity, so it follows the player in a specific, non-suicidal way.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateComponent {
 

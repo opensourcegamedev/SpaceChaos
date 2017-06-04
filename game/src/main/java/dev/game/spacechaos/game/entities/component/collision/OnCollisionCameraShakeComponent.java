@@ -13,7 +13,7 @@ import dev.game.spacechaos.engine.game.BaseGame;
  * Shakes the player's camera on colliding with specific entities.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 @RequiredComponents(components = CollisionComponent.class)
 public class OnCollisionCameraShakeComponent extends BaseComponent implements CollisionListener {
