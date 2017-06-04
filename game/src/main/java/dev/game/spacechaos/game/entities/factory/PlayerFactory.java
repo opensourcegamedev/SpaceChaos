@@ -17,7 +17,7 @@ import dev.game.spacechaos.engine.entity.listener.HPDeathListener;
 import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraShakeComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
-import dev.game.spacechaos.game.entities.component.combat.StatComponent;
+import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 
 /**
@@ -80,7 +80,7 @@ public class PlayerFactory {
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
 
         // add component for score
-        player.addComponent(new StatComponent());
+        player.addComponent(new ScoreComponent());
 
         return player;
     }

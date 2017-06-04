@@ -15,7 +15,7 @@ import dev.game.spacechaos.engine.hud.HUD;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
-import dev.game.spacechaos.game.entities.component.combat.StatComponent;
+import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 
 /**
@@ -46,7 +46,7 @@ public class HUDOverlayScreen extends BaseScreen {
 
     private HPComponent hpComponent = null;
 
-    private StatComponent statComponent = null;
+    private ScoreComponent scoreComponent = null;
 
     private HUD hud = null;
     private ShapeRenderer shapeRenderer = null;
@@ -82,7 +82,7 @@ public class HUDOverlayScreen extends BaseScreen {
         // get player entity and health component
         Entity playerEntity = game.getSharedData().get("playerEntity", Entity.class);
         this.hpComponent = playerEntity.getComponent(HPComponent.class);
-        this.statComponent = playerEntity.getComponent(StatComponent.class);
+        this.scoreComponent = playerEntity.getComponent(ScoreComponent.class);
 
         // set values and add listener to auto update values on change
         this.filledBar.setMaxValue(this.hpComponent.getMaxHP());
@@ -104,7 +104,6 @@ public class HUDOverlayScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
-
         this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedosLeft());
 
         // calculate elapsed time
@@ -129,7 +128,7 @@ public class HUDOverlayScreen extends BaseScreen {
 
         game.getSharedData().put("lastElapsedTimeText", this.timeText);
 
-        this.scoreText = "SCORE: " + String.valueOf((statComponent.getEnemyKills() * 50) + (this.elapsedTime / 100));
+        this.scoreText = "SCORE: " + String.valueOf(scoreComponent.getScore() + (this.elapsedTime / 100));
         game.getSharedData().put("score", this.scoreText.substring(7));
 
         // update HUD

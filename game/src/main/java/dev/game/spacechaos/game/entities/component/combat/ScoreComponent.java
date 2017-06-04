@@ -12,20 +12,25 @@ import dev.game.spacechaos.engine.game.BaseGame;
  * @since 1.0.1-PreAlpha
  *
  */
-public class StatComponent extends BaseComponent {
+public class ScoreComponent extends BaseComponent {
 
-    private int enemyKills = 0;
+    private int score = 0;
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
 
     }
 
-    public int getEnemyKills() {
-        return enemyKills;
+    public int getScore() {
+        return score;
     }
 
-    public void addEnemyKill() {
-        this.enemyKills += 1;
+    public void setScore(int score) {
+        this.score = score;
     }
+    
+    public void addScore(int score) {
+        this.score += score;
+    }
+
 }

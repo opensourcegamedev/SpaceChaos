@@ -30,7 +30,6 @@ import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.engine.utils.SpawnUtils;
-import dev.game.spacechaos.game.entities.component.combat.StatComponent;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
 import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
@@ -198,10 +197,6 @@ public class GameScreen extends BaseScreen {
                         assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity, projectileTexture,
                         (Entity causingEntity) -> {
                             spawnEnemyShuttles(1);
-                            StatComponent statsComp = causingEntity.getComponent(StatComponent.class);
-                            if (statsComp != null) {
-                                statsComp.addEnemyKill();
-                            }
                         });
                 this.ecs.addEntity(enemyEntity);
 
