@@ -6,7 +6,7 @@ import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.annotation.ThreadSafeComponent;
 import dev.game.spacechaos.engine.entity.listener.PositionChangedListener;
-import dev.game.spacechaos.engine.exception.InvalideJSONException;
+import dev.game.spacechaos.engine.exception.InvalidJSONException;
 import dev.game.spacechaos.engine.exception.ReadOnlyException;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.json.JSONLoadable;
@@ -289,7 +289,7 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         }
 
         if (!json.has("x") || !json.has("y")) {
-            throw new InvalideJSONException("JSON for PositionComponent is invalide! x and y position has to be set.");
+            throw new InvalidJSONException("JSON for PositionComponent is invalide! x and y position has to be set.");
         }
 
         this.x = Float.parseFloat(json.getString("x"));
