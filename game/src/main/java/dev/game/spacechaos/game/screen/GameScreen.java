@@ -30,7 +30,7 @@ import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.engine.utils.SpawnUtils;
-import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
+import dev.game.spacechaos.game.entities.component.combat.StatComponent;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
 import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
@@ -41,7 +41,7 @@ import dev.game.spacechaos.game.skybox.SkyBox;
  * This Screen is the singleplayer-mainscreen.
  *
  * @author SpaceChaos-Team (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @version 1.0.0-PreAlpha
+ * @since 1.0.0-PreAlpha
  */
 public class GameScreen extends BaseScreen {
 
@@ -199,7 +199,7 @@ public class GameScreen extends BaseScreen {
                         (Entity entity) -> {
                             //respawn shuttle
                             spawnEnemyShuttles(1);
-                            playerEntity.getComponent(ScoreComponent.class).addToScore(50);
+                            playerEntity.getComponent(StatComponent.class).addEnemyKill();
                         });
                 this.ecs.addEntity(enemyEntity);
 
