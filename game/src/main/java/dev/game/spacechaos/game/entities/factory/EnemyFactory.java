@@ -18,7 +18,9 @@ import dev.game.spacechaos.game.entities.component.combat.RemoveOnDeathComponent
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 
 /**
- * Creating a new entity which follows the player and tries to shoot him.
+ * Creates the new enemy entities.
+ * <p>
+ * Enemies follow the player and shoot him.
  *
  * @author SpaceChaos-Team
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)

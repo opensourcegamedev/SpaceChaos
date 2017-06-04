@@ -21,7 +21,7 @@ import dev.game.spacechaos.game.entities.component.combat.StatComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 
 /**
- * Creates a new entity controlled by the mouse representing the player.
+ * Creates a new player entity.
  *
  * @author SpaceChaos-Team
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
