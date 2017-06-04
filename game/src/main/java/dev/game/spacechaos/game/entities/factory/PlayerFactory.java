@@ -1,8 +1,11 @@
 package dev.game.spacechaos.game.entities.factory;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
@@ -19,8 +22,10 @@ import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
-import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
+import dev.game.spacechaos.game.entity.listener.HPDeathListener;
+import dev.game.spacechaos.game.fx.BaseParticleEffect;
+import dev.game.spacechaos.game.fx.MouseDependentParticleEffect;
 
 /**
  * Creates a new player entity.
@@ -32,7 +37,7 @@ import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 public class PlayerFactory {
 
     public static Entity createPlayer(EntityManager ecs, float x, float y, Texture texture,
-                                      HPDeathListener hpDeathListener) {
+            HPDeathListener hpDeathListener) {
         // create new entity
         Entity player = new Entity(ecs);
 
@@ -84,10 +89,15 @@ public class PlayerFactory {
         // add component for score
         player.addComponent(new ScoreComponent());
 
-        //add component for flame particles
+        // add component for flame particles
         ParticleEffect flameEffect = new ParticleEffect();
         flameEffect.load(Gdx.files.internal("./data/particles/flameBlue.p"), Gdx.files.internal(""));
-        player.addComponent(new ParticleComponent(flameEffect, texture.getWidth() / 2 - 12, texture.getHeight() / 2 - 12));
+        ArrayList<BaseParticleEffect> effects = new ArrayList<BaseParticleEffect>();
+        effects.add(new MouseDependentParticleEffect(flameEffect, texture.getWidth() / 2 - 12,
+                texture.getHeight() / 2 - 12, 0.7f, -9, -15));
+        effects.add(new MouseDependentParticleEffect(flameEffect, texture.getWidth() / 2 - 12,
+                texture.getHeight() / 2 - 12, 0.7f, 9, 15));
+        player.addComponent(new ParticleComponent(effects));
 
         return player;
     }

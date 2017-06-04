@@ -1,6 +1,8 @@
 package dev.game.spacechaos.game.entities.factory;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
@@ -16,6 +18,9 @@ import dev.game.spacechaos.engine.entity.component.sound.AvoidCollisionSoundComp
 import dev.game.spacechaos.engine.entity.component.utils.TimedAutoRemoveComponent;
 import dev.game.spacechaos.game.entities.component.collision.AvoidCollisionCameraShakeComponent;
 import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
+import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
+import dev.game.spacechaos.game.fx.BaseParticleEffect;
+import dev.game.spacechaos.game.fx.MovementDirectionBasedParticleEffect;
 
 /**
  * Creates different types of projectiles shot by real players or enemy-AIs.
@@ -161,6 +166,14 @@ public class ProjectileFactory {
 
         // add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(3000L));
+
+        // add component for smoke particles
+        // create smoke effect
+        ParticleEffect smokeEffect = new ParticleEffect();
+        smokeEffect.load(Gdx.files.internal("./data/particles/smokeGrey.p"), Gdx.files.internal(""));
+        BaseParticleEffect particleEffect = new MovementDirectionBasedParticleEffect(smokeEffect,
+                texture.getWidth() / 2 - 12, texture.getHeight() / 2 - 12);
+        projectileEntity.addComponent(new ParticleComponent(particleEffect));
 
         torpedosLeft--;
 
