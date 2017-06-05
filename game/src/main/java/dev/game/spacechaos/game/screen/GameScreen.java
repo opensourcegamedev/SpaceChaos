@@ -9,8 +9,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -35,7 +33,6 @@ import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 import dev.game.spacechaos.game.skybox.SkyBox;
-
 /**
  * This Screen is the singleplayer-mainscreen.
  *
@@ -49,7 +46,8 @@ public class GameScreen extends BaseScreen {
     private static final String SKYBOX_2 = "./data/images/skybox/space/space-1.png";
     private static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/pfau/shuttle.png";
     private static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
-    private static final String PROJECTILE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
+    private static final String PROJECTILE_BLUE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
+    private static final String PROJECTILE_RED_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
     private static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
     private static final String[] ASTEROID_IMAGE_PATHS = {"./data/images/entities/asteroids/1.png",
             "./data/images/entities/asteroids/2.png", "./data/images/entities/asteroids/3.png",
@@ -64,7 +62,8 @@ public class GameScreen extends BaseScreen {
     private static final Color COLLISION_BOX_COLOR = Color.BLUE;
     private static final Color IN_COLLISION_COLOR = Color.YELLOW;
 
-    private Texture projectileTexture = null;
+    private Texture projectileBlueTexture = null;
+    private Texture projectileRedTexture = null;
     private Texture torpedoTexture = null;
 
     private SkyBox skyBox = null;
@@ -87,6 +86,7 @@ public class GameScreen extends BaseScreen {
 
     // list with all enemy entities
     private List<Entity> enemyEntityList = new ArrayList<>();
+    private List<Entity> meteorEntityList = new ArrayList<>();
 
     public GameScreen() {
         // create shape renderer
@@ -102,7 +102,8 @@ public class GameScreen extends BaseScreen {
         assetManager.load(SKYBOX_2, Texture.class);
         assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
         assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
-        assetManager.load(PROJECTILE_IMAGE_PATH, Texture.class);
+        assetManager.load(PROJECTILE_BLUE_IMAGE_PATH, Texture.class);
+        assetManager.load(PROJECTILE_RED_IMAGE_PATH, Texture.class);
         assetManager.load(TORPEDO_IMAGE_PATH, Texture.class);
 
         // load meteorits
@@ -123,7 +124,8 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(SKYBOX_2);
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
-        assetManager.finishLoadingAsset(PROJECTILE_IMAGE_PATH);
+        assetManager.finishLoadingAsset(PROJECTILE_BLUE_IMAGE_PATH);
+        assetManager.finishLoadingAsset(PROJECTILE_RED_IMAGE_PATH);
         assetManager.finishLoadingAsset(TORPEDO_IMAGE_PATH);
         for (String ASTEROID_IMAGE_PATH : ASTEROID_IMAGE_PATHS) {
             assetManager.finishLoadingAsset(ASTEROID_IMAGE_PATH);
@@ -140,7 +142,8 @@ public class GameScreen extends BaseScreen {
         this.collisionManager = new DefaultCollisionManager(this.ecs);
 
         // get asset
-        this.projectileTexture = assetManager.get(PROJECTILE_IMAGE_PATH, Texture.class);
+        this.projectileBlueTexture = assetManager.get(PROJECTILE_BLUE_IMAGE_PATH, Texture.class);
+        this.projectileRedTexture = assetManager.get(PROJECTILE_RED_IMAGE_PATH, Texture.class);
         this.torpedoTexture = assetManager.get(TORPEDO_IMAGE_PATH);
 
         Texture skyBox1 = assetManager.get(SKYBOX_1);
@@ -163,45 +166,47 @@ public class GameScreen extends BaseScreen {
         // execute this code after updating all entities
         game.runOnUIThread(() -> {
             // add a specific amount of enemy shuttles
-            float[][] positions = new float[amount + 1][2]; // player + enemy
-            // positions
-            positions[0][0] = this.playerEntity.getComponent(PositionComponent.class).getMiddleX();
-            positions[0][1] = this.playerEntity.getComponent(PositionComponent.class).getMiddleY();
             for (int enemyNumber = 0; enemyNumber < amount; enemyNumber++) {
                 // calculate random enemy position near player
-                Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(1000, 3000,
-                        this.playerEntity.getComponent(PositionComponent.class).getMiddleX()
-                                - game.getViewportWidth() / 2,
-                        this.playerEntity.getComponent(PositionComponent.class).getMiddleY()
-                                - game.getViewportHeight() / 2);
+                Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(900, 1000,
+                        this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
+                        this.playerEntity.getComponent(PositionComponent.class).getMiddleY());
                 float x = randomPos.x;
                 float y = randomPos.y;
-                // float x = (float) Math.random() * game.getViewportWidth() * 5
-                // - (game.getViewportWidth() * 2);
-                // float y = (float) Math.random() * game.getViewportHeight() *
-                // 5 - (game.getViewportHeight() * 2);
-
-                boolean validPos = false;
-                while (!validPos) {
-                    if ((x > 0 && x < game.getViewportWidth()) && (y > 0 && y < game.getViewportHeight())) {
-                        validPos = true;
-                    } else {
-                        x = (float) Math.random() * game.getViewportWidth() * 5 - (game.getViewportWidth() * 2);
-                        y = (float) Math.random() * game.getViewportHeight() * 5 - (game.getViewportHeight() * 2);
-                    }
-                }
 
                 // create and add new enemy space shuttle to
                 // entity-component-system
                 Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y,
-                        assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity, projectileTexture,
-                        (Entity causingEntity) -> {
-                            spawnEnemyShuttles(1);
-                        });
+                        assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity, projectileRedTexture,
+                        (Entity causingEntity) -> spawnEnemyShuttles(1));
                 this.ecs.addEntity(enemyEntity);
 
                 // add entity to enemy entity list
                 this.enemyEntityList.add(enemyEntity);
+            }
+        });
+    }
+
+    private void spawnMeteorites(int amount){
+        // execute this code after updating all entities
+        game.runOnUIThread(() -> {
+            // add a specific amount of meteorites
+            for (int meteorNumber = 0; meteorNumber < amount; meteorNumber++) {
+                // calculate random meteor position near player
+                Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(1000, 1600,
+                        this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
+                        this.playerEntity.getComponent(PositionComponent.class).getMiddleY());
+                float x = randomPos.x;
+                float y = randomPos.y;
+
+                // create and add new meteor to
+                // entity-component-system
+                Entity entity = MeteoriteFactory.createMeteorite(this.ecs, x, y, assetManager
+                        .get(ASTEROID_IMAGE_PATHS[RandomUtils.getRandomNumber(0, ASTEROID_IMAGE_PATHS.length - 1)]));
+                this.ecs.addEntity(entity);
+
+                // add entity to meteor entity list
+                this.meteorEntityList.add(entity);
             }
         });
     }
@@ -231,41 +236,8 @@ public class GameScreen extends BaseScreen {
         // spawn enemy shuttles
         spawnEnemyShuttles(5);
 
-        float minDistance = 1000;
-
-        float playerPosX = playerEntity.getComponent(PositionComponent.class).getMiddleX();
-        float playerPosY = playerEntity.getComponent(PositionComponent.class).getMiddleY();
-
-        Vector2 tmpVector = new Vector2();
-
-        // add some random meteorits
-        for (int i = 0; i < 180; i++) {
-            float distance = 0;
-
-            float x = 0;
-            float y = 0;
-
-            while (distance < minDistance) {
-                // calculate random enemy position near player
-                // x = (float) Math.random() * game.getViewportWidth() * 3 -
-                // game.getViewportWidth();
-                // y = (float) Math.random() * game.getViewportHeight() * 3 -
-                // game.getViewportHeight();
-
-                // calculate random enemy position near player
-                Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(100, game.getViewportWidth() * 2);
-                x = randomPos.x;
-                y = randomPos.y;
-
-                tmpVector.set(playerPosX - x, playerPosY - y);
-                distance = tmpVector.len();
-            }
-
-            // create and add new meteorit
-            Entity entity = MeteoriteFactory.createMeteorite(this.ecs, x, y, assetManager
-                    .get(ASTEROID_IMAGE_PATHS[RandomUtils.getRandomNumber(0, ASTEROID_IMAGE_PATHS.length - 1)]));
-            this.ecs.addEntity(entity);
-        }
+        //spawn meteorites
+        spawnMeteorites(120);
 
         // play background music
         this.music.setVolume(VolumeManager.getInstance().getBackgroundMusicVolume());
@@ -284,6 +256,34 @@ public class GameScreen extends BaseScreen {
         // update entities
         this.ecs.update(game, time);
 
+        //respawn enemies that are too far away
+        for (Entity ent : this.enemyEntityList) {
+            if(SpawnUtils.getDistance(playerEntity, ent) > 1100) {
+                try{
+                    //Enemy is too far away -> respawn
+                    ent.dispose();
+                    this.ecs.removeEntity(ent);
+                    spawnEnemyShuttles(1);
+                }catch (NullPointerException npe){
+                    //Enemy got killed.
+                }
+            }
+        }
+
+        //respawn meteorites that are too far away
+        for (Entity ent : this.meteorEntityList) {
+            if(SpawnUtils.getDistance(playerEntity, ent) > 1800) {
+                try{
+                    //Meteor is too far away -> respawn
+                    ent.dispose();
+                    this.ecs.removeEntity(ent);
+                    spawnMeteorites(1);
+                }catch (NullPointerException npe){
+                    //Meteor got destroyed.
+                }
+            }
+        }
+
         game.getSharedData().put("can_shoot_torpedo", ProjectileFactory.canShootTorpedo());
 
         // check for shoot
@@ -296,7 +296,7 @@ public class GameScreen extends BaseScreen {
 
             Entity projectile = ProjectileFactory.createProjectile(this.ecs,
                     dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 20,
-                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20, projectileTexture,
+                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20, projectileBlueTexture,
                     dirX, dirY, this.playerEntity);
 
             projectile.getComponent(DrawTextureComponent.class)

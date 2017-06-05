@@ -1,6 +1,8 @@
 package dev.game.spacechaos.engine.utils;
 
 import com.badlogic.gdx.math.Vector2;
+import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.component.PositionComponent;
 
 /**
  * Created by Justin on 21.04.2017.
@@ -13,12 +15,12 @@ public class SpawnUtils {
         Vector2 pos = getRandomSpawnPosition(minDistance, maxDistance);
 
         pos.x += offsetX;
-        pos.y = offsetY;
+        pos.y += offsetY;
 
         return pos;
     }
 
-    public static Vector2 getRandomSpawnPosition(float minDistance, float maxDistance) {
+    private static Vector2 getRandomSpawnPosition(float minDistance, float maxDistance) {
         if (minDistance < 0) {
             throw new IllegalArgumentException("minDistance has to be >= 0.");
         }
@@ -39,6 +41,16 @@ public class SpawnUtils {
         tmpVector.setAngle(angle);
 
         return tmpVector;
+    }
+
+    public static float getDistance(Entity a, Entity b) {
+        PositionComponent entAPos = a.getComponent(PositionComponent.class);
+        PositionComponent entBPos = b.getComponent(PositionComponent.class);
+        if (entAPos == null || entBPos == null) {
+            return 0;
+        }
+
+        return (float) Math.sqrt(Math.pow(entAPos.getMiddleX() - entBPos.getMiddleX(), 2) + Math.pow(entAPos.getMiddleY() - entBPos.getMiddleY(), 2));
     }
 
 }
