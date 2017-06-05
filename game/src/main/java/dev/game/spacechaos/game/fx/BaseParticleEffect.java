@@ -12,7 +12,7 @@ import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 
 /**
- * This class is the subclass of all used particle effects.
+ * This class is the abstract class of all used particle effects.
  * 
  * @since 1.0.1-PreAlpha
  * @see ParticleComponent The component that updates and renders the particles.
