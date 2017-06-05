@@ -101,6 +101,10 @@ public class HPComponent extends BaseComponent {
     void subHP(float hp) {
         subHP(hp, null);
     }
+    
+    public void addHP(float hp) {
+        setCurrentHP(getCurrentHP() + hp);
+    }
 
     private void notifyUpdateListener(float oldValue, float newValue, float maxValue) {
         for (UpdateHPListener listener : this.updateHPListenerList) {
