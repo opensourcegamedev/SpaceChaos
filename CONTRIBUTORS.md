@@ -3,7 +3,7 @@
 Here you can see a list of all contributors and used assets from external authors.
 
 ## Internal Credits
-  - Justin Künzel (JuKuSoft.com) - Programming, Communication-Management, Projectmanagement
+  - Justin Künzel (JuKuSoft.com) - Programming, Projectmanagement
   - Dogemani - Programming
   - Constantin Schulte - Testing, Community, Marketing & PR-Management, Graphics
   - Javanewbie - Programming, Graphics

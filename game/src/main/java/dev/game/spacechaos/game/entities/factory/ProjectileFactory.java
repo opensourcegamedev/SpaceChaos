@@ -197,4 +197,9 @@ public class ProjectileFactory {
     public static int getTorpedosLeft() {
         return torpedosLeft;
     }
+
+    public static void resetTorpedosLeft (int numberOfTorpedos) {
+        torpedosLeft = numberOfTorpedos;
+    }
+
 }

@@ -31,9 +31,10 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("gameover", new GameoverScreen());
         screenManager.addScreen("menu", new MainMenuScreen());
         screenManager.addScreen("credits", new CreditsScreen());
+        screenManager.addScreen("load_screen", new LoadScreen());
 
         // push screen
-        screenManager.push("menu");
+        screenManager.push("load_screen");
         
         getSharedData().put("debug", debug);
 

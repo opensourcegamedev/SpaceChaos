@@ -2,6 +2,7 @@ package dev.game.spacechaos.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,6 +14,7 @@ import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.hud.HUD;
 import dev.game.spacechaos.engine.hud.widgets.TextButton;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
+import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
 
 /**
@@ -28,6 +30,7 @@ public class MainMenuScreen extends BaseScreen {
 
     private static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy3/space.png";
     private static final String SELECT_SOUND_PATH = "./data/sound/menu_selection_click/menu_selection_click_16bit.wav";
+    private static final String MUSIC_PATH = "./data/music/sci-fi-menus-2-shorts-tracks/menu_sci-fi.ogg";
 
     private Texture bgImage = null;
 
@@ -40,6 +43,9 @@ public class MainMenuScreen extends BaseScreen {
     private TextButton multiplayerButton = null;
     private TextButton creditsButton = null;
     private TextButton settingsButton = null;
+
+    //music
+    private Music music = null;
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -99,6 +105,16 @@ public class MainMenuScreen extends BaseScreen {
         this.multiplayerButton.setHoverSound(selectSound);
         this.creditsButton.setHoverSound(selectSound);
         this.settingsButton.setHoverSound(selectSound);
+
+        //load and get soundtrack
+        assetManager.load(MUSIC_PATH, Music.class);
+        assetManager.finishLoadingAsset(MUSIC_PATH);
+        this.music = assetManager.get(MUSIC_PATH, Music.class);
+
+        // play background music
+        this.music.setVolume(VolumeManager.getInstance().getBackgroundMusicVolume());
+        this.music.setLooping(true);
+        this.music.play();
     }
 
     @Override
@@ -107,6 +123,9 @@ public class MainMenuScreen extends BaseScreen {
         assetManager.unload(SELECT_SOUND_PATH);
 
         Gdx.input.setInputProcessor(null);
+
+        //stop music
+        this.music.stop();
     }
 
     @Override

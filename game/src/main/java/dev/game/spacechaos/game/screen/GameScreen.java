@@ -246,6 +246,9 @@ public class GameScreen extends BaseScreen {
         // get game flags
         debug = (Boolean) game.getSharedData().get("debug");
 
+        //reset number of torpedos
+        ProjectileFactory.resetTorpedosLeft(10);
+
         // play background music
         this.music.setVolume(VolumeManager.getInstance().getBackgroundMusicVolume());
         this.music.setLooping(true);
