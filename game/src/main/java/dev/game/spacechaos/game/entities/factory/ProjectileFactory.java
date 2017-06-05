@@ -17,7 +17,7 @@ import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.AvoidCollisionSoundComponent;
 import dev.game.spacechaos.engine.entity.component.utils.TimedAutoRemoveComponent;
 import dev.game.spacechaos.game.entities.component.collision.AvoidCollisionCameraShakeComponent;
-import dev.game.spacechaos.game.entities.component.combat.AttackComponent;
+import dev.game.spacechaos.game.entities.component.combat.ProjectileComponent;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 import dev.game.spacechaos.game.fx.BaseParticleEffect;
 import dev.game.spacechaos.game.fx.MovementDirectionBasedParticleEffect;
@@ -30,9 +30,6 @@ import dev.game.spacechaos.game.fx.MovementDirectionBasedParticleEffect;
  * @since 1.0.0-PreAlpha
  */
 public class ProjectileFactory {
-
-    private static long lastTorpedoShot = 0;
-    private static int torpedosLeft = 10;
 
     /**
      * Creates a new entity moving straight forward and causing damage.
@@ -78,7 +75,7 @@ public class ProjectileFactory {
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         // add attack component
-        projectileEntity.addComponent(new AttackComponent(ownEntity, 100));
+        projectileEntity.addComponent(new ProjectileComponent(ownEntity, 100));
 
         // add component to avoid camera shake, if player fires projectile (when
         // projectile starts, projectile is in player collision hull)
@@ -142,7 +139,7 @@ public class ProjectileFactory {
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         // add attack component
-        projectileEntity.addComponent(new AttackComponent(playerEntity, 500));
+        projectileEntity.addComponent(new ProjectileComponent(playerEntity, 500));
 
         // add component to avoid camera shake, if player fires projectile (if
         // projectile starts, projectile is in player collision hull)
@@ -175,31 +172,7 @@ public class ProjectileFactory {
                 texture.getWidth() / 2 - 12, texture.getHeight() / 2 - 12);
         projectileEntity.addComponent(new ParticleComponent(particleEffect));
 
-        torpedosLeft--;
-
         return projectileEntity;
-    }
-
-    public static boolean canShootTorpedo() {
-        int torpedoCoolDown = 500;
-        if (System.currentTimeMillis() - lastTorpedoShot > torpedoCoolDown && torpedosLeft > 0) {
-            // lastTorpedoShot = System.currentTimeMillis();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static void setLastTorpedoShot() {
-        lastTorpedoShot = System.currentTimeMillis();
-    }
-
-    public static int getTorpedosLeft() {
-        return torpedosLeft;
-    }
-
-    public static void resetTorpedosLeft (int numberOfTorpedos) {
-        torpedosLeft = numberOfTorpedos;
     }
 
 }

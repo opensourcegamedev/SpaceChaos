@@ -7,19 +7,19 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
- * Adds an attack-component to entities which are able to be shot and thus deal
+ * Adds an projectile-component to entities which are able to be shot and thus deal
  * damage on collision.
  *
  * @author SpaceChaos-Team
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
-public class AttackComponent extends BaseComponent implements CollisionListener {
+public class ProjectileComponent extends BaseComponent implements CollisionListener {
 
     private Entity ownerEntity = null;
     private float reduceHP = 0;
 
-    public AttackComponent(Entity ownerEntity, float reduceHP) {
+    public ProjectileComponent(Entity ownerEntity, float reduceHP) {
         this.ownerEntity = ownerEntity;
         this.reduceHP = reduceHP;
     }

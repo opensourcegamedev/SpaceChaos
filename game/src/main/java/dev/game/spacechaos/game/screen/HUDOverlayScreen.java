@@ -16,7 +16,7 @@ import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
-import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
+import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
 
 /**
  * The screen is on top of the {@link GameScreen}. It shows all the relevant
@@ -45,7 +45,7 @@ public class HUDOverlayScreen extends BaseScreen {
     private long seconds = 0;
 
     private HPComponent hpComponent = null;
-
+    private WeaponInventoryComponent weaponInvComponent = null;
     private ScoreComponent scoreComponent = null;
 
     private HUD hud = null;
@@ -82,6 +82,7 @@ public class HUDOverlayScreen extends BaseScreen {
         // get player entity and health component
         Entity playerEntity = game.getSharedData().get("playerEntity", Entity.class);
         this.hpComponent = playerEntity.getComponent(HPComponent.class);
+        this.weaponInvComponent = playerEntity.getComponent(WeaponInventoryComponent.class);
         this.scoreComponent = playerEntity.getComponent(ScoreComponent.class);
 
         // set values and add listener to auto update values on change
@@ -104,7 +105,7 @@ public class HUDOverlayScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
-        this.torpedoAmountText = String.valueOf(ProjectileFactory.getTorpedosLeft());
+        this.torpedoAmountText = String.valueOf(weaponInvComponent.getCurrentAmmoForRightWeapon());
 
         // calculate elapsed time
         this.elapsedTime = System.currentTimeMillis() - this.startTime;
@@ -178,9 +179,7 @@ public class HUDOverlayScreen extends BaseScreen {
         this.hud.drawLayer2(time, batch);
 
         // draw torpedo, if available
-        boolean torpedoAvailable = game.getSharedData().get("can_shoot_torpedo", Boolean.class);
-
-        if (torpedoAvailable) {
+        if (weaponInvComponent.canShootNowWithRightWeapon()) {
             batch.draw(this.torpedoTexture, game.getViewportWidth() - 91, 30);
         }
     }

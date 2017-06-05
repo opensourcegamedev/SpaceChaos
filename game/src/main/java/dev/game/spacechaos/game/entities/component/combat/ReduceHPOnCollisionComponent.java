@@ -63,7 +63,7 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
         entered = true;
 
         // check if the other entity is a projectile or another attacking entity
-        AttackComponent attackComponent = otherEntity.getComponent(AttackComponent.class);
+        ProjectileComponent attackComponent = otherEntity.getComponent(ProjectileComponent.class);
 
         if (attackComponent != null) {
             // don't reduce HP, because this is an task of the fighting system
@@ -86,7 +86,7 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
         }
 
         // check if the other entity is a projectile or another attacking entity
-        AttackComponent attackComponent = otherEntity.getComponent(AttackComponent.class);
+        ProjectileComponent attackComponent = otherEntity.getComponent(ProjectileComponent.class);
 
         if (attackComponent != null) {
             // don't reduce HP, because this is an task of the fighting system

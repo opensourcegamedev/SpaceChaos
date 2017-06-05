@@ -3,8 +3,6 @@ package dev.game.spacechaos.game.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -14,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
+import de.game.spacecahos.game.input.InputManager;
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.impl.DefaultCollisionManager;
 import dev.game.spacechaos.engine.entity.Entity;
@@ -24,12 +23,12 @@ import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMoveme
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.impl.ECS;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
-import dev.game.spacechaos.engine.input.InputStates;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.engine.utils.SpawnUtils;
+import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
 import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
@@ -90,6 +89,9 @@ public class GameScreen extends BaseScreen {
     // list with all enemy entities
     private List<Entity> enemyEntityList = new ArrayList<>();
     private List<Entity> meteorEntityList = new ArrayList<>();
+
+    // input
+    private InputManager inputManager;
 
     // settings
     private boolean debug;
@@ -164,8 +166,6 @@ public class GameScreen extends BaseScreen {
         // create skybox
         this.skyBox = new SkyBox(new Texture[] { /* skyBox2, */ skyBox1 }, game.getViewportWidth(),
                 game.getViewportHeight());
-
-        game.getSharedData().put("can_shoot_torpedo", true);
     }
 
     private void spawnEnemyShuttles(int amount) {
@@ -236,6 +236,9 @@ public class GameScreen extends BaseScreen {
         // add player entity to shared data
         game.getSharedData().put("playerEntity", this.playerEntity);
 
+        // input
+        this.inputManager = new InputManager();
+
         // push HUD overlay screen (GUI)
         game.getScreenManager().push("hud");
 
@@ -245,9 +248,6 @@ public class GameScreen extends BaseScreen {
 
         // get game flags
         debug = (Boolean) game.getSharedData().get("debug");
-
-        //reset number of torpedos
-        ProjectileFactory.resetTorpedosLeft(10);
 
         // play background music
         this.music.setVolume(VolumeManager.getInstance().getBackgroundMusicVolume());
@@ -294,31 +294,56 @@ public class GameScreen extends BaseScreen {
             }
         }
 
-        game.getSharedData().put("can_shoot_torpedo", ProjectileFactory.canShootTorpedo());
+        processInput();
 
-        // check for shoot
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || InputStates.isLeftMouseButtonJustPressed()) {
-            MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity
-                    .getComponent(MouseDependentMovementComponent.class);
+        if (lastBeep == 0) {
+            lastBeep = System.currentTimeMillis();
+        }
 
-            float dirX = mouseDependentMovementComponent.getFrontVec().x;
-            float dirY = mouseDependentMovementComponent.getFrontVec().y;
+        // play beep sound every 8 seconds
+        if (lastBeep + beepInterval < System.currentTimeMillis()) {
+            // beepSound.play();
+            lastBeep = System.currentTimeMillis();
 
-            Entity projectile = ProjectileFactory.createProjectile(this.ecs,
-                    dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 20,
-                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20,
-                    projectileBlueTexture, dirX, dirY, this.playerEntity);
+            // calculate new random beep interval
+            beepInterval = 5000 + (long) (Math.random() * 5000);
+        }
+    }
 
-            projectile.getComponent(DrawTextureComponent.class)
-                    .setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
-            projectile.getComponent(MoveComponent.class).setMoving(true);
-            this.ecs.addEntity(projectile);
+    private void processInput() {
+        WeaponInventoryComponent weaponInvComponent = this.playerEntity.getComponent(WeaponInventoryComponent.class);
 
-            // play fire sound
-            this.fireSound.play(VolumeManager.getInstance().getEnvVolume());
-        } else if (InputStates.isRightMouseButtonJustPressed()) {
-            if (ProjectileFactory.canShootTorpedo()) {
-                ProjectileFactory.setLastTorpedoShot();
+        // LEFT WEAPON
+        if (inputManager.isSpaceJustPressed() || inputManager.isLeftMouseButtonJustPressed()) {
+            if (weaponInvComponent.canShootNowWithLeftWeapon()) {
+                weaponInvComponent.setLastShotWithLeftWeapon();
+
+                MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity
+                        .getComponent(MouseDependentMovementComponent.class);
+
+                float dirX = mouseDependentMovementComponent.getFrontVec().x;
+                float dirY = mouseDependentMovementComponent.getFrontVec().y;
+
+                Entity projectile = ProjectileFactory.createProjectile(this.ecs,
+                        dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 20,
+                        dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20,
+                        projectileBlueTexture, dirX, dirY, this.playerEntity);
+
+                // weaponInvComponent.subAmmoForLeftWeapon();
+
+                projectile.getComponent(DrawTextureComponent.class)
+                        .setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
+                projectile.getComponent(MoveComponent.class).setMoving(true);
+                this.ecs.addEntity(projectile);
+
+                // play fire sound
+                this.fireSound.play(VolumeManager.getInstance().getEnvVolume());
+            }
+        }
+        // RIGHT WEAPON
+        if (inputManager.isRightMouseButtonJustPressed()) {
+            if (weaponInvComponent.canShootNowWithRightWeapon()) {
+                weaponInvComponent.setLastShotWithRightWeapon();
 
                 MouseDependentMovementComponent mouseDependentMovementComponent = this.playerEntity
                         .getComponent(MouseDependentMovementComponent.class);
@@ -339,6 +364,8 @@ public class GameScreen extends BaseScreen {
                         dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 30,
                         torpedoTexture, dirX, dirY, this.playerEntity, enemyEntity);
 
+                weaponInvComponent.subAmmoForRightWeapon();
+
                 projectile.getComponent(DrawTextureComponent.class)
                         .setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
                 projectile.getComponent(MoveComponent.class).setMoving(true);
@@ -347,19 +374,6 @@ public class GameScreen extends BaseScreen {
                 // play torpedo sound
                 this.torpedoSound.play(VolumeManager.getInstance().getEnvVolume() - 0.4f);
             }
-        }
-
-        if (lastBeep == 0) {
-            lastBeep = System.currentTimeMillis();
-        }
-
-        // play beep sound every 8 seconds
-        if (lastBeep + beepInterval < System.currentTimeMillis()) {
-            // beepSound.play();
-            lastBeep = System.currentTimeMillis();
-
-            // calculate new random beep interval
-            beepInterval = 5000 + (long) (Math.random() * 5000);
         }
     }
 

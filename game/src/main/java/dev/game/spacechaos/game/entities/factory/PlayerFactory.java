@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
+import de.game.spacechaos.game.weapons.BaseWeapon;
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
@@ -21,6 +22,7 @@ import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraSh
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
+import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 import dev.game.spacechaos.game.entity.listener.HPDeathListener;
@@ -98,6 +100,11 @@ public class PlayerFactory {
         effects.add(new MouseDependentParticleEffect(flameEffect, texture.getWidth() / 2 - 12,
                 texture.getHeight() / 2 - 12, 0.7f, 9, 15));
         player.addComponent(new ParticleComponent(effects));
+
+        // add component for shooting
+        BaseWeapon leftWeapon = new BaseWeapon(200, 1);
+        BaseWeapon rightWeapon = new BaseWeapon(500, 10);
+        player.addComponent(new WeaponInventoryComponent(leftWeapon, rightWeapon));
 
         return player;
     }
