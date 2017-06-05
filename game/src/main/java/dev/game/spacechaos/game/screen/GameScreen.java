@@ -2,6 +2,7 @@ package dev.game.spacechaos.game.screen;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.impl.DefaultCollisionManager;
 import dev.game.spacechaos.engine.entity.Entity;
@@ -33,6 +35,7 @@ import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
 import dev.game.spacechaos.game.entities.factory.PlayerFactory;
 import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 import dev.game.spacechaos.game.skybox.SkyBox;
+
 /**
  * This Screen is the singleplayer-mainscreen.
  *
@@ -49,11 +52,11 @@ public class GameScreen extends BaseScreen {
     private static final String PROJECTILE_BLUE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
     private static final String PROJECTILE_RED_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
     private static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
-    private static final String[] ASTEROID_IMAGE_PATHS = {"./data/images/entities/asteroids/1.png",
+    private static final String[] ASTEROID_IMAGE_PATHS = { "./data/images/entities/asteroids/1.png",
             "./data/images/entities/asteroids/2.png", "./data/images/entities/asteroids/3.png",
             "./data/images/entities/asteroids/4.png", "./data/images/entities/asteroids/5.png",
             "./data/images/entities/asteroids/6.png", "./data/images/entities/asteroids/7.png",
-            "./data/images/entities/asteroids/8.png"};
+            "./data/images/entities/asteroids/8.png" };
     private static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
     private static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
     private static final String FIRE_SHOOT_SOUND = "./data/sound/spaceshipshooting/Longshot.ogg";
@@ -87,6 +90,9 @@ public class GameScreen extends BaseScreen {
     // list with all enemy entities
     private List<Entity> enemyEntityList = new ArrayList<>();
     private List<Entity> meteorEntityList = new ArrayList<>();
+
+    // settings
+    private boolean debug;
 
     public GameScreen() {
         // create shape renderer
@@ -156,9 +162,9 @@ public class GameScreen extends BaseScreen {
         this.torpedoSound = assetManager.get(TORPEDO_SHOOT_SOUND);
 
         // create skybox
-        this.skyBox = new SkyBox(new Texture[]{ /* skyBox2, */ skyBox1}, game.getViewportWidth(),
+        this.skyBox = new SkyBox(new Texture[] { /* skyBox2, */ skyBox1 }, game.getViewportWidth(),
                 game.getViewportHeight());
-        
+
         game.getSharedData().put("can_shoot_torpedo", true);
     }
 
@@ -187,7 +193,7 @@ public class GameScreen extends BaseScreen {
         });
     }
 
-    private void spawnMeteorites(int amount){
+    private void spawnMeteorites(int amount) {
         // execute this code after updating all entities
         game.runOnUIThread(() -> {
             // add a specific amount of meteorites
@@ -233,11 +239,12 @@ public class GameScreen extends BaseScreen {
         // push HUD overlay screen (GUI)
         game.getScreenManager().push("hud");
 
-        // spawn enemy shuttles
+        // spawn entities
         spawnEnemyShuttles(5);
-
-        //spawn meteorites
         spawnMeteorites(120);
+
+        // get game flags
+        debug = (Boolean) game.getSharedData().get("debug");
 
         // play background music
         this.music.setVolume(VolumeManager.getInstance().getBackgroundMusicVolume());
@@ -256,30 +263,30 @@ public class GameScreen extends BaseScreen {
         // update entities
         this.ecs.update(game, time);
 
-        //respawn enemies that are too far away
+        // respawn enemies that are too far away
         for (Entity ent : this.enemyEntityList) {
-            if(SpawnUtils.getDistance(playerEntity, ent) > 1100) {
-                try{
-                    //Enemy is too far away -> respawn
+            if (SpawnUtils.getDistance(playerEntity, ent) > 1100) {
+                try {
+                    // Enemy is too far away -> respawn
                     ent.dispose();
                     this.ecs.removeEntity(ent);
                     spawnEnemyShuttles(1);
-                }catch (NullPointerException npe){
-                    //Enemy got killed.
+                } catch (NullPointerException npe) {
+                    // Enemy got killed.
                 }
             }
         }
 
-        //respawn meteorites that are too far away
+        // respawn meteorites that are too far away
         for (Entity ent : this.meteorEntityList) {
-            if(SpawnUtils.getDistance(playerEntity, ent) > 1800) {
-                try{
-                    //Meteor is too far away -> respawn
+            if (SpawnUtils.getDistance(playerEntity, ent) > 1800) {
+                try {
+                    // Meteor is too far away -> respawn
                     ent.dispose();
                     this.ecs.removeEntity(ent);
                     spawnMeteorites(1);
-                }catch (NullPointerException npe){
-                    //Meteor got destroyed.
+                } catch (NullPointerException npe) {
+                    // Meteor got destroyed.
                 }
             }
         }
@@ -296,8 +303,8 @@ public class GameScreen extends BaseScreen {
 
             Entity projectile = ProjectileFactory.createProjectile(this.ecs,
                     dirX + this.playerEntity.getComponent(PositionComponent.class).getMiddleX() - 20,
-                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20, projectileBlueTexture,
-                    dirX, dirY, this.playerEntity);
+                    dirY + this.playerEntity.getComponent(PositionComponent.class).getMiddleY() - 20,
+                    projectileBlueTexture, dirX, dirY, this.playerEntity);
 
             projectile.getComponent(DrawTextureComponent.class)
                     .setRotationAngle(playerEntity.getComponent(DrawTextureComponent.class).getRotationAngle());
@@ -382,8 +389,7 @@ public class GameScreen extends BaseScreen {
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         this.shapeRenderer.setColor(Color.BLACK);
 
-        // draw colliding objects
-        boolean debug = true;
+        // draw collision boxes
         if (debug) {
             this.collisionManager.drawCollisionBoxes(time, game.getCamera(), shapeRenderer, COLLISION_BOX_COLOR,
                     IN_COLLISION_COLOR);
