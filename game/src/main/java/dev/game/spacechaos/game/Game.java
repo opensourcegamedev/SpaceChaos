@@ -14,9 +14,13 @@ import dev.game.spacechaos.game.screen.*;
  * @since 1.0.0-PreAlpha
  */
 public class Game extends ScreenBasedGame {
+    
+    private boolean debug;
 
-    public Game() {
+    public Game(boolean debug) {
         super();
+        
+        this.debug = debug;
     }
 
     @Override
@@ -30,6 +34,8 @@ public class Game extends ScreenBasedGame {
 
         // push screen
         screenManager.push("menu");
+        
+        getSharedData().put("debug", debug);
 
         // push HUD overlay screen (GUI)
         // screenManager.push("hud");

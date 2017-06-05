@@ -37,12 +37,12 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
         this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
 
         if (this.moveComponent == null) {
-            throw new IllegalStateException("entity doesnt have an MoveComponent.");
+            throw new IllegalStateException("Entity doesn't have a MoveComponent.");
         }
 
         if (this.textureComponent == null && this.textureRegionComponent == null) {
             throw new RequiredComponentNotFoundException(
-                    "entity doesnt have an DrawTextureComponent or DrawTextureRegionComponent");
+                    "Entity doesn't have a DrawTextureComponent nor a DrawTextureRegionComponent");
         } else if (this.textureRegionComponent != null) {
             this.drawComponent = this.textureRegionComponent;
         } else if (this.textureComponent != null) {

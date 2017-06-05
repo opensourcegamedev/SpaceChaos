@@ -31,10 +31,17 @@ public class DesktopLauncher {
         config.height = 720;
         config.width = 1280;
         // config.addIcon("./data/icons/icon.png", Files.FileType.Absolute);
+        
+        boolean debug = false;
+        if(args != null && args.length > 0){
+            if(args[0].equalsIgnoreCase("debug")){
+                debug = true;
+            }
+        }
 
         try {
             // start game
-            new LwjglApplication(new Game(), config);
+            new LwjglApplication(new Game(debug), config);
         } catch (Exception e) {
             e.printStackTrace();
 
