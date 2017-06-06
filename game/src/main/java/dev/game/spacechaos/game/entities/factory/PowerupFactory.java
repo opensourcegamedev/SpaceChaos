@@ -16,7 +16,7 @@ import dev.game.spacechaos.game.entities.component.powerup.TorpedoAmmoCrateCompo
  *
  * @author SpaceChaos-Team
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
- * @since 1.0.0-PreAlpha
+ * @since 1.0.2-PreAlpha
  */
 public class PowerupFactory {
 
