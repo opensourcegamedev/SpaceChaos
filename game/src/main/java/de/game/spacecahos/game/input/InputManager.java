@@ -118,6 +118,14 @@ public class InputManager implements InputProcessor {
         return escape;
     }
 
+    public boolean isEscapeJustPressed() {
+        if (escape) {
+            escape = false;
+            return true;
+        }
+        return false;
+    }
+
     public boolean isSpacePressed() {
         return space;
     }
@@ -133,7 +141,7 @@ public class InputManager implements InputProcessor {
     public boolean isLeftMouseButtonPressed() {
         return leftMouse;
     }
-    
+
     public boolean isLeftMouseButtonJustPressed() {
         if (leftMouse) {
             leftMouse = false;
@@ -145,7 +153,7 @@ public class InputManager implements InputProcessor {
     public boolean isRightMouseButtonPressed() {
         return rightMouse;
     }
-    
+
     public boolean isRightMouseButtonJustPressed() {
         if (rightMouse) {
             rightMouse = false;
@@ -154,8 +162,14 @@ public class InputManager implements InputProcessor {
         return false;
     }
 
-    public int getScrollAmount() {
+    public int getAmountScrolled() {
         return scrollAmount;
+    }
+
+    public int getAmountJustScrolled() {
+        int tmp = scrollAmount;
+        scrollAmount = 0;
+        return tmp;
     }
 
 }
