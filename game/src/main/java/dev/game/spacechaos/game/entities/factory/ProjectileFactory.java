@@ -139,7 +139,7 @@ public class ProjectileFactory {
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         // add attack component
-        projectileEntity.addComponent(new ProjectileComponent(playerEntity, 500));
+        projectileEntity.addComponent(new ProjectileComponent(playerEntity, 700));
 
         // add component to avoid camera shake, if player fires projectile (if
         // projectile starts, projectile is in player collision hull)
