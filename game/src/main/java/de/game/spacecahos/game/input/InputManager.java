@@ -10,9 +10,6 @@ import com.badlogic.gdx.InputProcessor;
  * @since 1.0.2-PreAlpha
  */
 public class InputManager implements InputProcessor {
-    public InputManager() {
-        Gdx.input.setInputProcessor(this);
-    }
 
     private boolean left, right, up, down;
     private boolean escape, space;

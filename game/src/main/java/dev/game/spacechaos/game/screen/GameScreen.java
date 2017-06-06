@@ -3,6 +3,7 @@ package dev.game.spacechaos.game.screen;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -166,6 +167,8 @@ public class GameScreen extends BaseScreen {
         // create skybox
         this.skyBox = new SkyBox(new Texture[] { /* skyBox2, */ skyBox1 }, game.getViewportWidth(),
                 game.getViewportHeight());
+        
+        this.inputManager = new InputManager();
     }
 
     private void spawnEnemyShuttles(int amount) {
@@ -236,7 +239,7 @@ public class GameScreen extends BaseScreen {
         game.getSharedData().put("playerEntity", this.playerEntity);
 
         // input
-        this.inputManager = new InputManager();
+        Gdx.input.setInputProcessor(inputManager);
 
         // push HUD overlay screen (GUI)
         game.getScreenManager().push("hud");
@@ -258,6 +261,9 @@ public class GameScreen extends BaseScreen {
     public void onPause() {
         // stop music
         this.music.stop();
+        
+        // input
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
