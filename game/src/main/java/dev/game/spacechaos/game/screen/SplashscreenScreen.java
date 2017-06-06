@@ -10,13 +10,13 @@ import dev.game.spacechaos.engine.time.GameTime;
 /**
  * Created by Justin on 05.06.2017.
  */
-public class LoadScreen extends BaseScreen {
+public class SplashscreenScreen extends BaseScreen {
 
     protected static final String LOGO_IMAGE_PATH = "./data/images/loading/loadscreen.png";
     private static final String SPACE_IMAGE_PATH = "./data/wallpaper/galaxy3/space.png";
 
     protected long startTime = 0;
-    protected long interval = 1000;
+    protected long interval = 1250;
 
     //assets
     protected Texture bgTexture = null;
@@ -24,7 +24,6 @@ public class LoadScreen extends BaseScreen {
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
-        //load and get assets
         assetManager.load(LOGO_IMAGE_PATH, Texture.class);
         assetManager.load(SPACE_IMAGE_PATH, Texture.class);
         assetManager.finishLoadingAsset(LOGO_IMAGE_PATH);
@@ -47,12 +46,10 @@ public class LoadScreen extends BaseScreen {
     public void update(ScreenBasedGame game, GameTime time) {
         //check, if it was the first update call
         if (startTime == 0) {
-            //set current timestamp, on which screen was pushed to screen
             this.startTime = GameTime.getInstance().getTime();
         }
 
         if ((startTime + interval) < time.getTime()) {
-            //leave screen and push menu screen
             game.getScreenManager().leaveAllAndEnter("menu");
         }
     }

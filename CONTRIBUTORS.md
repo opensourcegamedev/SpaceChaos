@@ -122,3 +122,9 @@ Also thanks to https://opengameart.org/content/the-free-firearm-sound-library fo
 # Fonts
   - SparTakus (SIL Open Font License by Peter Wiegel, http://www.peter-wiegel.de/)
   - Arial
+  
+# uopt4j
+
+Path: de.game.spacechaos.game.utils.MicroOptions\
+License: Apache 2.0\
+Author & Copyright: Andrew Hayden

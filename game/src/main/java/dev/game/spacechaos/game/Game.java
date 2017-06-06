@@ -3,7 +3,12 @@ package dev.game.spacechaos.game;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.screen.IScreen;
 import dev.game.spacechaos.engine.screen.ScreenManager;
-import dev.game.spacechaos.game.screen.*;
+import dev.game.spacechaos.game.screen.CreditsScreen;
+import dev.game.spacechaos.game.screen.GameScreen;
+import dev.game.spacechaos.game.screen.GameoverScreen;
+import dev.game.spacechaos.game.screen.HUDOverlayScreen;
+import dev.game.spacechaos.game.screen.MainMenuScreen;
+import dev.game.spacechaos.game.screen.SplashscreenScreen;
 
 /**
  * This class starts the game by creating all the necessary screens and then
@@ -14,13 +19,14 @@ import dev.game.spacechaos.game.screen.*;
  * @since 1.0.0-PreAlpha
  */
 public class Game extends ScreenBasedGame {
-    
-    private boolean debug;
 
-    public Game(boolean debug) {
+    private boolean debug, showSplashscreen;
+
+    public Game(boolean debug, boolean showSplashscreen) {
         super();
-        
+
         this.debug = debug;
+        this.showSplashscreen = showSplashscreen;
     }
 
     @Override
@@ -31,11 +37,14 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("gameover", new GameoverScreen());
         screenManager.addScreen("menu", new MainMenuScreen());
         screenManager.addScreen("credits", new CreditsScreen());
-        screenManager.addScreen("load_screen", new LoadScreen());
+        screenManager.addScreen("splash", new SplashscreenScreen());
 
         // push screen
-        screenManager.push("load_screen");
-        
+        if (showSplashscreen)
+            screenManager.push("splash");
+        else
+            screenManager.push("menu");
+
         getSharedData().put("debug", debug);
 
         // push HUD overlay screen (GUI)

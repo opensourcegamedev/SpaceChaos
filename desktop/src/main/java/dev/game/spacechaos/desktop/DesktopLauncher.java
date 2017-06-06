@@ -1,13 +1,14 @@
 package dev.game.spacechaos.desktop;
 
-import dev.game.spacechaos.engine.utils.FileUtils;
-import dev.game.spacechaos.game.Game;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import de.game.spacechaos.game.utils.MicroOptions;
+import dev.game.spacechaos.engine.utils.FileUtils;
+import dev.game.spacechaos.game.Game;
 
 /**
  * Starts the application for the desktop-based builds.
@@ -23,7 +24,7 @@ public class DesktopLauncher {
      * configuration for the stage and a new game so one could play.
      *
      * @param args
-     *            So far unused start arguments.
+     *            The start arguments.
      */
     public static void main(String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -38,10 +39,23 @@ public class DesktopLauncher {
                 debug = true;
             }
         }
+        
+        MicroOptions options = new MicroOptions();
+        options.option("novid").describedAs("no splashscreen").isUnary();
+        options.option("debug").describedAs("enables debugmode").isUnary();
+        try {
+            options.parse(args);
+        } catch (MicroOptions.OptionException e) {
+            System.err.println("Usage:");
+            System.err.println(options.usageString());
+            System.exit(-1);
+        }
+        
+        //options.getArg("file", "/tmp/out");
 
         try {
             // start game
-            new LwjglApplication(new Game(debug), config);
+            new LwjglApplication(new Game(options.has("debug"), !options.has("novid")), config);
         } catch (Exception e) {
             e.printStackTrace();
 
