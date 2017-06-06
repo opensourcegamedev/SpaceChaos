@@ -2,10 +2,10 @@ package dev.game.spacechaos.game.entities.component.combat;
 
 import java.util.ArrayList;
 
-import de.game.spacechaos.game.weapons.BaseWeapon;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.game.weapons.BaseWeapon;
 
 /**
  * Is added to entities that can use weapons (shoot).

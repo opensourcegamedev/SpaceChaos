@@ -1,4 +1,4 @@
-package de.game.spacechaos.game.utils;
+package dev.game.spacechaos.game.utils;
 
 //Copyright 2014 Google Inc. All rights reserved.
 //

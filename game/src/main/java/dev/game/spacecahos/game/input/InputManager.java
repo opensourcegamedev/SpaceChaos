@@ -1,4 +1,4 @@
-package de.game.spacecahos.game.input;
+package dev.game.spacecahos.game.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

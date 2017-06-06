@@ -6,9 +6,9 @@ import java.nio.charset.StandardCharsets;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import de.game.spacechaos.game.utils.MicroOptions;
 import dev.game.spacechaos.engine.utils.FileUtils;
 import dev.game.spacechaos.game.Game;
+import dev.game.spacechaos.game.utils.MicroOptions;
 
 /**
  * Starts the application for the desktop-based builds.

@@ -7,8 +7,8 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
- * Adds an projectile-component to entities which are able to be shot and thus deal
- * damage on collision.
+ * Adds an projectile-component to entities which are able to be shot and thus
+ * deal damage on collision.
  *
  * @author SpaceChaos-Team
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
@@ -17,11 +17,11 @@ import dev.game.spacechaos.engine.game.BaseGame;
 public class ProjectileComponent extends BaseComponent implements CollisionListener {
 
     private Entity ownerEntity = null;
-    private float reduceHP = 0;
+    private float damage = 0;
 
-    public ProjectileComponent(Entity ownerEntity, float reduceHP) {
+    public ProjectileComponent(Entity ownerEntity, float damage) {
         this.ownerEntity = ownerEntity;
-        this.reduceHP = reduceHP;
+        this.damage = damage;
     }
 
     @Override
@@ -48,8 +48,19 @@ public class ProjectileComponent extends BaseComponent implements CollisionListe
             // don't reduce HP, maybe its an meteorite
             return;
         }
+        ShieldComponent shieldComponent = otherEntity.getComponent(ShieldComponent.class);
 
-        hpComponent.subHP(this.reduceHP, ownerEntity);
+        float tmp = this.damage;
+
+        if (shieldComponent != null) {
+            tmp -= shieldComponent.getCurrentShieldHP();
+            shieldComponent.subShieldHP(this.damage);
+        }
+
+        if (tmp > 0) {
+            // reduce HP
+            hpComponent.subHP(tmp, ownerEntity);
+        }
     }
 
     @Override

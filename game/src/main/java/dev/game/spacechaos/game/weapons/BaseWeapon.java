@@ -1,4 +1,4 @@
-package de.game.spacechaos.game.weapons;
+package dev.game.spacechaos.game.weapons;
 
 /**
  * Handles a weapon that can be shot.

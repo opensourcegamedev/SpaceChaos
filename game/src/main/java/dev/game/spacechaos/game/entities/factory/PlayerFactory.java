@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
-import de.game.spacechaos.game.weapons.BaseWeapon;
 import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
@@ -19,15 +18,18 @@ import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMoveme
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.OnCollisionPlaySoundComponent;
 import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraShakeComponent;
+import dev.game.spacechaos.game.entities.component.combat.GetDamagedOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
-import dev.game.spacechaos.game.entities.component.combat.ReduceHPOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
+import dev.game.spacechaos.game.entities.component.combat.ShieldComponent;
 import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
+import dev.game.spacechaos.game.entities.component.draw.DrawShieldHPBarComponent;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 import dev.game.spacechaos.game.fx.BaseParticleEffect;
 import dev.game.spacechaos.game.fx.MouseDependentParticleEffect;
+import dev.game.spacechaos.game.weapons.BaseWeapon;
 
 /**
  * Creates a new player entity.
@@ -74,7 +76,7 @@ public class PlayerFactory {
                 OnCollisionPlaySoundComponent.class);
 
         // add component for HP
-        player.addComponent(new HPComponent(1000, 1000));
+        player.addComponent(new HPComponent(800, 800));
         player.getComponent(HPComponent.class).addDeathListener(hpDeathListener);
 
         // add component to draw HP
@@ -83,7 +85,7 @@ public class PlayerFactory {
 
         // add component to reduce HP on collision, reduce 100 points on every
         // collision
-        player.addComponent(new ReduceHPOnCollisionComponent(100, 3000l), ReduceHPOnCollisionComponent.class);
+        player.addComponent(new GetDamagedOnCollisionComponent(100, 3000l), GetDamagedOnCollisionComponent.class);
 
         // add follow camera component, so camera is following player
         player.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
@@ -105,6 +107,13 @@ public class PlayerFactory {
         BaseWeapon leftWeapon = new BaseWeapon(200, 1);
         BaseWeapon rightWeapon = new BaseWeapon(500, 10);
         player.addComponent(new WeaponInventoryComponent(leftWeapon, rightWeapon));
+
+        // add component for shield
+        player.addComponent(new ShieldComponent(800, 800, 1.85F), ShieldComponent.class);
+
+        // add component to draw shield HP
+        player.addComponent(new DrawShieldHPBarComponent(texture.getWidth() / 3, 20, texture.getWidth() / 3, 5f),
+                DrawShieldHPBarComponent.class);
 
         return player;
     }

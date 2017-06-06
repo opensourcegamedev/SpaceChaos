@@ -13,9 +13,10 @@ import dev.game.spacechaos.engine.game.BaseGame;
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
-public class ReduceHPOnCollisionComponent extends BaseComponent implements CollisionListener {
+public class GetDamagedOnCollisionComponent extends BaseComponent implements CollisionListener {
 
     private HPComponent hpComponent = null;
+    private ShieldComponent shieldComponent = null;
 
     private float reduceValue = 100;
 
@@ -31,12 +32,12 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
     // quick & dirty fix
     private boolean entered = false;
 
-    public ReduceHPOnCollisionComponent(float reduceValue, long collisionInterval) {
+    public GetDamagedOnCollisionComponent(float reduceValue, long collisionInterval) {
         this.reduceValue = reduceValue;
         this.collisionInterval = collisionInterval;
     }
 
-    public ReduceHPOnCollisionComponent(float reduceValue) {
+    public GetDamagedOnCollisionComponent(float reduceValue) {
         this.reduceValue = reduceValue;
     }
 
@@ -44,6 +45,7 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
     protected void onInit(BaseGame game, Entity entity) {
         CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
         this.hpComponent = entity.getComponent(HPComponent.class);
+        this.shieldComponent = entity.getComponent(ShieldComponent.class);
 
         if (collisionComponent == null) {
             throw new IllegalStateException("entity doesn't have an CollisionComponent.");
@@ -70,13 +72,23 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
             return;
         }
 
-        // reduce HP
-        this.hpComponent.subHP(this.reduceValue);
+        float tmp = this.reduceValue;
+
+        if (shieldComponent != null) {
+            tmp -= shieldComponent.getCurrentShieldHP();
+            shieldComponent.subShieldHP(this.reduceValue);
+        }
+
+        if (tmp > 0) {
+            // reduce HP
+            this.hpComponent.subHP(tmp);
+        }
 
         if (this.collisionStartTime == 0) {
             // set new collision enter time
             this.collisionStartTime = System.currentTimeMillis();
         }
+
     }
 
     @Override
@@ -98,7 +110,17 @@ public class ReduceHPOnCollisionComponent extends BaseComponent implements Colli
 
             if (a > collisionInterval) {
                 // reduce HP
-                this.hpComponent.subHP(this.reduceValue);
+                float tmp = this.reduceValue;
+
+                if (shieldComponent != null) {
+                    tmp -= shieldComponent.getCurrentShieldHP();
+                    shieldComponent.subShieldHP(this.reduceValue);
+                }
+
+                if (tmp > 0) {
+                    // reduce HP
+                    this.hpComponent.subHP(tmp);
+                }
 
                 this.collisionStartTime = System.currentTimeMillis();
                 this.lastIntervalHPReduce = System.currentTimeMillis();
