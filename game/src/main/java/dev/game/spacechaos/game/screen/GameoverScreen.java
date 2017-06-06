@@ -28,8 +28,8 @@ public class GameoverScreen extends BaseScreen {
     private static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy1/galaxy1.png";
     private static final String GAMEOVER_SOUND_PATH = "./data/sound/rock_breaking/rock_breaking.ogg";
 
-    private static final String BUTTON_IMAGE_PATH = "./data/images/hud/restart_button/restart_button.png";
-    private static final String BUTTON_HOVER_PATH = "./data/images/hud/restart_button/restart_button_hovered.png";
+    private static final String BUTTON_IMAGE_PATH = "./data/images/gui/restart_button.png";
+    private static final String BUTTON_HOVER_PATH = "./data/images/gui/restart_button_hovered.png";
 
     // font for buttons & text
     private BitmapFont font = null;

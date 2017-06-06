@@ -227,7 +227,6 @@ public class GameScreen extends BaseScreen {
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, game.getViewportWidth() / 2,
                 game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), (causingEntity) -> {
                     System.out.println("game over");
-
                     game.getScreenManager().leaveAllAndEnter("gameover");
                 });
 
@@ -392,7 +391,7 @@ public class GameScreen extends BaseScreen {
         batch.setShader(null);
         batch.setProjectionMatrix(game.getCamera().getCombined());
 
-        // draw abilities and son on
+        // draw abilities and so on
         this.ecs.drawUILayer(time, game.getCamera(), batch);
 
         batch.flush();

@@ -7,6 +7,7 @@ import dev.game.spacechaos.game.screen.CreditsScreen;
 import dev.game.spacechaos.game.screen.GameScreen;
 import dev.game.spacechaos.game.screen.GameoverScreen;
 import dev.game.spacechaos.game.screen.HUDOverlayScreen;
+import dev.game.spacechaos.game.screen.LoadingScreen;
 import dev.game.spacechaos.game.screen.MainMenuScreen;
 import dev.game.spacechaos.game.screen.SplashscreenScreen;
 
@@ -38,6 +39,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("menu", new MainMenuScreen());
         screenManager.addScreen("credits", new CreditsScreen());
         screenManager.addScreen("splash", new SplashscreenScreen());
+        screenManager.addScreen("loading", new LoadingScreen());
 
         // push screen
         if (showSplashscreen)

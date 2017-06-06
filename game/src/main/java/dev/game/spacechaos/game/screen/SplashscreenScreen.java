@@ -12,7 +12,7 @@ import dev.game.spacechaos.engine.time.GameTime;
  */
 public class SplashscreenScreen extends BaseScreen {
 
-    protected static final String LOGO_IMAGE_PATH = "./data/images/loading/loadscreen.png";
+    protected static final String LOGO_IMAGE_PATH = "./data/images/gui/logo.png";
     private static final String SPACE_IMAGE_PATH = "./data/wallpaper/galaxy3/space.png";
 
     protected long startTime = 0;
@@ -34,12 +34,12 @@ public class SplashscreenScreen extends BaseScreen {
 
     @Override
     public void onResume () {
-        //
+
     }
 
     @Override
     public void onPause () {
-        //
+
     }
 
     @Override

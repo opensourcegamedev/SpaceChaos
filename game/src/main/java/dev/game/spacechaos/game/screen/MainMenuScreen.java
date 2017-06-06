@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
 import dev.game.spacechaos.engine.hud.HUD;
@@ -44,7 +45,7 @@ public class MainMenuScreen extends BaseScreen {
     private TextButton creditsButton = null;
     private TextButton settingsButton = null;
 
-    //music
+    // music
     private Music music = null;
 
     @Override
@@ -63,7 +64,10 @@ public class MainMenuScreen extends BaseScreen {
 
         this.newGameButton = new TextButton("New Singleplayer Game", buttonFont, startX, 400f);
         this.newGameButton.setDimension(400, 50);
-        this.newGameButton.setClickListener(() -> game.getScreenManager().leaveAllAndEnter("game"));
+        this.newGameButton.setClickListener(() ->
+        // TODO Implement loading screen
+        // game.getScreenManager().leaveAllAndEnter("loading")
+        game.getScreenManager().leaveAllAndEnter("game"));
         this.hud.addWidget(this.newGameButton);
 
         this.multiplayerButton = new TextButton("Multiplayer Lobby", buttonFont, startX, 340f);
@@ -106,7 +110,7 @@ public class MainMenuScreen extends BaseScreen {
         this.creditsButton.setHoverSound(selectSound);
         this.settingsButton.setHoverSound(selectSound);
 
-        //load and get soundtrack
+        // load and get soundtrack
         assetManager.load(MUSIC_PATH, Music.class);
         assetManager.finishLoadingAsset(MUSIC_PATH);
         this.music = assetManager.get(MUSIC_PATH, Music.class);
@@ -124,7 +128,7 @@ public class MainMenuScreen extends BaseScreen {
 
         Gdx.input.setInputProcessor(null);
 
-        //stop music
+        // stop music
         this.music.stop();
     }
 
