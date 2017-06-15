@@ -6,6 +6,7 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IDrawComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.listener.TextureRegionChangedListener;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * Created by Justin on 11.02.2017.
  */
+@InjectComponent
 public class DrawTextureRegionComponent extends DrawComponent {
 
     protected TextureRegion textureRegion = null;

@@ -1,10 +1,12 @@
 package dev.game.spacechaos.engine.entity.component.draw;
 
 import com.badlogic.gdx.math.Vector2;
+
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
@@ -17,11 +19,13 @@ import dev.game.spacechaos.engine.utils.MouseUtils;
  */
 public class MouseDependentDrawRotationAngle extends BaseComponent implements IUpdateComponent {
 
-    // required components
-    protected PositionComponent positionComponent = null;
+    @InjectComponent(nullable = false)
+    protected PositionComponent positionComponent=null;
+    @InjectComponent
     protected DrawTextureComponent textureComponent = null;
+    @InjectComponent
     protected DrawTextureRegionComponent textureRegionComponent = null;
-
+    @InjectComponent
     protected DrawComponent drawComponent = null;
 
     protected float frontX = 0;
@@ -35,11 +39,6 @@ public class MouseDependentDrawRotationAngle extends BaseComponent implements IU
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.textureComponent = entity.getComponent(DrawTextureComponent.class);
         this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
-
-        // check, if components are available
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an PositionComponent.");
-        }
 
         if (this.textureComponent == null && this.textureRegionComponent == null) {
             throw new RequiredComponentNotFoundException(

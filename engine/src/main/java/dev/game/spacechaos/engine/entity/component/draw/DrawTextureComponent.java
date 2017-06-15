@@ -1,20 +1,23 @@
 package dev.game.spacechaos.engine.entity.component.draw;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.listener.TextureChangedListener;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Justin on 10.02.2017.
  */
+@InjectComponent
 public class DrawTextureComponent extends DrawComponent {
 
     protected List<TextureChangedListener> textureChangedListenerList = new ArrayList<>();

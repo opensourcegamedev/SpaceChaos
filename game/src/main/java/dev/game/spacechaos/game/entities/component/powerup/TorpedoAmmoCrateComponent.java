@@ -1,6 +1,7 @@
 package dev.game.spacechaos.game.entities.component.powerup;
 
 import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
 
 /**
@@ -10,6 +11,7 @@ import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryCompone
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.2-PreAlpha
  */
+@InjectComponent
 public class TorpedoAmmoCrateComponent extends BasePowerupComponent {
 
     private int ammo;

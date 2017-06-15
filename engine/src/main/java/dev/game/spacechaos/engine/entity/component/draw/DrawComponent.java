@@ -3,6 +3,7 @@ package dev.game.spacechaos.engine.entity.component.draw;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IDrawComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
@@ -12,6 +13,7 @@ import dev.game.spacechaos.engine.game.BaseGame;
  */
 public abstract class DrawComponent extends BaseComponent implements IDrawComponent {
 
+    @InjectComponent(nullable = false)
     protected PositionComponent positionComponent = null;
 
     protected float originX = 0;
@@ -27,12 +29,6 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
 
     @Override
     public final void onInit(BaseGame game, Entity entity) {
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("Entity doesn't have a PositionComponent.");
-        }
-
         afterInit(game, entity);
     }
 

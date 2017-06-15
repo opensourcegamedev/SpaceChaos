@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
-import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
@@ -19,6 +19,7 @@ import dev.game.spacechaos.engine.time.GameTime;
  */
 public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
+    @InjectComponent(nullable = false)
     protected PositionComponent positionComponent = null;
 
     protected Vector2 moveDirection = new Vector2(0, 0);
@@ -66,12 +67,6 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        // get required components
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesnt have a PositionComponent.");
-        }
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
@@ -27,9 +28,11 @@ import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
  */
 public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateComponent {
 
-    // required components
+    @InjectComponent(nullable = false)
     private PositionComponent positionComponent = null;
+    @InjectComponent(nullable = false)
     private MoveComponent moveComponent = null;
+    @InjectComponent(nullable = false)
     private MoveDependentDrawRotationComponent moveDependentDrawRotationComponent = null;
 
     // target entity to follow
@@ -70,22 +73,6 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        // get required components
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-        this.moveComponent = entity.getComponent(MoveComponent.class);
-        this.moveDependentDrawRotationComponent = entity.getComponent(MoveDependentDrawRotationComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("Entity doesn't have an PositionComponent.");
-        }
-
-        if (this.moveComponent == null) {
-            throw new RequiredComponentNotFoundException("Entity doesn't have an MoveComponent.");
-        }
-
-        if (this.moveDependentDrawRotationComponent == null) {
-            throw new RequiredComponentNotFoundException("Entity doesn't have an MoveDependentDrawRotation.");
-        }
     }
 
     @Override

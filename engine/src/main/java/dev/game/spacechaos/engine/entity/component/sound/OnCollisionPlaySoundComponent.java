@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
@@ -16,6 +17,7 @@ import java.io.File;
  */
 public class OnCollisionPlaySoundComponent extends BaseComponent implements CollisionListener {
 
+    @InjectComponent(nullable = false)
     protected CollisionComponent collisionComponent = null;
     protected String soundPath = "";
 
@@ -38,12 +40,6 @@ public class OnCollisionPlaySoundComponent extends BaseComponent implements Coll
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        this.collisionComponent = entity.getComponent(CollisionComponent.class);
-
-        if (this.collisionComponent == null) {
-            throw new RequiredComponentNotFoundException("entity doesnt have an CollisionComponent.");
-        }
-
         this.collisionComponent.addCollisionListener(this);
 
         // load sound

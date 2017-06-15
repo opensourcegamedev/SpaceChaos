@@ -1,7 +1,12 @@
 package dev.game.spacechaos.engine.entity.component.collision;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.collision.CShape;
 import dev.game.spacechaos.engine.collision.CollisionManager;
@@ -9,24 +14,21 @@ import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
-import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
-import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Justin on 12.04.2017.
  */
-@RequiredComponents(components = PositionComponent.class)
 public class CollisionComponent extends BaseComponent implements IUpdateComponent {
 
+    @InjectComponent(nullable = false)
     protected PositionComponent positionComponent = null;
+    @InjectComponent
     protected MoveComponent moveComponent = null;
 
     // list with all collision listeners
@@ -48,13 +50,6 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-        this.moveComponent = entity.getComponent(MoveComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new RequiredComponentNotFoundException("entity doesnt have an PositionComponent.");
-        }
-
         this.alreadyInCollisionEntities.clear();
         this.tmpList.clear();
     }

@@ -6,6 +6,7 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IDrawUILayerComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
@@ -22,7 +23,9 @@ import dev.game.spacechaos.game.entities.component.combat.HPComponent;
  */
 public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerComponent {
 
+    @InjectComponent(nullable = false)
     private PositionComponent positionComponent = null;
+    @InjectComponent(nullable = false)
     private HPComponent hpComponent = null;
 
     private float offsetX = 0;
@@ -46,17 +49,6 @@ public class DrawHPBarComponent extends BaseComponent implements IDrawUILayerCom
 
     @Override
     public void onInit(BaseGame game, Entity entity) {
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-        this.hpComponent = entity.getComponent(HPComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("Entity doesn't have a PositionComponent.");
-        }
-
-        if (this.hpComponent == null) {
-            throw new IllegalStateException("Entity doesn't have a HPComponent.");
-        }
-
         if (this.barWidth == 0) {
             this.barWidth = this.positionComponent.getWidth();
         }

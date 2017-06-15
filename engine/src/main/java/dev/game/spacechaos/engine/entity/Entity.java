@@ -1,17 +1,23 @@
 package dev.game.spacechaos.engine.entity;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import dev.game.spacechaos.engine.camera.CameraWrapper;
-import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.annotation.SharableComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
-
-import java.lang.annotation.Annotation;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Justin on 10.02.2017.
@@ -47,15 +53,120 @@ public class Entity {
     protected ECSPriority updateOrder = ECSPriority.NORMAL;
     protected ECSPriority drawOrder = ECSPriority.NORMAL;
     protected ECSPriority drawUILayerOrder = ECSPriority.NORMAL;
+    private boolean initialized = false;
 
     public Entity(EntityManager ecs) {
         this.game = ecs.getGame();
         this.ecs = ecs;
     }
 
+    /**
+     * Initializes the entity and its components.
+     * 
+     * @param game
+     *            The game object.
+     * @param ecs
+     *            The ECS.
+     */
     public void init(BaseGame game, EntityManager ecs) {
         this.game = game;
         this.ecs = ecs;
+
+        // Injects the components
+        for (IComponent component : componentMap.values()) {
+            injectComponents(component, component.getClass());
+        }
+
+        // Initializes all components
+        for (IComponent component : componentMap.values()) {
+            component.init(this.game, this);
+        }
+        
+        this.initialized = true;
+
+    }
+
+    private void injectComponents(Object target, Class clazz) {
+        InjectComponent classAnnotation = (InjectComponent) clazz.getAnnotation(InjectComponent.class);
+        if (classAnnotation != null) {
+            injectValidFieldsInClass(target, clazz, classAnnotation.nullable(), classAnnotation.injectInherited());
+        } else {
+            injectAnnotatedFieldsInClass(target, clazz);
+        }
+    }
+
+    /**
+     * Injects all properly annotated fields in the component Object.
+     * 
+     * @param target
+     *            The object whose fields should be injected.
+     * @param clazz
+     *            The class of the component.
+     * @see #injectField(IComponent, Field, boolean)
+     */
+    private void injectAnnotatedFieldsInClass(Object target, Class clazz) {
+        for (Field field : target.getClass().getDeclaredFields()) {
+            InjectComponent annotation = field.getAnnotation(InjectComponent.class);
+
+            if (annotation != null && IComponent.class.isAssignableFrom(field.getType())) {
+                injectField(target, field, annotation.nullable());
+            }
+        }
+    }
+
+    /**
+     * Injects all valid fields in the given component Object.
+     * 
+     * @param component
+     *            The object whose field should be injected.
+     * @param clazz
+     *            The class of the component.
+     * @param nullable
+     *            Whether the field can be null.
+     * @param injectInherited
+     *            Whether inherited fields should also be injected.
+     * @see #injectField(IComponent, Field, boolean)
+     */
+    private void injectValidFieldsInClass(Object target, Class clazz, boolean nullable, boolean injectInherited) {
+        Field[] declaredFields = clazz.getDeclaredFields();
+        for (int i = 0, s = declaredFields.length; s > i; i++) {
+            if (IComponent.class.isAssignableFrom(declaredFields[i].getType())) {
+                InjectComponent fieldAnnotation = declaredFields[i].getAnnotation(InjectComponent.class);
+                injectField((IComponent) target, declaredFields[i],
+                        fieldAnnotation != null ? fieldAnnotation.nullable() : nullable);
+            }
+        }
+
+        while (injectInherited && (clazz = clazz.getSuperclass()) != Object.class) {
+            injectValidFieldsInClass(target, clazz, nullable, injectInherited);
+        }
+    }
+
+    /**
+     * Injects the value of the field in the given component.
+     * 
+     * @param target
+     *            The object whose field should be injected.
+     * @param field
+     *            The field.
+     * @param nullable
+     *            Whether the field can be null.
+     */
+    private void injectField(Object target, Field field, boolean nullable) {
+        // check if component present
+        if (componentMap.containsKey(field.getType())) {
+            field.setAccessible(true);
+            try {
+                field.set(target, componentMap.get(field.getType()));
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Couldn't inject component '" + field.getType() + "' in '"
+                        + field.getDeclaringClass().getName() + "'. Exception: " + e.getLocalizedMessage());
+            }
+        } else if (!nullable) {
+            throw new RequiredComponentNotFoundException("Component '" + field.getType()
+                    + "' is required by component '" + field.getDeclaringClass().getName() + "' but does not exist.");
+        }
     }
 
     public void update(BaseGame game, GameTime time) {
@@ -117,33 +228,16 @@ public class Entity {
     }
 
     public <T extends IComponent> void addComponent(T component, Class<T> cls) {
-        if (this.game == null) {
-            throw new IllegalStateException("Please call init() before adding components.");
-        }
-
-        // check component requirements first
-        for (Annotation annotation : component.getClass().getDeclaredAnnotations()) {
-            if (annotation instanceof RequiredComponents) {
-                RequiredComponents requiredComponents = component.getClass().getAnnotation(RequiredComponents.class);
-
-                // check requirements
-                for (Class<? extends IComponent> classType : requiredComponents.components()) {
-                    // check if class type is present
-                    if (!componentMap.containsKey(classType)) {
-                        throw new RequiredComponentNotFoundException("component '" + classType.getName()
-                                + "' is required by component '" + cls.getName() + "', but doesn't exists.");
-                    }
-                }
-            }
-        }
-
-        // initialize component
-        component.init(this.game, this);
-
-        component.onAddedToEntity(this);
-
         // add component to map
         this.componentMap.put(cls, component);
+        
+        if(initialized){
+            injectComponents(component, cls);
+            
+            component.init(this.game, this);
+        }
+
+        component.onAddedToEntity(this);
 
         // check if component needs to update
         if (component instanceof IUpdateComponent) {
@@ -187,6 +281,7 @@ public class Entity {
 
             // sort list
             Collections.sort(this.drawComponentList, new Comparator<IDrawComponent>() {
+
                 @Override
                 public int compare(IDrawComponent o1, IDrawComponent o2) {
                     return ((Integer) o2.getDrawOrder().getValue()).compareTo(o1.getDrawOrder().getValue());
@@ -209,6 +304,7 @@ public class Entity {
         }
 
         this.onComponentAdded(this, component, cls);
+
     }
 
     public <T extends IComponent> void addComponent(T component) {

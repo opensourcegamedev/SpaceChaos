@@ -4,9 +4,8 @@ import dev.game.spacechaos.engine.camera.impl.Shake1CameraModification;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
-import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
-import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
@@ -16,17 +15,13 @@ import dev.game.spacechaos.engine.game.BaseGame;
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
-@RequiredComponents(components = CollisionComponent.class)
 public class OnCollisionCameraShakeComponent extends BaseComponent implements CollisionListener {
+
+    @InjectComponent(nullable = false)
+    private CollisionComponent collisionComponent;
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
-
-        if (collisionComponent == null) {
-            throw new RequiredComponentNotFoundException("entity doesn't have an CollisionComponent.");
-        }
-
         collisionComponent.addCollisionListener(this);
     }
 

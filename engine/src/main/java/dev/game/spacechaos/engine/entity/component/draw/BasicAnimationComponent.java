@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
@@ -18,6 +19,7 @@ import dev.game.spacechaos.engine.utils.AnimationTextureUtils;
  */
 public class BasicAnimationComponent extends BaseComponent implements IUpdateComponent {
 
+    @InjectComponent(nullable = false)
     protected DrawTextureRegionComponent textureRegionComponent = null;
 
     protected Animation<TextureRegion> animation = null;
@@ -49,12 +51,6 @@ public class BasicAnimationComponent extends BaseComponent implements IUpdateCom
     @Override
     public void onInit(BaseGame game, Entity entity) {
         super.init(game, entity);
-
-        this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
-
-        if (this.textureRegionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an DrawTextureRegionComponent.");
-        }
 
         // set current frame
         this.currentFrame = this.animation.getKeyFrame(1);

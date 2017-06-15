@@ -7,6 +7,7 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IDrawUILayerComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
@@ -23,7 +24,9 @@ import dev.game.spacechaos.game.entities.component.combat.ShieldComponent;
  */
 public class DrawShieldHPBarComponent extends BaseComponent implements IDrawUILayerComponent {
 
+    @InjectComponent(nullable = false)
     private PositionComponent positionComponent = null;
+    @InjectComponent(nullable = false)
     private ShieldComponent shieldComponent = null;
 
     private float offsetX = 0;
@@ -47,17 +50,6 @@ public class DrawShieldHPBarComponent extends BaseComponent implements IDrawUILa
 
     @Override
     public void onInit(BaseGame game, Entity entity) {
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-        this.shieldComponent = entity.getComponent(ShieldComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("Entity doesn't have a PositionComponent.");
-        }
-
-        if (this.shieldComponent == null) {
-            throw new IllegalStateException("Entity doesn't have a ShieldComponent.");
-        }
-
         if (this.barWidth == 0) {
             this.barWidth = this.positionComponent.getWidth();
         }

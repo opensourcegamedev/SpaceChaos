@@ -1,29 +1,28 @@
 package dev.game.spacechaos.engine.entity.component.movement;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+
 import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IDrawComponent;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
-import dev.game.spacechaos.engine.entity.annotation.RequiredComponents;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.MouseUtils;
-import dev.game.spacechaos.engine.utils.SpriteBatcherUtils;
 
 /**
  * Created by Justin on 08.04.2017.
  */
-@RequiredComponents(components = { PositionComponent.class, MoveComponent.class })
 public class MouseDependentMovementComponent extends BaseComponent implements IUpdateComponent, IDrawComponent {
 
+    @InjectComponent(nullable = false)
     protected PositionComponent positionComponent = null;
+    @InjectComponent(nullable = false)
     protected MoveComponent moveComponent = null;
 
     // used to store front coordinates
@@ -43,17 +42,6 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        // get required components
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-        this.moveComponent = entity.getComponent(MoveComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an PositionComponent.");
-        }
-
-        if (this.moveComponent == null) {
-            throw new IllegalStateException("entity doesnt have an MoveComponent.");
-        }
     }
 
     @Override
@@ -109,11 +97,12 @@ public class MouseDependentMovementComponent extends BaseComponent implements IU
         // TODO: outsource this code to extra component
 
         // draw center, only for debugging purposes
-        //SpriteBatcherUtils.fillRectangle(batch, positionComponent.getMiddleX() - 10,
-        //        positionComponent.getMiddleY() - 10, 20, 20, Color.YELLOW);
+        // SpriteBatcherUtils.fillRectangle(batch,
+        // positionComponent.getMiddleX() - 10,
+        // positionComponent.getMiddleY() - 10, 20, 20, Color.YELLOW);
 
         // draw mouse position
-        //Vector3 mousePos = camera.getMousePosition();
+        // Vector3 mousePos = camera.getMousePosition();
         // SpriteBatcherUtils.fillRectangle(batch, mousePos.x - 5, mousePos.y -
         // 5, 10, 10, Color.RED);
 

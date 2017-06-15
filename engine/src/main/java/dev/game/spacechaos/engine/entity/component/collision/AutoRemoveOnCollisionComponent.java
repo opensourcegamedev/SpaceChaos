@@ -3,6 +3,7 @@ package dev.game.spacechaos.engine.entity.component.collision;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 
 /**
@@ -12,16 +13,11 @@ import dev.game.spacechaos.engine.game.BaseGame;
  */
 public class AutoRemoveOnCollisionComponent extends BaseComponent implements CollisionListener {
 
+    @InjectComponent(nullable = false)
     protected CollisionComponent collisionComponent = null;
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        this.collisionComponent = entity.getComponent(CollisionComponent.class);
-
-        if (this.collisionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an CollisionComponent.");
-        }
-
         // register collision listener
         this.collisionComponent.addCollisionListener(this);
     }

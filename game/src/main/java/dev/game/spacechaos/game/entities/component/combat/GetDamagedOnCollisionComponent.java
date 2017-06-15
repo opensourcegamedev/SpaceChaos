@@ -3,6 +3,7 @@ package dev.game.spacechaos.game.entities.component.combat;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 
@@ -15,9 +16,13 @@ import dev.game.spacechaos.engine.game.BaseGame;
  */
 public class GetDamagedOnCollisionComponent extends BaseComponent implements CollisionListener {
 
+    @InjectComponent(nullable = false)
     private HPComponent hpComponent = null;
+    @InjectComponent
     private ShieldComponent shieldComponent = null;
-
+    @InjectComponent(nullable = false)
+    private CollisionComponent collisionComponent = null;
+    
     private float reduceValue = 100;
 
     // time, when player enters collision
@@ -43,18 +48,6 @@ public class GetDamagedOnCollisionComponent extends BaseComponent implements Col
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
-        this.hpComponent = entity.getComponent(HPComponent.class);
-        this.shieldComponent = entity.getComponent(ShieldComponent.class);
-
-        if (collisionComponent == null) {
-            throw new IllegalStateException("entity doesn't have an CollisionComponent.");
-        }
-
-        if (this.hpComponent == null) {
-            throw new IllegalStateException("entity doesn't have an HPComponent.");
-        }
-
         // register collision listener
         collisionComponent.addCollisionListener(this);
     }

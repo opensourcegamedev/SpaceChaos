@@ -6,6 +6,7 @@ import dev.game.spacechaos.engine.camera.CameraWrapper;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IDrawComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
@@ -16,6 +17,7 @@ import dev.game.spacechaos.engine.time.GameTime;
  */
 public class DrawParticlesComponent extends BaseComponent implements IDrawComponent {
 
+    @InjectComponent(nullable = false)
     protected PositionComponent positionComponent = null;
 
     protected float paddingX = 0;
@@ -37,12 +39,6 @@ public class DrawParticlesComponent extends BaseComponent implements IDrawCompon
 
     @Override
     public void onInit(BaseGame game, Entity entity) {
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an PositionComponent.");
-        }
-
         // create new particle effect
         this.particleEffect = new ParticleEffect();
 

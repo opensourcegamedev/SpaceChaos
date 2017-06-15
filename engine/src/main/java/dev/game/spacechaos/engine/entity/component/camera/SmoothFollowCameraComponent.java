@@ -3,6 +3,7 @@ package dev.game.spacechaos.engine.entity.component.camera;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
@@ -14,15 +15,11 @@ import dev.game.spacechaos.engine.time.GameTime;
 public class SmoothFollowCameraComponent extends BaseComponent implements IUpdateComponent {
 
     protected float lerp = 0.1f;
+    @InjectComponent(nullable = false)
     protected PositionComponent entityPosition = null;
 
     @Override
     public void onInit(BaseGame game, Entity entity) {
-        this.entityPosition = entity.getComponent(PositionComponent.class);
-
-        if (this.entityPosition == null) {
-            throw new IllegalStateException("entity doesnt have an PositionComponent.");
-        }
     }
 
     @Override

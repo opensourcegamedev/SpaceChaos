@@ -1,10 +1,11 @@
 package dev.game.spacechaos.engine.entity.component.draw;
 
 import com.badlogic.gdx.math.Vector2;
+
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
-import dev.game.spacechaos.engine.entity.component.PositionComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
@@ -16,9 +17,13 @@ import dev.game.spacechaos.engine.time.GameTime;
  */
 public class MoveDependentDrawRotationComponent extends BaseComponent implements IUpdateComponent {
 
+    @InjectComponent(nullable = false)
     protected MoveComponent moveComponent = null;
+    @InjectComponent
     protected DrawTextureComponent textureComponent = null;
+    @InjectComponent
     protected DrawTextureRegionComponent textureRegionComponent = null;
+    @InjectComponent
     protected DrawComponent drawComponent = null;
 
     protected float lastAngle = 0;
@@ -31,15 +36,6 @@ public class MoveDependentDrawRotationComponent extends BaseComponent implements
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        // get required components
-        this.moveComponent = entity.getComponent(MoveComponent.class);
-        this.textureComponent = entity.getComponent(DrawTextureComponent.class);
-        this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
-
-        if (this.moveComponent == null) {
-            throw new IllegalStateException("Entity doesn't have a MoveComponent.");
-        }
-
         if (this.textureComponent == null && this.textureRegionComponent == null) {
             throw new RequiredComponentNotFoundException(
                     "Entity doesn't have a DrawTextureComponent nor a DrawTextureRegionComponent");

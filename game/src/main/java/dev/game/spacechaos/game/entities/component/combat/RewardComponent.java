@@ -2,6 +2,7 @@ package dev.game.spacechaos.game.entities.component.combat;
 
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 
@@ -16,6 +17,8 @@ import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 public class RewardComponent extends BaseComponent implements HPDeathListener {
 
     private int score = 0;
+    @InjectComponent(nullable = false)
+    private HPComponent hpComponent = null;
 
     public RewardComponent(int score) {
         setScore(score);
@@ -31,12 +34,6 @@ public class RewardComponent extends BaseComponent implements HPDeathListener {
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        HPComponent hpComponent = entity.getComponent(HPComponent.class);
-
-        if (hpComponent == null) {
-            throw new IllegalStateException("entity doesn't have an HPComponent.");
-        }
-
         hpComponent.addDeathListener(this);
     }
 

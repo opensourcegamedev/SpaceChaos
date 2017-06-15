@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.game.BaseGame;
 import dev.game.spacechaos.engine.time.GameTime;
@@ -32,6 +33,7 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
     protected Map<String, Animation<TextureRegion>> animationMap = new ConcurrentHashMap<>();
 
     protected float elapsed = 0;
+    @InjectComponent(nullable = false)
     protected DrawTextureRegionComponent textureRegionComponent = null;
 
     public AtlasAnimationComponent(String atlasPath, String startAnimationName, float sumDuration) {
@@ -43,14 +45,6 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
     @Override
     public void onInit(BaseGame game, Entity entity) {
         super.init(game, entity);
-
-        // get required components
-        this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
-
-        if (textureRegionComponent == null) {
-            throw new IllegalStateException(
-                    "You have to set an TextureRegionComponent to entity to use AtlasAnimationComponent.");
-        }
 
         // load texture atlas
         game.getAssetManager().load(this.textureAtlasPath, TextureAtlas.class);

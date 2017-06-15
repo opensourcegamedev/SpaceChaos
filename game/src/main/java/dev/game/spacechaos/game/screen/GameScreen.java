@@ -232,7 +232,6 @@ public class GameScreen extends BaseScreen {
                     System.out.println("game over");
                     game.getScreenManager().leaveAllAndEnter("gameover");
                 });
-
         this.ecs.addEntity(this.playerEntity);
 
         // add player entity to shared data

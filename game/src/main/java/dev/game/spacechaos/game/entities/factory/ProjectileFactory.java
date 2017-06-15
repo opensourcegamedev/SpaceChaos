@@ -130,7 +130,8 @@ public class ProjectileFactory {
         projectileEntity.addComponent(new MoveComponent(moveX, moveY, 4f), MoveComponent.class);
 
         // add component to rotate projectile dependent on move direction
-        enemyEntity.addComponent(new MoveDependentDrawRotationComponent(), MoveDependentDrawRotationComponent.class);
+        enemyEntity.addComponent(new MoveDependentDrawRotationComponent(),
+                MoveDependentDrawRotationComponent.class);
 
         // add collision component, so entity can collide with other space
         // shuttles or meteorites

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
@@ -18,8 +19,9 @@ import java.util.Random;
  */
 public class RandomWalkComponent extends BaseComponent implements IUpdateComponent {
 
-    // required components
+    @InjectComponent(nullable = false)
     protected PositionComponent positionComponent = null;
+    @InjectComponent(nullable = false)
     protected MoveComponent moveComponent = null;
 
     protected boolean initialized = false;
@@ -35,17 +37,7 @@ public class RandomWalkComponent extends BaseComponent implements IUpdateCompone
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        // get required components
-        this.positionComponent = entity.getComponent(PositionComponent.class);
-        this.moveComponent = entity.getComponent(MoveComponent.class);
 
-        if (this.positionComponent == null) {
-            throw new IllegalStateException("entity doesnt have an PositionComponent.");
-        }
-
-        if (this.moveComponent == null) {
-            throw new RequiredComponentNotFoundException("entity doesnt have an MoveComponent.");
-        }
     }
 
     @Override

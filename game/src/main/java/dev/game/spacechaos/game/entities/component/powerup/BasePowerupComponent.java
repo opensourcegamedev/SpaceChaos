@@ -3,6 +3,7 @@ package dev.game.spacechaos.game.entities.component.powerup;
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
 
@@ -17,6 +18,8 @@ import dev.game.spacechaos.engine.game.BaseGame;
  */
 public abstract class BasePowerupComponent extends BaseComponent implements CollisionListener {
 
+    @InjectComponent(nullable = false)
+    private CollisionComponent collisionComponent;
     private int uses;
 
     public BasePowerupComponent() {
@@ -29,12 +32,6 @@ public abstract class BasePowerupComponent extends BaseComponent implements Coll
 
     @Override
     protected void onInit(BaseGame game, Entity entity) {
-        CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
-
-        if (collisionComponent == null) {
-            throw new IllegalStateException("Entity doesn't have an CollisionComponent.");
-        }
-
         collisionComponent.addCollisionListener(this);
     }
 

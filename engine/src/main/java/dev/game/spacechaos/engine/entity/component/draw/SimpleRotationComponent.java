@@ -3,6 +3,7 @@ package dev.game.spacechaos.engine.entity.component.draw;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.IUpdateComponent;
+import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.priority.ECSPriority;
 import dev.game.spacechaos.engine.exception.RequiredComponentNotFoundException;
@@ -14,9 +15,11 @@ import dev.game.spacechaos.engine.time.GameTime;
  */
 public class SimpleRotationComponent extends BaseComponent implements IUpdateComponent {
 
-    // required components
+    @InjectComponent
     protected DrawTextureComponent textureComponent = null;
+    @InjectComponent
     protected DrawTextureRegionComponent textureRegionComponent = null;
+    @InjectComponent
     protected DrawComponent drawComponent = null;
 
     // rotation angle
