@@ -28,7 +28,7 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
 
 ### Programmers
   - Justin Künzel
-  - Cromewell (dogemani)
+  - Cromewell (dogemagni)
   - Constantin Schulte (SupressWarnings)
   - javanewbie
   - damios
