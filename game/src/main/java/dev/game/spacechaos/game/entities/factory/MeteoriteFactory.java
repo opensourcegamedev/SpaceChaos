@@ -58,7 +58,7 @@ public class MeteoriteFactory {
         entity.addComponent(new RandomWalkComponent(), RandomWalkComponent.class);
 
         // add HP component, so player can destroy meteorites
-        entity.addComponent(new HPComponent(1500, 1500));
+        entity.addComponent(new HPComponent(1000, 1000));
 
         // add component to remove entity on hit
         entity.addComponent(new RemoveOnDeathComponent(), RemoveOnDeathComponent.class);
