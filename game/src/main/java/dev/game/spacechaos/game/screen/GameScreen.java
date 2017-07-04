@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
-import dev.game.spacecahos.game.input.InputManager;
+import dev.game.spacechaos.game.input.InputManager;
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.impl.DefaultCollisionManager;
 import dev.game.spacechaos.engine.entity.Entity;
