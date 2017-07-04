@@ -68,8 +68,8 @@ public class DrawTextureComponent extends DrawComponent {
         if (this.visible) {
             // draw texture
             batch.draw(this.texture,
-                    this.positionComponent.getX()/* - originX */,
-                    this.positionComponent.getY()/* - originY */, originX, originY, getWidth(), getHeight(), scaleX,
+                    this.positionComponent.getX() + this.getPaddingLeft()/* - originX */,
+                    this.positionComponent.getY() + this.getPaddingBottom()/* - originY */, originX, originY, getWidth(), getHeight(), scaleX,
                     scaleY, angle, 0, // srcX
                     0, // srcY
                     this.texture.getWidth(), this.texture.getHeight(), false, false);

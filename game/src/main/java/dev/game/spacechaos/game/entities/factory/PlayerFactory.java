@@ -119,6 +119,7 @@ public class PlayerFactory {
         // add texture for shield
         player.addComponent(new DrawShieldTextureComponent(shieldTexture, shieldTexture.getWidth() / 2,
                 shieldTexture.getHeight() / 2), DrawShieldTextureComponent.class);
+        player.getComponent(DrawShieldTextureComponent.class).setPadding(-14, -14);
 
         return player;
     }

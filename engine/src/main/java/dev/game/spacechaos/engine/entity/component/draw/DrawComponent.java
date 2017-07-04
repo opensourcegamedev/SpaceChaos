@@ -21,9 +21,12 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
 
     protected float width = 0;
     protected float height = 0;
-    float scaleX = 1f;
-    float scaleY = 1f;
-    float angle = 0;
+    protected float scaleX = 1f;
+    protected float scaleY = 1f;
+    protected float angle = 0;
+
+    protected float paddingLeft = 0;
+    protected float paddingBottom = 0;
 
     protected boolean visible = true;
 
@@ -63,6 +66,19 @@ public abstract class DrawComponent extends BaseComponent implements IDrawCompon
     public void setOrigin(float originX, float originY) {
         this.originX = originX;
         this.originY = originY;
+    }
+
+    public float getPaddingLeft () {
+        return this.paddingLeft;
+    }
+
+    public float getPaddingBottom () {
+        return this.paddingBottom;
+    }
+
+    public void setPadding (float paddingLeft, float paddingBottom) {
+        this.paddingLeft = paddingLeft;
+        this.paddingBottom = paddingBottom;
     }
 
     public boolean isVisible() {
