@@ -48,6 +48,7 @@ public class GameScreen extends BaseScreen {
     private static final String SKYBOX_1 = "./data/images/skybox/space/space.png";
     private static final String SKYBOX_2 = "./data/images/skybox/space/space-1.png";
     private static final String SHUTTLE_IMAGE_PATH = "./data/images/entities/pfau/shuttle.png";
+    private static final String SHIELD_IMAGE_PATH = "./data/images/fx/shield-effect/shield-small.png";
     private static final String SHUTTLE2_IMAGE_PATH = "./data/images/entities/starships/spaceshuttledark.png";
     private static final String PROJECTILE_BLUE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
     private static final String PROJECTILE_RED_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
@@ -110,6 +111,7 @@ public class GameScreen extends BaseScreen {
         assetManager.load(SKYBOX_1, Texture.class);
         assetManager.load(SKYBOX_2, Texture.class);
         assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
+        assetManager.load(SHIELD_IMAGE_PATH, Texture.class);
         assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
         assetManager.load(PROJECTILE_BLUE_IMAGE_PATH, Texture.class);
         assetManager.load(PROJECTILE_RED_IMAGE_PATH, Texture.class);
@@ -132,6 +134,7 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(SKYBOX_1);
         assetManager.finishLoadingAsset(SKYBOX_2);
         assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
+        assetManager.finishLoadingAsset(SHIELD_IMAGE_PATH);
         assetManager.finishLoadingAsset(SHUTTLE2_IMAGE_PATH);
         assetManager.finishLoadingAsset(PROJECTILE_BLUE_IMAGE_PATH);
         assetManager.finishLoadingAsset(PROJECTILE_RED_IMAGE_PATH);
@@ -231,7 +234,7 @@ public class GameScreen extends BaseScreen {
                 game.getViewportHeight() / 2, assetManager.get(SHUTTLE_IMAGE_PATH, Texture.class), (causingEntity) -> {
                     System.out.println("game over");
                     game.getScreenManager().leaveAllAndEnter("gameover");
-                });
+                }, assetManager.get(SHIELD_IMAGE_PATH, Texture.class));
         this.ecs.addEntity(this.playerEntity);
 
         // add player entity to shared data

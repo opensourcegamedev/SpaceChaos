@@ -25,6 +25,7 @@ import dev.game.spacechaos.game.entities.component.combat.ShieldComponent;
 import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawShieldHPBarComponent;
+import dev.game.spacechaos.game.entities.component.draw.DrawShieldTextureComponent;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 import dev.game.spacechaos.game.fx.BaseParticleEffect;
@@ -41,7 +42,7 @@ import dev.game.spacechaos.game.weapons.BaseWeapon;
 public class PlayerFactory {
 
     public static Entity createPlayer(EntityManager ecs, float x, float y, Texture texture,
-            HPDeathListener hpDeathListener) {
+            HPDeathListener hpDeathListener, Texture shieldTexture) {
         // create new entity
         Entity player = new Entity(ecs);
 
@@ -114,6 +115,10 @@ public class PlayerFactory {
         // add component to reduce HP on collision, reduce 100 points on every
         // collision
         player.addComponent(new GetDamagedOnCollisionComponent(100, 3000l), GetDamagedOnCollisionComponent.class);
+        
+        // add texture for shield
+        player.addComponent(new DrawShieldTextureComponent(shieldTexture, shieldTexture.getWidth() / 2,
+                shieldTexture.getHeight() / 2), DrawShieldTextureComponent.class);
 
         return player;
     }
