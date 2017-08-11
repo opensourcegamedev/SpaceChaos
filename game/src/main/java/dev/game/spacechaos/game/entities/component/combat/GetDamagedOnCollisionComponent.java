@@ -18,8 +18,10 @@ public class GetDamagedOnCollisionComponent extends BaseComponent implements Col
 
     @InjectComponent(nullable = false)
     private HPComponent hpComponent = null;
+
     @InjectComponent
     private ShieldComponent shieldComponent = null;
+
     @InjectComponent(nullable = false)
     private CollisionComponent collisionComponent = null;
     

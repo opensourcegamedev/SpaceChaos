@@ -30,8 +30,10 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
     @InjectComponent(nullable = false)
     private PositionComponent positionComponent = null;
+
     @InjectComponent(nullable = false)
     private MoveComponent moveComponent = null;
+
     @InjectComponent(nullable = false)
     private MoveDependentDrawRotationComponent moveDependentDrawRotationComponent = null;
 

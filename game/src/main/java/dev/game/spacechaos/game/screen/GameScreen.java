@@ -139,9 +139,11 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(PROJECTILE_BLUE_IMAGE_PATH);
         assetManager.finishLoadingAsset(PROJECTILE_RED_IMAGE_PATH);
         assetManager.finishLoadingAsset(TORPEDO_IMAGE_PATH);
+
         for (String ASTEROID_IMAGE_PATH : ASTEROID_IMAGE_PATHS) {
             assetManager.finishLoadingAsset(ASTEROID_IMAGE_PATH);
         }
+
         assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
         assetManager.finishLoadingAsset(BEEP_SOUND_PATH);
         assetManager.finishLoadingAsset(FIRE_SHOOT_SOUND);
@@ -248,7 +250,7 @@ public class GameScreen extends BaseScreen {
 
         // spawn entities
         spawnEnemyShuttles(5);
-        spawnMeteorites(120);
+        spawnMeteorites(80);
 
         // get game flags
         debug = (Boolean) game.getSharedData().get("debug");
