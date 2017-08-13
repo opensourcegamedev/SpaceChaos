@@ -79,16 +79,19 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
     @Override
     public void update(BaseGame game, GameTime time) {
+        //calculate elapsed time
         this.elapsed += time.getDeltaTime() * 1000;
 
         // calculate target direction and move in this direction
         moveDir.set(targetPosition.getMiddleX() - positionComponent.getMiddleX(),
                 targetPosition.getMiddleY() - positionComponent.getMiddleY());
 
+        //check, if shoot timer is finished, so shuttle can shoot an projectile
         if (canShoot()) {
             shootProjectile();
         }
 
+        //check if movement is required or shuttle is near player and dont needs to move
         if (!isMovementRequired()) {
             // don't move entity
             moveComponent.setMoveDirection(0, 0);
@@ -97,6 +100,7 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
             return;
         }
 
+        //normalize direction vector (so length = 1)
         moveDir.nor();
 
         // set move direction
@@ -120,10 +124,18 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
         return length > minDistance;
     }
 
+    /**
+    * check, if interval is finished, so shuttle can shoot projectile
+     *
+     * @return true, if shuttle is allowed to shoot an projectile
+    */
     private boolean canShoot() {
         return elapsed > shootInterval;
     }
 
+    /**
+    * spawn an new projectile and shoot it to the direction of front of shuttle
+    */
     private void shootProjectile() {
         // get projectile direction from enemy direction
         float dirX = moveDependentDrawRotationComponent.getFrontVec().x;
