@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
+import dev.game.spacechaos.game.entities.factory.*;
 import dev.game.spacechaos.game.input.InputManager;
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.impl.DefaultCollisionManager;
@@ -30,10 +31,6 @@ import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.engine.utils.SpawnUtils;
 import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
-import dev.game.spacechaos.game.entities.factory.EnemyFactory;
-import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
-import dev.game.spacechaos.game.entities.factory.PlayerFactory;
-import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
 import dev.game.spacechaos.game.skybox.SkyBox;
 
 /**
@@ -53,11 +50,19 @@ public class GameScreen extends BaseScreen {
     private static final String PROJECTILE_BLUE_IMAGE_PATH = "./data/images/entities/projectiles/projectile2.png";
     private static final String PROJECTILE_RED_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
     private static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
+
     private static final String[] ASTEROID_IMAGE_PATHS = { "./data/images/entities/asteroids/1.png",
             "./data/images/entities/asteroids/2.png", "./data/images/entities/asteroids/3.png",
             "./data/images/entities/asteroids/4.png", "./data/images/entities/asteroids/5.png",
             "./data/images/entities/asteroids/6.png", "./data/images/entities/asteroids/7.png",
             "./data/images/entities/asteroids/8.png" };
+
+    //textures for power ups
+    private static final String[] POWERUP_IMAGE_PATH = {
+            "./data/images/entities/spaceshooter/PNG/Power-ups/powerupRed_bolt.png",
+            "./data/images/entities/spaceshooter/PNG/Power-ups/powerupRed.png"
+    };
+
     private static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
     private static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
     private static final String FIRE_SHOOT_SOUND = "./data/sound/spaceshipshooting/Longshot.ogg";
@@ -88,9 +93,10 @@ public class GameScreen extends BaseScreen {
 
     private CollisionManager collisionManager = null;
 
-    // list with all enemy entities
+    // list with all enemy entities, meteorits and items
     private List<Entity> enemyEntityList = new ArrayList<>();
     private List<Entity> meteorEntityList = new ArrayList<>();
+    private List<Entity> powerupEntityList = new ArrayList<>();
 
     // input
     private InputManager inputManager;
@@ -120,6 +126,11 @@ public class GameScreen extends BaseScreen {
         // load meteorits
         for (String ASTEROID_IMAGE_PATH : ASTEROID_IMAGE_PATHS) {
             assetManager.load(ASTEROID_IMAGE_PATH, Texture.class);
+        }
+
+        //load powerups
+        for(String POWERUP_IMAGE_PATH : POWERUP_IMAGE_PATH){
+            assetManager.load(POWERUP_IMAGE_PATH, Texture.class);
         }
 
         // load background music
@@ -225,6 +236,29 @@ public class GameScreen extends BaseScreen {
         });
     }
 
+    private void spawnPowerups(int amount) {
+        // execute this code after updating all entities
+            game.runOnUIThread(() -> {
+                // add a specific amount of powerups
+               for (int powerupNumber = 0; powerupNumber < amount; powerupNumber++) {
+                   // calculate random powerup position near player
+                   Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(1000, 1600,
+                   this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
+                   this.playerEntity.getComponent(PositionComponent.class).getMiddleY());
+                   float x = randomPos.x;
+                   float y = randomPos.y;
+
+                   // create and add new powerup to entity-component-system
+                   Entity entity = PowerupFactory.createPowerup(this.ecs, x, y, assetManager
+                           .get(POWERUP_IMAGE_PATH[RandomUtils.getRandomNumber(0, POWERUP_IMAGE_PATH.length - 1)]));
+                   this.ecs.addEntity(entity);
+
+                   // add entity to powerup entity list
+                   this.powerupEntityList.add(entity);
+               }
+            });
+    }
+
     @Override
     public void onResume() {
         // remove all entities
@@ -248,9 +282,10 @@ public class GameScreen extends BaseScreen {
         // push HUD overlay screen (GUI)
         game.getScreenManager().push("hud");
 
-        // spawn entities
+        // spawn entities, meteorits and power ups
         spawnEnemyShuttles(5);
         spawnMeteorites(80);
+        spawnPowerups(3);
 
         // get game flags
         debug = (Boolean) game.getSharedData().get("debug");
@@ -299,6 +334,22 @@ public class GameScreen extends BaseScreen {
                     spawnMeteorites(1);
                 } catch (NullPointerException npe) {
                     // Meteor got destroyed.
+                }
+            }
+        }
+
+        // respawn powerups that are to far away
+        for (Entity ent : this.powerupEntityList) {
+            if (SpawnUtils.getDistance(playerEntity, ent) > 1800) {
+                try {
+                    // Powerup is too far away -> respawn
+                    ent.dispose();
+                    this.ecs.removeEntity(ent);
+                    spawnPowerups(2);
+                } catch (NullPointerException npe) {
+                    // Powerup got catched.
+
+                    //TODO: remove this quick & dirty fix
                 }
             }
         }
