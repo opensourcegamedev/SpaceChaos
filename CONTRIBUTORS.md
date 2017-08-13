@@ -9,6 +9,7 @@ Here you can see a list of all contributors and used assets from external author
   - Javanewbie - Programming, Graphics
   - Paul Funk - Graphics
   - damios - Programming
+  - Adrian - Programming, AI Design
 
 # Internal Images
 
