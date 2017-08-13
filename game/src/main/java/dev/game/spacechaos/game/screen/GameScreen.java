@@ -351,8 +351,6 @@ public class GameScreen extends BaseScreen {
                 } catch (NullPointerException npe) {
                     // Powerup got catched.
 
-                    spawnPowerups(1);
-
                     //TODO: remove this quick & dirty fix
                 }
             }
