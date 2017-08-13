@@ -242,11 +242,13 @@ public class GameScreen extends BaseScreen {
                 // add a specific amount of powerups
                for (int powerupNumber = 0; powerupNumber < amount; powerupNumber++) {
                    // calculate random powerup position near player
-                   Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(1000, 1600,
+                   Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(100, 1300,
                    this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
                    this.playerEntity.getComponent(PositionComponent.class).getMiddleY());
                    float x = randomPos.x;
                    float y = randomPos.y;
+
+                   System.out.println("spawn power up on " + x + ", " + y + ".");
 
                    // create and add new powerup to entity-component-system
                    Entity entity = PowerupFactory.createPowerup(this.ecs, x, y, assetManager
@@ -285,7 +287,7 @@ public class GameScreen extends BaseScreen {
         // spawn entities, meteorits and power ups
         spawnEnemyShuttles(5);
         spawnMeteorites(80);
-        spawnPowerups(3);
+        spawnPowerups(5);
 
         // get game flags
         debug = (Boolean) game.getSharedData().get("debug");
