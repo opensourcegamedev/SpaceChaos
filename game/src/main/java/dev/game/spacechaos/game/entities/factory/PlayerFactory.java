@@ -27,6 +27,7 @@ import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawShieldHPBarComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawShieldTextureComponent;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
+import dev.game.spacechaos.game.entities.component.powerup.CanUsePowerUpsComponent;
 import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 import dev.game.spacechaos.game.fx.BaseParticleEffect;
 import dev.game.spacechaos.game.fx.MouseDependentParticleEffect;
@@ -115,6 +116,9 @@ public class PlayerFactory {
         // add component to reduce HP on collision, reduce 100 points on every
         // collision
         player.addComponent(new GetDamagedOnCollisionComponent(100, 3000l), GetDamagedOnCollisionComponent.class);
+
+        //add component, so player can use power ups
+        player.addComponent(new CanUsePowerUpsComponent(), CanUsePowerUpsComponent.class);
         
         // add texture for shield
         player.addComponent(new DrawShieldTextureComponent(shieldTexture, shieldTexture.getWidth() / 2,

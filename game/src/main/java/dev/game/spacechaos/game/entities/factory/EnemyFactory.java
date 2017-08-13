@@ -16,6 +16,7 @@ import dev.game.spacechaos.game.entities.component.combat.GetDamagedOnCollisionC
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnDeathComponent;
 import dev.game.spacechaos.game.entities.component.combat.RewardComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
+import dev.game.spacechaos.game.entities.component.powerup.CanUsePowerUpsComponent;
 import dev.game.spacechaos.game.entity.listener.HPDeathListener;
 
 /**
@@ -79,6 +80,9 @@ public class EnemyFactory {
         // add component to reduce HP on collision, reduce 100 points on every
         // collision
         enemyEntity.addComponent(new GetDamagedOnCollisionComponent(100), GetDamagedOnCollisionComponent.class);
+
+        //add component, so enemy shuttle can also use power ups
+        enemyEntity.addComponent(new CanUsePowerUpsComponent(), CanUsePowerUpsComponent.class);
 
         // add component for score reward
         enemyEntity.addComponent(new RewardComponent(50), RewardComponent.class);

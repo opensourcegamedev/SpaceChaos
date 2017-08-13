@@ -37,6 +37,11 @@ public abstract class BasePowerupComponent extends BaseComponent implements Coll
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
+        if (otherEntity.getComponent(CanUsePowerUpsComponent.class) == null) {
+            //this entity cannot use this component
+            return;
+        }
+
         if (onEffect(otherEntity)) {
             uses--;
             if (uses <= 0) {
