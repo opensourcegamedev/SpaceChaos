@@ -33,6 +33,7 @@ public class PowerupFactory {
      *            texture
      * @return power up entity
      */
+    @Deprecated
     public static Entity createHealthpack(EntityManager ecs, float x, float y, Texture texture) {
         // create new entity
         Entity powerupEntity = createPowerup(ecs, x, y, texture);
@@ -91,6 +92,8 @@ public class PowerupFactory {
         powerupEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
         powerupEntity.getComponent(CollisionComponent.class)
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
+
+        powerupEntity.addComponent(new HealthpackComponent(1000));
 
         return powerupEntity;
     }
