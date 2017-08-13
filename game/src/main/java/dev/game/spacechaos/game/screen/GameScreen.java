@@ -299,7 +299,7 @@ public class GameScreen extends BaseScreen {
 
         // spawn entities, meteorits and power ups
         spawnEnemyShuttles(5);
-        spawnMeteorites(80);
+        spawnMeteorites(50);
         spawnPowerups(5);
 
         // get game flags
