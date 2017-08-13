@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.game.spacechaos.engine.font.BitmapFontFactory;
 import dev.game.spacechaos.engine.game.ScreenBasedGame;
-import dev.game.spacechaos.engine.hud.widgets.ColoredTextButton;
-import dev.game.spacechaos.engine.hud.widgets.ImageButton;
 import dev.game.spacechaos.engine.hud.widgets.TextButton;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.sound.VolumeManager;
@@ -36,8 +34,8 @@ public class GameoverScreen extends BaseScreen {
     private Texture bgTexture = null;
     private Sound sound = null;
 
-    // private ColoredTextButton replayButton = null;
-    private TextButton replayButton = null;
+    private TextButton menuButton = null;
+    protected TextButton replayButton = null;
 
     private String timeText = "";
     private String scoreText = "";
@@ -51,15 +49,24 @@ public class GameoverScreen extends BaseScreen {
         game.getAssetManager().finishLoadingAsset(BG_IMAGE_PATH);
         sound = game.getAssetManager().get(GAMEOVER_SOUND_PATH);
         this.bgTexture = game.getAssetManager().get(BG_IMAGE_PATH);
+
         // generate fonts
         this.font = BitmapFontFactory.createFont("./data/font/spartakus/SparTakus.ttf", 48, Color.WHITE, Color.BLUE, 3);
         this.buttonFont = BitmapFontFactory.createFont("data/font/arial/arial.ttf", 32, Color.WHITE);
 
-        this.replayButton = new TextButton("Zum Menu", buttonFont);
-        this.replayButton.setDimension(/* 200 */400, /* 50 */50);
-        this.replayButton.setPosition(game.getViewportWidth() / 2 - (replayButton.getWidth() / 2), 260);
+        //back to menu button
+        this.menuButton = new TextButton("Back to Menu", this.buttonFont);
+        this.menuButton.setDimension(/* 200 */400, /* 50 */50);
+        this.menuButton.setPosition(game.getViewportWidth() / 2 - (menuButton.getWidth() / 2), 260);
+        this.menuButton.setClickListener(() -> game.getScreenManager().leaveAllAndEnter("menu"));
 
-        this.replayButton.setClickListener(() -> game.getScreenManager().leaveAllAndEnter("menu"));
+        //replay button
+        this.replayButton = new TextButton("Replay", this.buttonFont);
+        this.replayButton.setDimension(400, 50);
+        this.replayButton.setPosition(game.getViewportWidth() / 2 - (menuButton.getWidth() / 2), 200);
+        this.replayButton.setClickListener(() -> {
+            game.getScreenManager().leaveAllAndEnter("game");
+        });
     }
 
     @Override
@@ -78,21 +85,27 @@ public class GameoverScreen extends BaseScreen {
 
     @Override
     public void update(ScreenBasedGame game, GameTime time) {
+        //update buttons
+        this.menuButton.update(game, time);
         this.replayButton.update(game, time);
     }
 
     @Override
     public void draw(GameTime time, SpriteBatch batch) {
+        //set UI Camera projection matrix
         batch.setProjectionMatrix(game.getUICamera().combined);
 
+        //draw background image
         batch.draw(this.bgTexture, 0, 0);
 
+        //draw text
         this.font.draw(batch, "GAME OVER", game.getViewportWidth() / 2 - 245, game.getViewportHeight() / 2 + 70);
 
         this.buttonFont.draw(batch, "Elapsed Time: " + this.timeText, 75, 120);
         this.buttonFont.draw(batch, "Score: " + this.scoreText, 75, 70);
 
-        // draw replay button
+        // draw buttons
+        this.menuButton.drawLayer0(time, batch);
         this.replayButton.drawLayer0(time, batch);
     }
 
