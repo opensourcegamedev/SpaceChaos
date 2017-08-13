@@ -156,6 +156,11 @@ public class GameScreen extends BaseScreen {
             assetManager.finishLoadingAsset(ASTEROID_IMAGE_PATH);
         }
 
+        //load powerups
+        for(String POWERUP_IMAGE_PATH : POWERUP_IMAGE_PATH){
+            assetManager.finishLoadingAsset(POWERUP_IMAGE_PATH);
+        }
+
         assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
         assetManager.finishLoadingAsset(BEEP_SOUND_PATH);
         assetManager.finishLoadingAsset(FIRE_SHOOT_SOUND);
