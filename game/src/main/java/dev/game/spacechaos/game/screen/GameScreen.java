@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
+import dev.game.spacechaos.game.entities.component.powerup.HealthpackComponent;
 import dev.game.spacechaos.game.entities.factory.*;
 import dev.game.spacechaos.game.input.InputManager;
 import dev.game.spacechaos.engine.collision.CollisionManager;
@@ -253,6 +254,13 @@ public class GameScreen extends BaseScreen {
                    // create and add new powerup to entity-component-system
                    Entity entity = PowerupFactory.createPowerup(this.ecs, x, y, assetManager
                            .get(POWERUP_IMAGE_PATH[RandomUtils.getRandomNumber(0, POWERUP_IMAGE_PATH.length - 1)]));
+
+                   //add listener to respawn power up
+                   entity.getComponent(HealthpackComponent.class).setRemoveListener((Entity entity1) -> {
+                       //spawn new power up
+                       spawnPowerups(1);
+                   });
+
                    this.ecs.addEntity(entity);
 
                    // add entity to powerup entity list

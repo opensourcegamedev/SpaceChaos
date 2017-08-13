@@ -6,6 +6,7 @@ import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.annotation.InjectComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.game.entity.listener.RemoveListener;
 
 /**
  * Adds an collision effect to entities.
@@ -21,6 +22,9 @@ public abstract class BasePowerupComponent extends BaseComponent implements Coll
     @InjectComponent(nullable = false)
     private CollisionComponent collisionComponent;
     private int uses;
+
+    //listener, which is called, if entity is removed from ecs
+    protected RemoveListener removeListener = null;
 
     public BasePowerupComponent() {
         this(1);
@@ -46,6 +50,10 @@ public abstract class BasePowerupComponent extends BaseComponent implements Coll
             uses--;
             if (uses <= 0) {
                 game.runOnUIThread(() -> {
+                    if (this.removeListener != null) {
+                        this.removeListener.onRemoveEntity(this.entity);
+                    }
+
                     this.entity.getEntityComponentSystem().removeEntity(this.entity);
                 });
             }
@@ -60,6 +68,14 @@ public abstract class BasePowerupComponent extends BaseComponent implements Coll
      * @return Returns true if the effect was executed.
      */
     protected abstract boolean onEffect(Entity affectedEntity);
+    /**
+    * set remove listener
+     *
+     * @param listener listener, which is called, if entity will be removed
+    */
+    public void setRemoveListener (RemoveListener listener) {
+        this.removeListener = listener;
+    }
 
     @Override
     public void onStay(Entity entity, Entity otherEntity) {
