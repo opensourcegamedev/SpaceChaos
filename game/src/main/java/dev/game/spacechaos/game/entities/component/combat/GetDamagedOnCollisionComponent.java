@@ -75,8 +75,12 @@ public class GetDamagedOnCollisionComponent extends BaseComponent implements Col
         }
 
         if (tmp > 0) {
-            // reduce HP
-            this.hpComponent.subHP(tmp);
+            if (this.hpComponent != null) {
+                // reduce HP
+                this.hpComponent.subHP(tmp);
+            } else {
+                System.err.println("GetDamagedOnCollisionComponent: entity doesnt have an HPComponent.");
+            }
         }
 
         if (this.collisionStartTime == 0) {
