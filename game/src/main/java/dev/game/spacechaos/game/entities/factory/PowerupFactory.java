@@ -8,6 +8,8 @@ import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
+import dev.game.spacechaos.engine.entity.component.sound.AvoidCollisionSoundComponent;
+import dev.game.spacechaos.game.entities.component.collision.AvoidCollisionCameraShakeComponent;
 import dev.game.spacechaos.game.entities.component.powerup.HealthpackComponent;
 import dev.game.spacechaos.game.entities.component.powerup.TorpedoAmmoCrateComponent;
 
@@ -92,6 +94,10 @@ public class PowerupFactory {
         powerupEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
         powerupEntity.getComponent(CollisionComponent.class)
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
+
+        //avoid camera shake on collision and sounds on collision
+        powerupEntity.addComponent(new AvoidCollisionCameraShakeComponent(), AvoidCollisionCameraShakeComponent.class);
+        powerupEntity.addComponent(new AvoidCollisionSoundComponent(), AvoidCollisionSoundComponent.class);
 
         powerupEntity.addComponent(new HealthpackComponent(1000));
 
