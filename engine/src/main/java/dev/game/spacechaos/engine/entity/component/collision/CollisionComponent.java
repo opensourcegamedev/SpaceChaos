@@ -28,6 +28,7 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
 
     @InjectComponent(nullable = false)
     protected PositionComponent positionComponent = null;
+
     @InjectComponent
     protected MoveComponent moveComponent = null;
 
@@ -160,7 +161,14 @@ public class CollisionComponent extends BaseComponent implements IUpdateComponen
     protected void callCollisionEnterListeners(Entity collisionEntity) {
         // call collision listeners
         for (CollisionListener listener : this.listenerList) {
-            listener.onEnter(entity, collisionEntity);
+            try {
+                listener.onEnter(entity, collisionEntity);
+            } catch (Exception e) {
+                System.err.println("exception while enter collision:");
+
+                //print stacktrace
+                e.printStackTrace();
+            }
         }
     }
 
