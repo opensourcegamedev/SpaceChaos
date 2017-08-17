@@ -12,7 +12,6 @@ import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotatio
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.game.entities.component.ai.EnemyShuttleAIComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
-import dev.game.spacechaos.game.entities.component.combat.GetDamagedOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnDeathComponent;
 import dev.game.spacechaos.game.entities.component.combat.RewardComponent;
 import dev.game.spacechaos.game.entities.component.draw.DrawHPBarComponent;
@@ -77,11 +76,7 @@ public class EnemyFactory {
         // add component to remove entity on death
         enemyEntity.addComponent(new RemoveOnDeathComponent(), RemoveOnDeathComponent.class);
 
-        // add component to reduce HP on collision, reduce 100 points on every
-        // collision
-        enemyEntity.addComponent(new GetDamagedOnCollisionComponent(100), GetDamagedOnCollisionComponent.class);
-
-        //add component, so enemy shuttle can also use power ups
+        // add component, so enemy shuttle can also use power ups
         enemyEntity.addComponent(new CanUsePowerUpsComponent(), CanUsePowerUpsComponent.class);
 
         // add component for score reward

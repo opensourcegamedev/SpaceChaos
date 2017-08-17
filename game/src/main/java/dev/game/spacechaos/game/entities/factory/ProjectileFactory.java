@@ -8,8 +8,6 @@ import dev.game.spacechaos.engine.collision.shape.CCircle;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.EntityManager;
 import dev.game.spacechaos.engine.entity.component.PositionComponent;
-import dev.game.spacechaos.engine.entity.component.collision.AutoRemoveOnCollisionComponent;
-import dev.game.spacechaos.engine.entity.component.collision.AvoidRemoveOnCollisionComponent;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
@@ -17,7 +15,7 @@ import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.AvoidCollisionSoundComponent;
 import dev.game.spacechaos.engine.entity.component.utils.TimedAutoRemoveComponent;
 import dev.game.spacechaos.game.entities.component.collision.AvoidCollisionCameraShakeComponent;
-import dev.game.spacechaos.game.entities.component.combat.ProjectileComponent;
+import dev.game.spacechaos.game.entities.component.combat.CollisionDamageComponent;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 import dev.game.spacechaos.game.fx.BaseParticleEffect;
 import dev.game.spacechaos.game.fx.MovementDirectionBasedParticleEffect;
@@ -75,7 +73,7 @@ public class ProjectileFactory {
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         // add attack component
-        projectileEntity.addComponent(new ProjectileComponent(ownEntity, 100));
+        projectileEntity.addComponent(new CollisionDamageComponent(100, true, ownEntity));
 
         // add component to avoid camera shake, if player fires projectile (when
         // projectile starts, projectile is in player collision hull)
@@ -84,14 +82,6 @@ public class ProjectileFactory {
 
         // add component to avoid collision sound
         projectileEntity.addComponent(new AvoidCollisionSoundComponent(), AvoidCollisionSoundComponent.class);
-
-        // add component to remove entity, if entity collides with an other
-        // entity
-        projectileEntity.addComponent(new AutoRemoveOnCollisionComponent(), AutoRemoveOnCollisionComponent.class);
-
-        // don't remove, if projectile collides with player
-        projectileEntity.addComponent(new AvoidRemoveOnCollisionComponent(ownEntity),
-                AvoidRemoveOnCollisionComponent.class);
 
         // add component to auto remove projectile after a given time
         projectileEntity.addComponent(new TimedAutoRemoveComponent(4000L));
@@ -136,7 +126,7 @@ public class ProjectileFactory {
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         // add attack component
-        projectileEntity.addComponent(new ProjectileComponent(playerEntity, 700));
+        projectileEntity.addComponent(new CollisionDamageComponent(700, true, playerEntity));
 
         // add component to avoid camera shake, if player fires projectile (if
         // projectile starts, projectile is in player collision hull)
@@ -145,14 +135,6 @@ public class ProjectileFactory {
 
         // add component to avoid collision sound
         projectileEntity.addComponent(new AvoidCollisionSoundComponent(), AvoidCollisionSoundComponent.class);
-
-        // add component to remove entity, if entity collides with an other
-        // entity
-        projectileEntity.addComponent(new AutoRemoveOnCollisionComponent(), AutoRemoveOnCollisionComponent.class);
-
-        // don't remove, if projectile collides with player
-        projectileEntity.addComponent(new AvoidRemoveOnCollisionComponent(playerEntity),
-                AvoidRemoveOnCollisionComponent.class);
 
         // AI
         // projectileEntity.addComponent(new

@@ -18,7 +18,6 @@ import dev.game.spacechaos.engine.entity.component.movement.MouseDependentMoveme
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.OnCollisionPlaySoundComponent;
 import dev.game.spacechaos.game.entities.component.collision.OnCollisionCameraShakeComponent;
-import dev.game.spacechaos.game.entities.component.combat.GetDamagedOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.ScoreComponent;
 import dev.game.spacechaos.game.entities.component.combat.ShieldComponent;
@@ -113,13 +112,9 @@ public class PlayerFactory {
         player.addComponent(new DrawShieldHPBarComponent(texture.getWidth() / 3, 20, texture.getWidth() / 3, 5f),
                 DrawShieldHPBarComponent.class);
 
-        // add component to reduce HP on collision, reduce 100 points on every
-        // collision
-        player.addComponent(new GetDamagedOnCollisionComponent(100, 3000l), GetDamagedOnCollisionComponent.class);
-
-        //add component, so player can use power ups
+        // add component, so player can use power ups
         player.addComponent(new CanUsePowerUpsComponent(), CanUsePowerUpsComponent.class);
-        
+
         // add texture for shield
         player.addComponent(new DrawShieldTextureComponent(shieldTexture, shieldTexture.getWidth() / 2,
                 shieldTexture.getHeight() / 2), DrawShieldTextureComponent.class);
