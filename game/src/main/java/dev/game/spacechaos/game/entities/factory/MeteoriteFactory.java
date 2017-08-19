@@ -12,7 +12,7 @@ import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.SimpleRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.utils.RandomUtils;
-import dev.game.spacechaos.game.entities.component.combat.CollisionDamageComponent;
+import dev.game.spacechaos.game.entities.component.collision.DealDamageOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnDeathComponent;
 
@@ -59,13 +59,13 @@ public class MeteoriteFactory {
         entity.addComponent(new RandomWalkComponent(), RandomWalkComponent.class);
 
         // add HP component, so player can destroy meteorites
-        entity.addComponent(new HPComponent(1000, 1000));
+        entity.addComponent(new HPComponent(4000, 1000));
 
         // add component to remove entity on hit
         entity.addComponent(new RemoveOnDeathComponent(), RemoveOnDeathComponent.class);
 
         // add component to deal damage upon collision
-        entity.addComponent(new CollisionDamageComponent(100, false, null, true));
+        entity.addComponent(new DealDamageOnCollisionComponent(100, false, null, true));
 
         // add collision component, so player can collide with meteorites
         entity.addComponent(new CollisionComponent(), CollisionComponent.class);

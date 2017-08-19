@@ -94,7 +94,7 @@ public class ShieldComponent extends BaseComponent implements IUpdateComponent {
         }
     }
 
-    void subShieldHP(float hp) {
+    public void subShieldHP(float hp) {
         setCurrentShieldHP(getCurrentShieldHP() - hp);
     }
 

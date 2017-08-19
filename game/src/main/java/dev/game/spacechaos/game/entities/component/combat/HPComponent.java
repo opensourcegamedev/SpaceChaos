@@ -94,7 +94,7 @@ public class HPComponent extends BaseComponent {
         }
     }
 
-    void subHP(float hp, Entity causingEntity) {
+    public void subHP(float hp, Entity causingEntity) {
         setCurrentHP(getCurrentHP() - hp, causingEntity);
     }
 

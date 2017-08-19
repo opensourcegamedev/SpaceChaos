@@ -112,7 +112,7 @@ public class PlayerFactory {
         player.addComponent(new DrawShieldHPBarComponent(texture.getWidth() / 3, 20, texture.getWidth() / 3, 5f),
                 DrawShieldHPBarComponent.class);
 
-        // add component, so player can use power ups
+        // add component, so the player can use power ups
         player.addComponent(new CanUsePowerUpsComponent(), CanUsePowerUpsComponent.class);
 
         // add texture for shield

@@ -15,7 +15,7 @@ import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.engine.entity.component.sound.AvoidCollisionSoundComponent;
 import dev.game.spacechaos.engine.entity.component.utils.TimedAutoRemoveComponent;
 import dev.game.spacechaos.game.entities.component.collision.AvoidCollisionCameraShakeComponent;
-import dev.game.spacechaos.game.entities.component.combat.CollisionDamageComponent;
+import dev.game.spacechaos.game.entities.component.collision.DealDamageOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.draw.ParticleComponent;
 import dev.game.spacechaos.game.fx.BaseParticleEffect;
 import dev.game.spacechaos.game.fx.MovementDirectionBasedParticleEffect;
@@ -73,7 +73,7 @@ public class ProjectileFactory {
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         // add attack component
-        projectileEntity.addComponent(new CollisionDamageComponent(100, true, ownEntity));
+        projectileEntity.addComponent(new DealDamageOnCollisionComponent(100, true, ownEntity));
 
         // add component to avoid camera shake, if player fires projectile (when
         // projectile starts, projectile is in player collision hull)
@@ -126,7 +126,7 @@ public class ProjectileFactory {
                 .addInnerShape(new CCircle(texture.getWidth() / 2, texture.getHeight() / 2, texture.getWidth() / 2));
 
         // add attack component
-        projectileEntity.addComponent(new CollisionDamageComponent(700, true, playerEntity));
+        projectileEntity.addComponent(new DealDamageOnCollisionComponent(800, true, playerEntity));
 
         // add component to avoid camera shake, if player fires projectile (if
         // projectile starts, projectile is in player collision hull)

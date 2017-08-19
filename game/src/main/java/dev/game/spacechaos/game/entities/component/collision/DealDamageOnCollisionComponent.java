@@ -1,20 +1,22 @@
-package dev.game.spacechaos.game.entities.component.combat;
+package dev.game.spacechaos.game.entities.component.collision;
 
 import dev.game.spacechaos.engine.collision.listener.CollisionListener;
 import dev.game.spacechaos.engine.entity.BaseComponent;
 import dev.game.spacechaos.engine.entity.Entity;
 import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.game.BaseGame;
+import dev.game.spacechaos.game.entities.component.combat.HPComponent;
+import dev.game.spacechaos.game.entities.component.combat.ShieldComponent;
 
 /**
- * Adds an projectile-component to entities which deal damage to another entity
- * on collision.
+ * Adds a component to entities which deal damage to another entity on
+ * collision.
  *
  * @author SpaceChaos-Team
  *         (https://github.com/opensourcegamedev/SpaceChaos/blob/master/CONTRIBUTORS.md)
  * @since 1.0.0-PreAlpha
  */
-public class CollisionDamageComponent extends BaseComponent implements CollisionListener {
+public class DealDamageOnCollisionComponent extends BaseComponent implements CollisionListener {
 
     private Entity ownerEntity = null;
     private float damage = 0;
@@ -28,22 +30,23 @@ public class CollisionDamageComponent extends BaseComponent implements Collision
      */
     private boolean removeOnCollision;
 
-    public CollisionDamageComponent(float damage, boolean removeOnCollision, Entity ownerEntity, boolean ignoreShield) {
+    public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision, Entity ownerEntity,
+            boolean ignoreShield) {
         this.ownerEntity = ownerEntity;
         this.removeOnCollision = removeOnCollision;
         this.damage = damage;
         this.ignoreShield = ignoreShield;
     }
 
-    public CollisionDamageComponent(float damage, boolean removeOnCollision, Entity ownerEntity) {
+    public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision, Entity ownerEntity) {
         this(damage, removeOnCollision, ownerEntity, false);
     }
 
-    public CollisionDamageComponent(float damage, boolean removeOnCollision) {
+    public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision) {
         this(damage, removeOnCollision, null);
     }
 
-    public CollisionDamageComponent(float damage) {
+    public DealDamageOnCollisionComponent(float damage) {
         this(damage, true);
     }
 
@@ -67,25 +70,14 @@ public class CollisionDamageComponent extends BaseComponent implements Collision
             return;
         }
 
-        dealDamage(otherEntity);
-
-        if (removeOnCollision) {
-            game.runOnUIThread(() -> {
-                this.entity.getEntityComponentSystem().removeEntity(this.entity);
-            });
-        } else {
-            
-        }
-    }
-
-    private void dealDamage(Entity entity) {
-        HPComponent hpComponent = entity.getComponent(HPComponent.class);
+        // Deal the damage
+        HPComponent hpComponent = otherEntity.getComponent(HPComponent.class);
         if (hpComponent == null) {
             // HP can't be reduced
             return;
         }
 
-        ShieldComponent shieldComponent = entity.getComponent(ShieldComponent.class);
+        ShieldComponent shieldComponent = otherEntity.getComponent(ShieldComponent.class);
 
         float tmp = this.damage;
 
@@ -99,6 +91,13 @@ public class CollisionDamageComponent extends BaseComponent implements Collision
         if (tmp > 0) {
             // reduce HP
             hpComponent.subHP(tmp, ownerEntity);
+        }
+
+        // Remove the entity containing this component if necessary
+        if (removeOnCollision) {
+            game.runOnUIThread(() -> {
+                this.entity.getEntityComponentSystem().removeEntity(this.entity);
+            });
         }
     }
 
