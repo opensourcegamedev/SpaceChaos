@@ -68,7 +68,9 @@ public class GameScreen extends BaseScreen {
     private static final String[] ENEMY_SHUTTLE_IMAGE_PATHS = {
             "./data/images/entities/starships/spaceshuttledark.png",
             "./data/images/entities/supresswarnings/enemy_shuttle.png",
-            "./data/images/entities/supresswarnings/shuttle.png"
+            "./data/images/entities/supresswarnings/shuttle.png",
+            "./data/images/entities/starships/spaceshuttle.png",
+            "./data/images/entities/kenney_spaceshooterextension/png/sprites/ships/spaceships_009.png"
     };
 
     private static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
@@ -198,6 +200,8 @@ public class GameScreen extends BaseScreen {
         this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[0]));
         this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[1]));
         this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[2]));
+        this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[3]));
+        this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[4]));
 
         Texture skyBox1 = assetManager.get(SKYBOX_1);
 
@@ -323,9 +327,9 @@ public class GameScreen extends BaseScreen {
         game.getScreenManager().push("hud");
 
         // spawn entities, meteorits and power ups
-        spawnEnemyShuttles(5);
-        spawnMeteorites(40);
-        spawnPowerups(4);
+        spawnEnemyShuttles(6);
+        spawnMeteorites(35);
+        spawnPowerups(9);
 
         // get game flags
         debug = (Boolean) game.getSharedData().get("debug");

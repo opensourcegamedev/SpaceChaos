@@ -11,7 +11,7 @@ import dev.game.spacechaos.engine.entity.component.collision.CollisionComponent;
 import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
-import dev.game.spacechaos.game.entities.component.ai.EnemyShuttleAIComponentNew;
+import dev.game.spacechaos.game.entities.component.ai.EnemyShuttleAIComponent;
 import dev.game.spacechaos.game.entities.component.ai.EnemyShuttleTransitionConfiguration;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.GetDamagedOnCollisionComponent;
@@ -38,12 +38,7 @@ public class EnemyFactory {
                                                Texture projectileTexture, HPDeathListener listener, List<Texture> enemies) {
 
 
-        Entity enemyEntity = createEnemyShuttle(ecs, x, y, texture, targetEntity, projectileTexture, listener);
-
-        /*
-         * Adds a AI, a component for HP and a component
-         * to move entity
-         */
+        Entity enemyEntity = createEnemyShuttle(ecs, x, y, texture);
 
         for (int i = 0; i <= enemies.size(); i++) {
             if (texture == enemies.get(i)) {
@@ -57,24 +52,25 @@ public class EnemyFactory {
                 int shootIntervall = e.getEnemyTransition().get(i).shootIntervall;
 
                 if (aiRequired) {
-                    //enemyEntity.addComponent(new EnemyShuttleAIComponentNew(targetEntity, projectileTexture, enemyEntity,
-                    // shootIntervall), EnemyShuttleAIComponentNew.class);
+                    enemyEntity.addComponent(new EnemyShuttleAIComponent(targetEntity, projectileTexture,
+                     shootIntervall), EnemyShuttleAIComponent.class);
+                }else {
+                    enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity),
+                            SimpleFollowAIMovementComponent.class);
                 }
 
-                enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity),
-                        SimpleFollowAIMovementComponent.class);
                 enemyEntity.addComponent(new HPComponent(currentHealth, maxHealth));
                 enemyEntity.getComponent(HPComponent.class).addDeathListener(listener);
                 enemyEntity.addComponent(new MoveComponent(speed), MoveComponent.class);
                 enemyEntity.addComponent(new RewardComponent(scoreByDeath), RewardComponent.class);
+                System.out.println("Spawn: " + i);
                 return enemyEntity;
             }
         }
         return null;
     }
 
-    private static Entity createEnemyShuttle(EntityManager ecs, float x, float y, Texture texture, Entity targetEntity,
-            Texture projectileTexture, HPDeathListener listener) {
+    private static Entity createEnemyShuttle(EntityManager ecs, float x, float y, Texture texture) {
         // create new entity
         Entity enemyEntity = new Entity(ecs);
 
