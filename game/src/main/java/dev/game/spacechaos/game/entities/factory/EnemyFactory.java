@@ -70,7 +70,6 @@ public class EnemyFactory {
                 return enemyEntity;
             }
         }
-        System.out.println("Fehler! If-Abfrage nicht geklappt!");
         return null;
     }
 
