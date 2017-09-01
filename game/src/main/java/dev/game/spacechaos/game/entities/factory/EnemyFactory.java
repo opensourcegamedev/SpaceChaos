@@ -42,6 +42,7 @@ public class EnemyFactory {
 
         for (int i = 0; i <= enemies.size(); i++) {
             if (texture == enemies.get(i)) {
+                // TODO: An enum with all transitions should improve the design
                 EnemyShuttleTransitionConfiguration e = new EnemyShuttleTransitionConfiguration();
                 e.initializeEnemyTransitions();
                 int currentHealth = e.getEnemyTransition().get(i).currentHealth;

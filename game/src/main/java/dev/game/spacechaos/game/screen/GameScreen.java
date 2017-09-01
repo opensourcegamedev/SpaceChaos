@@ -356,7 +356,7 @@ public class GameScreen extends BaseScreen {
 
         // respawn enemy that are too far away
         for (Entity ent : this.enemyEntityList) {
-            if (SpawnUtils.getDistance(playerEntity, ent) > 1100) {
+            if (SpawnUtils.getDistance(playerEntity, ent) > 1000) {
                 try {
                     // Enemy is too far away -> respawn
                     ent.dispose();
