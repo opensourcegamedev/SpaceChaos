@@ -12,6 +12,7 @@ import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.draw.MoveDependentDrawRotationComponent;
 import dev.game.spacechaos.engine.entity.component.movement.MoveComponent;
 import dev.game.spacechaos.game.entities.component.ai.EnemyShuttleAIComponentNew;
+import dev.game.spacechaos.game.entities.component.ai.EnemyShuttleTransitionConfiguration;
 import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.GetDamagedOnCollisionComponent;
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnDeathComponent;
@@ -44,37 +45,33 @@ public class EnemyFactory {
          * to move entity
          */
 
-        if (texture == enemies.get(0)) {
-            //enemyEntity.addComponent(new EnemyShuttleAIComponentNew(targetEntity, projectileTexture, enemyEntity),
-            // EnemyShuttleAIComponentNew.class);
-            enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity),
-                    SimpleFollowAIMovementComponent.class);
-            enemyEntity.addComponent(new HPComponent(50, 50));
-            enemyEntity.getComponent(HPComponent.class).addDeathListener(listener);
-            enemyEntity.addComponent(new MoveComponent(3.0f), MoveComponent.class);
-            enemyEntity.addComponent(new RewardComponent(80), RewardComponent.class);
+        for (int i = 0; i <= enemies.size(); i++) {
+            if (texture == enemies.get(i)) {
+                EnemyShuttleTransitionConfiguration e = new EnemyShuttleTransitionConfiguration();
+                e.initializeEnemyTransitions();
+                int currentHealth = e.getEnemyTransition().get(i).currentHealth;
+                int maxHealth = e.getEnemyTransition().get(i).maxHealth;
+                float speed = e.getEnemyTransition().get(i).speed;
+                int scoreByDeath = e.getEnemyTransition().get(i).scoreByDeath;
+                boolean aiRequired = e.getEnemyTransition().get(i).aiRequired;
+                int shootIntervall = e.getEnemyTransition().get(i).shootIntervall;
+
+                if (aiRequired) {
+                    //enemyEntity.addComponent(new EnemyShuttleAIComponentNew(targetEntity, projectileTexture, enemyEntity,
+                    // shootIntervall), EnemyShuttleAIComponentNew.class);
+                }
+
+                enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity),
+                        SimpleFollowAIMovementComponent.class);
+                enemyEntity.addComponent(new HPComponent(currentHealth, maxHealth));
+                enemyEntity.getComponent(HPComponent.class).addDeathListener(listener);
+                enemyEntity.addComponent(new MoveComponent(speed), MoveComponent.class);
+                enemyEntity.addComponent(new RewardComponent(scoreByDeath), RewardComponent.class);
+                return enemyEntity;
+            }
         }
-        else if (texture == enemies.get(1)) { // the enemy shouldn't be able to shoot
-            //enemyEntity.addComponent(new EnemyShuttleAIComponentNew(targetEntity, projectileTexture, enemyEntity),
-            // EnemyShuttleAIComponentNew.class);
-            enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity),
-                    SimpleFollowAIMovementComponent.class);
-            enemyEntity.addComponent(new HPComponent(4000, 4000));
-            enemyEntity.getComponent(HPComponent.class).addDeathListener(listener);
-            enemyEntity.addComponent(new MoveComponent(1.1f), MoveComponent.class);
-            enemyEntity.addComponent(new RewardComponent(1000), RewardComponent.class);
-        }
-        else if (texture == enemies.get(2)) {
-            //enemyEntity.addComponent(new EnemyShuttleAIComponentNew(targetEntity, projectileTexture, enemyEntity),
-            // EnemyShuttleAIComponentNew.class);
-            enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity),
-                    SimpleFollowAIMovementComponent.class);
-            enemyEntity.addComponent(new HPComponent(1000, 1000));
-            enemyEntity.getComponent(HPComponent.class).addDeathListener(listener);
-            enemyEntity.addComponent(new MoveComponent(1.5f), MoveComponent.class);
-            enemyEntity.addComponent(new RewardComponent(200), RewardComponent.class);
-        }
-        return enemyEntity;
+        System.out.println("Fehler! If-Abfrage nicht geklappt!");
+        return null;
     }
 
     private static Entity createEnemyShuttle(EntityManager ecs, float x, float y, Texture texture, Entity targetEntity,
@@ -91,10 +88,6 @@ public class EnemyFactory {
 
         // add component to rotate shuttle dependent on move direction
         enemyEntity.addComponent(new MoveDependentDrawRotationComponent(), MoveDependentDrawRotationComponent.class);
-
-        // add AI
-        //enemyEntity.addComponent(new EnemyShuttleAIComponentNew(targetEntity, projectileTexture, enemyEntity),
-               // EnemyShuttleAIComponentNew.class);
 
         // add collision component, so player can collide with other space
         // shuttles or meteorites

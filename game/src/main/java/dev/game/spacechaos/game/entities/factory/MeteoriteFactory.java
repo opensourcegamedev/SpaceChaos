@@ -16,7 +16,7 @@ import dev.game.spacechaos.game.entities.component.combat.HPComponent;
 import dev.game.spacechaos.game.entities.component.combat.RemoveOnDeathComponent;
 
 /**
- * Creates new meteorite enemies.
+ * Creates new meteorite enemy.
  * <p>
  * These move randomly and deal damage upon collision.
  *
