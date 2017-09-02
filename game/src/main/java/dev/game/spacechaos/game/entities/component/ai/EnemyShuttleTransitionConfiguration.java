@@ -8,11 +8,11 @@ public class EnemyShuttleTransitionConfiguration {
     private List<EnemyShuttleTransition> enemyTransition = new ArrayList<>();
 
      public void initializeEnemyTransitions() {
-         enemyTransition.add(new EnemyShuttleTransition(100, 100, 3.5f, 40, false, 0));
-         enemyTransition.add(new EnemyShuttleTransition(4000, 4000, 1.1f, 1250, true, 5000));
-         enemyTransition.add(new EnemyShuttleTransition(1000, 1000, 1.5f, 200, true, 4000));
-         enemyTransition.add(new EnemyShuttleTransition(100, 100, 4.0f, 80, false, 0));
-         enemyTransition.add(new EnemyShuttleTransition(100, 100, 5.0f, 120, false, 0));
+         enemyTransition.add(new EnemyShuttleTransition(150, 300, 3.5f, 25, false, 0));
+         enemyTransition.add(new EnemyShuttleTransition(4000, 4000, 1.1f, 2250, true, 5000));
+         enemyTransition.add(new EnemyShuttleTransition(700, 700, 1.5f, 125, true, 4000));
+         enemyTransition.add(new EnemyShuttleTransition(150, 300, 4.0f, 65, false, 0));
+         enemyTransition.add(new EnemyShuttleTransition(150, 300, 5.0f, 115, false, 0));
     }
 
     public List<EnemyShuttleTransition> getEnemyTransition() {
