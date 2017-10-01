@@ -68,8 +68,9 @@ public abstract class BasePowerupComponent extends BaseComponent implements Coll
      * @return Returns true if the effect was executed.
      */
     protected abstract boolean onEffect(Entity affectedEntity);
+    
     /**
-    * set remove listener
+    * Sets a remove listener.
      *
      * @param listener listener, which is called, if entity will be removed
     */

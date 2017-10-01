@@ -13,9 +13,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
-import dev.game.spacechaos.game.entities.component.powerup.HealthpackComponent;
-import dev.game.spacechaos.game.entities.factory.*;
-import dev.game.spacechaos.game.input.InputManager;
 import dev.game.spacechaos.engine.collision.CollisionManager;
 import dev.game.spacechaos.engine.collision.impl.DefaultCollisionManager;
 import dev.game.spacechaos.engine.entity.Entity;
@@ -32,6 +29,14 @@ import dev.game.spacechaos.engine.time.GameTime;
 import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.engine.utils.SpawnUtils;
 import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
+import dev.game.spacechaos.game.entities.component.powerup.HealthpackComponent;
+import dev.game.spacechaos.game.entities.component.powerup.TorpedoAmmoCrateComponent;
+import dev.game.spacechaos.game.entities.factory.EnemyFactory;
+import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
+import dev.game.spacechaos.game.entities.factory.PlayerFactory;
+import dev.game.spacechaos.game.entities.factory.PowerupFactory;
+import dev.game.spacechaos.game.entities.factory.ProjectileFactory;
+import dev.game.spacechaos.game.input.InputManager;
 import dev.game.spacechaos.game.skybox.SkyBox;
 
 /**
@@ -57,12 +62,8 @@ public class GameScreen extends BaseScreen {
             "./data/images/entities/asteroids/4.png", "./data/images/entities/asteroids/5.png",
             "./data/images/entities/asteroids/6.png", "./data/images/entities/asteroids/7.png",
             "./data/images/entities/asteroids/8.png" };
-
-    //textures for power ups
-    private static final String[] POWERUP_IMAGE_PATH = {
-            "./data/images/entities/spaceshooter/PNG/Power-ups/powerupRed_bolt.png",
-            "./data/images/entities/spaceshooter/PNG/Power-ups/powerupRed.png"
-    };
+    private static final String HEALTHPACK_IMAGE_PATH = "./data/images/entities/spaceshooter/PNG/Power-ups/powerupGreen_bolt.png";
+    private static final String AMMOPACK_IMAGE_PATH = "./data/images/entities/spaceshooter/PNG/Power-ups/things_silver.png";
 
     private static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
     private static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
@@ -117,6 +118,7 @@ public class GameScreen extends BaseScreen {
         // load skybox
         assetManager.load(SKYBOX_1, Texture.class);
         assetManager.load(SKYBOX_2, Texture.class);
+
         assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
         assetManager.load(SHIELD_IMAGE_PATH, Texture.class);
         assetManager.load(SHUTTLE2_IMAGE_PATH, Texture.class);
@@ -129,10 +131,8 @@ public class GameScreen extends BaseScreen {
             assetManager.load(ASTEROID_IMAGE_PATH, Texture.class);
         }
 
-        //load powerups
-        for(String POWERUP_IMAGE_PATH : POWERUP_IMAGE_PATH){
-            assetManager.load(POWERUP_IMAGE_PATH, Texture.class);
-        }
+        assetManager.load(HEALTHPACK_IMAGE_PATH, Texture.class);
+        assetManager.load(AMMOPACK_IMAGE_PATH, Texture.class);
 
         // load background music
         assetManager.load(BACKGROUND_MUSIC_PATH, Music.class);
@@ -156,10 +156,9 @@ public class GameScreen extends BaseScreen {
             assetManager.finishLoadingAsset(ASTEROID_IMAGE_PATH);
         }
 
-        //load powerups
-        for(String POWERUP_IMAGE_PATH : POWERUP_IMAGE_PATH){
-            assetManager.finishLoadingAsset(POWERUP_IMAGE_PATH);
-        }
+        // load powerups
+        assetManager.finishLoadingAsset(HEALTHPACK_IMAGE_PATH);
+        assetManager.finishLoadingAsset(AMMOPACK_IMAGE_PATH);
 
         assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
         assetManager.finishLoadingAsset(BEEP_SOUND_PATH);
@@ -189,7 +188,7 @@ public class GameScreen extends BaseScreen {
         // create skybox
         this.skyBox = new SkyBox(new Texture[] { /* skyBox2, */ skyBox1 }, game.getViewportWidth(),
                 game.getViewportHeight());
-        
+
         this.inputManager = new InputManager();
     }
 
@@ -244,34 +243,40 @@ public class GameScreen extends BaseScreen {
 
     private void spawnPowerups(int amount) {
         // execute this code after updating all entities
-            game.runOnUIThread(() -> {
-                // add a specific amount of powerups
-               for (int powerupNumber = 0; powerupNumber < amount; powerupNumber++) {
-                   // calculate random powerup position near player
-                   Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(100, 1300,
-                   this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
-                   this.playerEntity.getComponent(PositionComponent.class).getMiddleY());
-                   float x = randomPos.x;
-                   float y = randomPos.y;
+        game.runOnUIThread(() -> {
+            // add a specific amount of powerups
+            for (int i = 0; i < amount; i++) {
+                // calculate random powerup position near player
+                Vector2 randomPos = SpawnUtils.getRandomSpawnPosition(100, 1300,
+                        this.playerEntity.getComponent(PositionComponent.class).getMiddleX(),
+                        this.playerEntity.getComponent(PositionComponent.class).getMiddleY());
+                float x = randomPos.x;
+                float y = randomPos.y;
 
-                   System.out.println("spawn power up on " + x + ", " + y + ".");
+                Entity entity;
 
-                   // create and add new powerup to entity-component-system
-                   Entity entity = PowerupFactory.createPowerup(this.ecs, x, y, assetManager
-                           .get(POWERUP_IMAGE_PATH[RandomUtils.getRandomNumber(0, POWERUP_IMAGE_PATH.length - 1)]));
+                // create and add new powerup to entity-component-system
+                if (RandomUtils.rollTheDice(2)) {
+                    entity = PowerupFactory.createHealthpack(this.ecs, x, y, assetManager.get(HEALTHPACK_IMAGE_PATH));
+                    // add listener to respawn power up
+                    entity.getComponent(HealthpackComponent.class).setRemoveListener((Entity entity1) -> {
+                        spawnPowerups(1);
+                    });
+                } else {
+                    entity = PowerupFactory.createTorpedoAmmoCrate(this.ecs, x, y,
+                            assetManager.get(AMMOPACK_IMAGE_PATH));
+                    // add listener to respawn power up
+                    entity.getComponent(TorpedoAmmoCrateComponent.class).setRemoveListener((Entity entity1) -> {
+                        spawnPowerups(1);
+                    });
+                }
 
-                   //add listener to respawn power up
-                   entity.getComponent(HealthpackComponent.class).setRemoveListener((Entity entity1) -> {
-                       //spawn new power up
-                       spawnPowerups(1);
-                   });
+                this.ecs.addEntity(entity);
 
-                   this.ecs.addEntity(entity);
-
-                   // add entity to powerup entity list
-                   this.powerupEntityList.add(entity);
-               }
-            });
+                // add entity to powerup entity list
+                this.powerupEntityList.add(entity);
+            }
+        });
     }
 
     @Override
@@ -315,7 +320,7 @@ public class GameScreen extends BaseScreen {
     public void onPause() {
         // stop music
         this.music.stop();
-        
+
         // input
         Gdx.input.setInputProcessor(null);
     }
@@ -364,7 +369,7 @@ public class GameScreen extends BaseScreen {
                 } catch (NullPointerException npe) {
                     // Powerup got catched.
 
-                    //TODO: remove this quick & dirty fix
+                    // TODO: remove this quick & dirty fix
                 }
             }
         }

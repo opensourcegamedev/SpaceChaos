@@ -35,7 +35,6 @@ public class PowerupFactory {
      *            texture
      * @return power up entity
      */
-    @Deprecated
     public static Entity createHealthpack(EntityManager ecs, float x, float y, Texture texture) {
         // create new entity
         Entity powerupEntity = createPowerup(ecs, x, y, texture);
@@ -98,8 +97,6 @@ public class PowerupFactory {
         //avoid camera shake on collision and sounds on collision
         powerupEntity.addComponent(new AvoidCollisionCameraShakeComponent(), AvoidCollisionCameraShakeComponent.class);
         powerupEntity.addComponent(new AvoidCollisionSoundComponent(), AvoidCollisionSoundComponent.class);
-
-        powerupEntity.addComponent(new HealthpackComponent(1000));
 
         return powerupEntity;
     }

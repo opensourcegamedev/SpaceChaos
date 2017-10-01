@@ -61,7 +61,7 @@ public class WeaponInventoryComponent extends BaseComponent {
      *            The amount to add.
      */
     public void addAmmoToRightWeapon(int add) {
-        leftWeapon.addAmmo(add);
+        rightWeapons.get(rightWeaponIndex).addAmmo(add);
     }
 
     public boolean canShootNowWithLeftWeapon() {
