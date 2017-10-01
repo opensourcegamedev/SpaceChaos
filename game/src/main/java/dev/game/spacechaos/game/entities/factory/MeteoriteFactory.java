@@ -65,7 +65,7 @@ public class MeteoriteFactory {
         entity.addComponent(new RemoveOnDeathComponent(), RemoveOnDeathComponent.class);
 
         // add component to deal damage upon collision
-        entity.addComponent(new DealDamageOnCollisionComponent(100, false, null, true));
+        entity.addComponent(new DealDamageOnCollisionComponent(75, false, null, true, 525));
 
         // add collision component, so player can collide with meteorites
         entity.addComponent(new CollisionComponent(), CollisionComponent.class);

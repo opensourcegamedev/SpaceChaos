@@ -29,13 +29,23 @@ public class DealDamageOnCollisionComponent extends BaseComponent implements Col
      * collision.
      */
     private boolean removeOnCollision;
+    private int timer = 0;
+
+    private long lastCollisionTime = 0;
+    private long damageInterval = 0;
 
     public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision, Entity ownerEntity,
-            boolean ignoreShield) {
+            boolean ignoreShield, long damageInterval) {
         this.ownerEntity = ownerEntity;
         this.removeOnCollision = removeOnCollision;
         this.damage = damage;
         this.ignoreShield = ignoreShield;
+        this.damageInterval = damageInterval;
+    }
+
+    public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision, Entity ownerEntity,
+            boolean ignoreShield) {
+        this(damage, removeOnCollision, ownerEntity, ignoreShield, 0);
     }
 
     public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision, Entity ownerEntity) {
@@ -64,17 +74,39 @@ public class DealDamageOnCollisionComponent extends BaseComponent implements Col
 
     @Override
     public void onEnter(Entity entity, Entity otherEntity) {
+        if (damageInterval == 0) {
+            dealDamage(entity, otherEntity);
+        }
+    }
+
+    @Override
+    public void onStay(Entity entity, Entity otherEntity) {
+        if (damageInterval > 0) {
+            long a = System.currentTimeMillis() - this.lastCollisionTime;
+
+            if (a > damageInterval) {
+
+                if (dealDamage(entity, otherEntity)) {
+                    this.lastCollisionTime = System.currentTimeMillis();
+                }
+            }
+
+        }
+
+    }
+
+    private boolean dealDamage(Entity entity, Entity otherEntity) {
         // don't attack the owning entities, i.e. a shuttle shooting a
         // projectile
         if (otherEntity == ownerEntity) {
-            return;
+            return false;
         }
 
         // Deal the damage
         HPComponent hpComponent = otherEntity.getComponent(HPComponent.class);
         if (hpComponent == null) {
             // HP can't be reduced
-            return;
+            return false;
         }
 
         ShieldComponent shieldComponent = otherEntity.getComponent(ShieldComponent.class);
@@ -99,11 +131,8 @@ public class DealDamageOnCollisionComponent extends BaseComponent implements Col
                 this.entity.getEntityComponentSystem().removeEntity(this.entity);
             });
         }
-    }
 
-    @Override
-    public void onStay(Entity entity, Entity otherEntity) {
-
+        return true;
     }
 
     @Override
