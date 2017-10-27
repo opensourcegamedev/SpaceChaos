@@ -32,6 +32,8 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
   - Constantin Schulte (SupressWarnings)
   - javanewbie
   - damios
+  - Adrian Buch
+  - Markus Dohrmann
   
 ### Graphics
   - Paul Funk (pfau)
@@ -40,6 +42,15 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
   
 ### Community, Marketing & PR Management
   - Constantin Schulte (SupressWarnings)
+  
+### Support
+  - cain
+  - flown
+  - gab92
+  - luggioh
+  
+### Webdesign
+  - lars
   
 Also thanks to all other supporters and the libGDX team!
   
