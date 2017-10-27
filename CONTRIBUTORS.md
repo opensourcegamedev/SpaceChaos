@@ -3,13 +3,35 @@
 Here you can see a list of all contributors and used assets from external authors.
 
 ## Internal Credits
+
+### Project Management
   - Justin Künzel (JuKuSoft.com) - Programming, Projectmanagement
-  - Dogemagni/Cromewell - Programming
-  - Constantin Schulte - Testing, Community, Marketing & PR-Management, Graphics
-  - Javanewbie - Programming, Graphics
-  - Paul Funk - Graphics
-  - damios - Programming
-  - Adrian Buch - Programming, AI Design
+  
+### Programmers 
+  - Justin Künzel
+  - Cromewell (dogemagni)
+  - Constantin Schulte (SupressWarnings)
+  - javanewbie
+  - damios
+  - Adrian Buch
+  - Markus Dohrmann
+  
+### Graphics
+  - Paul Funk (pfau)
+  - Constantin Schulte (SupressWarnings)
+  - javanewbie
+  
+### Community, Marketing, PR Management
+  - Constantin Schulte (SupressWarnings)
+  
+### Support
+  - cain
+  - flown
+  - gab92
+  - luggioh
+  
+### Webdesign
+  - lars
 
 # Internal Images
 
