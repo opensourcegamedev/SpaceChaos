@@ -11,6 +11,7 @@ import dev.game.spacechaos.engine.entity.component.draw.DrawTextureComponent;
 import dev.game.spacechaos.engine.entity.component.sound.AvoidCollisionSoundComponent;
 import dev.game.spacechaos.game.entities.component.collision.AvoidCollisionCameraShakeComponent;
 import dev.game.spacechaos.game.entities.component.powerup.HealthpackComponent;
+import dev.game.spacechaos.game.entities.component.powerup.ShieldpackComponent;
 import dev.game.spacechaos.game.entities.component.powerup.TorpedoAmmoCrateComponent;
 
 /**
@@ -60,6 +61,27 @@ public class PowerupFactory {
         // create new entity
         Entity powerupEntity = createPowerup(ecs, x, y, texture);
         powerupEntity.addComponent(new TorpedoAmmoCrateComponent(5));
+
+        return powerupEntity;
+    }
+
+    /**
+     * Creates a new shieldpack entity.
+     *
+     * @param ecs
+     *            entity component system
+     * @param x
+     *            x start position
+     * @param y
+     *            y start position
+     * @param texture
+     *            texture
+     * @return power up entity
+     */
+    public static Entity createShieldpack(EntityManager ecs, float x, float y, Texture texture) {
+        // create new entity
+        Entity powerupEntity = createPowerup(ecs, x, y, texture);
+        powerupEntity.addComponent(new ShieldpackComponent(500));
 
         return powerupEntity;
     }

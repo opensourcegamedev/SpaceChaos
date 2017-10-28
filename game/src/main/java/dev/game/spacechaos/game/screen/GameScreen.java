@@ -30,6 +30,7 @@ import dev.game.spacechaos.engine.utils.RandomUtils;
 import dev.game.spacechaos.engine.utils.SpawnUtils;
 import dev.game.spacechaos.game.entities.component.combat.WeaponInventoryComponent;
 import dev.game.spacechaos.game.entities.component.powerup.HealthpackComponent;
+import dev.game.spacechaos.game.entities.component.powerup.ShieldpackComponent;
 import dev.game.spacechaos.game.entities.component.powerup.TorpedoAmmoCrateComponent;
 import dev.game.spacechaos.game.entities.factory.EnemyFactory;
 import dev.game.spacechaos.game.entities.factory.MeteoriteFactory;
@@ -69,11 +70,11 @@ public class GameScreen extends BaseScreen {
             "./data/images/entities/starships/spaceshuttle.png",
             "./data/images/entities/supresswarnings/enemy_shuttle.png",
             "./data/images/entities/supresswarnings/shuttle.png",
-            "./data/images/entities/spaceshooter/png/enemies/enemyblack1.png"
-    };
+            "./data/images/entities/spaceshooter/png/enemies/enemyblack1.png"};
 
     private static final String HEALTHPACK_IMAGE_PATH = "./data/images/entities/spaceshooter/PNG/Power-ups/powerupGreen_bolt.png";
     private static final String AMMOPACK_IMAGE_PATH = "./data/images/entities/spaceshooter/PNG/Power-ups/things_silver.png";
+    private static final String SHIELDPACK_IMAGE_PATH = "./data/images/entities/spaceshooter/PNG/Power-ups/powerupRed_shield.png";
 
     private static final String BACKGROUND_MUSIC_PATH = "./data/music/i-know-your-secret/I_know_your_secret.ogg";
     private static final String BEEP_SOUND_PATH = "./data/sound/beep-sound/beep.ogg";
@@ -150,6 +151,7 @@ public class GameScreen extends BaseScreen {
         // load power-ups
         assetManager.load(HEALTHPACK_IMAGE_PATH, Texture.class);
         assetManager.load(AMMOPACK_IMAGE_PATH, Texture.class);
+        assetManager.load(SHIELDPACK_IMAGE_PATH, Texture.class);
 
         // load background music
         assetManager.load(BACKGROUND_MUSIC_PATH, Music.class);
@@ -182,6 +184,7 @@ public class GameScreen extends BaseScreen {
         // load powerups
         assetManager.finishLoadingAsset(HEALTHPACK_IMAGE_PATH);
         assetManager.finishLoadingAsset(AMMOPACK_IMAGE_PATH);
+        assetManager.finishLoadingAsset(SHIELDPACK_IMAGE_PATH);
 
         assetManager.finishLoadingAsset(BACKGROUND_MUSIC_PATH);
         assetManager.finishLoadingAsset(BEEP_SOUND_PATH);
@@ -287,17 +290,24 @@ public class GameScreen extends BaseScreen {
                 Entity entity;
 
                 // create and add new powerup to entity-component-system
-                if (RandomUtils.rollTheDice(2)) {
+                if (RandomUtils.rollTheDice(3)) {
                     entity = PowerupFactory.createHealthpack(this.ecs, x, y, assetManager.get(HEALTHPACK_IMAGE_PATH));
                     // add listener to respawn power up
                     entity.getComponent(HealthpackComponent.class).setRemoveListener((Entity entity1) -> {
                         spawnPowerups(1);
                     });
-                } else {
+                } else if (RandomUtils.rollTheDice(2)){
                     entity = PowerupFactory.createTorpedoAmmoCrate(this.ecs, x, y,
                             assetManager.get(AMMOPACK_IMAGE_PATH));
                     // add listener to respawn power up
                     entity.getComponent(TorpedoAmmoCrateComponent.class).setRemoveListener((Entity entity1) -> {
+                        spawnPowerups(1);
+                    });
+                } else {
+                    entity = PowerupFactory.createShieldpack(this.ecs, x, y,
+                            assetManager.get(SHIELDPACK_IMAGE_PATH));
+                    // add listener to respawn power up
+                    entity.getComponent(ShieldpackComponent.class).setRemoveListener((Entity entity1) -> {
                         spawnPowerups(1);
                     });
                 }
