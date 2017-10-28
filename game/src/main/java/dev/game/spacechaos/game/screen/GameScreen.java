@@ -57,11 +57,21 @@ public class GameScreen extends BaseScreen {
     private static final String PROJECTILE_RED_IMAGE_PATH = "./data/images/entities/projectiles/projectile1.png";
     private static final String TORPEDO_IMAGE_PATH = "./data/images/entities/projectiles/torpedo.png";
 
-    private static final String[] ASTEROID_IMAGE_PATHS = { "./data/images/entities/asteroids/1.png",
+    private static final String[] ASTEROID_IMAGE_PATHS = {
+            "./data/images/entities/asteroids/1.png",
             "./data/images/entities/asteroids/2.png", "./data/images/entities/asteroids/3.png",
             "./data/images/entities/asteroids/4.png", "./data/images/entities/asteroids/5.png",
             "./data/images/entities/asteroids/6.png", "./data/images/entities/asteroids/7.png",
             "./data/images/entities/asteroids/8.png" };
+
+    private static final String[] ENEMY_SHUTTLE_IMAGE_PATHS = {
+            "./data/images/entities/starships/spaceshuttledark.png",
+            "./data/images/entities/starships/spaceshuttle.png",
+            "./data/images/entities/supresswarnings/enemy_shuttle.png",
+            "./data/images/entities/supresswarnings/shuttle.png",
+            "./data/images/entities/spaceshooter/png/enemies/enemyblack1.png"
+    };
+
     private static final String HEALTHPACK_IMAGE_PATH = "./data/images/entities/spaceshooter/PNG/Power-ups/powerupGreen_bolt.png";
     private static final String AMMOPACK_IMAGE_PATH = "./data/images/entities/spaceshooter/PNG/Power-ups/things_silver.png";
 
@@ -76,6 +86,7 @@ public class GameScreen extends BaseScreen {
     private Texture projectileBlueTexture = null;
     private Texture projectileRedTexture = null;
     private Texture torpedoTexture = null;
+    private List<Texture> enemyShuttleTexture = new ArrayList<>();
 
     private SkyBox skyBox = null;
 
@@ -131,6 +142,12 @@ public class GameScreen extends BaseScreen {
             assetManager.load(ASTEROID_IMAGE_PATH, Texture.class);
         }
 
+        // load enemy shuttles
+        for (String SHUTTLE_IMAGE_PATH : ENEMY_SHUTTLE_IMAGE_PATHS) {
+            assetManager.load(SHUTTLE_IMAGE_PATH, Texture.class);
+        }
+
+        // load power-ups
         assetManager.load(HEALTHPACK_IMAGE_PATH, Texture.class);
         assetManager.load(AMMOPACK_IMAGE_PATH, Texture.class);
 
@@ -152,8 +169,14 @@ public class GameScreen extends BaseScreen {
         assetManager.finishLoadingAsset(PROJECTILE_RED_IMAGE_PATH);
         assetManager.finishLoadingAsset(TORPEDO_IMAGE_PATH);
 
+        // load asteorids
         for (String ASTEROID_IMAGE_PATH : ASTEROID_IMAGE_PATHS) {
             assetManager.finishLoadingAsset(ASTEROID_IMAGE_PATH);
+        }
+
+        // load space shuttles
+        for (String SHUTTLE_IMAGE_PATH : ENEMY_SHUTTLE_IMAGE_PATHS) {
+            assetManager.finishLoadingAsset(SHUTTLE_IMAGE_PATH);
         }
 
         // load powerups
@@ -175,6 +198,12 @@ public class GameScreen extends BaseScreen {
         this.projectileBlueTexture = assetManager.get(PROJECTILE_BLUE_IMAGE_PATH, Texture.class);
         this.projectileRedTexture = assetManager.get(PROJECTILE_RED_IMAGE_PATH, Texture.class);
         this.torpedoTexture = assetManager.get(TORPEDO_IMAGE_PATH);
+
+        this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[0]));
+        this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[1]));
+        this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[2]));
+        this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[3]));
+        this.enemyShuttleTexture.add(assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[4]));
 
         Texture skyBox1 = assetManager.get(SKYBOX_1);
 
@@ -207,8 +236,10 @@ public class GameScreen extends BaseScreen {
                 // create and add new enemy space shuttle to
                 // entity-component-system
                 Entity enemyEntity = EnemyFactory.createEnemyShuttle(this.ecs, x, y,
-                        assetManager.get(SHUTTLE2_IMAGE_PATH, Texture.class), this.playerEntity, projectileRedTexture,
-                        (Entity causingEntity) -> spawnEnemyShuttles(1));
+                        assetManager.get(ENEMY_SHUTTLE_IMAGE_PATHS[RandomUtils.getRandomNumber(0,
+                                ENEMY_SHUTTLE_IMAGE_PATHS.length - 1)],
+                                Texture.class), this.playerEntity, projectileRedTexture,
+                        (Entity causingEntity) -> spawnEnemyShuttles(1), enemyShuttleTexture);
                 this.ecs.addEntity(enemyEntity);
 
                 // add entity to enemy entity list
@@ -303,9 +334,9 @@ public class GameScreen extends BaseScreen {
         game.getScreenManager().push("hud");
 
         // spawn entities, meteorits and power ups
-        spawnEnemyShuttles(5);
-        spawnMeteorites(50);
-        spawnPowerups(5);
+        spawnEnemyShuttles(6);
+        spawnMeteorites(35);
+        spawnPowerups(9);
 
         // get game flags
         debug = (Boolean) game.getSharedData().get("debug");
@@ -332,7 +363,7 @@ public class GameScreen extends BaseScreen {
 
         // respawn enemies that are too far away
         for (Entity ent : this.enemyEntityList) {
-            if (SpawnUtils.getDistance(playerEntity, ent) > 1100) {
+            if (SpawnUtils.getDistance(playerEntity, ent) > 1000) {
                 try {
                     // Enemy is too far away -> respawn
                     ent.dispose();
@@ -346,7 +377,7 @@ public class GameScreen extends BaseScreen {
 
         // respawn meteorites that are too far away
         for (Entity ent : this.meteorEntityList) {
-            if (SpawnUtils.getDistance(playerEntity, ent) > 1800) {
+            if (SpawnUtils.getDistance(playerEntity, ent) > 1400) {
                 try {
                     // Meteor is too far away -> respawn
                     ent.dispose();
@@ -360,12 +391,12 @@ public class GameScreen extends BaseScreen {
 
         // respawn powerups that are to far away
         for (Entity ent : this.powerupEntityList) {
-            if (SpawnUtils.getDistance(playerEntity, ent) > 1800) {
+            if (SpawnUtils.getDistance(playerEntity, ent) > 1200) {
                 try {
                     // Powerup is too far away -> respawn
                     ent.dispose();
                     this.ecs.removeEntity(ent);
-                    spawnPowerups(2);
+                    spawnPowerups(1);
                 } catch (NullPointerException npe) {
                     // Powerup got catched.
 

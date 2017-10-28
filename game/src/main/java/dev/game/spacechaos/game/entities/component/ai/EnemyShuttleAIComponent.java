@@ -51,7 +51,7 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
 
     private Vector2 tmpVector = new Vector2(0, 0);
 
-    public EnemyShuttleAIComponent(Entity targetEntity, Texture projectileTexture) {
+    public EnemyShuttleAIComponent(Entity targetEntity, Texture projectileTexture, int shootIntervallMin) {
         if (targetEntity == null) {
             throw new NullPointerException("target entity cannot be null.");
         }
@@ -67,10 +67,9 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
                     "PositionComponent is required on target entity, but cannot be found.");
         }
 
-        // generate random shoot interval
-        int minShootInterval = 2000;
-        int maxShootInterval = 5000;
-        this.shootInterval = RandomUtils.getRandomNumber(minShootInterval, maxShootInterval);
+        // generate shoot interval
+        int maxShootInterval = shootIntervallMin * 2;
+        this.shootInterval = RandomUtils.getRandomNumber(shootIntervallMin, maxShootInterval);
     }
 
     @Override
@@ -125,17 +124,17 @@ public class EnemyShuttleAIComponent extends BaseComponent implements IUpdateCom
     }
 
     /**
-    * check, if interval is finished, so shuttle can shoot projectile
+     * check, if interval is finished, so shuttle can shoot projectile
      *
      * @return true, if shuttle is allowed to shoot an projectile
-    */
+     */
     private boolean canShoot() {
         return elapsed > shootInterval;
     }
 
     /**
-    * spawn an new projectile and shoot it to the direction of front of shuttle
-    */
+     * spawn an new projectile and shoot it to the direction of front of shuttle
+     */
     private void shootProjectile() {
         // get projectile direction from enemy direction
         float dirX = moveDependentDrawRotationComponent.getFrontVec().x;
