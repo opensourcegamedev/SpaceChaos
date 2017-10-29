@@ -13,6 +13,10 @@ import dev.game.spacechaos.engine.hud.widgets.TextButton;
 import dev.game.spacechaos.engine.screen.impl.BaseScreen;
 import dev.game.spacechaos.engine.sound.VolumeManager;
 import dev.game.spacechaos.engine.time.GameTime;
+import dev.game.spacechaos.engine.utils.FileUtils;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * The screen shown when you died contains a button to restart and a label which
@@ -26,6 +30,7 @@ public class GameoverScreen extends BaseScreen {
 
     private static final String BG_IMAGE_PATH = "./data/wallpaper/galaxy1/galaxy1.png";
     private static final String GAMEOVER_SOUND_PATH = "./data/sound/rock_breaking/rock_breaking.ogg";
+    private static final String HIGHSCORE_PATH = "./data/statistics/highscore.txt";
 
     // font for buttons & text
     private BitmapFont font = null;
@@ -35,10 +40,13 @@ public class GameoverScreen extends BaseScreen {
     private Sound sound = null;
 
     private TextButton menuButton = null;
-    protected TextButton replayButton = null;
+    private TextButton replayButton = null;
 
     private String timeText = "";
     private String scoreText = "";
+
+    private int highScorePoints = 0;
+    private int scorePoints = 0;
 
     @Override
     protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
@@ -80,7 +88,6 @@ public class GameoverScreen extends BaseScreen {
 
     @Override
     public void onPause() {
-        //
     }
 
     @Override
@@ -98,15 +105,43 @@ public class GameoverScreen extends BaseScreen {
         //draw background image
         batch.draw(this.bgTexture, 0, 0);
 
-        //draw text
-        this.font.draw(batch, "GAME OVER", game.getViewportWidth() / 2 - 245, game.getViewportHeight() / 2 + 70);
+        // get highscore and convert text into integer
+        try {
+            String scoreMessage = FileUtils.readFile(HIGHSCORE_PATH, Charset.forName("UTF8"));
+            this.highScorePoints = Integer.parseInt(scoreMessage);
+            this.scorePoints = Integer.parseInt(scoreText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        this.buttonFont.draw(batch, "Elapsed Time: " + this.timeText, 75, 120);
-        this.buttonFont.draw(batch, "Score: " + this.scoreText, 75, 70);
+        // draw heading
+        boolean isHighscore;
+        if (scorePoints >= highScorePoints) {
+            this.font.draw(batch, "NEW HIGHSCORE!", game.getViewportWidth() / 2 - 345, game.getViewportHeight() / 2 + 70);
+            isHighscore = true;
+        }else {
+            this.font.draw(batch, "GAME OVER", game.getViewportWidth() / 2 - 245, game.getViewportHeight() / 2 + 70);
+            isHighscore = false;
+        }
+
+        // draw text
+        this.buttonFont.draw(batch, "Elapsed Time: " + this.timeText, 75, 150);
+        this.buttonFont.draw(batch, "Score: " + this.scoreText, 75, 100);
+        this.buttonFont.draw(batch, "HighScore: " + this.highScorePoints, 75, 50);
 
         // draw buttons
         this.menuButton.drawLayer0(time, batch);
         this.replayButton.drawLayer0(time, batch);
+
+        // saves a new highscore
+        if (isHighscore) {
+            try {
+                this.scoreText = Integer.valueOf(scorePoints).toString();
+                FileUtils.writeFile(HIGHSCORE_PATH, scoreText, Charset.forName("UTF8"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
