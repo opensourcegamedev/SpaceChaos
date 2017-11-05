@@ -24,9 +24,11 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
 ## Credits
 
 ### Project Management
+
   - Justin Künzel
 
 ### Programmers
+
   - Justin Künzel
   - Cromewell (dogemagni)
   - Constantin Schulte (SupressWarnings)
@@ -36,20 +38,24 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
   - Markus Dohrmann
   
 ### Graphics
+
   - Paul Funk (pfau)
   - Constantin Schulte (SupressWarnings)
   - javanewbie
   
 ### Community, Marketing & PR Management
+
   - Constantin Schulte (SupressWarnings)
   
 ### Support
+
   - cain
   - flown
   - gab92
   - luggioh
   
 ### Webdesign
+
   - lars
   
 Also thanks to all other supporters and the libGDX team!
