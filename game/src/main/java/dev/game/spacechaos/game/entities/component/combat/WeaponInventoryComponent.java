@@ -21,6 +21,7 @@ public class WeaponInventoryComponent extends BaseComponent {
     private BaseWeapon leftWeapon;
     private ArrayList<BaseWeapon> rightWeapons;
     private int rightWeaponIndex = 0;
+    private boolean canShotRightFirstSlot = false;
 
     // The right weapon can later be replaced by a list, so you can switch your
     // equipped weapon (e.g. via scrolling)
@@ -65,11 +66,11 @@ public class WeaponInventoryComponent extends BaseComponent {
     }
 
     public boolean canShootNowWithLeftWeapon() {
-        return leftWeapon.canShootNow();
+        return leftWeapon.canShootLeftNow();
     }
 
     public boolean canShootNowWithRightWeapon() {
-        return rightWeapons.get(rightWeaponIndex).canShootNow();
+        return rightWeapons.get(rightWeaponIndex).canShootRightNow();
     }
 
     public void setLastShotWithLeftWeapon() {
@@ -77,7 +78,14 @@ public class WeaponInventoryComponent extends BaseComponent {
     }
 
     public void setLastShotWithRightWeapon() {
-        rightWeapons.get(rightWeaponIndex).setLastShot();
+
+        if (canShotRightFirstSlot) {
+            rightWeapons.get(rightWeaponIndex).setLastShotRightFirstSlot();
+            this.canShotRightFirstSlot = false;
+        } else {
+            rightWeapons.get(rightWeaponIndex).setLastShotRightSecondSlot();
+            this.canShotRightFirstSlot = true;
+        }
     }
 
 }
