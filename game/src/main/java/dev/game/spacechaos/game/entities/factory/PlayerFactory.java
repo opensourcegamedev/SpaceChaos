@@ -102,7 +102,7 @@ public class PlayerFactory {
 
         // add component for shooting
         BaseWeapon leftWeapon = new BaseWeapon(200, 1);
-        BaseWeapon rightWeapon = new BaseWeapon(500, 10);
+        BaseWeapon rightWeapon = new BaseWeapon(100, 10, 20);
         player.addComponent(new WeaponInventoryComponent(leftWeapon, rightWeapon));
 
         // add component for shield
