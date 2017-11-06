@@ -34,13 +34,21 @@ public class DealDamageOnCollisionComponent extends BaseComponent implements Col
     private long lastCollisionTime = 0;
     private long damageInterval = 0;
 
+    private boolean selfDamage;
+
     public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision, Entity ownerEntity,
-            boolean ignoreShield, long damageInterval) {
+            boolean ignoreShield, long damageInterval, boolean selfDamage) {
         this.ownerEntity = ownerEntity;
         this.removeOnCollision = removeOnCollision;
         this.damage = damage;
         this.ignoreShield = ignoreShield;
         this.damageInterval = damageInterval;
+        this.selfDamage = selfDamage;
+    }
+
+    public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision, Entity ownerEntity,
+            boolean ignoreShield, long damageInterval) {
+        this(damage, removeOnCollision, ownerEntity, ignoreShield, damageInterval, false);
     }
 
     public DealDamageOnCollisionComponent(float damage, boolean removeOnCollision, Entity ownerEntity,
@@ -123,6 +131,11 @@ public class DealDamageOnCollisionComponent extends BaseComponent implements Col
         if (tmp > 0) {
             // reduce HP
             hpComponent.subHP(tmp, ownerEntity);
+        }
+
+        if (selfDamage && ownerEntity != null) {
+            HPComponent ownerHPComponent = ownerEntity.getComponent(HPComponent.class);
+            ownerHPComponent.subHP(tmp, ownerEntity);
         }
 
         // Remove the entity containing this component if necessary

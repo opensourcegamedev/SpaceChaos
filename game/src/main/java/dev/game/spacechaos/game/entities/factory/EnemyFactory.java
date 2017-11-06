@@ -64,10 +64,20 @@ public class EnemyFactory {
                 if(aiRequired) {
                     // add AI
                     int shootInterval = e.getEnemyShuttleAttributeList().get(i).getShootInterval();
+
+                    // add component to attack player
                     enemyEntity.addComponent(new EnemyShuttleAIComponent(targetEntity, projectileTexture, shootInterval),
                             EnemyShuttleAIComponent.class);
+
+                    // add component to deal damage upon collision
+                    enemyEntity.addComponent(new DealDamageOnCollisionComponent(75, false, null, true, 525));
+
                 } else {
+                    // add component to directly follow the player
                     enemyEntity.addComponent(new SimpleFollowAIMovementComponent(targetEntity), SimpleFollowAIMovementComponent.class);
+
+                    // add component to deal damage and to suffer harm upon collision
+                    enemyEntity.addComponent(new DealDamageOnCollisionComponent(75, false, enemyEntity, true, 525, true));
                 }
                 return enemyEntity;
             }
@@ -80,7 +90,6 @@ public class EnemyFactory {
         // create new entity
         Entity enemyEntity = new Entity(ecs);
 
-
         // every entity requires an position component
         enemyEntity.addComponent(new PositionComponent(x, y), PositionComponent.class);
 
@@ -90,9 +99,6 @@ public class EnemyFactory {
 
         // add component to rotate shuttle dependent on move direction
         enemyEntity.addComponent(new MoveDependentDrawRotationComponent(), MoveDependentDrawRotationComponent.class);
-
-        // add component to deal damage upon collision
-        enemyEntity.addComponent(new DealDamageOnCollisionComponent(75, false, null, true, 525));
 
         // add collision component, so player can collide with enemy shuttles
         enemyEntity.addComponent(new CollisionComponent(), CollisionComponent.class);
