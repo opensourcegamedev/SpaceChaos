@@ -58,6 +58,8 @@ jcmd 13864 JFR.start duration=60s filename=myrecording2.jfr
 
   - lars
   
+### Special thanks
+  
 Also thanks to all other supporters and the libGDX team!
   
 ### Assets
