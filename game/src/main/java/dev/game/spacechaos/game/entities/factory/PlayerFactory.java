@@ -106,7 +106,7 @@ public class PlayerFactory {
         player.addComponent(new WeaponInventoryComponent(leftWeapon, rightWeapon));
 
         // add component for shield
-        player.addComponent(new ShieldComponent(800, 800, 1.85F), ShieldComponent.class);
+        player.addComponent(new ShieldComponent(800, 1000, 1.85F), ShieldComponent.class);
 
         // add component to draw shield HP
         player.addComponent(new DrawShieldHPBarComponent(texture.getWidth() / 3, 20, texture.getWidth() / 3, 5f),
