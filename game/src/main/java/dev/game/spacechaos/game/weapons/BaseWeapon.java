@@ -10,14 +10,25 @@ package dev.game.spacechaos.game.weapons;
 public class BaseWeapon {
 
     private long lastShot = 0;
+    private long lastShotRightFirstSlot = 0;
+    private long lastShotRightSecondSlot = 0;
+
     private int currentAmmo;
     private int maxAmmo;
-    private int cooldown;
 
-    public BaseWeapon(int cooldown, int ammo, int maxAmmo) {
-        this.cooldown = cooldown;
+    //cooldown of right and left weapon
+    private int cooldownLeft;
+    private int cooldownRight;
+
+    public BaseWeapon(int cooldownLeft, int cooldownRight, int ammo, int maxAmmo) {
+        this.cooldownLeft = cooldownLeft;
         this.currentAmmo = ammo;
         this.maxAmmo = maxAmmo;
+        this.cooldownRight = cooldownRight;
+    }
+
+    public BaseWeapon(int cooldown, int ammo, int maxAmmo) {
+        this(cooldown, 0, ammo, maxAmmo);
     }
 
     public BaseWeapon(int cooldown, int ammo) {
@@ -50,13 +61,31 @@ public class BaseWeapon {
         lastShot = System.currentTimeMillis();
     }
 
-    public boolean canShootNow() {
-        if (System.currentTimeMillis() - lastShot > cooldown && currentAmmo > 0) {
+    public void setLastShotRightFirstSlot() {
+        lastShotRightFirstSlot = System.currentTimeMillis();
+    }
+
+    public void setLastShotRightSecondSlot() {
+        lastShotRightSecondSlot = System.currentTimeMillis();
+    }
+
+    public boolean canShootLeftNow() {
+
+        if (System.currentTimeMillis() - lastShot > cooldownLeft && currentAmmo > 0) {
             // lastShot = System.currentTimeMillis();
             return true;
         } else {
             return false;
         }
+    }
+
+    public boolean canShootRightNow() {
+        if (System.currentTimeMillis() - lastShotRightFirstSlot > cooldownRight && currentAmmo > 0) {
+            return true;
+        } else if (System.currentTimeMillis() - lastShotRightSecondSlot > cooldownRight && currentAmmo > 0) {
+            return true;
+        }
+        return false;
     }
 
 }
