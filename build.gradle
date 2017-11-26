@@ -1,12 +1,12 @@
 plugins {
-    id "org.sonarqube" version "2.2"
+    id "org.sonarqube" version "2.6.1"
 }
 
 group 'dev.game'
-version '1.1.0-SNAPSHOT'
+version '1.2.0-SNAPSHOT'
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.9'
+  gradleVersion = '4.3.1'
   distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
