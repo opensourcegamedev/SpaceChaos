@@ -1,9 +1,11 @@
-# SpaceChaos
+﻿# SpaceChaos
 
 [![Build Status](https://travis-ci.org/opensourcegamedev/SpaceChaos.svg?branch=master)](https://travis-ci.org/opensourcegamedev/SpaceChaos)
 Sonarqube: https://sonarqube.com/organizations/opensourcegamedev-spacechaos/projects
 
-A simple 2D java game to learn some libGDX
+A simple 2D java game to learn some libGDX\
+\
+![SpaceChaos Logo](./SpaceChaos_Final_Release_Logo.png)
 
 ## Game Description
 
